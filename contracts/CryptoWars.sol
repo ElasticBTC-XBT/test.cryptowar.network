@@ -637,12 +637,12 @@ contract CryptoWars is Initializable, AccessControlUpgradeable, PausableUpgradea
 
     function mintCharacter() public onlyNonContract oncePerBlock(msg.sender) {
 
-        uint256 skillAmount = usdToxBlade(mintCharacterFee);
+        uint256 xBladeAmount = usdToxBlade(mintCharacterFee);
         (,, uint256 fromUserWallet) =
             getSkillToSubtract(
                 0,
                 tokenRewards[msg.sender],
-                skillAmount
+                xBladeAmount
             );
         require(xBlade.balanceOf(msg.sender) >= fromUserWallet && promos.getBit(msg.sender, 4) == false);
 
@@ -666,6 +666,36 @@ contract CryptoWars is Initializable, AccessControlUpgradeable, PausableUpgradea
                 RandomUtil.combineSeeds(seed,102)
             );
         }
+    }
+
+    function mintCharacterWithBNB() public onlyNonContract oncePerBlock(msg.sender) {
+        uint256 xBladeAmount = usdToxBlade(mintCharacterFee);
+
+        // generate the pancake pair path of token -> weth
+        address[] memory path = new address[](2);
+        path[0] = address(xBlade);
+        path[1] = pancakeRouter.WETH();
+
+        // amount of BNB need to mintCharacter
+        uint bnbAmount = pancakeRouter.getAmountsOut(xBladeAmount, path)[1];
+        require(bnbAmount > address(msg.sender).balance, "Not enough BNB to mint");
+
+        // swap BNB to xBlade
+        address[] memory path2 = new address[](2);
+        path2[0] = pancakeRouter.WETH();
+        path2[1] = address(xBlade);
+
+        // make the swap
+        pancakeRouter.swapExactETHForTokensSupportingFeeOnTransferTokens{
+            value: bnbAmount
+        }(
+            0, // accept any amount of BNB
+            path2,
+            address(this),
+            block.timestamp + 360
+        );
+
+        mintCharacter();
     }
 
     /*function mintWeaponN(uint32 num)
