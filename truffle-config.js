@@ -61,6 +61,7 @@ module.exports = {
       gas: parseInt(process.env.ETH_DEV_RPC_GAS, 10) || 67219750, // required for deploy, otherwise it throws weird require-errors on constructor
     },
     bsctestnet: {
+      networkCheckTimeout: 4000,
       provider: () =>
         new HDWalletProvider(
           hdWalletProviderOptions(
@@ -73,7 +74,6 @@ module.exports = {
         ),
       network_id: 0x61,
       confirmations: 2,
-      timeoutBlocks: 400,
       gas: 8000000, //8000000,
       skipDryRun: true,
     },

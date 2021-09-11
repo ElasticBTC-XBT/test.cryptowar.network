@@ -17,7 +17,7 @@ export async function getFeeInSkillFromUsdFromAnyContract<T extends Contract<unk
   const feeInUsd = await fn(feeContract.methods).call(opts);
 
   const feeInSkill = await cryptoBladesContract.methods
-    .usdToSkill(feeInUsd)
+    .usdToxBlade(feeInUsd)
     .call(opts);
 
   return feeInSkill;

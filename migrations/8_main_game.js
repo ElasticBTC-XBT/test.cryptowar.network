@@ -45,8 +45,10 @@ module.exports = async function (deployer, network) {
   const charas = await deployProxy(Characters, [], { deployer });
 
   const weps = await deployProxy(Weapons, [], { deployer });
-  const pancakeRouter = "";// Pancake router address
-  const busdAddress = ""; // BUSD Address for get price
+
+  // Testnet
+  const pancakeRouter = "0xD99D1c33F9fC3444f8101754aBC46c52416550D1";// Pancake router address
+  const busdAddress = "0x78867bbeef44f2326bf8ddd1941a4439382ef2a7"; // BUSD Address for get price
 
   const game = await deployProxy(CryptoWars, [xBladeToken.address, charas.address, weps.address, priceOracle.address, randoms.address, pancakeRouter, busdAddress], { deployer });
 
@@ -66,6 +68,4 @@ module.exports = async function (deployer, network) {
   const GAME_ADMIN = await game.GAME_ADMIN();
   await game.grantRole(GAME_ADMIN, raid.address);
 
-  // Migrations for save fee
-  await game.migrateTo_801f279();
 };

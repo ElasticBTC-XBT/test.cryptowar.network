@@ -499,19 +499,19 @@ export default Vue.extend({
   async created() {
     if(!this.contracts.CryptoWars) return;
     const forgeCost = await this.contracts.CryptoWars.methods.mintWeaponFee().call({ from: this.defaultAccount });
-    const skillForgeCost = await this.contracts.CryptoWars.methods.usdToSkill(forgeCost).call({ from: this.defaultAccount });
+    const skillForgeCost = await this.contracts.CryptoWars.methods.usdToxBlade(forgeCost).call({ from: this.defaultAccount });
     this.forgeCost = new BN(skillForgeCost).div(new BN(10).pow(18)).toFixed(4);
 
     const reforgeCost = await this.contracts.CryptoWars.methods.reforgeWeaponFee().call({ from: this.defaultAccount });
-    const skillReforgeCost = await this.contracts.CryptoWars.methods.usdToSkill(reforgeCost).call({ from: this.defaultAccount });
+    const skillReforgeCost = await this.contracts.CryptoWars.methods.usdToxBlade(reforgeCost).call({ from: this.defaultAccount });
     this.reforgeCost = new BN(skillReforgeCost).div(new BN(10).pow(18)).toFixed(4);
 
     const reforgeDustCost = await this.contracts.CryptoWars.methods.reforgeWeaponWithDustFee().call({ from: this.defaultAccount });
-    const skillDustReforgeCost = await this.contracts.CryptoWars.methods.usdToSkill(reforgeDustCost).call({ from: this.defaultAccount });
+    const skillDustReforgeCost = await this.contracts.CryptoWars.methods.usdToxBlade(reforgeDustCost).call({ from: this.defaultAccount });
     this.dustReforgeCost = new BN(skillDustReforgeCost).div(new BN(10).pow(18)).toFixed(4);
 
     const burnCost = await this.contracts.CryptoWars.methods.burnWeaponFee().call({ from: this.defaultAccount });
-    const skillBurnCost = await this.contracts.CryptoWars.methods.usdToSkill(burnCost).call({ from: this.defaultAccount });
+    const skillBurnCost = await this.contracts.CryptoWars.methods.usdToxBlade(burnCost).call({ from: this.defaultAccount });
     this.burnCost = new BN(skillBurnCost).div(new BN(10).pow(18)).toFixed(4);
 
     if(!this.contracts.WeaponRenameTagConsumables) return;
