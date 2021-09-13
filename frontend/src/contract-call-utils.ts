@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import BigNumber from 'bignumber.js';
 import { Web3JsCallOptions, Web3JsAbiCall, Web3JsSendOptions } from '../../abi-common';
 import { Contract, Contracts } from './interfaces';
@@ -9,17 +10,17 @@ type MethodsFunction<T extends Contract<unknown>> = (contract: T['methods']) => 
 type CryptoBladesMethodsFunction = MethodsFunction<CryptoWarsAlias>;
 
 export async function getFeeInSkillFromUsdFromAnyContract<T extends Contract<unknown>>(
-  cryptoBladesContract: CryptoWarsAlias,
-  feeContract: T,
-  opts: Web3JsCallOptions,
-  fn: MethodsFunction<T>
+  _cryptoBladesContract: CryptoWarsAlias,
+  _feeContract: T,
+  _opts: Web3JsCallOptions,
+  _fn: MethodsFunction<T>
 ): Promise<string> {
-  const feeInUsd = await fn(feeContract.methods).call(opts);
+  // const feeInUsd = await fn(feeContract.methods).call(opts);
 
-  const feeInSkill = await cryptoBladesContract.methods
-    .usdToxBlade(feeInUsd)
-    .call(opts);
-
+  // const feeInSkill = await cryptoBladesContract.methods
+  //   .usdToxBlade(feeInUsd)
+  //   .call(opts);
+  const feeInSkill = '0';
   return feeInSkill;
 }
 

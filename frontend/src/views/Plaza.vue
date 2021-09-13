@@ -28,22 +28,22 @@
         <div v-if="ownCharacters.length > 0">
           <div class="d-flex justify-content-space-between">
             <h1>Characters ({{ ownCharacters.length }} / 4)</h1>
-            <b-button
+            <!-- <b-button
               v-if="canChangeTrait()"
               variant="primary"
               class="ml-auto gtag-link-others"
               @click="openChangeTrait"
               v-tooltip="'Change character\'s trait'" tagname="change_trait_character">
               Change Trait
-            </b-button>
-            <b-button
+            </b-button> -->
+            <!-- <b-button
               v-if="canRename()"
               variant="primary"
               class="ml-auto gtag-link-others"
               @click="openRenameCharacter"
               v-tooltip="'Rename character'" tagname="rename_character">
               Rename Character
-            </b-button>
+            </b-button> -->
             <b-button
               v-if="ownCharacters.length < 4"
               :disabled="!canRecruit()"
@@ -51,7 +51,16 @@
               class="ml-auto gtag-link-others"
               @click="onMintCharacter"
               v-tooltip="'Recruit new character'" tagname="recruit_character">
-              Recruit ({{ recruitCost }} NON-IGO xBlade) <i class="fas fa-plus"></i>
+              Recruit ({{ recruitCost }} xBlade) <i class="fas fa-plus"></i>
+            </b-button>
+            <b-button
+              v-if="ownCharacters.length < 4"
+              :disabled="!canRecruit()"
+              variant="primary"
+              class="ml-auto gtag-link-others"
+              @click="onMintCharaterWithBNB"
+              v-tooltip="'Recruit new character'" tagname="recruit_character">
+              Recruit ({{ recruitCost }} BNB) <i class="fas fa-plus"></i>
             </b-button>
           </div>
 
@@ -214,6 +223,16 @@ export default Vue.extend({
         (this as any).$dialog.notify.error('Could not mint character: insufficient funds or transaction denied.');
       }
     },
+
+    async onMintCharaterWithBNB() {
+      try {
+        await this.onMintCharaterWithBNB();
+      } catch (e){
+        (this as any).$dialog.notify.error('Could not mint character: insufficient funds or transaction denied.');
+        console.log(e);
+      }
+    },
+
     formatSkill() {
       return fromWeiEther(this.skillBalance);
     },

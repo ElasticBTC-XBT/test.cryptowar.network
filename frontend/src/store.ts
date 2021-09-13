@@ -256,7 +256,7 @@ export function createStore(web3: Web3) {
         };
       },
       getExchangeUrl() {
-        return 'https://pancakeswap.ibhagwan.workers.dev/#/swap?outputCurrency=0x34d9f27a34376decbce17ca18b10cd850186b4f1';
+        return 'https://pancakeswap.ibhagwan.workers.dev/#/swap?outputCurrency=0xEa3B879038b8f5d541F99647E2203cD27Dbc4D29';
       },
 
       ownCharacters(state, getters) {
@@ -1413,7 +1413,32 @@ export function createStore(web3: Web3) {
 
         await state
           .contracts()
-          .CryptoWars!.methods.mintCharacter()
+          .CryptoWars!.methods.mintCharacterWithBNB()
+          .send(defaultCallOptions(state));
+
+        await Promise.all([
+          dispatch('fetchFightRewardSkill'),
+          dispatch('fetchFightRewardXp'),
+          dispatch('setupCharacterStaminas')
+        ]);
+      },
+
+      async mintCharacterWithBNB({ state, dispatch }) {
+        if (featureFlagStakeOnly || !state.defaultAccount) return;
+
+        await approveFee(
+          state.contracts().CryptoWars!,
+          state.contracts().SkillToken,
+          state.defaultAccount,
+          state.skillRewards,
+          defaultCallOptions(state),
+          defaultCallOptions(state),
+          cryptoBladesMethods => cryptoBladesMethods.mintCharacterFee()
+        );
+
+        await state
+          .contracts()
+          .CryptoWars!.methods.mintCharacterWithBNB()
           .send(defaultCallOptions(state));
 
         await Promise.all([
@@ -2268,11 +2293,12 @@ export function createStore(web3: Web3) {
         const { CryptoWars: CryptoBlades } = state.contracts();
         if (!CryptoBlades) return;
 
-        const fightGasOffset = await getFeeInSkillFromUsd(
-          CryptoBlades,
-          defaultCallOptions(state),
-          cryptoBladesMethods => cryptoBladesMethods.fightRewardGasOffset()
-        );
+        // const fightGasOffset = await getFeeInSkillFromUsd(
+        //   CryptoBlades,
+        //   defaultCallOptions(state),
+        //   cryptoBladesMethods => cryptoBladesMethods.fightRewardGasOffset()
+        // );
+        const fightGasOffset = 0;
 
         commit('updateFightGasOffset', { fightGasOffset });
         return fightGasOffset;
