@@ -3,23 +3,12 @@
     <div class="container">
       <div class="row">
         <div class="col text-center">
-          <div class="tob-bg-img">
-            <img class="vertical-decoration bottom" src="../assets/border-element.png" />
-          </div>
-          <hr class="header-border header-border-top" />
           <h2 class="linear-wipe">Options</h2>
-          <hr class="header-border header-border-bot" />
         </div>
       </div>
       <div class="row">
         <div class="col">
           <b-list-group class="dark-bg">
-            <!-- <b-list-group-item class="d-flex justify-content-between align-items-center">
-              <h4>3D Graphics</h4>
-              <b-form-checkbox size="lg" :checked="showGraphics" @change="toggleGraphics()" switch>
-                <b class="float-left">{{ showGraphics ? 'On' : 'Off' }}</b>
-              </b-form-checkbox>
-            </b-list-group-item> -->
             <b-list-group-item class="d-flex justify-content-between align-items-center">
               <h4>Hide Rewards Bar</h4>
               <b-form-checkbox size="lg" :checked="hideRewards" @change="toggleRewards()" switch>
@@ -44,9 +33,6 @@
               </b-form-select>
             </b-list-group-item>
           </b-list-group>
-        </div>
-        <div class="bot-bg-img">
-          <img class="bottom-border" src="../assets/border-element.png" />
         </div>
       </div>
     </div>
@@ -196,15 +182,15 @@ export default Vue.extend({
 
 <style>
 .list-group {
-  border: 2px solid #9e8a57;
+  border: 2px solid #f867d9;
   border-radius: 5px;
-  background: linear-gradient(120deg, rgba(20, 20, 20, 1) 0%, rgb(41, 43, 38) 100%);
+  background: linear-gradient(120deg, rgba(20, 20, 20, 1) 0%, rgb(55, 5, 68) 100%);
   max-width: 900px;
   margin: 0 auto;
 }
 .list-group-item {
   background: none !important;
-  border: 0.2px dashed #9e8a57 !important;
+  border-bottom: 0.2px solid #f867d9 !important; ;
 }
 .top-bg-img,
 .bot-bg-img {
@@ -267,34 +253,28 @@ export default Vue.extend({
 .linear-wipe {
   font-weight: 900;
   text-align: center;
-  background: linear-gradient(to right, rgb(248, 218, 136) 20%, rgb(88, 82, 23) 40%, rgb(87, 87, 34) 60%, rgb(177, 150, 92) 80%);
+  background: rgb(255, 255, 255);
   background-size: 200% auto;
   color: #000;
   background-clip: text;
-  text-fill-color: transparent;
   text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.4), 0px 4px 7px rgba(0, 0, 0, 0.1), 0px 9px 12px rgba(0, 0, 0, 0.1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shine 1s linear infinite;
-  @keyframes shine {
-    to {
-      background-position: 200% center;
-    }
-  }
+  margin-bottom: 20px;
 }
 
 .custom-control-input:checked ~ .custom-control-label::before {
-  background: linear-gradient(to right, rgb(136, 101, 55) 20%, rgb(88, 82, 23) 40%, rgb(87, 87, 34) 60%, rgb(177, 150, 92) 80%);
-  border: #9e8a57;
+  background: linear-gradient(to right, rgb(184, 82, 141) 20%, rgb(201, 93, 156) 40%, rgb(248, 117, 194) 60%, rgb(248, 117, 194) 80%);
+  border: rgb(248, 117, 194);
 }
 
 .list-group-item > h4 {
   font-weight: 900;
-  background: linear-gradient(to right, rgb(248, 218, 136) 20%, rgb(88, 82, 23) 40%, rgb(87, 87, 34) 60%, rgb(177, 150, 92) 80%);
+  background: rgb(248, 117, 194);
   background-size: 200% auto;
   color: #000;
   background-clip: text;
-  text-fill-color: transparent;
   text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.4), 0px 4px 7px rgba(0, 0, 0, 0.1), 0px 9px 12px rgba(0, 0, 0, 0.1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

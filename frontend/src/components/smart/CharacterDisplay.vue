@@ -314,7 +314,7 @@ li.character-highlight{
 }
 
 .character-name {
-  color: #dabf75; /* little lighter to emboss */
+  color: #f5a4f5; /* little lighter to emboss */
   font-family: 'Roboto Slab', serif;
 }
 

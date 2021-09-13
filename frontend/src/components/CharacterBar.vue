@@ -1,7 +1,8 @@
 <template>
   <div class="character-bar">
     <character-display />
-    <img src="../assets/infoDivider.png" class="info-divider">
+    <div class="character-bar-divider"/>
+    <!-- <img src="../assets/infoDivider.png" class="info-divider"> -->
   </div>
 </template>
 
@@ -18,5 +19,9 @@ export default {
 <style scoped>
 .character-bar {
   padding: 0.5em 1.2em;
+}
+.character-bar-divider {
+  height: 1px;
+  background: rgb(124, 70, 117);
 }
 </style>

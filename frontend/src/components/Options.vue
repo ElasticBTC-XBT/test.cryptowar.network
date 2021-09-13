@@ -22,7 +22,9 @@
         <hr class="border-light">
 
         <b-dropdown-group class="mb-2">
-
+          <b-dropdown-item  @click.native="$router.push('options')">
+        <i class="fa fa-cog mr-2"></i>Options
+        </b-dropdown-item>
         </b-dropdown-group>
       </b-nav-item-dropdown>
     </b-navbar-nav>
