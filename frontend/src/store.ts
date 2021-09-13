@@ -256,7 +256,7 @@ export function createStore(web3: Web3) {
         };
       },
       getExchangeUrl() {
-        return 'https://pancakeswap.ibhagwan.workers.dev/#/swap?outputCurrency=0xEa3B879038b8f5d541F99647E2203cD27Dbc4D29';
+        return process.env.VUE_APP_EXCHANGE_URL || 'https://pancake.kiemtienonline360.com/#/swap?outputCurrency=0xEa3B879038b8f5d541F99647E2203cD27Dbc4D29';
       },
 
       ownCharacters(state, getters) {
