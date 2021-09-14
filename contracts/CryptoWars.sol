@@ -100,23 +100,11 @@ contract CryptoWars is
         reforgeWeaponFee = burnWeaponFee + reforgeWeaponWithDustFee; //0.5 usd;
     }
 
-    // function migrateTo_ef994e2(Promos _promos) public {
-    //     require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender));
-
-    //     promos = _promos;
-    // }
-
     function migrateTo_23b3a8b(IStakeFromGame _stakeFromGame) external {
         require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender));
 
         stakeFromGameImpl = _stakeFromGame;
     }
-
-    // function migrateTo_60872c8(Blacksmith _blacksmith) external {
-    //     require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender));
-
-    //     blacksmith = _blacksmith;
-    // }
 
     // config vars
     uint8 staminaCostFight;
@@ -139,7 +127,7 @@ contract CryptoWars is
 
     uint256 public fightXpGain; // multiplied based on power differences
 
-    mapping(address => uint256) tokenRewards; // user adress : skill wei
+    mapping(address => uint256) tokenRewards; // user adress : xblade wei
     mapping(uint256 => uint256) xpRewards; // character id : xp
 
     int128 public oneFrac; // 1.0
@@ -170,13 +158,13 @@ contract CryptoWars is
         uint24 playerRoll,
         uint24 enemyRoll,
         uint16 xpGain,
-        uint256 skillGain
+        uint256 xBladeGain
     );
-    event InGameOnlyFundsGiven(address indexed to, uint256 skillAmount);
+    event InGameOnlyFundsGiven(address indexed to, uint256 xBladeAmount);
     event MintWeaponsSuccess(address indexed minter, uint32 count);
     event MintWeaponsFailure(address indexed minter, uint32 count);
 
-    function recoverSkill(uint256 amount) public {
+    function recoverXBlade(uint256 amount) public {
         require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Not adm");
 
         xBlade.safeTransfer(msg.sender, amount);
@@ -185,7 +173,7 @@ contract CryptoWars is
     function getXBladeToSubtract(
         uint256 _inGameOnlyFunds,
         uint256 _tokenRewards,
-        uint256 _skillNeeded
+        uint256 _xBladeNeeded
     )
         public
         pure
@@ -195,29 +183,29 @@ contract CryptoWars is
             uint256 fromUserWallet
         )
     {
-        if (_skillNeeded <= _inGameOnlyFunds) {
-            return (_skillNeeded, 0, 0);
+        if (_xBladeNeeded <= _inGameOnlyFunds) {
+            return (_xBladeNeeded, 0, 0);
         }
 
-        _skillNeeded -= _inGameOnlyFunds;
+        _xBladeNeeded -= _inGameOnlyFunds;
 
-        if (_skillNeeded <= _tokenRewards) {
-            return (_inGameOnlyFunds, _skillNeeded, 0);
+        if (_xBladeNeeded <= _tokenRewards) {
+            return (_inGameOnlyFunds, _xBladeNeeded, 0);
         }
 
-        _skillNeeded -= _tokenRewards;
+        _xBladeNeeded -= _tokenRewards;
 
-        return (_inGameOnlyFunds, _tokenRewards, _skillNeeded);
+        return (_inGameOnlyFunds, _tokenRewards, _xBladeNeeded);
     }
 
-    function getSkillNeededFromUserWallet(
+    function getXBladeNeededFromUserWallet(
         address playerAddress,
-        uint256 skillNeeded
-    ) public view returns (uint256 skillNeededFromUserWallet) {
-        (, , skillNeededFromUserWallet) = getXBladeToSubtract(
+        uint256 xBladeNeeded
+    ) public view returns (uint256 xBladeNeededFromUserWallet) {
+        (, , xBladeNeededFromUserWallet) = getXBladeToSubtract(
             inGameOnlyFunds[playerAddress],
             tokenRewards[playerAddress],
-            skillNeeded
+            xBladeNeeded
         );
     }
 
@@ -681,23 +669,23 @@ contract CryptoWars is
         }
     }
 
-    function mintCharacterWithBNB()
-        public
-        onlyNonContract
-        oncePerBlock(msg.sender)
-    {
-        PancakeUtil.swapBNBForTokens(
-            address(pancakeRouter),
-            address(xBlade),
-            PancakeUtil.getAmountBNBFromTokens(
-                address(pancakeRouter),
-                address(xBlade),
-                ABDKMath64x64.toUInt(mintCharacterFee) * 10**18
-            )
-        );
+    // function mintCharacterWithBNB()
+    //     public
+    //     onlyNonContract
+    //     oncePerBlock(msg.sender)
+    // {
+    //     PancakeUtil.swapBNBForTokens(
+    //         address(pancakeRouter),
+    //         address(xBlade),
+    //         PancakeUtil.getAmountBNBFromTokens(
+    //             address(pancakeRouter),
+    //             address(xBlade),
+    //             ABDKMath64x64.toUInt(mintCharacterFee) * 10**18
+    //         )
+    //     );
 
-        mintCharacter();
-    }
+    //     mintCharacter();
+    // }
 
     function mintWeaponN(uint32 num)
         public
@@ -1076,33 +1064,33 @@ contract CryptoWars is
     //     fightRewardGasOffset = ABDKMath64x64.divu(cents, 100);
     // }
 
-    function giveInGameOnlyFunds(address to, uint256 skillAmount)
+    function giveInGameOnlyFunds(address to, uint256 xBladeAmount)
         external
         restricted
     {
-        totalInGameOnlyFunds = totalInGameOnlyFunds.add(skillAmount);
-        inGameOnlyFunds[to] = inGameOnlyFunds[to].add(skillAmount);
+        totalInGameOnlyFunds = totalInGameOnlyFunds.add(xBladeAmount);
+        inGameOnlyFunds[to] = inGameOnlyFunds[to].add(xBladeAmount);
 
-        xBlade.safeTransferFrom(msg.sender, address(this), skillAmount);
+        xBlade.safeTransferFrom(msg.sender, address(this), xBladeAmount);
 
-        emit InGameOnlyFundsGiven(to, skillAmount);
+        emit InGameOnlyFundsGiven(to, xBladeAmount);
     }
 
     function _giveInGameOnlyFundsFromContractBalance(
         address to,
-        uint256 skillAmount
+        uint256 xBladeAmount
     ) internal {
-        totalInGameOnlyFunds = totalInGameOnlyFunds.add(skillAmount);
-        inGameOnlyFunds[to] = inGameOnlyFunds[to].add(skillAmount);
+        totalInGameOnlyFunds = totalInGameOnlyFunds.add(xBladeAmount);
+        inGameOnlyFunds[to] = inGameOnlyFunds[to].add(xBladeAmount);
 
-        emit InGameOnlyFundsGiven(to, skillAmount);
+        emit InGameOnlyFundsGiven(to, xBladeAmount);
     }
 
     function giveInGameOnlyFundsFromContractBalance(
         address to,
-        uint256 skillAmount
+        uint256 xBladeAmount
     ) external restricted {
-        _giveInGameOnlyFundsFromContractBalance(to, skillAmount);
+        _giveInGameOnlyFundsFromContractBalance(to, xBladeAmount);
     }
 
     function claimTokenRewards() public {
@@ -1158,7 +1146,7 @@ contract CryptoWars is
         return tokenRewards[wallet];
     }
 
-    function getTotalSkillOwnedBy(address wallet)
+    function getTotalXBladeOwnedBy(address wallet)
         public
         view
         returns (uint256)
