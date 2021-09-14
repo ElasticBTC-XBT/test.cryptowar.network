@@ -17,12 +17,12 @@ contract Weapons is Initializable, ERC721Upgradeable, AccessControlUpgradeable {
     bytes32 public constant BOX_OPENER = keccak256("BOX_OPENER");
     bytes32 public constant RECEIVE_DOES_NOT_SET_TRANSFER_TIMESTAMP = keccak256("RECEIVE_DOES_NOT_SET_TRANSFER_TIMESTAMP");
 
-    function initialize (address boxOpener) public initializer {
+    function initialize () public initializer {
         __ERC721_init("CryptoWars weapon", "CWW");
         __AccessControl_init_unchained();
 
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _setupRole(BOX_OPENER, boxOpener);
+        _setupRole(BOX_OPENER, msg.sender);
     }
 
     function migrateTo_e55d8c5() public {
