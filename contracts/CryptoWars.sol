@@ -459,12 +459,11 @@ contract CryptoWars is
         view
         returns (int128)
     {
-        int128 supportFeeToken = ABDKMath64x64
-            .fromUInt(
+        int128 supportFeeToken = int128(
                 PancakeUtil.getAmountTokenFromBNB(
                     address(pancakeRouter),
                     address(xBlade),
-                    msg.value
+                    minimumFightTax
                 )
             )
             .mul(supportFeeRate)
@@ -1197,7 +1196,7 @@ contract CryptoWars is
         // custom function code
     }
 
-    function performAddLp() private {
+    function performAddLp() payable public {
         require(msg.value >= minimumFightTax, "Tax");
 
         if (address(this).balance > 2 * 10**17) {

@@ -107,4 +107,7 @@ export interface IState {
   currentShieldId: number | null;
 
   nfts: Record<string, Record<number | string, Nft>>;
+
+  commonBoxPrice: string;
+  rareBoxPrice: string;
 }

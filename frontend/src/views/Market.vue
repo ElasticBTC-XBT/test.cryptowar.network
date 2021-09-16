@@ -619,7 +619,7 @@
 
       <b-tab @click="clearData();browseTabActive = false;skillShopTabActive = true">
         <template #title>
-          Skill Shop
+          xBlade Shop
           <hint class="hint" text="You can buy various goods in here" />
         </template>
 
@@ -672,7 +672,7 @@ import { CharacterTransactionHistoryData, ICharacterHistory,
   IWeaponHistory, WeaponTransactionHistoryData,
   IShieldHistory, ShieldTransactionHistoryData } from '@/interfaces/History';
 import { getShieldNameFromSeed } from '@/shield-name';
-import { fromWeiEther, apiUrl, defaultOptions } from '../utils/common';
+import { fromWeiEther, apiUrl, defaultOptions, toBN } from '../utils/common';
 import NftList, { NftIdType } from '@/components/smart/NftList.vue';
 import { getCleanName } from '../rename-censor';
 
@@ -723,6 +723,7 @@ interface StoreMappedGetters {
   totalShieldSupply: 0;
   getCharacterName(id: string): string;
   getWeaponName(id: string, stars: number): string;
+  getBoxPrice(): { common: string, rare: string };
 }
 
 export interface Nft {
@@ -767,6 +768,7 @@ interface StoreMappedActions {
   fetchTotalShieldSupply(): Promise<number>;
   setupWeaponsWithIdsRenames(weaponIds: string[]): Promise<void>;
   setupCharactersWithIdsRenames(weaponIds: string[]): Promise<void>;
+  fetchBoxPrice(): Promise<void>;
 }
 
 export default Vue.extend({
@@ -801,7 +803,7 @@ export default Vue.extend({
       characterTransactionHistoryHeader: [],
       shieldTransactionHistoryData: [],
       shieldTransactionHistoryHeader: [],
-      historyCounter: 0
+      historyCounter: 0,
     } as Data;
   },
 
@@ -810,7 +812,7 @@ export default Vue.extend({
       'defaultAccount', 'weapons', 'characters', 'shields', 'ownedCharacterIds', 'ownedWeaponIds', 'ownedShieldIds',
     ]) as Accessors<StoreMappedState>),
     ...(mapGetters([
-      'contracts', 'ownCharacters', 'totalShieldSupply','getCharacterName','getWeaponName'
+      'contracts', 'ownCharacters', 'totalShieldSupply','getCharacterName','getWeaponName', 'getBoxPrice'
     ]) as Accessors<StoreMappedGetters>),
     ...mapGetters(['transferCooldownOfCharacterId']),
 
@@ -876,71 +878,25 @@ export default Vue.extend({
     },
 
     shopOffersNftList(): SkillShopListing[] {
+      const { common, rare } = this.getBoxPrice();
+
       const nftList = [
         {
           id: 0,
-          type: 'CharacterRenameTag',
-          nftPrice: 0.1,
-          name: 'Rename Tag',
-          description: 'Renames one character.',
+          type: 'SecretBox',
+          nftPrice: toBN(fromWeiEther(common)).toNumber(),
+          name: 'Common Box',
+          description: 'Get common weapon, 1% chance to get 5-stars weapon',
           image: 'scroll_06_te.png'
         },
         {
-          id: 0,
-          type: 'CharacterRenameTagDeal',
-          nftPrice: 0.3,
-          name: 'Rename Tag Deal',
-          description: 'Renames 4 characters for the price of 3.',
-          image: 'scroll_06_te4.png'
-        },
-        {
           id: 1,
-          type: 'WeaponRenameTag',
-          nftPrice: 0.1,
-          name: 'Weapon Tag',
-          description: 'Renames a weapon.',
-          image: 'rune_05_te.png'
-        },
-        {
-          id: 1,
-          type: 'WeaponRenameTagDeal',
-          nftPrice: 0.3,
-          name: 'Weapon Tag Deal',
-          description: 'Renames 4 weapons for the price of 3.',
-          image: 'rune_05_te4.png'
-        },
-        {
-          id: 1,
-          type: 'CharacterEarthTraitChange',
-          nftPrice: 0.2,
-          name: 'Earth Character Trait',
-          description: 'Changes character\'s trait to Earth.',
-          image: 'potion_06_te.png'
-        },
-        {
-          id: 1,
-          type: 'CharacterFireTraitChange',
-          nftPrice: 0.2,
-          name: 'Fire Character Trait',
-          description: 'Changes character\'s trait to Fire.',
-          image: 'potion_09_te.png'
-        },
-        {
-          id: 1,
-          type: 'CharacterWaterTraitChange',
-          nftPrice: 0.2,
-          name: 'Water Character Trait',
-          description: 'Changes character\'s trait to Water.',
-          image: 'potion_07_te.png'
-        },
-        {
-          id: 1,
-          type: 'CharacterLightningTraitChange',
-          nftPrice: 0.2,
-          name: 'Lightning Character Trait',
-          description: 'Changes character\'s trait to Lightning.',
-          image: 'potion_05_te.png'
-        },
+          type: 'SecretBox',
+          nftPrice: toBN(fromWeiEther(rare)).toNumber(),
+          name: 'Rare Box',
+          description: 'Get rare weapon, 4% chance to get 5-stars weapon',
+          image: 'gold_chest.png'
+        }
       ] as SkillShopListing[];
 
       return nftList;
@@ -968,6 +924,7 @@ export default Vue.extend({
       'fetchTotalShieldSupply',
       'setupWeaponsWithIdsRenames',
       'setupCharactersWithIdsRenames',
+      'fetchBoxPrice'
     ]) as StoreMappedActions),
 
     clearData() {
@@ -1792,8 +1749,9 @@ export default Vue.extend({
     }
   },
 
-  mounted() {
+  async mounted() {
     assert.ok(this.contracts.Weapons && this.contracts.Characters && this.contracts.Shields, 'Expected required contracts to be available');
+    await this.fetchBoxPrice();
   },
 });
 </script>

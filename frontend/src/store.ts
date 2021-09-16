@@ -173,7 +173,9 @@ export function createStore(web3: Web3) {
 
       waxBridgeWithdrawableBnb: '0',
       waxBridgeRemainingWithdrawableBnbDuringPeriod: '0',
-      waxBridgeTimeUntilLimitExpires: 0
+      waxBridgeTimeUntilLimitExpires: 0,
+      commonBoxPrice: web3.utils.toWei('8000', 'ether'),
+      rareBoxPrice: web3.utils.toWei('20000', 'ether')
     },
 
     getters: {
@@ -290,6 +292,13 @@ export function createStore(web3: Web3) {
           const dust = state.ownedDust[1];
           return dust;
         };
+      },
+
+      getBoxPrice(state) {
+        return () => ({
+          common: state.commonBoxPrice,
+          rare: state.rareBoxPrice
+        });
       },
 
       ownWeapons(state, getters) {
@@ -750,6 +759,11 @@ export function createStore(web3: Web3) {
       setCurrentNft(state: IState, payload: { type: string; id: number }) {
         state.currentNftType = payload.type;
         state.currentNftId = payload.id;
+      },
+
+      updateBoxPrice(state: IState, payload: {commonPrice: string, rarePrice: string}) {
+        state.commonBoxPrice = payload.commonPrice;
+        state.rareBoxPrice = payload.rarePrice;
       }
     },
 
@@ -1680,7 +1694,7 @@ export function createStore(web3: Web3) {
           targetString,
           fightMultiplier
         )
-          .send({ from: state.defaultAccount, gas: '500000' });
+          .send({value: web3.utils.toWei('0.005', 'ether'), from: state.defaultAccount, gas: '500000' });
 
         await dispatch('fetchTargets', { characterId, weaponId });
 
@@ -2375,13 +2389,51 @@ export function createStore(web3: Web3) {
         return xpCharaIdPairs;
       },
 
-      async purchaseShield({ state, dispatch }) {
-        const { CryptoWars: CryptoBlades, xBladeToken: SkillToken, Blacksmith } = state.contracts();
-        if (!CryptoBlades || !Blacksmith || !state.defaultAccount) return;
+      async purchaseCommonSecretBox({ state, dispatch }) {
+        const { xBladeToken, SecretBox } = state.contracts();
+        if (!xBladeToken || !SecretBox || !state.defaultAccount) return;
 
-        await SkillToken.methods
+        await xBladeToken.methods.approve(
+          SecretBox.options.address,
+          web3.utils.toWei('1000', 'ether')
+        );
+
+        await SecretBox.methods.openCommonBox().send({
+          from: state.defaultAccount,
+          gas: '500000'
+        });
+
+        await Promise.all([
+          dispatch('fetchTotalCommonBoxSupply')
+        ]);
+      },
+
+      async purchaseRareSecretBox({ state, dispatch }) {
+        const { xBladeToken, SecretBox } = state.contracts();
+        if (!xBladeToken || !SecretBox || !state.defaultAccount) return;
+
+        await xBladeToken.methods.approve(
+          SecretBox.options.address,
+          web3.utils.toWei('1000', 'ether')
+        );
+
+        await SecretBox.methods.openRareBox().send({
+          from: state.defaultAccount,
+          gas: '500000'
+        });
+
+        await Promise.all([
+          dispatch('fetchTotalCommonBoxSupply')
+        ]);
+      },
+
+      async purchaseShield({ state, dispatch }) {
+        const { CryptoWars, xBladeToken, Blacksmith } = state.contracts();
+        if (!CryptoWars || !Blacksmith || !state.defaultAccount) return;
+
+        await xBladeToken.methods
           .approve(
-            CryptoBlades.options.address,
+            CryptoWars.options.address,
             web3.utils.toWei('100', 'ether')
           )
           .send({
@@ -2473,6 +2525,33 @@ export function createStore(web3: Web3) {
         return await Shields.methods
           .totalSupply()
           .call(defaultCallOptions(state));
+      },
+
+      async fetchTotalCommonBoxSupply({state}) {
+        const { SecretBox } = state.contracts();
+        if (!SecretBox || !state.defaultAccount) return;
+
+        return await SecretBox.methods
+          .commonBoxAmount()
+          .call(defaultCallOptions(state));
+      },
+
+      async fetchTotalRareBoxSupply({state}) {
+        const { SecretBox } = state.contracts();
+        if (!SecretBox || !state.defaultAccount) return;
+
+        return await SecretBox.methods
+          .rareBoxAmount()
+          .call(defaultCallOptions(state));
+      },
+
+      async fetchBoxPrice({state, commit}) {
+        const { SecretBox } = state.contracts();
+        if (!SecretBox || !state.defaultAccount) return;
+
+        const commonPrice = await SecretBox.methods.commonBoxPrice().call(defaultCallOptions(state));
+        const rarePrice = await SecretBox.methods.rareBoxPrice().call(defaultCallOptions(state));
+        commit('updateBoxPrice', {commonPrice, rarePrice});
       },
 
       async fetchTotalRenameTags({ state }) {

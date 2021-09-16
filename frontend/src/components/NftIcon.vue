@@ -37,7 +37,15 @@
         </div>
       </div>
 
-      <div v-if="nft.type !== 'shield'" class="nft-details">
+
+      <div v-if="nft.type === 'SecretBox'" class="nft-details glow-container" ref="el" :class="['glow-' + (nft.stars || 0)]">
+        <img class="placeholder-shield" src="../assets/gold_chest.png" v-if="isShop" />
+
+        <span v-if="isShop && nft.id === 0" class="nft-supply">Supply left: {{commonBoxSupply}}</span>
+        <span v-if="isShop && nft.id === 1" class="nft-supply">Supply left: {{rareBoxSupply}}</span>
+      </div>
+
+      <div v-if="nft.type !== 'shield' && nft.type !== 'SecretBox'" class="nft-details">
         <img class="placeholder-consumable" :src="nft.image.startsWith('http') ? nft.image : imgPath(nft.image)"/>
         <span v-if="isShop" class="nft-supply">Owned: {{this.quantityOwned}}</span>
       </div>
@@ -81,6 +89,10 @@ export default {
     return {
       totalShieldSupply: 0,
       fetchSupplyInterval: 0,
+      fetchCommonBoxSupplyInterval: 0,
+      fetchRareBoxSupplyInterval: 0,
+      commonBoxSupply: 0,
+      rareBoxSupply: 0,
       quantityOwned: 0,
       images: require.context('../assets/elements/', false, /\.png$/)
     };
@@ -89,7 +101,8 @@ export default {
   methods: {
     ...mapActions(['fetchTotalShieldSupply', 'fetchTotalRenameTags', 'fetchTotalWeaponRenameTags',
       'fetchTotalCharacterFireTraitChanges', 'fetchTotalCharacterEarthTraitChanges',
-      'fetchTotalCharacterWaterTraitChanges', 'fetchTotalCharacterLightningTraitChanges']),
+      'fetchTotalCharacterWaterTraitChanges', 'fetchTotalCharacterLightningTraitChanges',
+      'fetchTotalRareBoxSupply','fetchTotalCommonBoxSupply',]),
 
     imgPath(img) {
       return this.images('./' + img);
@@ -132,11 +145,21 @@ export default {
       this.fetchSupplyInterval = setInterval(async () => {
         this.quantityOwned = await this.fetchTotalCharacterLightningTraitChanges();
       }, 3000);
+    } else if (this.nft.type === 'SecretBox') {
+      this.fetchCommonBoxSupplyInterval = setInterval(async () =>{
+        this.commonBoxSupply = await this.fetchTotalCommonBoxSupply();
+      }, 3000);
+
+      this.fetchRareBoxSupplyInterval = setInterval(async ()=> {
+        this.rareBoxSupply = await this.fetchTotalRareBoxSupply();
+      }, 3000);
     }
   },
 
   beforeDestroy() {
     clearInterval(this.fetchSupplyInterval);
+    clearInterval(this.fetchCommonBoxSupplyInterval);
+    clearInterval(this.fetchRareBoxSupplyInterval);
   }
 };
 </script>

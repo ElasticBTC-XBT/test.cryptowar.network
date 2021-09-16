@@ -39,8 +39,8 @@ contract SecretBox is Initializable, OwnableUpgradeable, PausableUpgradeable {
         weapons = _weapons;
         commonBoxAmount = 1000;
         rareBoxAmount = 100;
-        commonBoxPrice = 1000; // xBlade
-        rareBoxPrice = 4000; // xBlade
+        commonBoxPrice = 1000 ether; // xBlade
+        rareBoxPrice = 4000 ether; // xBlade
     }
 
     modifier onlyNonContract() {

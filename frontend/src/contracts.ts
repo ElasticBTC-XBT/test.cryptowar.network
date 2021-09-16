@@ -3,7 +3,6 @@ import { abi as erc20Abi } from '../../build/contracts/IERC20.json';
 import { networks as xBladeStakingRewardsNetworks } from '../../build/contracts/XBladeStakingRewardsUpgradeable.json';
 import { networks as lpStakingRewardsNetworks } from '../../build/contracts/LPStakingRewardsUpgradeable.json';
 import { networks as lp2StakingRewardsNetworks } from '../../build/contracts/LP2StakingRewardsUpgradeable.json';
-import { networks as skillTokenNetworks } from '../../build/contracts/SkillToken.json';
 import { networks as lpTokenNetworks } from '../../build/contracts/ExperimentToken.json';
 import { networks as lp2TokenNetworks } from '../../build/contracts/ExperimentToken2.json';
 import { abi as stakingRewardsAbi } from '../../build/contracts/IStakingRewards.json';
@@ -23,8 +22,8 @@ import { abi as characterLightningTraitChangeConsumablesAbi } from '../../build/
 import { abi as randomsAbi } from '../../build/contracts/IRandoms.json';
 import { abi as marketAbi, networks as marketNetworks } from '../../build/contracts/NFTMarket.json';
 import { abi as waxBridgeAbi, networks as waxBridgeNetworks } from '../../build/contracts/WaxBridge.json';
-import { abi as xBladeTokenAbi } from '../../build/contracts/xBlade.json';
-
+import { abi as xBladeTokenAbi, networks as xBladeTokenNetworks } from '../../build/contracts/xBlade.json';
+import { abi as secretBoxAbi } from '../../build/contracts/SecretBox.json';
 import Web3 from 'web3';
 import { Contracts, isStakeType, StakeType, StakingContracts } from './interfaces';
 
@@ -53,7 +52,7 @@ type Abi = any[];
 const stakingContractAddressesFromBuild: Partial<Record<StakeType, Partial<StakingContractEntry>>> = {
   skill: {
     stakingRewardsAddress: (xBladeStakingRewardsNetworks as Networks)[networkId]?.address,
-    stakingTokenAddress: (skillTokenNetworks as Networks)[networkId]?.address
+    stakingTokenAddress: (xBladeTokenNetworks as Networks)[networkId]?.address
   },
   lp: {
     stakingRewardsAddress: (lpStakingRewardsNetworks as Networks)[networkId]?.address,
@@ -100,11 +99,11 @@ async function setUpStakingContracts(web3: Web3) {
     };
   }
 
-  const skillTokenAddress = process.env.VUE_APP_XBLADE_TOKEN_CONTRACT_ADDRESS || (skillTokenNetworks as Networks)[networkId]!.address;
-  const SkillToken = new web3.eth.Contract(erc20Abi as Abi, skillTokenAddress);
+  const xBladeTokenAddress = process.env.VUE_APP_XBLADE_TOKEN_CONTRACT_ADDRESS || (xBladeTokenNetworks as Networks)[networkId]!.address;
+  const xBladeToken = new web3.eth.Contract(erc20Abi as Abi, xBladeTokenAddress);
 
   return {
-    SkillToken,
+    xBladeToken,
 
     staking
   };
@@ -130,6 +129,7 @@ export async function setUpContracts(web3: Web3): Promise<Contracts> {
   const Characters = new web3.eth.Contract(charactersAbi as Abi, charactersAddr);
   const Weapons = new web3.eth.Contract(weaponsAbi as Abi, weaponsAddr);
   const Blacksmith = new web3.eth.Contract(blacksmithAbi as Abi, blacksmithAddr);
+  const SecretBox = new web3.eth.Contract(secretBoxAbi as Abi, process.env.VUE_APP_SECRET_BOX_ADDRESS);
 
   const xBladeTokenAddress = process.env.VUE_APP_XBLADE_TOKEN_CONTRACT_ADDRESS;
   const xBladeToken = new web3.eth.Contract(xBladeTokenAbi as Abi, xBladeTokenAddress);
@@ -189,6 +189,7 @@ export async function setUpContracts(web3: Web3): Promise<Contracts> {
     ...marketContracts,
     WaxBridge,
     xBladeToken,
+    SecretBox,
   };
 }
 

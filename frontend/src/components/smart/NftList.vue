@@ -134,6 +134,8 @@ interface StoreMappedActions {
   purchaseCharacterEarthTraitChange(): Promise<void>;
   purchaseCharacterWaterTraitChange(): Promise<void>;
   purchaseCharacterLightningTraitChange(): Promise<void>;
+  purchaseCommonSecretBox(): Promise<void>;
+  purchaseRareSecretBox(): Promise<void>;
 }
 
 export default Vue.extend({
@@ -307,7 +309,8 @@ export default Vue.extend({
     ...(mapActions(['purchaseShield', 'fetchShields', 'purchaseRenameTag', 'purchaseWeaponRenameTag',
       'purchaseRenameTagDeal', 'purchaseWeaponRenameTagDeal',
       'purchaseCharacterFireTraitChange', 'purchaseCharacterEarthTraitChange',
-      'purchaseCharacterWaterTraitChange', 'purchaseCharacterLightningTraitChange'
+      'purchaseCharacterWaterTraitChange', 'purchaseCharacterLightningTraitChange',
+      'purchaseCommonSecretBox', 'purchaseRareSecretBox'
     ]) as StoreMappedActions),
     ...mapMutations(['setCurrentNft']),
 
@@ -389,6 +392,16 @@ export default Vue.extend({
       if(item.type === 'shield'){
         console.log('buying shield');
         await this.purchaseShield();
+      }
+
+      if (item.type === 'SecretBox') {
+        console.log('Buying secret box');
+        if (item.id === 0) { //Common Box
+          await this.purchaseCommonSecretBox();
+        }
+        if (item.id === 1) { // Rare Box
+          await this.purchaseRareSecretBox();
+        }
       }
 
       if(item.type === 'CharacterRenameTag'){

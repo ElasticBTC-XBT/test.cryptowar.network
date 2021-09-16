@@ -44,7 +44,7 @@
                         v-tooltip="'Burn weapons to buff selected weapon'">
                   Create Dust
                 </b-button>
-                <b-button
+                <!-- <b-button
                         variant="primary"
                         class="ml-3"
                         @click="onForgeWeapon"
@@ -53,8 +53,8 @@
                   <span v-if="disableForge">Cooling forge...</span>
                   <span v-if="!disableForge" class="gtag-link-others" tagname="forge_weapon">Forge x1 ({{ forgeCost }} xBlade) <i class="fas fa-plus"></i>
                   </span>
-                </b-button>
-                <b-button
+                </b-button> -->
+                <!-- <b-button
                         variant="primary"
                         class="ml-3"
                         @click="onForgeWeaponx10()"
@@ -62,7 +62,7 @@
                         v-tooltip="'Forge new weapon'">
                   <span v-if="disableForge">Cooling forge...</span>
                   <span v-if="!disableForge" class="gtag-link-others" tagname="forge_weapon">x10 ({{ forgeCost*10 }} xBlade) <i class="fas fa-plus"></i></span>
-                </b-button>
+                </b-button> -->
 
                 <b-icon-question-circle class="centered-icon" scale="1.5"
                   v-on:click="onShowForgeDetails" v-tooltip.bottom="'Click for forge percentages'"/>
