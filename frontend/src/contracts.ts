@@ -23,6 +23,7 @@ import { abi as characterLightningTraitChangeConsumablesAbi } from '../../build/
 import { abi as randomsAbi } from '../../build/contracts/IRandoms.json';
 import { abi as marketAbi, networks as marketNetworks } from '../../build/contracts/NFTMarket.json';
 import { abi as waxBridgeAbi, networks as waxBridgeNetworks } from '../../build/contracts/WaxBridge.json';
+import { abi as xBladeTokenAbi } from '../../build/contracts/xBlade.json';
 
 import Web3 from 'web3';
 import { Contracts, isStakeType, StakeType, StakingContracts } from './interfaces';
@@ -130,6 +131,9 @@ export async function setUpContracts(web3: Web3): Promise<Contracts> {
   const Weapons = new web3.eth.Contract(weaponsAbi as Abi, weaponsAddr);
   const Blacksmith = new web3.eth.Contract(blacksmithAbi as Abi, blacksmithAddr);
 
+  const xBladeTokenAddress = process.env.VUE_APP_XBLADE_TOKEN_CONTRACT_ADDRESS;
+  const xBladeToken = new web3.eth.Contract(xBladeTokenAbi as Abi, xBladeTokenAddress);
+
   const shieldsAddr = await Blacksmith.methods.shields().call();
   const Shields = new web3.eth.Contract(shieldsAbi as Abi, shieldsAddr);
 
@@ -184,6 +188,7 @@ export async function setUpContracts(web3: Web3): Promise<Contracts> {
     ...raidContracts,
     ...marketContracts,
     WaxBridge,
+    xBladeToken,
   };
 }
 

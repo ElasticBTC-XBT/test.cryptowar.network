@@ -156,8 +156,8 @@ export default {
 
     async initializeRecruitCost() {
       const recruitCost = await this.contracts.CryptoWars.methods.mintCharacterFee().call({ from: this.defaultAccount });
-      const skillRecruitCost = await this.contracts.CryptoWars.methods.usdToxBlade(recruitCost).call();
-      this.recruitCost = BN(skillRecruitCost)
+      const xBladeRecruitCost = await this.contracts.CryptoWars.methods.usdToxBlade(recruitCost).call();
+      this.recruitCost = BN(xBladeRecruitCost)
         .div(BN(10).pow(18))
         .toFixed(4);
     },

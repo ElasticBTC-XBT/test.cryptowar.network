@@ -7,12 +7,12 @@ const NFTMarket = artifacts.require("NFTMarket");
 const Promos = artifacts.require("Promos");
 
 module.exports = async function (deployer, network, accounts) {
-  const game = await upgradeProxy(CryptoWars.address, CryptoWars, { deployer });
-  const promos = await upgradeProxy(Promos.address, Promos, { deployer });
+  const game = await CryptoWars.deployed();
+  const promos = await Promos.deployed();
 
   const shields = await deployProxy(Shields, [], { deployer });
 
-  const blacksmith = await upgradeProxy(Blacksmith.address, Blacksmith, { deployer });
+  const blacksmith = await Blacksmith.deployed();
   await blacksmith.migrateTo_61c10da(shields.address, game.address);
 
   const shields_GAME_ADMIN = await shields.GAME_ADMIN();

@@ -6,11 +6,11 @@ const Promos = artifacts.require("Promos");
 const Weapons = artifacts.require('Weapons');
 
 module.exports = async function (deployer) {
-  const promos = await deployProxy(Promos, [], { deployer });
+  const promos = await Promos.deployed();
 
-  const game = await upgradeProxy(CryptoWars.address, CryptoWars, { deployer });
+  // const game = await CryptoWars.deployed();
   const charas = await upgradeProxy(Characters.address, Characters, { deployer });
-  await game.migrateTo_ef994e2(promos.address);
+  // await game.migrateTo_ef994e2(promos.address);
   await charas.migrateTo_ef994e2(promos.address);
 
   const promos_GAME_ADMIN = await promos.GAME_ADMIN();

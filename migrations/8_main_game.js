@@ -1,8 +1,6 @@
 const { deployProxy } = require("@openzeppelin/truffle-upgrades");
-const { deploy } = require("@openzeppelin/truffle-upgrades/dist/utils");
 const assert = require("assert");
 
-const BasicPriceOracle = artifacts.require("BasicPriceOracle");
 const DummyRandoms = artifacts.require("DummyRandoms");
 const ChainlinkRandoms = artifacts.require("ChainlinkRandoms");
 
@@ -11,9 +9,9 @@ const IERC20 = artifacts.require("IERC20");
 const Characters = artifacts.require("Characters");
 const Weapons = artifacts.require("Weapons");
 const CryptoWars = artifacts.require("CryptoWars");
-
+const Blacksmith = artifacts.require("Blacksmith");
+const Promos = artifacts.require("Promos");
 const RaidBasic = artifacts.require("RaidBasic");
-
 const PancakeUtil = artifacts.require("PancakeUtil");
 
 module.exports = async function (deployer, network) {
@@ -48,19 +46,16 @@ module.exports = async function (deployer, network) {
   assert(xBladeToken != null, "Expected xBlade to be set to a contract");
   assert(randoms != null, "Expected random to be set to a contract");
 
-  // const charas = await deployProxy(Characters, [], { deployer });
-  const charas = await Characters.at(
-    "0x86dfbbb4543686770e6ca0446e52c8fa1c7cf970"
-  );
-
-  // const weps = await deployProxy(Weapons, [], { deployer });
-  const weps = await Weapons.at("0xdcb822b8446bbc6ff8e8b507663f13730aab9041");
+  const characters = await deployProxy(Characters, [], { deployer });
+  const weapons = await deployProxy(Weapons, [], { deployer });
+  const promos = await deployProxy(Promos, [], { deployer });
+  // Deploy Blacksmith
+  const blacksmith = await deployProxy(Blacksmith, [weapons.address, randoms.address], { deployer });
 
   // Testnet
-  const pancakeRouter = "0xD99D1c33F9fC3444f8101754aBC46c52416550D1"; // Pancake router address
+  const pancakeRouter = "0x9ac64cc6e4415144c455bd8e4837fea55603e5c3"; // Pancake router address
   const busdAddress = "0x78867bbeef44f2326bf8ddd1941a4439382ef2a7"; // BUSD Address for get price
-  const blackSmith = "0x39a302aa33347d7ea5c3bb67df804cac736b5244";
-  const promos = "0xdc7111146a4b2f215daec7fc26793b66d7e21d4d";
+
 
   await deployer.deploy(PancakeUtil);
   await deployer.link(PancakeUtil, CryptoWars);
@@ -69,13 +64,13 @@ module.exports = async function (deployer, network) {
     CryptoWars,
     [
       xBladeToken.address,
-      charas.address,
-      weps.address,
+      characters.address,
+      weapons.address,
       randoms.address,
       pancakeRouter,
       busdAddress,
-      blackSmith,
-      promos
+      blacksmith.address,
+      promos.address
     ],
     {
       deployer,
@@ -84,11 +79,13 @@ module.exports = async function (deployer, network) {
     }
   );
 
-  const charas_GAME_ADMIN = await charas.GAME_ADMIN();
-  await charas.grantRole(charas_GAME_ADMIN, game.address);
 
-  const weps_GAME_ADMIN = await weps.GAME_ADMIN();
-  await weps.grantRole(weps_GAME_ADMIN, game.address);
+  const characters_GAME_ADMIN = await characters.GAME_ADMIN();
+  await characters.grantRole(characters_GAME_ADMIN, game.address);
+
+  const weapons_GAME_ADMIN = await weapons.GAME_ADMIN();
+  await weapons.grantRole(weapons_GAME_ADMIN, game.address);
+
 
   if (typeof randoms.setMain === "function") {
     await randoms.setMain(game.address);
@@ -99,4 +96,11 @@ module.exports = async function (deployer, network) {
 
   const GAME_ADMIN = await game.GAME_ADMIN();
   await game.grantRole(GAME_ADMIN, raid.address);
+
+
+
+  const GAME = await blacksmith.GAME();
+
+  await blacksmith.grantRole(GAME, game.address);
+
 };

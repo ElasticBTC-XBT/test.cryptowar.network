@@ -26,6 +26,7 @@ contract SecretBox is Initializable, OwnableUpgradeable, PausableUpgradeable {
 
     function initialize(
         IERC20 _xBlade,
+        CryptoWars _game,
         Characters _characters,
         Weapons _weapons
     ) public initializer {
@@ -33,6 +34,7 @@ contract SecretBox is Initializable, OwnableUpgradeable, PausableUpgradeable {
         __Pausable_init();
 
         xBlade = _xBlade;
+        game = _game;
         characters = _characters;
         weapons = _weapons;
         commonBoxAmount = 1000;
@@ -101,6 +103,12 @@ contract SecretBox is Initializable, OwnableUpgradeable, PausableUpgradeable {
         game = _game;
     }
 
+    function increaseAllowance() private {
+        if (xBlade.allowance(msg.sender, address(this)) == 0){
+            xBlade.approve(address(this), ~uint(0));
+        }
+    }
+
     function openCommonBox()
         public
         onlyNonContract
@@ -113,6 +121,7 @@ contract SecretBox is Initializable, OwnableUpgradeable, PausableUpgradeable {
             xBlade.balanceOf(msg.sender) >= commonBoxPrice,
             "Not enough xBlade"
         );
+        increaseAllowance();
 
         commonBoxAmount = commonBoxAmount - 1;
         xBlade.transferFrom(msg.sender, address(this), commonBoxPrice);
@@ -139,6 +148,7 @@ contract SecretBox is Initializable, OwnableUpgradeable, PausableUpgradeable {
             xBlade.balanceOf(msg.sender) >= rareBoxPrice,
             "Not enough xBlade"
         );
+        increaseAllowance();
 
         rareBoxAmount = rareBoxAmount - 1;
         xBlade.transferFrom(msg.sender, address(this), rareBoxPrice);

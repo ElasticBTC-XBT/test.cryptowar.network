@@ -3,13 +3,7 @@
 
     <div v-if="ownCharacters.length === 0" class="blank-slate">
       <div class="current-promotion">
-        <div class="tob-bg-img promotion-decoration">
-          <img class="vertical-decoration bottom" src="../assets/border-element.png">
-        </div>
         <strong class="upper-text">Start earning today!</strong>
-        <div class="bot-bg-img promotion-decoration">
-            <img src="../assets/border-element.png">
-        </div>
       </div>
       <big-button
         class="button"
@@ -237,7 +231,7 @@ export default Vue.extend({
       return fromWeiEther(this.skillBalance);
     },
     canRecruit() {
-      const cost = toBN(this.recruitCost);
+      const cost = toBN(this.recruitCost).div(10**9).toNumber() / 10 ** 9;
       const balance = toBN(this.skillBalance);
       return balance.isGreaterThanOrEqualTo(cost);
     },
@@ -310,6 +304,7 @@ export default Vue.extend({
 .current-promotion {
   width: 40%;
   text-align: center;
+  margin: 32px 0;
 }
 
 @media all and (max-width:  767.98px) {

@@ -5,8 +5,8 @@ const Blacksmith = artifacts.require("Blacksmith");
 const ChainlinkRandoms = artifacts.require("ChainlinkRandoms");
 
 module.exports = async function (deployer, network, accounts) {
-  const game = await upgradeProxy(CryptoWars.address, CryptoWars, { deployer });
-  const blacksmith = await upgradeProxy(Blacksmith.address, Blacksmith, { deployer });
+  const game = await CryptoWars.deployed();
+  const blacksmith = await Blacksmith.deployed();
 
   if (network === 'bsctestnet' || network === 'bsctestnet-fork' || network === 'bscmainnet' || network === 'bscmainnet-fork') {
     let openZeppelinRelayerAddress, linkToken, vrfCoordinator, keyHash, fee;

@@ -6,7 +6,7 @@ const DummyRandoms = artifacts.require("DummyRandoms");
 const ChainlinkRandoms = artifacts.require("ChainlinkRandoms");
 
 module.exports = async function (deployer, network) {
-  const game = await upgradeProxy(CryptoWars.address, CryptoWars, { deployer });
+  const game = await CryptoWars.deployed();
 
   if (network === 'development' || network === 'development-fork') {
     await upgradeProxy(DummyRandoms.address, DummyRandoms, { deployer });

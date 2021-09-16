@@ -42,7 +42,7 @@ type WithOptionalFrom<T extends { from: unknown }> = Omit<T, 'from'> & Partial<P
 export async function approveFeeFromAnyContract<T extends Contract<unknown>>(
   cryptoBladesContract: CryptoWarsAlias,
   feeContract: T,
-  skillToken: Contracts['SkillToken'],
+  skillToken: Contracts['xBladeToken'],
   from: NonNullable<Web3JsCallOptions['from']>,
   skillRewardsAvailable: string,
   callOpts: WithOptionalFrom<Web3JsCallOptions>,
@@ -68,7 +68,7 @@ export async function approveFeeFromAnyContract<T extends Contract<unknown>>(
 
   try {
     feeInSkill = await cryptoBladesContract.methods
-      .getSkillNeededFromUserWallet(from, feeInSkill.toString())
+      .getXBladeNeededFromUserWallet(from, feeInSkill.toString())
       .call(callOptsWithFrom)
       .then(n => new BigNumber(n));
 
@@ -96,7 +96,7 @@ export async function approveFeeFromAnyContract<T extends Contract<unknown>>(
 
 export async function approveFee(
   cryptoBladesContract: CryptoWarsAlias,
-  skillToken: Contracts['SkillToken'],
+  skillToken: Contracts['xBladeToken'],
   from: NonNullable<Web3JsCallOptions['from']>,
   skillRewardsAvailable: string,
   callOpts: WithOptionalFrom<Web3JsCallOptions>,

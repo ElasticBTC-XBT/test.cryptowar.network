@@ -20,7 +20,7 @@ export type StakingContracts = Partial<Record<StakeType, {
 }>>;
 
 export interface Contracts {
-  SkillToken: Contract<IERC20>;
+  xBladeToken: Contract<IERC20>;
   staking: StakingContracts;
 
   CryptoWars?: Contract<CryptoWars>;

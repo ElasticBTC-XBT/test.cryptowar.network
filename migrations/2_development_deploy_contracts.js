@@ -14,9 +14,8 @@ module.exports = async function (deployer, network, accounts) {
     network === "bsctestnet" ||
     network === "bsctestnet-fork"
   ) {
-    // tokens
-    // await deployer.deploy(SkillToken);
-    const token = await xBlade.deployed();
+
+    const token = await xBlade.at("0xEa3B879038b8f5d541F99647E2203cD27Dbc4D29");
 
     await deployer.deploy(ExperimentToken);
     const expToken = await ExperimentToken.deployed();

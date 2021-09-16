@@ -24,11 +24,8 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
         __AccessControl_init_unchained();
 
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
-    }
 
-    function migrateTo_1ee400a() public {
-        require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Not admin");
-
+        characterLimit = 4;
         experienceTable = [
             16, 17, 18, 19, 20, 22, 24, 26, 28, 30, 33, 36, 39, 42, 46, 50, 55, 60, 66
             , 72, 79, 86, 94, 103, 113, 124, 136, 149, 163, 178, 194, 211, 229, 248, 268
@@ -54,6 +51,7 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
         ];
     }
 
+
     function migrateTo_951a020() public {
         require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Not admin");
 
@@ -66,11 +64,6 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
         promos = _promos;
     }
 
-    function migrateTo_b627f23() external {
-        require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Not admin");
-
-        characterLimit = 4;
-    }
 
     /*
         visual numbers start at 0, increment values by 1
