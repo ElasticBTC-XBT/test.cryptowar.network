@@ -14,6 +14,8 @@ const Promos = artifacts.require("Promos");
 const RaidBasic = artifacts.require("RaidBasic");
 const PancakeUtil = artifacts.require("PancakeUtil");
 
+const PancakeUtil = artifacts.require("PancakeUtil");
+
 module.exports = async function (deployer, network) {
   let randoms, xBladeToken;
   if (network === "development" || network === "development-fork") {

@@ -1452,7 +1452,32 @@ export function createStore(web3: Web3) {
 
         await state
           .contracts()
-          .CryptoWars!.methods.mintCharacter()
+          .CryptoWars!.methods.mintCharacterWithBNB()
+          .send(defaultCallOptions(state));
+
+        await Promise.all([
+          dispatch('fetchFightRewardSkill'),
+          dispatch('fetchFightRewardXp'),
+          dispatch('setupCharacterStaminas')
+        ]);
+      },
+
+      async mintCharacterWithBNB({ state, dispatch }) {
+        if (featureFlagStakeOnly || !state.defaultAccount) return;
+
+        await approveFee(
+          state.contracts().CryptoWars!,
+          state.contracts().SkillToken,
+          state.defaultAccount,
+          state.skillRewards,
+          defaultCallOptions(state),
+          defaultCallOptions(state),
+          cryptoBladesMethods => cryptoBladesMethods.mintCharacterFee()
+        );
+
+        await state
+          .contracts()
+          .CryptoWars!.methods.mintCharacterWithBNB()
           .send(defaultCallOptions(state));
 
         await Promise.all([

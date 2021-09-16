@@ -161,44 +161,20 @@
             "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
           },
           {
-            "contract": "OwnableUpgradeable",
-            "label": "_owner",
-            "type": "t_address",
-            "src": "../@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:20"
+            "contract": "AccessControlUpgradeable",
+            "label": "_roles",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)20051_storage)",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
           },
           {
-            "contract": "OwnableUpgradeable",
+            "contract": "AccessControlUpgradeable",
             "label": "__gap",
             "type": "t_array(t_uint256)49_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:74"
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:225"
           },
           {
-            "contract": "RewardsDistributionRecipientUpgradeable",
-            "label": "rewardsDistribution",
-            "type": "t_address",
-            "src": "staking/RewardsDistributionRecipientUpgradeable.sol:9"
-          },
-          {
-            "contract": "ReentrancyGuardUpgradeable",
-            "label": "_status",
-            "type": "t_uint256",
-            "src": "../@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:37"
-          },
-          {
-            "contract": "ReentrancyGuardUpgradeable",
-            "label": "__gap",
-            "type": "t_array(t_uint256)49_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:67"
-          },
-          {
-            "contract": "FailsafeUpgradeable",
-            "label": "failsafeModeActive",
-            "type": "t_bool",
-            "src": "staking/FailsafeUpgradeable.sol:7"
-          },
-          {
-            "contract": "PausableUpgradeable",
-            "label": "_paused",
+            "contract": "BasicPriceOracle",
+            "label": "priceSet",
             "type": "t_bool",
             "src": "../@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:28"
           },
@@ -293,10 +269,10 @@
             "src": "staking/StakingRewardsUpgradeable.sol:48"
           },
           {
-            "contract": "StakingRewardsUpgradeable",
-            "label": "minimumStakeAmount",
+            "contract": "BasicPriceOracle",
+            "label": "currentPrice_",
             "type": "t_uint256",
-            "src": "staking/StakingRewardsUpgradeable.sol:50"
+            "src": "BasicPriceOracle.sol:11"
           }
         ],
         "types": {
@@ -306,17 +282,42 @@
           "t_uint256": {
             "label": "uint256"
           },
-          "t_mapping(t_address,t_uint256)": {
-            "label": "mapping(address => uint256)"
+          "t_mapping(t_bytes32,t_struct(RoleData)20051_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
           },
-          "t_address": {
-            "label": "address"
+          "t_bytes32": {
+            "label": "bytes32"
           },
           "t_contract(CryptoWars)5034": {
             "label": "contract CryptoWars"
           },
-          "t_bool": {
-            "label": "bool"
+          "t_struct(AddressSet)23919_storage": {
+            "label": "struct EnumerableSetUpgradeable.AddressSet",
+            "members": [
+              {
+                "label": "_inner",
+                "type": "t_struct(Set)23654_storage"
+              }
+            ]
+          },
+          "t_struct(Set)23654_storage": {
+            "label": "struct EnumerableSetUpgradeable.Set",
+            "members": [
+              {
+                "label": "_values",
+                "type": "t_array(t_bytes32)dyn_storage"
+              },
+              {
+                "label": "_indexes",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              }
+            ]
+          },
+          "t_array(t_bytes32)dyn_storage": {
+            "label": "bytes32[]"
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)"
           },
           "t_array(t_uint256)49_storage": {
             "label": "uint256[49]"
@@ -351,40 +352,16 @@
             "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
           },
           {
-            "contract": "OwnableUpgradeable",
-            "label": "_owner",
-            "type": "t_address",
-            "src": "../@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:20"
+            "contract": "AccessControlUpgradeable",
+            "label": "_roles",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)20117_storage)",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
           },
           {
-            "contract": "OwnableUpgradeable",
+            "contract": "AccessControlUpgradeable",
             "label": "__gap",
             "type": "t_array(t_uint256)49_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:74"
-          },
-          {
-            "contract": "RewardsDistributionRecipientUpgradeable",
-            "label": "rewardsDistribution",
-            "type": "t_address",
-            "src": "staking/RewardsDistributionRecipientUpgradeable.sol:9"
-          },
-          {
-            "contract": "ReentrancyGuardUpgradeable",
-            "label": "_status",
-            "type": "t_uint256",
-            "src": "../@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:37"
-          },
-          {
-            "contract": "ReentrancyGuardUpgradeable",
-            "label": "__gap",
-            "type": "t_array(t_uint256)49_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:67"
-          },
-          {
-            "contract": "FailsafeUpgradeable",
-            "label": "failsafeModeActive",
-            "type": "t_bool",
-            "src": "staking/FailsafeUpgradeable.sol:7"
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:225"
           },
           {
             "contract": "PausableUpgradeable",
@@ -411,70 +388,70 @@
             "src": "staking/StakingRewardsUpgradeable.sol:32"
           },
           {
-            "contract": "StakingRewardsUpgradeable",
-            "label": "periodFinish",
+            "contract": "CryptoWars",
+            "label": "xBlade",
+            "type": "t_contract(IERC20)25991",
+            "src": "CryptoWars.sol:41"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "randoms",
+            "type": "t_contract(IRandoms)10435",
+            "src": "CryptoWars.sol:42"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "pancakeRouter",
+            "type": "t_contract(IPancakeRouter02)10399",
+            "src": "CryptoWars.sol:43"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "minimumFightTax",
             "type": "t_uint256",
-            "src": "staking/StakingRewardsUpgradeable.sol:33"
+            "src": "CryptoWars.sol:44"
           },
           {
-            "contract": "StakingRewardsUpgradeable",
-            "label": "rewardRate",
-            "type": "t_uint256",
-            "src": "staking/StakingRewardsUpgradeable.sol:34"
+            "contract": "CryptoWars",
+            "label": "supportFeeRate",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:45"
           },
           {
-            "contract": "StakingRewardsUpgradeable",
-            "label": "rewardsDuration",
-            "type": "t_uint256",
-            "src": "staking/StakingRewardsUpgradeable.sol:35"
+            "contract": "CryptoWars",
+            "label": "staminaCostFight",
+            "type": "t_uint8",
+            "src": "CryptoWars.sol:116"
           },
           {
-            "contract": "StakingRewardsUpgradeable",
-            "label": "minimumStakeTime",
-            "type": "t_uint256",
-            "src": "staking/StakingRewardsUpgradeable.sol:36"
+            "contract": "CryptoWars",
+            "label": "mintCharacterFee",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:119"
           },
           {
-            "contract": "StakingRewardsUpgradeable",
-            "label": "lastUpdateTime",
-            "type": "t_uint256",
-            "src": "staking/StakingRewardsUpgradeable.sol:37"
+            "contract": "CryptoWars",
+            "label": "refillStaminaFee",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:122"
           },
           {
-            "contract": "StakingRewardsUpgradeable",
-            "label": "rewardPerTokenStored",
-            "type": "t_uint256",
-            "src": "staking/StakingRewardsUpgradeable.sol:38"
+            "contract": "CryptoWars",
+            "label": "fightRewardBaseline",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:125"
           },
           {
-            "contract": "StakingRewardsUpgradeable",
-            "label": "userRewardPerTokenPaid",
-            "type": "t_mapping(t_address,t_uint256)",
-            "src": "staking/StakingRewardsUpgradeable.sol:40"
+            "contract": "CryptoWars",
+            "label": "mintWeaponFee",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:128"
           },
           {
-            "contract": "StakingRewardsUpgradeable",
-            "label": "rewards",
-            "type": "t_mapping(t_address,t_uint256)",
-            "src": "staking/StakingRewardsUpgradeable.sol:41"
-          },
-          {
-            "contract": "StakingRewardsUpgradeable",
-            "label": "_totalSupply",
-            "type": "t_uint256",
-            "src": "staking/StakingRewardsUpgradeable.sol:43"
-          },
-          {
-            "contract": "StakingRewardsUpgradeable",
-            "label": "_balances",
-            "type": "t_mapping(t_address,t_uint256)",
-            "src": "staking/StakingRewardsUpgradeable.sol:44"
-          },
-          {
-            "contract": "StakingRewardsUpgradeable",
-            "label": "_stakeTimestamp",
-            "type": "t_mapping(t_address,t_uint256)",
-            "src": "staking/StakingRewardsUpgradeable.sol:45"
+            "contract": "CryptoWars",
+            "label": "reforgeWeaponFee",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:129"
           },
           {
             "contract": "StakingRewardsUpgradeable",
@@ -493,23 +470,38 @@
           "t_contract(IERC20)27037": {
             "label": "contract IERC20"
           },
-          "t_uint256": {
-            "label": "uint256"
+          {
+            "contract": "CryptoWars",
+            "label": "fightXpGain",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:135"
           },
-          "t_mapping(t_address,t_uint256)": {
-            "label": "mapping(address => uint256)"
+          {
+            "contract": "CryptoWars",
+            "label": "tokenRewards",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "CryptoWars.sol:137"
           },
-          "t_address": {
-            "label": "address"
+          {
+            "contract": "CryptoWars",
+            "label": "xpRewards",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "CryptoWars.sol:138"
           },
           "t_contract(CryptoWars)5034": {
             "label": "contract CryptoWars"
           },
-          "t_bool": {
-            "label": "bool"
+          {
+            "contract": "CryptoWars",
+            "label": "fightTraitBonus",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:141"
           },
-          "t_array(t_uint256)49_storage": {
-            "label": "uint256[49]"
+          {
+            "contract": "CryptoWars",
+            "label": "inGameOnlyFunds",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "CryptoWars.sol:143"
           },
           "t_array(t_uint256)50_storage": {
             "label": "uint256[50]"
@@ -541,13 +533,13 @@
             "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
           },
           {
-            "contract": "ERC165Upgradeable",
-            "label": "_supportedInterfaces",
-            "type": "t_mapping(t_bytes4,t_bool)",
-            "src": "../@openzeppelin/contracts-upgradeable/introspection/ERC165Upgradeable.sol:23"
+            "contract": "AccessControlUpgradeable",
+            "label": "_roles",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)20117_storage)",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
           },
           {
-            "contract": "ERC165Upgradeable",
+            "contract": "AccessControlUpgradeable",
             "label": "__gap",
             "type": "t_array(t_uint256)49_storage",
             "src": "../@openzeppelin/contracts-upgradeable/introspection/ERC165Upgradeable.sol:59"
@@ -565,46 +557,46 @@
             "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:37"
           },
           {
-            "contract": "ERC721Upgradeable",
-            "label": "_tokenApprovals",
-            "type": "t_mapping(t_uint256,t_address)",
-            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:40"
-          },
-          {
-            "contract": "ERC721Upgradeable",
-            "label": "_operatorApprovals",
-            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
-            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:43"
-          },
-          {
-            "contract": "ERC721Upgradeable",
-            "label": "_name",
-            "type": "t_string_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:46"
-          },
-          {
-            "contract": "ERC721Upgradeable",
-            "label": "_symbol",
-            "type": "t_string_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:49"
-          },
-          {
-            "contract": "ERC721Upgradeable",
-            "label": "_tokenURIs",
-            "type": "t_mapping(t_uint256,t_string_storage)",
-            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:52"
-          },
-          {
-            "contract": "ERC721Upgradeable",
-            "label": "_baseURI",
-            "type": "t_string_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:55"
-          },
-          {
-            "contract": "ERC721Upgradeable",
+            "contract": "PausableUpgradeable",
             "label": "__gap",
-            "type": "t_array(t_uint256)41_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:485"
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:96"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "characters",
+            "type": "t_contract(Characters)9698",
+            "src": "CryptoWars.sol:39"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "weapons",
+            "type": "t_contract(Weapons)18751",
+            "src": "CryptoWars.sol:40"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "xBlade",
+            "type": "t_contract(IERC20)25991",
+            "src": "CryptoWars.sol:41"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "randoms",
+            "type": "t_contract(IRandoms)10435",
+            "src": "CryptoWars.sol:42"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "pancakeRouter",
+            "type": "t_contract(IPancakeRouter02)10399",
+            "src": "CryptoWars.sol:43"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "minimumFightTax",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:44"
           },
           {
             "contract": "AccessControlUpgradeable",
@@ -613,10 +605,10 @@
             "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
           },
           {
-            "contract": "AccessControlUpgradeable",
-            "label": "__gap",
-            "type": "t_array(t_uint256)49_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:225"
+            "contract": "CryptoWars",
+            "label": "staminaCostFight",
+            "type": "t_uint8",
+            "src": "CryptoWars.sol:116"
           },
           {
             "contract": "Characters",
@@ -649,8 +641,8 @@
             "src": "characters.sol:95"
           },
           {
-            "contract": "Characters",
-            "label": "lastMintedBlock",
+            "contract": "CryptoWars",
+            "label": "nonce",
             "type": "t_uint256",
             "src": "characters.sol:97"
           },
@@ -661,8 +653,8 @@
             "src": "characters.sol:98"
           },
           {
-            "contract": "Characters",
-            "label": "characterLimit",
+            "contract": "CryptoWars",
+            "label": "fightXpGain",
             "type": "t_uint256",
             "src": "characters.sol:100"
           }
@@ -692,14 +684,23 @@
               }
             ]
           },
-          "t_uint16": {
-            "label": "uint16"
+          {
+            "contract": "CryptoWars",
+            "label": "xpRewards",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "CryptoWars.sol:138"
           },
-          "t_uint8": {
-            "label": "uint8"
+          {
+            "contract": "CryptoWars",
+            "label": "oneFrac",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:140"
           },
-          "t_uint64": {
-            "label": "uint64"
+          {
+            "contract": "CryptoWars",
+            "label": "fightTraitBonus",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:141"
           },
           "t_array(t_struct(CharacterCosmetics)9794_storage)dyn_storage": {
             "label": "struct Characters.CharacterCosmetics[]"
@@ -720,8 +721,17 @@
           "t_uint256": {
             "label": "uint256"
           },
-          "t_array(t_uint256)256_storage": {
-            "label": "uint256[256]"
+          "t_int128": {
+            "label": "int128"
+          },
+          "t_uint8": {
+            "label": "uint8"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_address": {
+            "label": "address"
           },
           "t_mapping(t_uint256,t_uint256)": {
             "label": "mapping(uint256 => uint256)"
@@ -889,16 +899,16 @@
             "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
           },
           {
-            "contract": "ERC165Upgradeable",
-            "label": "_supportedInterfaces",
-            "type": "t_mapping(t_bytes4,t_bool)",
-            "src": "../@openzeppelin/contracts-upgradeable/introspection/ERC165Upgradeable.sol:23"
+            "contract": "AccessControlUpgradeable",
+            "label": "_roles",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)20117_storage)",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
           },
           {
-            "contract": "ERC165Upgradeable",
+            "contract": "AccessControlUpgradeable",
             "label": "__gap",
             "type": "t_array(t_uint256)49_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/introspection/ERC165Upgradeable.sol:59"
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:225"
           },
           {
             "contract": "ERC721Upgradeable",
@@ -913,46 +923,46 @@
             "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:37"
           },
           {
-            "contract": "ERC721Upgradeable",
-            "label": "_tokenApprovals",
-            "type": "t_mapping(t_uint256,t_address)",
-            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:40"
+            "contract": "CryptoWars",
+            "label": "characters",
+            "type": "t_contract(Characters)9698",
+            "src": "CryptoWars.sol:39"
           },
           {
-            "contract": "ERC721Upgradeable",
-            "label": "_operatorApprovals",
-            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
-            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:43"
+            "contract": "CryptoWars",
+            "label": "weapons",
+            "type": "t_contract(Weapons)18751",
+            "src": "CryptoWars.sol:40"
           },
           {
-            "contract": "ERC721Upgradeable",
-            "label": "_name",
-            "type": "t_string_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:46"
+            "contract": "CryptoWars",
+            "label": "xBlade",
+            "type": "t_contract(IERC20)25991",
+            "src": "CryptoWars.sol:41"
           },
           {
-            "contract": "ERC721Upgradeable",
-            "label": "_symbol",
-            "type": "t_string_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:49"
+            "contract": "CryptoWars",
+            "label": "randoms",
+            "type": "t_contract(IRandoms)10435",
+            "src": "CryptoWars.sol:42"
           },
           {
-            "contract": "ERC721Upgradeable",
-            "label": "_tokenURIs",
-            "type": "t_mapping(t_uint256,t_string_storage)",
-            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:52"
+            "contract": "CryptoWars",
+            "label": "pancakeRouter",
+            "type": "t_contract(IPancakeRouter02)10399",
+            "src": "CryptoWars.sol:43"
           },
           {
-            "contract": "ERC721Upgradeable",
-            "label": "_baseURI",
-            "type": "t_string_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:55"
+            "contract": "CryptoWars",
+            "label": "minimumFightTax",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:44"
           },
           {
-            "contract": "ERC721Upgradeable",
-            "label": "__gap",
-            "type": "t_array(t_uint256)41_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:485"
+            "contract": "CryptoWars",
+            "label": "supportFeeRate",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:45"
           },
           {
             "contract": "AccessControlUpgradeable",
@@ -961,10 +971,10 @@
             "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
           },
           {
-            "contract": "AccessControlUpgradeable",
-            "label": "__gap",
-            "type": "t_array(t_uint256)49_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:225"
+            "contract": "CryptoWars",
+            "label": "mintCharacterFee",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:119"
           },
           {
             "contract": "Weapons",
@@ -991,8 +1001,8 @@
             "src": "weapons.sol:92"
           },
           {
-            "contract": "Weapons",
-            "label": "lowStarBurnPowerPerPoint",
+            "contract": "CryptoWars",
+            "label": "nonce",
             "type": "t_uint256",
             "src": "weapons.sol:93"
           },
@@ -1003,8 +1013,8 @@
             "src": "weapons.sol:94"
           },
           {
-            "contract": "Weapons",
-            "label": "fiveStarBurnPowerPerPoint",
+            "contract": "CryptoWars",
+            "label": "fightXpGain",
             "type": "t_uint256",
             "src": "weapons.sol:95"
           },
@@ -1021,20 +1031,20 @@
             "src": "weapons.sol:98"
           },
           {
-            "contract": "Weapons",
-            "label": "powerMultPerPointPWR",
+            "contract": "CryptoWars",
+            "label": "oneFrac",
             "type": "t_int128",
             "src": "weapons.sol:99"
           },
           {
-            "contract": "Weapons",
-            "label": "powerMultPerPointMatching",
+            "contract": "CryptoWars",
+            "label": "fightTraitBonus",
             "type": "t_int128",
             "src": "weapons.sol:100"
           },
           {
-            "contract": "Weapons",
-            "label": "lastMintedBlock",
+            "contract": "CryptoWars",
+            "label": "totalInGameOnlyFunds",
             "type": "t_uint256",
             "src": "weapons.sol:103"
           },
@@ -1095,8 +1105,8 @@
           "t_uint16": {
             "label": "uint16"
           },
-          "t_uint8": {
-            "label": "uint8"
+          "t_contract(IERC20)25991": {
+            "label": "contract IERC20"
           },
           "t_array(t_struct(WeaponCosmetics)17013_storage)dyn_storage": {
             "label": "struct Weapons.WeaponCosmetics[]"
@@ -1396,14 +1406,8 @@
           "t_mapping(t_bytes32,t_uint256)": {
             "label": "mapping(bytes32 => uint256)"
           },
-          "t_array(t_uint256)49_storage": {
-            "label": "uint256[49]"
-          },
           "t_array(t_uint256)50_storage": {
             "label": "uint256[50]"
-          },
-          "t_bool": {
-            "label": "bool"
           }
         }
       }
@@ -1997,8 +2001,11 @@
           "t_array(t_uint256)dyn_storage": {
             "label": "uint256[]"
           },
-          "t_uint256": {
-            "label": "uint256"
+          {
+            "contract": "CryptoWars",
+            "label": "weapons",
+            "type": "t_contract(Weapons)18751",
+            "src": "CryptoWars.sol:40"
           },
           "t_uint8": {
             "label": "uint8"
@@ -2060,22 +2067,22 @@
       "layout": {
         "storage": [
           {
-            "contract": "Initializable",
-            "label": "_initialized",
-            "type": "t_bool",
-            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:25"
+            "contract": "CryptoWars",
+            "label": "reforgeWeaponFee",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:129"
           },
           {
-            "contract": "Initializable",
-            "label": "_initializing",
-            "type": "t_bool",
-            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:30"
+            "contract": "CryptoWars",
+            "label": "nonce",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:131"
           },
           {
-            "contract": "ContextUpgradeable",
-            "label": "__gap",
-            "type": "t_array(t_uint256)50_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
+            "contract": "CryptoWars",
+            "label": "lastBlockNumberCalled",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "CryptoWars.sol:133"
           },
           {
             "contract": "OwnableUpgradeable",
@@ -2160,8 +2167,8 @@
           "t_mapping(t_address,t_uint256)": {
             "label": "mapping(address => uint256)"
           },
-          "t_address": {
-            "label": "address"
+          "t_contract(IPancakeRouter02)10399": {
+            "label": "contract IPancakeRouter02"
           },
           "t_uint256": {
             "label": "uint256"
@@ -2825,16 +2832,16 @@
             "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
           },
           {
-            "contract": "ERC165Upgradeable",
-            "label": "_supportedInterfaces",
-            "type": "t_mapping(t_bytes4,t_bool)",
-            "src": "../@openzeppelin/contracts-upgradeable/introspection/ERC165Upgradeable.sol:23"
+            "contract": "AccessControlUpgradeable",
+            "label": "_roles",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)20117_storage)",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
           },
           {
-            "contract": "ERC165Upgradeable",
+            "contract": "AccessControlUpgradeable",
             "label": "__gap",
             "type": "t_array(t_uint256)49_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/introspection/ERC165Upgradeable.sol:59"
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:225"
           },
           {
             "contract": "ERC721Upgradeable",
@@ -2849,46 +2856,46 @@
             "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:37"
           },
           {
-            "contract": "ERC721Upgradeable",
-            "label": "_tokenApprovals",
-            "type": "t_mapping(t_uint256,t_address)",
-            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:40"
+            "contract": "CryptoWars",
+            "label": "characters",
+            "type": "t_contract(Characters)9698",
+            "src": "CryptoWars.sol:39"
           },
           {
-            "contract": "ERC721Upgradeable",
-            "label": "_operatorApprovals",
-            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
-            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:43"
+            "contract": "CryptoWars",
+            "label": "weapons",
+            "type": "t_contract(Weapons)18751",
+            "src": "CryptoWars.sol:40"
           },
           {
-            "contract": "ERC721Upgradeable",
-            "label": "_name",
-            "type": "t_string_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:46"
+            "contract": "CryptoWars",
+            "label": "xBlade",
+            "type": "t_contract(IERC20)25991",
+            "src": "CryptoWars.sol:41"
           },
           {
-            "contract": "ERC721Upgradeable",
-            "label": "_symbol",
-            "type": "t_string_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:49"
+            "contract": "CryptoWars",
+            "label": "randoms",
+            "type": "t_contract(IRandoms)10435",
+            "src": "CryptoWars.sol:42"
           },
           {
-            "contract": "ERC721Upgradeable",
-            "label": "_tokenURIs",
-            "type": "t_mapping(t_uint256,t_string_storage)",
-            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:52"
+            "contract": "CryptoWars",
+            "label": "pancakeRouter",
+            "type": "t_contract(IPancakeRouter02)10399",
+            "src": "CryptoWars.sol:43"
           },
           {
-            "contract": "ERC721Upgradeable",
-            "label": "_baseURI",
-            "type": "t_string_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:55"
+            "contract": "CryptoWars",
+            "label": "minimumFightTax",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:44"
           },
           {
-            "contract": "ERC721Upgradeable",
-            "label": "__gap",
-            "type": "t_array(t_uint256)41_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:485"
+            "contract": "CryptoWars",
+            "label": "supportFeeRate",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:45"
           },
           {
             "contract": "AccessControlUpgradeable",
@@ -2897,10 +2904,10 @@
             "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
           },
           {
-            "contract": "AccessControlUpgradeable",
-            "label": "__gap",
-            "type": "t_array(t_uint256)49_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:225"
+            "contract": "CryptoWars",
+            "label": "mintCharacterFee",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:119"
           },
           {
             "contract": "Weapons",
@@ -3028,8 +3035,8 @@
               }
             ]
           },
-          "t_uint16": {
-            "label": "uint16"
+          "t_contract(Weapons)18751": {
+            "label": "contract Weapons"
           },
           "t_uint8": {
             "label": "uint8"
@@ -3076,11 +3083,17 @@
           "t_int128": {
             "label": "int128"
           },
-          "t_mapping(t_uint256,t_uint64)": {
-            "label": "mapping(uint256 => uint64)"
+          "t_uint8": {
+            "label": "uint8"
           },
-          "t_uint64": {
-            "label": "uint64"
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)"
           },
           "t_mapping(t_address,t_uint256)": {
             "label": "mapping(address => uint256)"
@@ -3456,8 +3469,11 @@
           "t_contract(IPancakeRouter02)11384": {
             "label": "contract IPancakeRouter02"
           },
-          "t_uint256": {
-            "label": "uint256"
+          {
+            "contract": "CryptoWars",
+            "label": "pancakeRouter",
+            "type": "t_contract(IPancakeRouter02)10399",
+            "src": "CryptoWars.sol:43"
           },
           "t_uint8": {
             "label": "uint8"
@@ -3468,8 +3484,11 @@
           "t_mapping(t_address,t_uint256)": {
             "label": "mapping(address => uint256)"
           },
-          "t_address": {
-            "label": "address"
+          {
+            "contract": "CryptoWars",
+            "label": "staminaCostFight",
+            "type": "t_uint8",
+            "src": "CryptoWars.sol:116"
           },
           "t_mapping(t_uint256,t_uint256)": {
             "label": "mapping(uint256 => uint256)"
@@ -3483,8 +3502,11 @@
           "t_contract(Blacksmith)853": {
             "label": "contract Blacksmith"
           },
-          "t_bool": {
-            "label": "bool"
+          {
+            "contract": "CryptoWars",
+            "label": "refillStaminaFee",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:122"
           },
           "t_array(t_uint256)49_storage": {
             "label": "uint256[49]"
@@ -3530,11 +3552,17 @@
               }
             ]
           },
-          "t_array(t_bytes32)dyn_storage": {
-            "label": "bytes32[]"
+          {
+            "contract": "CryptoWars",
+            "label": "lastBlockNumberCalled",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "CryptoWars.sol:133"
           },
-          "t_mapping(t_bytes32,t_uint256)": {
-            "label": "mapping(bytes32 => uint256)"
+          {
+            "contract": "CryptoWars",
+            "label": "fightXpGain",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:135"
           },
           "t_array(t_uint256)50_storage": {
             "label": "uint256[50]"
@@ -3548,22 +3576,22 @@
       "layout": {
         "storage": [
           {
-            "contract": "Initializable",
-            "label": "_initialized",
-            "type": "t_bool",
-            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:25"
+            "contract": "CryptoWars",
+            "label": "xpRewards",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "CryptoWars.sol:138"
           },
           {
-            "contract": "Initializable",
-            "label": "_initializing",
-            "type": "t_bool",
-            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:30"
+            "contract": "CryptoWars",
+            "label": "oneFrac",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:140"
           },
           {
-            "contract": "ContextUpgradeable",
-            "label": "__gap",
-            "type": "t_array(t_uint256)50_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
+            "contract": "CryptoWars",
+            "label": "fightTraitBonus",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:141"
           },
           {
             "contract": "AccessControlUpgradeable",
@@ -3572,10 +3600,10 @@
             "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
           },
           {
-            "contract": "AccessControlUpgradeable",
-            "label": "__gap",
-            "type": "t_array(t_uint256)49_storage",
-            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:225"
+            "contract": "CryptoWars",
+            "label": "totalInGameOnlyFunds",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:144"
           },
           {
             "contract": "PausableUpgradeable",
