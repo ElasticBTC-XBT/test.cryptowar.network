@@ -18,6 +18,7 @@
       <div class="trait">
         <span :class="weapon.element.toLowerCase() + '-icon'"></span>
         <b-icon v-if="favorite" class="favorite-star" icon="star-fill" variant="warning" />
+        {{Array(this.weapon.stars + 1).fill('★').join('')}}
       </div>
 
       <div class="name">
@@ -204,13 +205,13 @@ export default {
 <style scoped>
 .small-durability-bar {
   position: relative;
-  top: -5px;
-  height: 10px;
+  top: 20px;
+  height: 12px;
   width: 80%;
   margin: 0 auto;
-  border-radius: 2px;
-  border: 0.5px solid rgb(216, 215, 215);
-  background : linear-gradient(to right, rgb(236, 75, 75) var(--durabilityReady), rgba(255, 255, 255, 0.1) 0);
+  border-radius: 4px;
+  border: 2px solid rgb(252, 252, 252);
+  background : linear-gradient(to right, rgb(142, 30, 165) var(--durabilityReady), rgba(255, 255, 255, 0.1) 0);
 }
 
 .weapon-icon {
@@ -272,10 +273,10 @@ export default {
 .placeholder {
   max-width: 180px;
   max-height: 180px;
-  margin-left: 10px;
-  margin-top: 5px;
+  margin-left: 16px;
+  margin-top: 32px;
 
-  transform: scale(0.7);
+  transform: scale(0.8);
 }
 
 .name {
@@ -321,37 +322,37 @@ export default {
 
 @keyframes glow-1 {
   0% {
-    box-shadow: inset 0 0 10px rgba(0, 162, 255, 0.5);
+    box-shadow: inset 0 0 10px rgba(9, 163, 252, 1);
   }
   100% {
-    box-shadow: inset 0 0 15px rgba(0, 162, 255, 0.5);
+    box-shadow: inset 0 0 20px rgba(27, 162, 240, 1);
   }
 }
 
 @keyframes glow-2 {
   0% {
-    box-shadow: inset 0 0 10px rgba(125, 0, 125, 0.5);
+    box-shadow: inset 0 0 10px rgba(157, 250, 8, 0.8);
   }
   100% {
-    box-shadow: inset 0 0 20px rgba(125, 0, 125, 0.5);
+    box-shadow: inset 0 0 20px rgba(157, 250, 8, 0.8);
   }
 }
 
 @keyframes glow-3 {
   0% {
-    box-shadow: inset 0 0 10px rgba(255, 102, 0, 0.3);
+    box-shadow: inset 0 0 10px rgba(255, 148, 61, 1);
   }
   100% {
-    box-shadow: inset 0 0 25px rgba(255, 102, 0, 0.3);
+    box-shadow: inset 0 0 30px rgb(238, 95, 0);
   }
 }
 
 @keyframes glow-4 {
   0% {
-    box-shadow: inset 0 0 10px rgba(125, 0, 0, 0.5);
+    box-shadow: inset 0 0 10px rgba(197, 77, 233, 1);
   }
   100% {
-    box-shadow: inset 0 0 30px rgba(125, 0, 0, 0.5);
+    box-shadow: inset 0 0 30px rgba(197, 77, 233, 1);
   }
 }
 </style>

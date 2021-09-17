@@ -397,25 +397,25 @@ export default Vue.extend({
   display: grid;
   padding: 0.5em;
   grid-template-columns: repeat(auto-fit, 14em);
-  gap: 0.5em;
+  gap: 2em;
 }
 
 .weapon {
-  width: 12em;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 5px;
+  width: 14em;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
 }
 
 .weapon.selected {
-  outline: solid currentcolor 2px;
+  box-shadow: inset 0 0 20px rgb(255, 255, 255);
 }
 
 .weapon-icon-wrapper {
-  width: 12em;
-  height: 12em;
+  width: 14em;
+  height: 18em;
 }
 
 .above-wrapper {
