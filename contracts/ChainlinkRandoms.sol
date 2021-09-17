@@ -63,8 +63,8 @@ contract ChainlinkRandoms is IRandoms, Pausable, AccessControl, VRFConsumerBase 
 
         // the user-provided seed is not necessary, as per the docs
         // hence we set it to an arbitrary constant
-        requestRandomness(keyHash, fee, VRF_MAGIC_SEED);
-        // requestRandomness(keyHash, fee);
+        // requestRandomness(keyHash, fee, VRF_MAGIC_SEED);
+        requestRandomness(keyHash, fee);
     }
 
     function pause() external onlyOwner {
