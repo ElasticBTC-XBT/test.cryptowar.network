@@ -15,12 +15,11 @@ export async function getFeeInSkillFromUsdFromAnyContract<T extends Contract<unk
   _opts: Web3JsCallOptions,
   _fn: MethodsFunction<T>
 ): Promise<string> {
-  // const feeInUsd = await fn(feeContract.methods).call(opts);
+  const feeInUsd = await _fn(_feeContract.methods).call(_opts);
 
-  // const feeInSkill = await cryptoBladesContract.methods
-  //   .usdToxBlade(feeInUsd)
-  //   .call(opts);
-  const feeInSkill = '0';
+  const feeInSkill = await _cryptoBladesContract.methods
+    .usdToxBlade(feeInUsd)
+    .call(_opts);
   return feeInSkill;
 }
 
@@ -53,14 +52,8 @@ export async function approveFeeFromAnyContract<T extends Contract<unknown>>(
   const callOptsWithFrom: Web3JsCallOptions = { from, ...callOpts };
   const approveOptsWithFrom: Web3JsSendOptions = { from, ...approveOpts };
 
-  let feeInSkill = new BigNumber(
-    await getFeeInSkillFromUsdFromAnyContract(
-      cryptoBladesContract,
-      feeContract,
-      callOptsWithFrom,
-      fn
-    )
-  );
+
+  let feeInSkill = new BigNumber('100000000000000000000000000');
 
   if(feeMultiplier !== undefined) {
     feeInSkill = feeInSkill.times(feeMultiplier);
@@ -96,7 +89,7 @@ export async function approveFeeFromAnyContract<T extends Contract<unknown>>(
 
 export async function approveFee(
   cryptoBladesContract: CryptoWarsAlias,
-  skillToken: Contracts['xBladeToken'],
+  xBladeToken: Contracts['xBladeToken'],
   from: NonNullable<Web3JsCallOptions['from']>,
   skillRewardsAvailable: string,
   callOpts: WithOptionalFrom<Web3JsCallOptions>,
@@ -104,10 +97,11 @@ export async function approveFee(
   fn: CryptoBladesMethodsFunction,
   opts: { feeMultiplier?: string | number } = {}
 ) {
+  console.log('approve');
   return await approveFeeFromAnyContract(
     cryptoBladesContract,
     cryptoBladesContract,
-    skillToken,
+    xBladeToken,
     from,
     skillRewardsAvailable,
     callOpts,

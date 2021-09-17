@@ -258,7 +258,7 @@ export function createStore(web3: Web3) {
         };
       },
       getExchangeUrl() {
-        return process.env.VUE_APP_EXCHANGE_URL || 'https://pancake.kiemtienonline360.com/#/swap?outputCurrency=0xEa3B879038b8f5d541F99647E2203cD27Dbc4D29';
+        return process.env.VUE_APP_EXCHANGE_URL || 'https://pancake.kiemtienonline360.com/#/swap?outputCurrency=0x28ad774C41c229D48a441B280cBf7b5c5F1FED2B';
       },
 
       ownCharacters(state, getters) {
@@ -1412,14 +1412,14 @@ export function createStore(web3: Web3) {
           commit('updateCharacterRename', { characterId, renameString });
         }
       },
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       async mintCharacter({ state, dispatch }) {
         if (featureFlagStakeOnly || !state.defaultAccount) return;
-
         await approveFee(
           state.contracts().CryptoWars!,
           state.contracts().xBladeToken,
           state.defaultAccount,
-          state.skillRewards,
+          web3.utils.toWei('100000000', 'ether'),
           defaultCallOptions(state),
           defaultCallOptions(state),
           cryptoBladesMethods => cryptoBladesMethods.mintCharacterFee()

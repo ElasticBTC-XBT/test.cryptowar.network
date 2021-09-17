@@ -14,8 +14,6 @@ const Promos = artifacts.require("Promos");
 const RaidBasic = artifacts.require("RaidBasic");
 const PancakeUtil = artifacts.require("PancakeUtil");
 
-const PancakeUtil = artifacts.require("PancakeUtil");
-
 module.exports = async function (deployer, network) {
   let randoms, xBladeToken;
   if (network === "development" || network === "development-fork") {
@@ -38,7 +36,7 @@ module.exports = async function (deployer, network) {
     );
     randoms = await ChainlinkRandoms.deployed();
 
-    xBladeToken = await IERC20.at("0xEa3B879038b8f5d541F99647E2203cD27Dbc4D29");
+    xBladeToken = await IERC20.at("0x28ad774C41c229D48a441B280cBf7b5c5F1FED2B");
   } else if (network === "bscmainnet" || network === "bscmainnet-fork") {
     randoms = await ChainlinkRandoms.deployed();
 

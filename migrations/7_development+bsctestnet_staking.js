@@ -9,7 +9,7 @@ const LP2StakingRewardsUpgradeable = artifacts.require("LP2StakingRewardsUpgrade
 
 module.exports = async function (deployer, network, accounts) {
   if (network === 'development' || network === 'development-fork' || network === 'bsctestnet' || network === 'bsctestnet-fork') {
-    const token = await xBlade.at("0xEa3B879038b8f5d541F99647E2203cD27Dbc4D29");
+    const token = await xBlade.at("0x28ad774C41c229D48a441B280cBf7b5c5F1FED2B");
     const expToken = await ExperimentToken.deployed();
     // const expToken2 = await ExperimentToken2.deployed();
 

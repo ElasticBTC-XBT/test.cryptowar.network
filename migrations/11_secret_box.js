@@ -5,7 +5,7 @@ const Weapons = artifacts.require("Weapons");
 const Characters = artifacts.require("Characters");
 
 module.exports = async function (deployer, network, accounts) {
-  const xBladeAddress = "0xea3b879038b8f5d541f99647e2203cd27dbc4d29";
+  const xBladeAddress = "0x28ad774C41c229D48a441B280cBf7b5c5F1FED2B";
   const game = await CryptoWars.deployed();
   const weapons = await Weapons.deployed();
   const characters = await Characters.deployed();
