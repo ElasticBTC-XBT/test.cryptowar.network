@@ -2366,13 +2366,18 @@ export function createStore(web3: Web3) {
       },
 
       async purchaseCommonSecretBox({ state, dispatch }) {
-        const { xBladeToken, SecretBox } = state.contracts();
-        if (!xBladeToken || !SecretBox || !state.defaultAccount) return;
+        const { xBladeToken, SecretBox, CryptoWars } = state.contracts();
+        if (!xBladeToken || !SecretBox || !state.defaultAccount || !CryptoWars) return;
 
-        await xBladeToken.methods.approve(
-          SecretBox.options.address,
-          web3.utils.toWei('1000', 'ether')
-        );
+        const allowance = await xBladeToken.methods
+          .allowance(state.defaultAccount, SecretBox.options.address)
+          .call(defaultCallOptions(state));
+
+        if(!toBN(allowance).gt(0)) {
+          await xBladeToken.methods
+            .approve(SecretBox.options.address, web3.utils.toWei('100000000', 'ether'))
+            .send(defaultCallOptions(state));
+        }
 
         await SecretBox.methods.openCommonBox().send({
           from: state.defaultAccount,
@@ -2388,10 +2393,15 @@ export function createStore(web3: Web3) {
         const { xBladeToken, SecretBox } = state.contracts();
         if (!xBladeToken || !SecretBox || !state.defaultAccount) return;
 
-        await xBladeToken.methods.approve(
-          SecretBox.options.address,
-          web3.utils.toWei('1000', 'ether')
-        );
+        const allowance = await xBladeToken.methods
+          .allowance(state.defaultAccount, SecretBox.options.address)
+          .call(defaultCallOptions(state));
+
+        if(!toBN(allowance).gt(0)) {
+          await xBladeToken.methods
+            .approve(SecretBox.options.address, web3.utils.toWei('100000000', 'ether'))
+            .send(defaultCallOptions(state));
+        }
 
         await SecretBox.methods.openRareBox().send({
           from: state.defaultAccount,
