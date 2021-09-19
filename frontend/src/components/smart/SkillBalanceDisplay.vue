@@ -1,18 +1,15 @@
 <template>
   <div class="skill-balance-display">
     <div size="sm" class="my-2 my-sm-0 mr-3" variant="primary" v-tooltip="'Buy xBlade'" @click="onBuySkill">
-      <!-- <i class="fa fa-plus gtag-link-others" tagname="buy_skill"></i> -->
-      <div class="add-button gtag-link-others" tagname="buy_skill"> BUY xBlade </div>
-      <!-- <img src="../../assets/addButton.png" class="add-button gtag-link-others"  tagname="buy_skill"> -->
+      <div class="add-button gtag-link-others" tagname="buy_skill">+</div>
     </div>
 
     <div class="balance-container">
-      <strong class="mr-2 balance-text">Balance</strong>
       <span class="balance"
         v-tooltip="{ content: totalSkillTooltipHtml , trigger: (isMobile() ? 'click' : 'hover') }"
         @mouseover="hover = !isMobile() || true"
         @mouseleave="hover = !isMobile()"
-      >{{ formattedTotalSkillBalance }} <b-icon-gift-fill scale="1" v-if="hasInGameSkill" variant="success"/>
+      >{{ formattedTotalSkillBalance }}
       </span>
     </div>
 
@@ -57,9 +54,9 @@ export default Vue.extend({
     }) as Accessors<StoreMappedGetters>),
 
     formattedTotalSkillBalance(): string {
-      const skillBalance = fromWeiEther(Bignumber.sum(toBN(this.skillBalance), toBN(this.inGameOnlyFunds), toBN(this.skillRewards)));
-
-      return `${toBN(skillBalance).toFixed(4)} xBlade`;
+      const xBladeBalance = fromWeiEther(Bignumber.sum(toBN(this.skillBalance), toBN(this.inGameOnlyFunds), toBN(this.skillRewards)));
+      const { format } = new Intl.NumberFormat('en-EN');
+      return `${format(toBN(xBladeBalance).toNumber())} xBlade`;
     },
 
     formattedSkillBalance(): string {
@@ -159,7 +156,7 @@ export default Vue.extend({
 .balance-container {
   margin-right: 5px;
   color: #FFF;
-  font-size: 0.7em;
+  font-size: 16px;
 }
 
 .balance-text {
@@ -167,22 +164,57 @@ export default Vue.extend({
   font-size: 12px
 }
 .add-button {
-  width : 100%;
-  height: 100%;
-  border: none;
-  border-radius: 50px;
-  box-shadow: inset 0px 0px 10px 7px #b523f3;
   background: #9a13d2;
   transition: all 0.3s ease-in;
   font-weight: 600;
-  padding: 4px 16px;
+  padding: 6px 16px;
   color: #FFF;
+
+  align-items: center;
+  appearance: none;
+  background-image: linear-gradient(to right top, #e477f9, #db68f6, #d158f3, #c746f1, #bc33ee);
+  border: 0;
+  border-radius: 6px;
+  box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(105, 58, 111, 0.5) 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "JetBrains Mono",monospace;
+  height: 28px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow .15s,transform .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow,transform;
+  font-size: 28px;
 }
-@media only screen and (max-width: 769px) {
-  .add-button{
-    font-size: 11px;
-  }
+
+.add-button:focus {
+  box-shadow: #a43ce0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
 }
+
+.add-button:hover {
+  box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #a43ce0 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+.add-button:active {
+  box-shadow: #a43ce0 0 3px 7px inset;
+  transform: translateY(2px);
+}
+
+
 .add-button:hover {
   cursor: pointer;
 }

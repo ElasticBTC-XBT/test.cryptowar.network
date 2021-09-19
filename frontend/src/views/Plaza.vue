@@ -47,7 +47,7 @@
               v-tooltip="'Recruit new character'" tagname="recruit_character">
               Recruit ({{ recruitCost }} xBlade) <i class="fas fa-plus"></i>
             </b-button>
-            <b-button
+            <!-- <b-button
               v-if="ownCharacters.length < 4"
               :disabled="!canRecruit()"
               variant="primary"
@@ -55,7 +55,7 @@
               @click="onMintCharaterWithBNB"
               v-tooltip="'Recruit new character'" tagname="recruit_character">
               Recruit ({{ recruitCost }} BNB) <i class="fas fa-plus"></i>
-            </b-button>
+            </b-button> -->
           </div>
 
           <character-list
