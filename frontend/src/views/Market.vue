@@ -222,32 +222,11 @@
                   @click="searchListingsByNftId('weapon')"  class="gtag-link-others" tagname="search_weapon_id">Search Weapon ID</b-button>
               </div>
 
-              <div class="col-4 col-md-3 col-lg-2 mb-2">
-                <b-button
-                  variant="primary"
-                  :disabled="!search"
-                  @click="searchListingsBySeller('weapon')"  class="gtag-link-others" tagname="weapons_seller">Weapons by Seller</b-button>
-              </div>
-
-              <div class="col-4 col-md-3 col-lg-2">
-                <b-button
-                  variant="primary"
-                  :disabled="!search"
-                  @click="searchListingsBySeller('character')"  class="gtag-link-others" tagname="characters_seller">Characters by Seller</b-button>
-              </div>
-
               <div class="col-4 col-md-3 col-lg-2">
                 <b-button
                   variant="primary"
                   :disabled="!search"
                   @click="searchListingsByNftId('shield')"  class="gtag-link-others" tagname="search_shield_id">Search Shield ID</b-button>
-              </div>
-
-              <div class="col">
-                <b-button
-                  variant="primary"
-                  :disabled="!search"
-                  @click="searchListingsBySeller('shield')"  class="gtag-link-others" tagname="shields_seller">Shields by Seller</b-button>
               </div>
 
               <div class="col-4 col-md-3 col-lg-2">
@@ -1290,15 +1269,15 @@ export default Vue.extend({
         tokenId: this.search
       });
       this.searchResultsOwned = nftSeller === this.defaultAccount;
-      const url = new URL('https://xblades.herokuapp.com/static/wallet/banned/' + nftSeller);
-      const data = await fetch(url.toString(),defaultOptions);
-      const banned = await data.json();
-      if(banned.banned) {
-        (this as any).$dialog.notify.error('Item not available!');
-      }
+      // const url = new URL('https://xblades.herokuapp.com/static/wallet/banned/' + nftSeller);
+      // const data = await fetch(url.toString(),defaultOptions);
+      // const banned = await data.json();
+      // if(banned.banned) {
+      //   (this as any).$dialog.notify.error('Item not available!');
+      // }
 
       const price = await this.lookupNftPrice(this.search);
-      if(price !== '0' && !banned.banned) {
+      if(price !== '0' /* && !banned.banned */) {
         this.searchResults = [this.search];
       } else {
         this.searchResults = [];
@@ -1350,38 +1329,26 @@ export default Vue.extend({
     async searchOwnListings(type: SellType) {
       this.marketOutcome = null;
       this.activeType = type;
-
+      console.log('1');
       if(!this.defaultAccount) {
         this.searchResults = [];
         return;
       }
-
+      console.log('2');
       this.waitingMarketOutcome = true;
 
-      if(useBlockchain){
-        await this.searchOwnListingsThroughChain();
-      }
-      else {
-        await this.searchOwnListingsThroughAPI();
-      }
+      await this.searchOwnListingsThroughChain();
 
       this.searchResultsOwned = true;
       this.waitingMarketOutcome = false;
     },
 
     async searchOwnListingsThroughChain() {
+      console.log('Contract address: ', this.contractAddress);
       this.searchResults = await this.fetchMarketNftIdsBySeller({
         nftContractAddr: this.contractAddress,
         sellerAddr: this.defaultAccount as string
       });
-    },
-
-    async searchOwnListingsThroughAPI(){
-      this.searchResults = this.activeType === 'weapon' ?
-        await this.searchWeaponListingsBySeller(this.defaultAccount as string):
-        (this.activeType === 'character' ?
-          await this.searchCharacterListingsBySeller(this.defaultAccount as string)
-          : await this.searchShieldListingsBySeller(this.defaultAccount as string));
     },
 
     async searchCharacterListingsBySeller(sellerAddress: string): Promise<string[]>{
