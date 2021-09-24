@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { abi as erc20Abi } from '../../build/contracts/IERC20.json';
 
 import { networks as xBladeStakingRewardsNetworks } from '../../build/contracts/XBladeStakingRewardsUpgradeable.json';
@@ -50,18 +51,18 @@ type Networks = Partial<Record<string, { address: string }>>;
 type Abi = any[];
 
 const stakingContractAddressesFromBuild: Partial<Record<StakeType, Partial<StakingContractEntry>>> = {
-  skill: {
-    stakingRewardsAddress: (xBladeStakingRewardsNetworks as Networks)[networkId]?.address,
-    stakingTokenAddress: (xBladeTokenNetworks as Networks)[networkId]?.address
-  },
+  // skill: {
+  //   stakingRewardsAddress: (xBladeStakingRewardsNetworks as Networks)[networkId]?.address,
+  //   stakingTokenAddress: (xBladeTokenNetworks as Networks)[networkId]?.address
+  // },
   lp: {
     stakingRewardsAddress: (lpStakingRewardsNetworks as Networks)[networkId]?.address,
     stakingTokenAddress: (lpTokenNetworks as Networks)[networkId]?.address
   },
-  lp2: {
-    stakingRewardsAddress: (lp2StakingRewardsNetworks as Networks)[networkId]?.address,
-    stakingTokenAddress: (lp2TokenNetworks as Networks)[networkId]?.address
-  }
+  // lp2: {
+  //   stakingRewardsAddress: (lp2StakingRewardsNetworks as Networks)[networkId]?.address,
+  //   stakingTokenAddress: (lp2TokenNetworks as Networks)[networkId]?.address
+  // }
 };
 
 function getStakingContractsInfoWithDefaults(): Partial<Record<StakeType, Partial<StakingContractEntry>>> {
