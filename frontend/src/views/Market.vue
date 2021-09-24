@@ -457,9 +457,9 @@
                   <b-form-input type="number" :max="10000"
                     class="modal-input" v-model="listingSellPrice" placeholder="Sell Price (xBlade)" />
 
-                  <span v-if="listingSellPrice">Do you want to sell your {{activeType}} for {{Math.min(+listingSellPrice, 10000)}} xBlade?<br>
+                  <span v-if="listingSellPrice">Do you want to sell your {{activeType}} for {{listingSellPrice}} xBlade?<br>
                   <i>The buyer will pay an extra {{activeListingMarketTax()}}% market fee for a total of
-                  {{calculatedBuyerCost(Math.min(+listingSellPrice, 10000))}} xBlade</i></span>
+                  {{calculatedBuyerCost(listingSellPrice)}} xBlade</i></span>
                 </b-modal>
               </div>
 
