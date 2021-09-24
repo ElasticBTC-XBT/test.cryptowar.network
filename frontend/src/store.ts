@@ -1682,7 +1682,7 @@ export function createStore(web3: Web3) {
           playerRoll,
           enemyRoll,
           xpGain,
-          skillGain
+          xBladeGain
         } = res.events.FightOutcome.returnValues;
 
         const { gasPrice } = await web3.eth.getTransaction(res.transactionHash);
@@ -1696,7 +1696,7 @@ export function createStore(web3: Web3) {
           playerRoll,
           enemyRoll,
           xpGain,
-          skillGain,
+          xBladeGain,
           bnbGasUsed
         ];
       },

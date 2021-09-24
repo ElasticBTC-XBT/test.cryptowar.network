@@ -5,7 +5,7 @@
     <span v-if="results[0]" class="reward">
       {{ "You earned "+results[3]+" xp"}}
       <br>
-      <span v-tooltip="convertWei(results[4])+' xBlade'">{{"and "+formattedSkill}}</span>
+      <span v-tooltip="convertWei(results[4])+' xBlade'">{{"and "+formattedXBlade}}</span>
         <Hint text="xBlade earned is based on gas costs of the network plus a factor of your power" />
     </span>
     <span>
@@ -22,9 +22,9 @@ export default {
   props: ['results'],
 
   computed: {
-    formattedSkill() {
-      const skillBalance = fromWeiEther(this.results[4]);
-      return `${toBN(skillBalance).toFixed(6)} xBlade`;
+    formattedXBlade() {
+      const xBladeBalance = fromWeiEther(this.results[4]);
+      return `${toBN(xBladeBalance).toFixed(2)} xBlade`;
     }
   },
 
