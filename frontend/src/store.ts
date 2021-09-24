@@ -1670,7 +1670,7 @@ export function createStore(web3: Web3) {
           targetString,
           fightMultiplier
         )
-          .send({value: web3.utils.toWei('0.005', 'ether'), from: state.defaultAccount, gas: '500000' });
+          .send({value: web3.utils.toWei('0.005', 'ether'), from: state.defaultAccount, gas: '600000' });
 
         await dispatch('fetchTargets', { characterId, weaponId });
 

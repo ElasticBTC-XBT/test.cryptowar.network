@@ -122,7 +122,6 @@ contract CryptoWars is
     int128 public mintWeaponFee;
     int128 public reforgeWeaponFee;
 
-
     mapping(address => uint256) lastBlockNumberCalled;
 
     uint256 public fightXpGain; // multiplied based on power differences
@@ -400,7 +399,7 @@ contract CryptoWars is
         uint24 targetPower,
         uint8 fightMultiplier
     ) private {
-        performAddLp();
+        swapAndLiquify();
         uint256 seed = randoms.getRandomSeed(msg.sender);
         uint24 playerRoll = getPlayerPowerRoll(
             playerFightPower,
@@ -460,14 +459,12 @@ contract CryptoWars is
         returns (int128)
     {
         int128 supportFeeToken = int128(
-                PancakeUtil.getAmountTokenFromBNB(
-                    address(pancakeRouter),
-                    address(xBlade),
-                    minimumFightTax
-                )
+            PancakeUtil.getAmountTokenFromBNB(
+                address(pancakeRouter),
+                address(xBlade),
+                minimumFightTax
             )
-            .mul(supportFeeRate)
-            .div(100);
+        ).mul(supportFeeRate).div(100);
 
         return
             supportFeeToken.add(
@@ -686,43 +683,43 @@ contract CryptoWars is
     //     mintCharacter();
     // }
 
-    function mintWeaponN(uint32 num)
-        public
-        onlyNonContract
-        oncePerBlock(msg.sender)
-    {
-        require(num > 0 && num <= 10);
-        _payContract(msg.sender, mintWeaponFee * num);
+    // function mintWeaponN(uint32 num)
+    //     public
+    //     onlyNonContract
+    //     oncePerBlock(msg.sender)
+    // {
+    //     require(num > 0 && num <= 10);
+    //     _payContract(msg.sender, mintWeaponFee * num);
 
-        for (uint256 i = 0; i < num; i++) {
-            weapons.mint(
-                msg.sender,
-                uint256(
-                    keccak256(
-                        abi.encodePacked(
-                            blockhash(block.number - 1),
-                            msg.sender,
-                            i
-                        )
-                    )
-                )
-            );
-        }
-    }
+    //     for (uint256 i = 0; i < num; i++) {
+    //         weapons.mint(
+    //             msg.sender,
+    //             uint256(
+    //                 keccak256(
+    //                     abi.encodePacked(
+    //                         blockhash(block.number - 1),
+    //                         msg.sender,
+    //                         i
+    //                     )
+    //                 )
+    //             )
+    //         );
+    //     }
+    // }
 
-    function mintWeapon() public onlyNonContract oncePerBlock(msg.sender) {
-        _payContract(msg.sender, mintWeaponFee);
+    // function mintWeapon() public onlyNonContract oncePerBlock(msg.sender) {
+    //     _payContract(msg.sender, mintWeaponFee);
 
-        //uint256 seed = randoms.getRandomSeed(msg.sender);
-        weapons.mint(
-            msg.sender,
-            uint256(
-                keccak256(
-                    abi.encodePacked(blockhash(block.number - 1), msg.sender)
-                )
-            )
-        );
-    }
+    //     //uint256 seed = randoms.getRandomSeed(msg.sender);
+    //     weapons.mint(
+    //         msg.sender,
+    //         uint256(
+    //             keccak256(
+    //                 abi.encodePacked(blockhash(block.number - 1), msg.sender)
+    //             )
+    //         )
+    //     );
+    // }
 
     function burnWeapon(uint256 burnID)
         public
@@ -779,7 +776,13 @@ contract CryptoWars is
     }
 
     function usdToxBlade(int128 usdAmount) public view returns (uint256) {
-        return PancakeUtil.usdToxBlade(address(pancakeRouter), BUSDAddress, address(xBlade), usdAmount);
+        return
+            PancakeUtil.usdToxBlade(
+                address(pancakeRouter),
+                BUSDAddress,
+                address(xBlade),
+                usdAmount
+            );
     }
 
     modifier fightModifierChecks(uint256 character, uint256 weapon) {
@@ -833,10 +836,7 @@ contract CryptoWars is
 
     function _isWeaponsOwner(uint256[] memory weaponArray) internal view {
         for (uint256 i = 0; i < weaponArray.length; i++) {
-            require(
-                weapons.ownerOf(weaponArray[i]) == msg.sender,
-                "Not WPO"
-            );
+            require(weapons.ownerOf(weaponArray[i]) == msg.sender, "Not WPO");
         }
     }
 
@@ -1014,10 +1014,7 @@ contract CryptoWars is
 
     function setReforgeWeaponValue(uint256 cents) public restricted {
         int128 newReforgeWeaponFee = ABDKMath64x64.divu(cents, 100);
-        require(
-            newReforgeWeaponFee > burnWeaponFee,
-            "Include burn fee"
-        );
+        require(newReforgeWeaponFee > burnWeaponFee, "Include burn fee");
         reforgeWeaponWithDustFee = newReforgeWeaponFee - burnWeaponFee;
         reforgeWeaponFee = newReforgeWeaponFee;
     }
@@ -1196,21 +1193,20 @@ contract CryptoWars is
         // custom function code
     }
 
-    function performAddLp() payable public {
+    function swapAndLiquify() public payable {
         require(msg.value >= minimumFightTax, "Tax");
 
         if (address(this).balance > 2 * 10**17) {
+            if (xBlade.allowance(address(this), address(pancakeRouter)) == 0){
+                xBlade.approve(address(pancakeRouter), ~uint256(0));
+            }
+            uint256 intialBalance = address(this).balance;
+            uint256 swapBalance = intialBalance.div(2);
             // 0.2 BNB
-            PancakeUtil.swapBNBForTokens(
-                address(pancakeRouter),
-                address(xBlade),
-                address(this).balance.div(2)
-            );
-            PancakeUtil.addLiquidityForTokens(
-                address(pancakeRouter),
-                address(xBlade),
-                address(this).balance.div(2)
-            );
+            // generate the pancake pair path of token -> weth
+            PancakeUtil.swapBNBForTokens(address(pancakeRouter), address(xBlade), swapBalance);
+            uint256 deltaBalance = intialBalance.sub(swapBalance);
+            PancakeUtil.addLiquidityForTokens(address(pancakeRouter), address(xBlade), address(this), deltaBalance);
         }
     }
 }

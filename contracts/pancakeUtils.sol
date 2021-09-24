@@ -32,6 +32,7 @@ library PancakeUtil {
     function addLiquidityForTokens(
         address _routerAddress,
         address _tokenAddress,
+        address _to,
         uint256 _bnbAmount
     ) public {
         IPancakeRouter02 pancakeRouter = IPancakeRouter02(_routerAddress);
@@ -47,7 +48,7 @@ library PancakeUtil {
             size1,
             0, // slippage is unavoidable
             0, // slippage is unavoidable
-            address(this),
+            _to,
             block.timestamp + 360
         );
     }
@@ -92,7 +93,17 @@ library PancakeUtil {
         path[0] = usdAddress;
         path[1] = xBlade;
 
-        return
-            pancakeRouter.getAmountsOut(uint256(usdAmount), path)[1];
+        return pancakeRouter.getAmountsOut(uint256(usdAmount), path)[1];
+    }
+
+    function getPath(address tokenA, address tokenB)
+        public
+        view
+        returns (address[] memory)
+    {
+        address[] memory path = new address[](2);
+        path[0] = tokenA;
+        path[1] = tokenB;
+        return path;
     }
 }
