@@ -11,7 +11,7 @@
           <big-button
             class="button"
             :mainText="`Forge sword for ${forgeCost} xBlade`"
-            @click="onForgeWeapon"
+            @click="$router.push({name: 'market'})"
           />
         </div>
         <div class="row mt-3" v-if="ownWeapons.length > 0 && !showReforge">
@@ -44,25 +44,7 @@
                         v-tooltip="'Burn weapons to buff selected weapon'">
                   Create Dust
                 </b-button>
-                <!-- <b-button
-                        variant="primary"
-                        class="ml-3"
-                        @click="onForgeWeapon"
-                        :disabled="disableForge"
-                        v-tooltip="'Forge new weapon'">
-                  <span v-if="disableForge">Cooling forge...</span>
-                  <span v-if="!disableForge" class="gtag-link-others" tagname="forge_weapon">Forge x1 ({{ forgeCost }} xBlade) <i class="fas fa-plus"></i>
-                  </span>
-                </b-button> -->
-                <!-- <b-button
-                        variant="primary"
-                        class="ml-3"
-                        @click="onForgeWeaponx10()"
-                        :disabled="disableForge"
-                        v-tooltip="'Forge new weapon'">
-                  <span v-if="disableForge">Cooling forge...</span>
-                  <span v-if="!disableForge" class="gtag-link-others" tagname="forge_weapon">x10 ({{ forgeCost*10 }} xBlade) <i class="fas fa-plus"></i></span>
-                </b-button> -->
+
 
                 <b-icon-question-circle class="centered-icon" scale="1.5"
                   v-on:click="onShowForgeDetails" v-tooltip.bottom="'Click for forge percentages'"/>
@@ -405,6 +387,7 @@ import { Contracts, IState } from '@/interfaces';
 import { Accessors } from 'vue/types/options';
 import DustBalanceDisplay from '@/components/smart/DustBalanceDisplay.vue';
 import { getCleanName, isProfaneIsh } from '../rename-censor';
+// import VueRouter from 'vue-router';
 
 type StoreMappedState = Pick<IState, 'defaultAccount'| 'ownedWeaponIds'>;
 
@@ -519,57 +502,8 @@ export default Vue.extend({
   },
 
   methods: {
-    ...mapActions(['mintWeapon', 'reforgeWeapon', 'mintWeaponN', 'renameWeapon',
+    ...mapActions(['reforgeWeapon', 'renameWeapon',
       'fetchTotalWeaponRenameTags', 'burnWeapon', 'reforgeWeaponWithDust', 'massBurnWeapons']),
-
-    async onForgeWeapon() {
-      if(this.disableForge) return;
-
-      const forgeMultiplier = 1;
-
-      this.disableForge = true;
-      // Incase the network or mm are having issues, after 1 min we reshow
-      const failbackTimeout = setTimeout(() => {
-        this.disableForge = false;
-      }, 30000);
-
-      try {
-        await this.mintWeapon();
-
-      } catch (e) {
-        console.error(e);
-        (this as any).$dialog.notify.error('Could not forge sword: insuffucient funds or transaction denied.');
-      } finally {
-        clearTimeout(failbackTimeout);
-        this.disableForge = false;
-      }
-      this.relayFunction(forgeMultiplier);
-    },
-
-    async onForgeWeaponx10(){
-      if(this.disableForge) return;
-
-      this.disableForge = true;
-      const forgeMultiplier = 10;
-
-      // Incase the network or mm are having issues, after 1 min we reshow
-      const failbackTimeout = setTimeout(() => {
-        this.disableForge = false;
-      }, 30000);
-
-      try {
-        await this.mintWeaponN({num: forgeMultiplier});
-
-      } catch (e) {
-        console.error(e);
-        (this as any).$dialog.notify.error('Could not forge sword: insuffucient funds or transaction denied.');
-      } finally {
-        clearTimeout(failbackTimeout);
-        this.disableForge = false;
-      }
-      this.relayFunction(forgeMultiplier);
-
-    },
 
     relayFunction(offset: number){
       try{

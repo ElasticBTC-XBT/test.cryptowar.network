@@ -1438,60 +1438,60 @@ export function createStore(web3: Web3) {
       },
 
 
-      async mintWeaponN({ state, dispatch }, { num }) {
-        const { CryptoWars: CryptoBlades, xBladeToken: SkillToken, Weapons } = state.contracts();
-        if (!CryptoBlades || !SkillToken || !Weapons || !state.defaultAccount)
-          return;
+      // async mintWeaponN({ state, dispatch }, { num }) {
+      //   const { CryptoWars: CryptoBlades, xBladeToken: SkillToken, Weapons } = state.contracts();
+      //   if (!CryptoBlades || !SkillToken || !Weapons || !state.defaultAccount)
+      //     return;
 
-        await approveFee(
-          CryptoBlades,
-          SkillToken,
-          state.defaultAccount,
-          state.skillRewards,
-          defaultCallOptions(state),
-          defaultCallOptions(state),
-          cryptoBladesMethods => cryptoBladesMethods.mintWeaponFee(),
-          { feeMultiplier: num * 4 }
-        );
+      //   await approveFee(
+      //     CryptoBlades,
+      //     SkillToken,
+      //     state.defaultAccount,
+      //     state.skillRewards,
+      //     defaultCallOptions(state),
+      //     defaultCallOptions(state),
+      //     cryptoBladesMethods => cryptoBladesMethods.mintWeaponFee(),
+      //     { feeMultiplier: num * 4 }
+      //   );
 
-        await CryptoBlades.methods
-          .mintWeaponN(num)
-          .send({ from: state.defaultAccount, gas: '5000000' });
+      //   // await CryptoBlades.methods
+      //   //   .mintWeaponN(num)
+      //   //   .send({ from: state.defaultAccount, gas: '5000000' });
 
-        await Promise.all([
-          dispatch('fetchFightRewardSkill'),
-          dispatch('fetchFightRewardXp'),
-          dispatch('updateWeaponIds'),
-          dispatch('setupWeaponDurabilities')
-        ]);
-      },
+      //   await Promise.all([
+      //     dispatch('fetchFightRewardSkill'),
+      //     dispatch('fetchFightRewardXp'),
+      //     dispatch('updateWeaponIds'),
+      //     dispatch('setupWeaponDurabilities')
+      //   ]);
+      // },
 
-      async mintWeapon({ state, dispatch }) {
-        const { CryptoWars: CryptoBlades, xBladeToken: SkillToken, Weapons } = state.contracts();
-        if (!CryptoBlades || !SkillToken || !Weapons || !state.defaultAccount)
-          return;
+      // async mintWeapon({ state, dispatch }) {
+      //   const { CryptoWars: CryptoBlades, xBladeToken: SkillToken, Weapons } = state.contracts();
+      //   if (!CryptoBlades || !SkillToken || !Weapons || !state.defaultAccount)
+      //     return;
 
-        await approveFee(
-          CryptoBlades,
-          SkillToken,
-          state.defaultAccount,
-          state.skillRewards,
-          defaultCallOptions(state),
-          defaultCallOptions(state),
-          cryptoBladesMethods => cryptoBladesMethods.mintWeaponFee()
-        );
+      //   await approveFee(
+      //     CryptoBlades,
+      //     SkillToken,
+      //     state.defaultAccount,
+      //     state.skillRewards,
+      //     defaultCallOptions(state),
+      //     defaultCallOptions(state),
+      //     cryptoBladesMethods => cryptoBladesMethods.mintWeaponFee()
+      //   );
 
-        await CryptoBlades.methods
-          .mintWeapon()
-          .send({ from: state.defaultAccount });
+      //   await CryptoBlades.methods
+      //     .mintWeapon()
+      //     .send({ from: state.defaultAccount });
 
-        await Promise.all([
-          dispatch('fetchFightRewardSkill'),
-          dispatch('fetchFightRewardXp'),
-          dispatch('updateWeaponIds'),
-          dispatch('setupWeaponDurabilities')
-        ]);
-      },
+      //   await Promise.all([
+      //     dispatch('fetchFightRewardSkill'),
+      //     dispatch('fetchFightRewardXp'),
+      //     dispatch('updateWeaponIds'),
+      //     dispatch('setupWeaponDurabilities')
+      //   ]);
+      // },
 
       async reforgeWeapon(
         { state, dispatch },
