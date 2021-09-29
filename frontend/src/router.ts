@@ -42,8 +42,8 @@ function createRouter() {
       { path: '/combat', name: 'combat', component: Combat },
       { path: '/leaderboard', name: 'leaderboard', component: Leaderboard },
       ...marketRoutes,
-      { path: '/stake', name: 'select-stake-type', component: SelectStakeType },
-      { path: '/stake/:stakeType', name: 'stake', component: Stake, props: true },
+      // { path: '/stake', name: 'select-stake-type', component: SelectStakeType },
+      // { path: '/stake/:stakeType', name: 'stake', component: Stake, props: true },
       { path: '/options', name: 'options', component: Options },
       { path: '/shop', name: 'shop', component: Shop }
     ]
