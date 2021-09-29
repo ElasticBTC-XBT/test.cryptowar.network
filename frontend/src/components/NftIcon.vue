@@ -40,15 +40,15 @@
 
       <div v-if="nft.type === 'SecretBox'" class="nft-details glow-container" ref="el" :class="['glow-' + (nft.stars || 0)]">
         <img class="placeholder-shield" src="../assets/gold_chest.png" v-if="isShop" />
-
-        <span v-if="isShop && nft.id === 0" class="nft-supply">Supply left: {{commonBoxSupply}}</span>
-        <span v-if="isShop && nft.id === 1" class="nft-supply">Supply left: {{rareBoxSupply}}</span>
+        <span v-if="isShop" class="nft-name">{{nft.id === 0 ? "Common Box" :"Rare Box"}}</span>
+        <span v-if="isShop" class="nft-supply">Supply left: {{nft.id === 0 ? commonBoxSupply: rareBoxSupply}}</span>
       </div>
 
       <div v-if="nft.type !== 'shield' && nft.type !== 'SecretBox'" class="nft-details">
         <img class="placeholder-consumable" :src="nft.image.startsWith('http') ? nft.image : imgPath(nft.image)"/>
         <span v-if="isShop" class="nft-supply">Owned: {{this.quantityOwned}}</span>
       </div>
+
     </div>
   </div>
 </template>
@@ -211,6 +211,14 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
+}
+
+.nft-name {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  font-weight: 800;
 }
 
 .nft-details {

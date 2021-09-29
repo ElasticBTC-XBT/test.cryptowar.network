@@ -15,7 +15,7 @@
             class="shop-button"
             @click="buyItem(nft)">
             <span class="gtag-link-others">
-              Buy ({{ nft.nftPrice }} xBlade)
+              Buy ({{ nft.nftPrice}} xBlade)
             </span>
           </b-button>
         </li>
@@ -460,12 +460,12 @@ export default Vue.extend({
 <style>
 .nft-grid {
   list-style-type: none;
-  justify-content: center;
+  justify-content: flex-start;
   margin: 0;
   display: grid;
   padding: 0.5em;
   grid-template-columns: repeat(auto-fit, 12em);
-  gap: 0.5em;
+  gap: 2em;
 }
 .nft {
   width: 12em;

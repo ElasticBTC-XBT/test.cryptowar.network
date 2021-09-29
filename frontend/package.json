@@ -150,7 +150,6 @@
           }
         }
       ],
-     
       "@typescript-eslint/semi": [
         "error",
         "always"

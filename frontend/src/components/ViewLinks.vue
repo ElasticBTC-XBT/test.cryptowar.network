@@ -38,6 +38,12 @@
       </li>
     </router-link>
 
+    <router-link :to="{ name: 'shop' }" exact class="nav-link">
+      <li class="nav-item nav-top-links">
+        <span class="gtag-link-others" tagname="shop_screen">Shop</span>
+      </li>
+    </router-link>
+
   </b-navbar-nav>
 </template>
 

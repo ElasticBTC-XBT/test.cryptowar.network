@@ -576,38 +576,6 @@
           </div>
         </div>
       </b-tab>
-
-      <b-tab @click="clearData();browseTabActive = false;skillShopTabActive = true">
-        <template #title>
-          xBlade Shop
-          <hint class="hint" text="You can buy various goods in here" />
-        </template>
-
-        <div>
-          <div class="row">
-            <div class="col-sm-4 centered-text">
-              <h3>Specials</h3>
-            </div>
-            <div class="col-sm-8 centered-text">
-              <h3>Shop</h3>
-            </div>
-            <img class="shop-horizontal-divider-top" src="../assets/divider4.png" />
-          </div>
-           <div class="row">
-            <div class="col-sm-4 special-offer-items">
-              <div class="special-offer-bg">
-                 <nft-list :isShop="true" :nftIdTypes="specialOffersNftList"/>
-              </div>
-            </div>
-            <div class="col-sm-8 shop-items">
-              <div class="shop-items">
-                <nft-list :isShop="true" :nftIdTypes="shopOffersNftList"/>
-              </div>
-            </div>
-            <img class="shop-horizontal-divider" src="../assets/divider4.png" />
-          </div>
-        </div>
-      </b-tab>
     </b-tabs>
   </div>
 </template>
