@@ -923,7 +923,7 @@ export default Vue.extend({
       if(this.selectedNftId === null) return;
       if(!this.listingSellPrice) return;
 
-      const val = Math.min(+this.listingSellPrice, 10000);
+      const val = +this.listingSellPrice;
       if(val <= 0 || !val || isNaN(val)) return;
 
       this.waitingMarketOutcome = true;
