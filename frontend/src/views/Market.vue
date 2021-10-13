@@ -23,10 +23,7 @@
                   @click="searchAllWeaponListings(currentPage - 1)"  class="gtag-link-others search-btn" tagname="browse_weapons">Browse Weapons</b-button>
               </div>
 
-              <div class="">
-                <b-button
-                  @click="searchAllShieldListings(currentPage - 1)"  class="gtag-link-others search-btn" tagname="browse_shields">Browse Shields</b-button>
-              </div>
+
 
               <div class=""></div>
             </div>
@@ -218,11 +215,7 @@
                   @click="searchListingsByNftId('weapon')"  class="gtag-link-others search-btn" tagname="search_weapon_id">Search Weapon ID</b-button>
               </div>
 
-              <div class="mb-3">
-                <b-button
-                  :disabled="!search"
-                  @click="searchListingsByNftId('shield')"  class="gtag-link-others search-btn" tagname="search_shield_id">Search Shield ID</b-button>
-              </div>
+
 
               <div class="mb-3">
                 <b-button
@@ -234,10 +227,6 @@
                   @click="searchOwnListings('character')"  class="gtag-link-others search-btn" tagname="search_own_characters">Search My Characters</b-button>
               </div>
 
-              <div class="mb-3">
-                <b-button
-                  @click="searchOwnListings('shield')"  class="gtag-link-others search-btn" tagname="search_own_shields">Search My Shields</b-button>
-              </div>
 
               <div class="mb-3">
                 <b-button
@@ -406,10 +395,7 @@
                   @click="activeType = 'character'"  class="gtag-link-others  search-btn" tagname="show_characters_market">Show Characters</b-button>
               </div>
 
-              <div class="mb-2">
-                <b-button
-                  @click="activeType = 'shield'"  class="gtag-link-others search-btn" tagname="show_shields_market">Show Shields</b-button>
-              </div>
+
 
               <div class="mb-2">
                 <b-button
@@ -505,35 +491,7 @@
                 </b-modal>
               </div>
 
-              <div class="mb-2">
-                <b-button
-                   class="gtag-link-others  search-btn" tagname="show_shields_sold"
-                  @click="showShieldsSoldModal()"> Shields Sold
-                  <b-icon-question-circle v-tooltip.bottom="'View shields you have sold.'"/>
-                </b-button>
 
-                <b-modal class="centered-modal " ref="shields-sold-modal">
-
-                    <template #modal-header>
-                         <div class="transaction-history-header-text">
-                           Shield Transaction History
-                         </div>
-                    </template>
-                    <div v-if="historyCounter > 0">
-                      <b-table class="transaction-history-text" :items="shieldTransactionHistoryData" :fields="sieldTransactionHistoryHeader"></b-table>
-                    </div>
-                    <div v-if="historyCounter === 0">
-                      <p>It's seems like there's nothing here.</p>
-                      <p>For tips on how to list NFTs, you may click this <strong><a href="https://wiki.cryptowar.network/market/trading" target="_blank">link</a></strong></p>
-                    </div>
-                    <template #modal-footer>
-                    <b-button class="mt-3 btn-buy" block @click="resetTransactionHistoryValues('shields-sold-modal')">Ok</b-button>
-                    </template>
-
-
-                </b-modal>
-
-              </div>
 
               <div class="">
               </div>

@@ -2,7 +2,7 @@
   <div class="character-display-container">
     <transition name="slide-fade">
       <div class="row chara-head-box" :class="[getIsCharacterViewExpanded?'':'chara-head-close']">
-        <div class="col-sm-6 root main-font">
+        <div class="col-sm-12 root main-font">
           <div class="character-portrait">
             <!--img
             v-if="!isLoadingCharacter"
@@ -57,10 +57,8 @@
                 />
               </p>
             </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
           <earnings-calculator />
+          </div>
         </div>
       </div>
     </transition>
@@ -220,9 +218,6 @@ export default Vue.extend({
   /* overflow: hidden; */
 }
 
-.character-display-container .root{
-  border-right: 1px solid #707070;
-}
 
 .character-data-column {
   display: flex;

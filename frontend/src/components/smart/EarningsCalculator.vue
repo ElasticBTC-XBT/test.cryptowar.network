@@ -1,147 +1,24 @@
 <template>
   <div>
-    <div class="character-earning-potential dark-bg-text" v-if="!isLoadingCharacter">
+    <div
+      class="character-earning-potential dark-bg-text"
+      v-if="!isLoadingCharacter"
+    >
       <div class="milestone-header-box">
         <div class="milestone-header">
           <div class="milestone-item">
-          <img src="../../assets/earning-potential-sword.png" class="sword-left">
-          <span class="milestone-text">Next Milestone</span>
-          <img src="../../assets/earning-potential-sword.png" class="sword-right">
-        </div>
-        <div class="milestone-item">
-          Earn <span class="bonus-text">{{getNextMilestoneBonus(currentCharacter.level)}}%</span> more per battle at<br>
-        </div>
-        <div class="milestone-item">
-          <span class="milestone-lvl-text">LVL {{getNextMilestoneLevel(currentCharacter.level)}}</span><br>
-        </div>
-      </div>
-      </div>
-      <div class="milestone-details">
-        <div class="calculator-icon-div">
-          <b-button class="btn-primary" @click="onShowEarningsCalculator">
-            <!-- <b-icon-calculator-fill class="milestone-hint" scale="1"
-              v-tooltip.bottom="`Earnings Calculator`"/> -->
-              Earnings Calculator
-          </b-button>
-
-          <b-modal hide-footer ref="earnings-calc-modal" size="xl" title="Earnings Calculator">
-            <div class="calculator">
-              <div class="calculator-character">
-                <span class="calculator-subheader">Character</span>
-                <img src="../../assets/placeholder/chara-0.png" class="char-placeholder">
-                <span>Element</span>
-                <select class="form-control wep-trait-form" v-model="characterElementValue">
-                  <option v-for="x in ['Earth', 'Fire', 'Lightning', 'Water']" :value="x" :key="x">{{ x }}</option>
-                </select>
-                <span>Level</span>
-                <div class="slider-input-div">
-                  <input class="stat-slider" type="range" min="1" max="255" v-model="levelSliderValue" />
-                  <b-form-input class="stat-input" type="number" v-model="levelSliderValue" :min="1" :max="255" />
-                </div>
-                <span>Stamina</span>
-                <select class="form-control wep-trait-form" v-model="staminaSelectValue">
-                  <option v-for="x in [40,80,120,160,200]" :value="x" :key="x">{{ x }}</option>
-                </select>
-              </div>
-
-              <div class="calculator-earnings">
-                <div class="coin-price-inputs">
-                  <span class="calculator-subheader">Current prices (USD)</span>
-                  <div class="prices-div">
-                    <div class="token-price-div">
-                       BNB: <b-form-label class="price-input" type="number" v-model="bnbPrice" /> <span class="text-white"> ${{bnbPrice }}</span>
-                    </div>
-                    <div class="token-price-div">
-                     xBlade:  <b-form-label class="price-input" type="number" v-model="skillPrice" /> <span class="text-white"> ${{skillPrice }}</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="results">
-                  <strong>Earnings (USD)</strong>
-                  <div class="earnings-grid">
-                    <b-row>
-                      <b-col><strong>Wins # per day</strong></b-col>
-                      <b-col><strong>Daily profit</strong><br>(1 character)</b-col>
-                      <b-col><strong>Daily profit</strong><br>(4 characters)</b-col>
-                      <b-col><strong>Monthly profit</strong><br>(4 characters)</b-col>
-                    </b-row>
-                    <b-row class="earnings-row" v-for="i in 7" :key="i">
-                      <b-col>{{8 - i}} ({{i - 1}} lost)</b-col>
-                      <b-col v-bind:class="[getColoringClass(8 - i - 1)]">
-                        ${{ calculationResults.length && calculationResults[8 - i - 1][0].toFixed(2) || 0}}
-                      </b-col>
-                      <b-col v-bind:class="[getColoringClass(8 - i - 1)]">
-                        ${{ calculationResults.length && calculationResults[8 - i - 1][1].toFixed(2) || 0}}
-                      </b-col>
-                      <b-col v-bind:class="[getColoringClass(8 - i - 1)]">
-                        ${{ calculationResults.length && calculationResults[8 - i - 1][2].toFixed(2) || 0}}
-                      </b-col>
-                    </b-row>
-                  </div>
-                </div>
-                <div class="button-div">
-                  <b-button class="btn btn-secondary" @click="onReset">
-                      Reset
-                  </b-button>
-                  <b-button class="btn btn-secondary" @click="calculateEarnings"
-                    v-bind:class="[!canCalculate() ? 'disabled disabled-button' : '']">
-                      Calculate
-                  </b-button>
-                  <b-icon-question-circle class="centered-icon" scale="1.5"
-                    v-tooltip.bottom="`Earnings on victory: ${this.stringFormattedSkill(this.fightGasOffset)} gas offset +
-                    ${this.stringFormattedSkill(this.fightBaseline)} per square root of power/1000`"/>
-                </div>
-              </div>
-
-              <div class="calculator-weapon">
-                <span class="calculator-subheader">Weapon</span>
-                <img src="../../assets/sword/sword-air-04.png" class="wep-placeholder">
-                <span>Stars</span>
-                <b-form-rating @change="refreshWeaponStats" class="stars-picker" variant="warning" v-model="starsValue" size="sm"></b-form-rating>
-                <span>Element</span>
-                <select class="form-control wep-trait-form" v-model="wepElementValue">
-                  <option v-for="x in ['Earth', 'Fire', 'Lightning', 'Water']" :value="x" :key="x">{{ x }}</option>
-                </select>
-                <span>Stats</span>
-                <div>
-                  <select class="form-control wep-trait-form" v-model="wepFirstStatElementValue">
-                    <option v-for="x in ['STR', 'DEX', 'CHA', 'INT', 'PWR']" :value="x" :key="x">{{ x }}</option>
-                  </select>
-                  <div class="slider-input-div">
-                    <input class="stat-slider" type="range" :min="getMinRoll(starsValue)" :max="getMaxRoll(starsValue)" v-model="wepFirstStatSliderValue" />
-                    <b-form-input class="stat-input" type="number" v-model="wepFirstStatSliderValue"
-                      :min="getMinRoll(starsValue)" :max="getMaxRoll(starsValue)" />
-                  </div>
-                </div>
-                <div v-if="starsValue > 3">
-                  <select class="form-control wep-trait-form" v-model="wepSecondStatElementValue">
-                    <option v-for="x in ['STR', 'DEX', 'CHA', 'INT', 'PWR']" :value="x" :key="x">{{ x }}</option>
-                  </select>
-                  <div class="slider-input-div">
-                    <input class="stat-slider" type="range" :min="getMinRoll(starsValue)" :max="getMaxRoll(starsValue)" v-model="wepSecondStatSliderValue" />
-                    <b-form-input class="stat-input" type="number" v-model="wepSecondStatSliderValue"
-                      :min="getMinRoll(starsValue)" :max="getMaxRoll(starsValue)" />
-                  </div>
-                </div>
-                <div v-if="starsValue > 4">
-                  <select class="form-control wep-trait-form" v-model="wepThirdStatElementValue">
-                    <option v-for="x in ['STR', 'DEX', 'CHA', 'INT', 'PWR']" :value="x" :key="x">{{ x }}</option>
-                  </select>
-                  <div class="slider-input-div">
-                    <input class="stat-slider" type="range" :min="getMinRoll(starsValue)" :max="getMaxRoll(starsValue)" v-model="wepThirdStatSliderValue" />
-                    <b-form-input class="stat-input" type="number" v-model="wepThirdStatSliderValue"
-                      :min="getMinRoll(starsValue)" :max="getMaxRoll(starsValue)" />
-                  </div>
-                </div>
-                <span>Bonus power</span>
-                <div class="slider-input-div">
-                  <input class="stat-slider" type="range" :min="0" :max="2500" v-model="wepBonusPowerSliderValue" />
-                  <b-form-input class="power-input" type="number" v-model="wepBonusPowerSliderValue"
-                    :min="getMinRoll(starsValue)" :max="getMaxRoll(starsValue)" />
-                </div>
-              </div>
-            </div>
-          </b-modal>
+            <span class="milestone-text">Next Milestone</span>
+          </div>
+          <div class="milestone-item">
+            Earn
+            <span class="bonus-text">
+              {{ getNextMilestoneBonus(currentCharacter.level) }}%
+            </span>
+            more per battle at
+            <span class="milestone-lvl-text"
+              >LVL {{ getNextMilestoneLevel(currentCharacter.level) }}</span
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -149,28 +26,18 @@
 </template>
 
 <script lang="ts">
-import { CharacterPower, CharacterTrait, GetTotalMultiplierForTrait, IWeapon, WeaponTrait } from '@/interfaces';
-import axios from 'axios';
-import Vue from 'vue';
-import { mapGetters } from 'vuex';
-import { toBN, fromWeiEther } from '../../utils/common';
-
-interface PriceJson {
-  binancecoin: CoinPrice;
-  cryptoblades: CoinPrice;
-}
-
-interface CoinPrice {
-  usd: number;
-}
+import { CharacterPower } from "@/interfaces";
+import Vue from "vue";
+import { mapGetters } from "vuex";
+import { toBN, fromWeiEther } from "../../utils/common";
 
 export default Vue.extend({
   computed: {
     ...mapGetters([
-      'currentCharacter',
-      'currentWeapon',
-      'fightGasOffset',
-      'fightBaseline'
+      "currentCharacter",
+      "currentWeapon",
+      "fightGasOffset",
+      "fightBaseline",
     ]),
 
     isLoadingCharacter(): boolean {
@@ -180,14 +47,14 @@ export default Vue.extend({
 
   data() {
     return {
-      characterElementValue: '',
+      characterElementValue: "",
       levelSliderValue: 1,
       staminaSelectValue: 40,
       starsValue: 1,
-      wepElementValue: '',
-      wepFirstStatElementValue: '',
-      wepSecondStatElementValue: '',
-      wepThirdStatElementValue: '',
+      wepElementValue: "",
+      wepFirstStatElementValue: "",
+      wepSecondStatElementValue: "",
+      wepThirdStatElementValue: "",
       wepFirstStatSliderValue: 4,
       wepSecondStatSliderValue: 4,
       wepThirdStatSliderValue: 4,
@@ -199,123 +66,6 @@ export default Vue.extend({
   },
 
   methods: {
-    async onShowEarningsCalculator() {
-      if(this.currentCharacter !== null) {
-        this.characterElementValue = CharacterTrait[this.currentCharacter.trait];
-        this.levelSliderValue = this.currentCharacter.level + 1;
-      }
-
-      if(this.currentWeapon !== null) {
-        this.starsValue = this.currentWeapon.stars + 1;
-        this.wepElementValue = this.currentWeapon.element;
-        this.wepFirstStatSliderValue = this.currentWeapon.stat1Value;
-        this.wepSecondStatSliderValue = this.starsValue > 3 && this.currentWeapon.stat2Value;
-        this.wepThirdStatSliderValue = this.starsValue > 4 && this.currentWeapon.stat3Value;
-        this.wepFirstStatElementValue = this.currentWeapon.stat1;
-        this.wepSecondStatElementValue = this.starsValue > 3 && this.currentWeapon.stat2;
-        this.wepThirdStatElementValue = this.starsValue > 4 && this.currentWeapon.stat3;
-        this.wepBonusPowerSliderValue = this.currentWeapon.bonusPower;
-      }
-
-      await this.fetchPrices();
-      (this.$refs['earnings-calc-modal'] as any).show();
-    },
-
-    onReset() {
-      this.characterElementValue = '';
-      this.levelSliderValue =  1;
-      this.staminaSelectValue = 40;
-      this.starsValue =  1;
-      this.wepElementValue =  '';
-      this.wepFirstStatElementValue =  '';
-      this.wepSecondStatElementValue =  '';
-      this.wepThirdStatElementValue =  '';
-      this.wepFirstStatSliderValue =  4;
-      this.wepSecondStatSliderValue =  4;
-      this.wepThirdStatSliderValue =  4;
-      this.wepBonusPowerSliderValue =  0;
-      this.calculationResults = [] as number[][];
-    },
-
-    getMinRoll(stars: number): number {
-      switch(stars) {
-      case 2: return 180;
-      case 3: return 280;
-      case 4: return 200;
-      case 5: return 268;
-      default: return 4;
-      }
-    },
-
-    getMaxRoll(stars: number): number {
-      switch(stars) {
-      case 1: return 200;
-      case 2: return 300;
-      default: return 400;
-      }
-    },
-
-    async fetchPrices() {
-      const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=cryptoblades,binancecoin&vs_currencies=usd');
-      const data = response.data as PriceJson;
-      this.bnbPrice = data?.binancecoin.usd;
-      this.skillPrice = data?.cryptoblades.usd;
-    },
-
-    canCalculate(): boolean {
-      if(!this.characterElementValue || !this.wepElementValue) return false;
-      if(this.starsValue < 4 && !this.wepFirstStatElementValue) return false;
-      if(this.starsValue === 4 && (!this.wepFirstStatElementValue || !this.wepSecondStatElementValue)) return false;
-      if(this.starsValue === 5 && (!this.wepFirstStatElementValue || !this.wepSecondStatElementValue || !this.wepThirdStatElementValue)) return false;
-      return true;
-    },
-
-    calculateEarnings() {
-      if(!this.canCalculate()) return;
-      this.calculationResults = [];
-      const fightBnbFee = 0.0007 * this.bnbPrice;
-      const weapon = this.getWeapon();
-      const characterTrait = CharacterTrait[this.characterElementValue as keyof typeof CharacterTrait];
-      const weaponMultiplier = GetTotalMultiplierForTrait(weapon, characterTrait);
-      const fights = this.getNumberOfFights(this.staminaSelectValue);
-
-      const totalPower = this.getTotalPower(CharacterPower(this.levelSliderValue - 1), weaponMultiplier, this.wepBonusPowerSliderValue);
-      const averageDailyReward = this.getAverageRewardForPower(totalPower) *7.2 +
-        this.formattedSkill(this.fightGasOffset) * fights;
-      const averageFightProfit = averageDailyReward * this.skillPrice / 7.2;
-      for(let i = 1; i < 8; i++) {
-        const averageDailyProfitForCharacter = averageFightProfit * i -
-          ((this.getNumberOfFights(this.staminaSelectValue) * fightBnbFee));
-        const averageDailyProfitForAllCharacter = 4 * averageDailyProfitForCharacter;
-        const averageMonthlyProfitForAllCharacter = 30 * averageDailyProfitForAllCharacter;
-        this.calculationResults.push([averageDailyProfitForCharacter, averageDailyProfitForAllCharacter, averageMonthlyProfitForAllCharacter]);
-      }
-    },
-
-    getNumberOfFights(stamina: number) {
-      return 288 / stamina;
-    },
-
-    getWeapon(): IWeapon {
-      const weapon = {
-        stat1Type: WeaponTrait[this.wepFirstStatElementValue as keyof typeof WeaponTrait],
-        stat2Type: WeaponTrait[this.wepSecondStatElementValue as keyof typeof WeaponTrait],
-        stat3Type: WeaponTrait[this.wepThirdStatElementValue as keyof typeof WeaponTrait],
-        stat1Value: this.wepFirstStatSliderValue,
-        stat2Value: this.starsValue > 3 && this.wepSecondStatSliderValue || 0,
-        stat3Value: this.starsValue > 4 && this.wepThirdStatSliderValue || 0,
-      } as IWeapon;
-      return weapon;
-    },
-
-    getTotalPower(characterPower: number, weaponMultiplier: number, bonusPower: number): number {
-      return characterPower * weaponMultiplier + Number(bonusPower);
-    },
-
-    getAverageRewardForPower(power: number): number {
-      return (this.formattedSkill(this.fightBaseline) * Math.sqrt(power / 1000));
-    },
-
     getNextMilestoneBonus(level: number): string {
       const nextMilestoneLevel = this.getNextMilestoneLevel(level);
       return this.getRewardDiffBonus(level, nextMilestoneLevel);
@@ -326,57 +76,32 @@ export default Vue.extend({
     },
 
     getAverageRewardAtLevel(level: number): number {
-      return this.formattedSkill(this.fightGasOffset) + (this.formattedSkill(this.fightBaseline) * (Math.sqrt(CharacterPower(level - 1)/1000)));
+      return (
+        this.formattedSkill(this.fightGasOffset) +
+        this.formattedSkill(this.fightBaseline) *
+          Math.sqrt(CharacterPower(level - 1) / 1000)
+      );
     },
 
     getRewardDiffBonus(level: number, targetLevel: number): string {
-      return (this.getAverageRewardAtLevel(targetLevel) /
-        this.getAverageRewardAtLevel(level + 1) * 100 - 100).toFixed(2);
+      return (
+        (this.getAverageRewardAtLevel(targetLevel) /
+          this.getAverageRewardAtLevel(level + 1)) *
+          100 -
+        100
+      ).toFixed(2);
     },
 
     formattedSkill(skill: number): number {
       const skillBalance = fromWeiEther(skill.toString());
       return toBN(skillBalance).toNumber();
     },
-
-    stringFormattedSkill(skill: number): string {
-      const skillBalance = fromWeiEther(skill.toString());
-      return toBN(skillBalance).toFixed(6);
-    },
-
-    getColoringClass(i: number): string {
-      if(!this.calculationResults.length || this.calculationResults[i][0] === 0) return '';
-      if(this.calculationResults[i][0] < 0) return 'negative-value';
-      return 'positive-value';
-    },
-
-    refreshWeaponStats(value: number) {
-      this.wepFirstStatSliderValue = this.getMinRoll(value);
-      this.wepSecondStatSliderValue = this.getMinRoll(value);
-      this.wepThirdStatSliderValue = this.getMinRoll(value);
-    }
   },
 });
 </script>
 <style scoped>
-
-.sword-left {
-  position: relative;
-  margin-right: 5px;
-  width: 5em;
-  pointer-events: none;
-}
-
-.sword-right {
-  transform: scaleX(-1);
-  margin-left: 5px;
-  position: relative;
-  width: 5em;
-  pointer-events: none;
-}
-
 .milestone-text {
-  color: #dabf75; /* little lighter to emboss */
+  color: #f9974e;
 }
 
 .milestone-details {
@@ -384,11 +109,15 @@ export default Vue.extend({
 }
 
 .bonus-text {
-  color: green;
+  color: rgb(5, 202, 94);
+  margin: 0 8px;
+  font-weight: 600;
 }
 
 .milestone-lvl-text {
-  color: rgb(236, 75, 75);
+  color: rgb(250, 149, 33);
+  margin: 0 8px;
+  font-weight: 600;
 }
 
 .calculator-icon-div {
@@ -413,7 +142,9 @@ export default Vue.extend({
   justify-content: space-between;
 }
 
-.calculator-weapon, .calculator-earnings, .calculator-character {
+.calculator-weapon,
+.calculator-earnings,
+.calculator-character {
   display: flex;
   flex-direction: column;
 }
@@ -424,14 +155,15 @@ export default Vue.extend({
   padding-right: 5px;
 }
 
-.milestone-header .milestone-item{
+.milestone-header .milestone-item {
   display: flex;
   text-align: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
-.milestone-header-box{
-  display: flex;;
+.milestone-header-box {
+  display: flex;
+  padding: 5px;
 }
 
 .calculator-weapon {
@@ -468,7 +200,7 @@ export default Vue.extend({
 }
 
 .b-rating.stars-picker {
- background-color: #5b553d;
+  background-color: #5b553d;
 }
 
 .form-control.wep-trait-form {
@@ -575,12 +307,13 @@ export default Vue.extend({
   .calculator {
     flex-direction: column;
   }
-  .calculator-character, .calculator-weapon {
+  .calculator-character,
+  .calculator-weapon {
     justify-self: center;
     width: 100%;
   }
 
-  .calculator-weapon{
+  .calculator-weapon {
     margin-top: 2rem;
   }
 }
