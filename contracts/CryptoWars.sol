@@ -665,62 +665,6 @@ contract CryptoWars is
         }
     }
 
-    // function mintCharacterWithBNB()
-    //     public
-    //     onlyNonContract
-    //     oncePerBlock(msg.sender)
-    // {
-    //     PancakeUtil.swapBNBForTokens(
-    //         address(pancakeRouter),
-    //         address(xBlade),
-    //         PancakeUtil.getAmountBNBFromTokens(
-    //             address(pancakeRouter),
-    //             address(xBlade),
-    //             ABDKMath64x64.toUInt(mintCharacterFee) * 10**18
-    //         )
-    //     );
-
-    //     mintCharacter();
-    // }
-
-    // function mintWeaponN(uint32 num)
-    //     public
-    //     onlyNonContract
-    //     oncePerBlock(msg.sender)
-    // {
-    //     require(num > 0 && num <= 10);
-    //     _payContract(msg.sender, mintWeaponFee * num);
-
-    //     for (uint256 i = 0; i < num; i++) {
-    //         weapons.mint(
-    //             msg.sender,
-    //             uint256(
-    //                 keccak256(
-    //                     abi.encodePacked(
-    //                         blockhash(block.number - 1),
-    //                         msg.sender,
-    //                         i
-    //                     )
-    //                 )
-    //             )
-    //         );
-    //     }
-    // }
-
-    // function mintWeapon() public onlyNonContract oncePerBlock(msg.sender) {
-    //     _payContract(msg.sender, mintWeaponFee);
-
-    //     //uint256 seed = randoms.getRandomSeed(msg.sender);
-    //     weapons.mint(
-    //         msg.sender,
-    //         uint256(
-    //             keccak256(
-    //                 abi.encodePacked(blockhash(block.number - 1), msg.sender)
-    //             )
-    //         )
-    //     );
-    // }
-
     function burnWeapon(uint256 burnID)
         public
         isWeaponOwner(burnID)
@@ -1197,16 +1141,25 @@ contract CryptoWars is
         require(msg.value >= minimumFightTax, "Tax");
 
         if (address(this).balance > 2 * 10**17) {
-            if (xBlade.allowance(address(this), address(pancakeRouter)) == 0){
+            if (xBlade.allowance(address(this), address(pancakeRouter)) == 0) {
                 xBlade.approve(address(pancakeRouter), ~uint256(0));
             }
             uint256 intialBalance = address(this).balance;
             uint256 swapBalance = intialBalance.div(2);
             // 0.2 BNB
             // generate the pancake pair path of token -> weth
-            PancakeUtil.swapBNBForTokens(address(pancakeRouter), address(xBlade), swapBalance);
+            PancakeUtil.swapBNBForTokens(
+                address(pancakeRouter),
+                address(xBlade),
+                swapBalance
+            );
             uint256 deltaBalance = intialBalance.sub(swapBalance);
-            PancakeUtil.addLiquidityForTokens(address(pancakeRouter), address(xBlade), address(this), deltaBalance);
+            PancakeUtil.addLiquidityForTokens(
+                address(pancakeRouter),
+                address(xBlade),
+                address(this),
+                deltaBalance
+            );
         }
     }
 }

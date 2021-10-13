@@ -78,7 +78,7 @@
         "error",
         {
           "ignorePattern": "//",
-          "code": 160
+          "code": 180
         }
       ],
       "no-debugger": "error",
