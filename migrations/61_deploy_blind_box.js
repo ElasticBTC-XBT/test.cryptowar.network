@@ -36,6 +36,9 @@ module.exports = async function (deployer, network, accounts) {
   await upgradeProxy(characterAddress, Characters, {
     deployer,
   });
+  await upgradeProxy(characterAddress, Characters, {
+    deployer,
+  });
 
   const wep = await Weapons.at(weaponAddress);
   const char = await Characters.at(characterAddress);
