@@ -108,6 +108,7 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
     mapping(uint256 => uint256) public cachedSecondsPerStamina;
     mapping(uint256 => uint256) public latestUpdateTimestamp;
     mapping(uint256 => mapping(uint256 => uint8)) public expectedLevel_v2;
+    bytes32 public constant BLIND_BOX = keccak256("BLIND_BOX");
 
     event NewCharacter(uint256 indexed character, address indexed minter);
     event LevelUp(address indexed owner, uint256 indexed character, uint16 level);
@@ -130,6 +131,11 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
         require(id < firstMintedOfLastBlock || lastMintedBlock < block.number, "Too fresh for lookup");
     }
 
+    modifier canMintCharacter() {
+        require(hasRole(GAME_ADMIN, msg.sender) || hasRole(BLIND_BOX, msg.sender), "Can not mint");
+        _;
+    }
+
     function transferCooldownEnd(uint256 tokenId) public override view returns (uint256) {
         return lastTransferTimestamp[tokenId].add(TRANSFER_COOLDOWN);
     }
@@ -141,6 +147,10 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
             );
 
         return success ? secondsLeft : 0;
+    }
+
+    function migrate_blindBox(address _blindBox) public restricted {
+        _setupRole(BLIND_BOX, _blindBox);
     }
 
     function get(uint256 id) public view noFreshLookup(id) returns (uint16, uint8, uint8, uint64, uint16, uint16, uint16, uint16, uint16, uint16) {
@@ -160,9 +170,12 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
         return uint16(RandomUtil.randomSeededMinMax(0, limit, RandomUtil.combineSeeds(seed, seed2)));
     }
 
-    function mint(address minter, uint256 seed) public restricted {
-        require(availableAmount > 0, "Cannot mint character now");
-        availableAmount = availableAmount - 1;
+    function mint(address minter, uint256 seed) public canMintCharacter {
+        if (!hasRole(BLIND_BOX, msg.sender)) {
+            // Blind box not affect to available amount
+            require(availableAmount > 0, "Cannot mint character now");
+            availableAmount = availableAmount - 1;
+        }
         uint256 tokenID = tokens.length;
 
         if(block.number != lastMintedBlock)

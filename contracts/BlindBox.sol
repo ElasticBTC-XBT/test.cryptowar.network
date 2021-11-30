@@ -46,15 +46,21 @@ contract BlindBox is
     uint256 epicPrice;
 
     event NewBlindBox(uint256 indexed boxId, address indexed minter);
+    event Burned(address indexed owner, uint256 indexed burned);
+    event Open(address indexed minter, uint256 stars);
 
     function initialize() public initializer {
         __ERC721_init("CryptoWars BlindBox", "CBB");
         __AccessControl_init_unchained();
 
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        commonQty = 0;
-        rareQty = 0;
-        epicQty = 0;
+        commonQty = 100;
+        rareQty = 100;
+        epicQty = 100;
+
+        commonPrice = 1 ether;
+        rarePrice = 2 ether;
+        epicPrice = 2 ether;
     }
 
     /** MODIFIERS */
@@ -183,5 +189,91 @@ contract BlindBox is
 
         _mint(msg.sender, tokenId);
         emit NewBlindBox(tokenId, msg.sender);
+    }
+
+    function open(uint256 id) public {
+        address burnOwner = ownerOf(id);
+        require(burnOwner == msg.sender, "Not box owner");
+        Box storage _box = tokens[id];
+        uint256 seed = uint256(
+            keccak256(abi.encodePacked(blockhash(block.number - 1), msg.sender))
+        );
+        uint256 stars = 0;
+        if (_box.boxType == Type.COMMON) {
+            stars = getCommonStars(seed);
+        }
+        if (_box.boxType == Type.RARE) {
+            stars = getRareStars(seed);
+        }
+        if (_box.boxType == Type.EPIC) {
+            stars = getEpicStars(seed);
+        }
+        if (stars < 4) {
+            weapons.mintWeaponWithStars(msg.sender, stars, seed);
+        }
+        if (stars == 10) {
+            // Mint hero
+            characters.mint(msg.sender, seed);
+        }
+        emit Open(msg.sender, stars);
+
+        _burn(id);
+        emit Burned(burnOwner, id);
+    }
+
+    function getCommonStars(uint256 seed) internal pure returns (uint256) {
+        uint256 stars;
+        uint256 roll = seed % 1000;
+        // will need revision, possibly manual configuration if we support more than 5 stars
+        if (roll < 5) {
+            stars = 4;
+        } else if (roll < 15) {
+            stars = 3;
+        } else if (roll < 35) {
+            stars = 2;
+        } else if (roll < 120) {
+            stars = 1;
+        } else {
+            stars = 0;
+        }
+        return stars;
+    }
+
+    function getRareStars(uint256 seed) internal pure returns (uint256) {
+        uint256 stars;
+        uint256 roll = seed % 1000;
+        // will need revision, possibly manual configuration if we support more than 5 stars
+        if (roll < 25) {
+            stars = 4;
+        } else if (roll < 75) {
+            stars = 3;
+        } else if (roll < 175) {
+            stars = 2;
+        } else if (roll < 735) {
+            stars = 1;
+        } else {
+            stars = 0;
+        }
+        return stars;
+    }
+
+    function getEpicStars(uint256 seed) internal pure returns (uint256) {
+        uint256 stars;
+        uint256 roll = seed % 1000;
+        // will need revision, possibly manual configuration if we support more than 5 stars
+        if (roll < 7) {
+            stars = 4;
+        } else if (roll < 22) {
+            stars = 3;
+        } else if (roll < 47) {
+            stars = 2;
+        } else if (roll < 147) {
+            stars = 1;
+        } else if (roll < 157) {
+            stars = 10; // Mint hero
+        } else {
+            stars = 0;
+        }
+        return stars;
     }
 }

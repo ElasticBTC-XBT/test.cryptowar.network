@@ -112,6 +112,8 @@ contract Weapons is Initializable, ERC721Upgradeable, AccessControlUpgradeable {
 
     Promos public promos;
 
+    bytes32 public constant BLIND_BOX = keccak256("BLIND_BOX");
+
     event Burned(address indexed owner, uint256 indexed burned);
     event NewWeapon(uint256 indexed weapon, address indexed minter);
     event Reforged(address indexed owner, uint256 indexed reforged, uint256 indexed burned, uint8 lowPoints, uint8 fourPoints, uint8 fivePoints);
@@ -127,13 +129,17 @@ contract Weapons is Initializable, ERC721Upgradeable, AccessControlUpgradeable {
     }
 
     modifier canMintWeapon() {
-        require(hasRole(GAME_ADMIN, msg.sender) || hasRole(BOX_OPENER, msg.sender), "Can not mint");
+        require(hasRole(GAME_ADMIN, msg.sender) || hasRole(BOX_OPENER, msg.sender) || hasRole(BLIND_BOX, msg.sender), "Can not mint");
         _;
     }
 
     modifier noFreshLookup(uint256 id) {
         _noFreshLookup(id);
         _;
+    }
+
+    function migrate_blindBox(address _blindBox) public restricted {
+        _setupRole(BLIND_BOX, _blindBox);
     }
 
     function _noFreshLookup(uint256 id) internal view {
