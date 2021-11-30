@@ -171,6 +171,7 @@
       "kind": "transparent"
     },
     {
+<<<<<<< HEAD
       "address": "0x70CB095816927865e0596929e9A84D48ca5faB58",
       "txHash": "0x8c06ca6ef2782cc6cbb0d201e0c3e2ff37401c2fcb1182767e604931088d9480",
       "kind": "transparent"
@@ -268,6 +269,30 @@
     {
       "address": "0xEfC8E6EDfeD04fFE7B32a3962BB821f7073e03b3",
       "txHash": "0x5b87a55781ea488cdded32e78a2779ae65da626da2239b45b82952722ae5fbc2",
+=======
+      "address": "0x2DaeDD7d61Ee7CB63cA9b829c4e8116238d8C090",
+      "txHash": "0x5b774fcc9fd94e26e5965d98993a73718fe73318c31512640da78c500d04895a",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x07dec1D152adA2a6Ae9884689Ec57f28dC45e5cd",
+      "txHash": "0x621e0f3b93f808af407d8982cdbd12a658d396fc2060829a1dd028f6b4601836",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xA9CDd2d08c2fDC671E516d90fCdd225Dc1ca4Ee1",
+      "txHash": "0x2268ebc5fde8fdd70d66b42949d94b3477e81d532cb9f96222170222766881dd",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xE5aE344ab89f6105f42e042D6eCC36E4009cb25D",
+      "txHash": "0x3dec446ba2d3f8d20383e697a5e3e14b0c01a7f854e6eb9d0d81fa466ac2944c",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xdB10b6Fc3B2641ff01758B6815A749E6d3Efa7d1",
+      "txHash": "0xc1b3e69f4179f8f4ffe9104a31abafd025562fb70d5b31ec117e42a874f67bf3",
+>>>>>>> ee1f57d (feat: upgrade box rate)
       "kind": "transparent"
     }
   ],
@@ -21346,6 +21371,7 @@
         }
       }
     },
+<<<<<<< HEAD
     "9114c46f8c6c2d2beadd55e032d5735c84db7dd475e45f4b6fc8c46bb20c2f7e": {
       "address": "0xf8dCEB1E91036Db0F3fAdd157424a892911C2403",
       "txHash": "0x5070bd1b9dae8ed5c1d6e25647fab331dbc187bc113642e5a1668269fdb5febb",
@@ -27262,6 +27288,11 @@
     "25cd0fc00e1cecc8a17aa9431653464211ef78603209a4f340f6cd5148c21144": {
       "address": "0xc855E05232e07edeB9C8B92aDdfc51b8Ed8c438b",
       "txHash": "0xe3b6b9d839bb559ed3449c622b51ca133f012daf5a95642c78502710e1aea3cb",
+=======
+    "972630e278775a9e4171f95e38ab282f668b5bcd54162d4cb8e56818ec13264a": {
+      "address": "0x0EacAABf60791F052A1365bE7e2ca15Fc40a99b1",
+      "txHash": "0x75aa05b54505ae4d47b21000994ece8212540b3cfeafd26e92182ccde21c504b",
+>>>>>>> ee1f57d (feat: upgrade box rate)
       "layout": {
         "storage": [
           {
@@ -27297,13 +27328,21 @@
           {
             "contract": "ERC721Upgradeable",
             "label": "_holderTokens",
+<<<<<<< HEAD
             "type": "t_mapping(t_address,t_struct(UintSet)30037_storage)",
+=======
+            "type": "t_mapping(t_address,t_struct(UintSet)27719_storage)",
+>>>>>>> ee1f57d (feat: upgrade box rate)
             "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:34"
           },
           {
             "contract": "ERC721Upgradeable",
             "label": "_tokenOwners",
+<<<<<<< HEAD
             "type": "t_struct(UintToAddressMap)29414_storage",
+=======
+            "type": "t_struct(UintToAddressMap)27096_storage",
+>>>>>>> ee1f57d (feat: upgrade box rate)
             "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:37"
           },
           {
@@ -27351,7 +27390,11 @@
           {
             "contract": "AccessControlUpgradeable",
             "label": "_roles",
+<<<<<<< HEAD
             "type": "t_mapping(t_bytes32,t_struct(RoleData)26048_storage)",
+=======
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)23730_storage)",
+>>>>>>> ee1f57d (feat: upgrade box rate)
             "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
           },
           {
@@ -27363,61 +27406,103 @@
           {
             "contract": "BlindBox",
             "label": "tokens",
+<<<<<<< HEAD
             "type": "t_array(t_struct(Box)899_storage)dyn_storage",
             "src": "BlindBox.sol:31"
+=======
+            "type": "t_array(t_struct(Box)902_storage)dyn_storage",
+            "src": "BlindBox.sol:33"
+>>>>>>> ee1f57d (feat: upgrade box rate)
           },
           {
             "contract": "BlindBox",
             "label": "xBlade",
+<<<<<<< HEAD
             "type": "t_contract(IERC20)31922",
             "src": "BlindBox.sol:33"
+=======
+            "type": "t_contract(IERC20)29604",
+            "src": "BlindBox.sol:35"
+>>>>>>> ee1f57d (feat: upgrade box rate)
           },
           {
             "contract": "BlindBox",
             "label": "cwController",
+<<<<<<< HEAD
             "type": "t_contract(CWController)3318",
             "src": "BlindBox.sol:34"
+=======
+            "type": "t_contract(CWController)2711",
+            "src": "BlindBox.sol:36"
+>>>>>>> ee1f57d (feat: upgrade box rate)
           },
           {
             "contract": "BlindBox",
             "label": "characters",
+<<<<<<< HEAD
             "type": "t_contract(Characters)15118",
             "src": "BlindBox.sol:35"
+=======
+            "type": "t_contract(Characters)12764",
+            "src": "BlindBox.sol:37"
+>>>>>>> ee1f57d (feat: upgrade box rate)
           },
           {
             "contract": "BlindBox",
             "label": "weapons",
+<<<<<<< HEAD
             "type": "t_contract(Weapons)24601",
             "src": "BlindBox.sol:36"
+=======
+            "type": "t_contract(Weapons)22283",
+            "src": "BlindBox.sol:38"
+>>>>>>> ee1f57d (feat: upgrade box rate)
           },
           {
             "contract": "BlindBox",
             "label": "commonQty",
             "type": "t_uint256",
+<<<<<<< HEAD
             "src": "BlindBox.sol:38"
+=======
+            "src": "BlindBox.sol:40"
+>>>>>>> ee1f57d (feat: upgrade box rate)
           },
           {
             "contract": "BlindBox",
             "label": "rareQty",
             "type": "t_uint256",
+<<<<<<< HEAD
             "src": "BlindBox.sol:39"
+=======
+            "src": "BlindBox.sol:41"
+>>>>>>> ee1f57d (feat: upgrade box rate)
           },
           {
             "contract": "BlindBox",
             "label": "epicQty",
             "type": "t_uint256",
+<<<<<<< HEAD
             "src": "BlindBox.sol:40"
+=======
+            "src": "BlindBox.sol:42"
+>>>>>>> ee1f57d (feat: upgrade box rate)
           },
           {
             "contract": "BlindBox",
             "label": "commonPrice",
             "type": "t_uint256",
+<<<<<<< HEAD
             "src": "BlindBox.sol:42"
+=======
+            "src": "BlindBox.sol:44"
+>>>>>>> ee1f57d (feat: upgrade box rate)
           },
           {
             "contract": "BlindBox",
             "label": "rarePrice",
             "type": "t_uint256",
+<<<<<<< HEAD
             "src": "BlindBox.sol:43"
           },
           {
@@ -27430,10 +27515,13 @@
             "contract": "BlindBox",
             "label": "fragmentQty",
             "type": "t_mapping(t_address,t_uint256)",
+=======
+>>>>>>> ee1f57d (feat: upgrade box rate)
             "src": "BlindBox.sol:45"
           },
           {
             "contract": "BlindBox",
+<<<<<<< HEAD
             "label": "fragmentPerBox",
             "type": "t_uint256",
             "src": "BlindBox.sol:46"
@@ -27456,15 +27544,35 @@
             "label": "struct BlindBox.Box[]"
           },
           "t_struct(Box)899_storage": {
+=======
+            "label": "epicPrice",
+            "type": "t_uint256",
+            "src": "BlindBox.sol:46"
+          }
+        ],
+        "types": {
+          "t_array(t_struct(Box)902_storage)dyn_storage": {
+            "label": "struct BlindBox.Box[]"
+          },
+          "t_struct(Box)902_storage": {
+>>>>>>> ee1f57d (feat: upgrade box rate)
             "label": "struct BlindBox.Box",
             "members": [
               {
                 "label": "boxType",
+<<<<<<< HEAD
                 "type": "t_enum(Type)896"
               }
             ]
           },
           "t_enum(Type)896": {
+=======
+                "type": "t_enum(Type)899"
+              }
+            ]
+          },
+          "t_enum(Type)899": {
+>>>>>>> ee1f57d (feat: upgrade box rate)
             "label": "enum BlindBox.Type",
             "members": [
               "COMMON",
@@ -27472,6 +27580,7 @@
               "EPIC"
             ]
           },
+<<<<<<< HEAD
           "t_contract(IERC20)31922": {
             "label": "contract IERC20"
           },
@@ -27482,11 +27591,24 @@
             "label": "contract Characters"
           },
           "t_contract(Weapons)24601": {
+=======
+          "t_contract(IERC20)29604": {
+            "label": "contract IERC20"
+          },
+          "t_contract(CWController)2711": {
+            "label": "contract CWController"
+          },
+          "t_contract(Characters)12764": {
+            "label": "contract Characters"
+          },
+          "t_contract(Weapons)22283": {
+>>>>>>> ee1f57d (feat: upgrade box rate)
             "label": "contract Weapons"
           },
           "t_uint256": {
             "label": "uint256"
           },
+<<<<<<< HEAD
           "t_mapping(t_address,t_uint256)": {
             "label": "mapping(address => uint256)"
           },
@@ -27494,17 +27616,28 @@
             "label": "address"
           },
           "t_mapping(t_bytes32,t_struct(RoleData)26048_storage)": {
+=======
+          "t_mapping(t_bytes32,t_struct(RoleData)23730_storage)": {
+>>>>>>> ee1f57d (feat: upgrade box rate)
             "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
           },
           "t_bytes32": {
             "label": "bytes32"
           },
+<<<<<<< HEAD
           "t_struct(RoleData)26048_storage": {
+=======
+          "t_struct(RoleData)23730_storage": {
+>>>>>>> ee1f57d (feat: upgrade box rate)
             "label": "struct AccessControlUpgradeable.RoleData",
             "members": [
               {
                 "label": "members",
+<<<<<<< HEAD
                 "type": "t_struct(AddressSet)29916_storage"
+=======
+                "type": "t_struct(AddressSet)27598_storage"
+>>>>>>> ee1f57d (feat: upgrade box rate)
               },
               {
                 "label": "adminRole",
@@ -27512,16 +27645,28 @@
               }
             ]
           },
+<<<<<<< HEAD
           "t_struct(AddressSet)29916_storage": {
+=======
+          "t_struct(AddressSet)27598_storage": {
+>>>>>>> ee1f57d (feat: upgrade box rate)
             "label": "struct EnumerableSetUpgradeable.AddressSet",
             "members": [
               {
                 "label": "_inner",
+<<<<<<< HEAD
                 "type": "t_struct(Set)29651_storage"
               }
             ]
           },
           "t_struct(Set)29651_storage": {
+=======
+                "type": "t_struct(Set)27333_storage"
+              }
+            ]
+          },
+          "t_struct(Set)27333_storage": {
+>>>>>>> ee1f57d (feat: upgrade box rate)
             "label": "struct EnumerableSetUpgradeable.Set",
             "members": [
               {
@@ -27543,33 +27688,63 @@
           "t_array(t_uint256)49_storage": {
             "label": "uint256[49]"
           },
+<<<<<<< HEAD
           "t_mapping(t_address,t_struct(UintSet)30037_storage)": {
             "label": "mapping(address => struct EnumerableSetUpgradeable.UintSet)"
           },
           "t_struct(UintSet)30037_storage": {
+=======
+          "t_mapping(t_address,t_struct(UintSet)27719_storage)": {
+            "label": "mapping(address => struct EnumerableSetUpgradeable.UintSet)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_struct(UintSet)27719_storage": {
+>>>>>>> ee1f57d (feat: upgrade box rate)
             "label": "struct EnumerableSetUpgradeable.UintSet",
             "members": [
               {
                 "label": "_inner",
+<<<<<<< HEAD
                 "type": "t_struct(Set)29651_storage"
               }
             ]
           },
           "t_struct(UintToAddressMap)29414_storage": {
+=======
+                "type": "t_struct(Set)27333_storage"
+              }
+            ]
+          },
+          "t_struct(UintToAddressMap)27096_storage": {
+>>>>>>> ee1f57d (feat: upgrade box rate)
             "label": "struct EnumerableMapUpgradeable.UintToAddressMap",
             "members": [
               {
                 "label": "_inner",
+<<<<<<< HEAD
                 "type": "t_struct(Map)29096_storage"
               }
             ]
           },
           "t_struct(Map)29096_storage": {
+=======
+                "type": "t_struct(Map)26778_storage"
+              }
+            ]
+          },
+          "t_struct(Map)26778_storage": {
+>>>>>>> ee1f57d (feat: upgrade box rate)
             "label": "struct EnumerableMapUpgradeable.Map",
             "members": [
               {
                 "label": "_entries",
+<<<<<<< HEAD
                 "type": "t_array(t_struct(MapEntry)29088_storage)dyn_storage"
+=======
+                "type": "t_array(t_struct(MapEntry)26770_storage)dyn_storage"
+>>>>>>> ee1f57d (feat: upgrade box rate)
               },
               {
                 "label": "_indexes",
@@ -27577,10 +27752,17 @@
               }
             ]
           },
+<<<<<<< HEAD
           "t_array(t_struct(MapEntry)29088_storage)dyn_storage": {
             "label": "struct EnumerableMapUpgradeable.MapEntry[]"
           },
           "t_struct(MapEntry)29088_storage": {
+=======
+          "t_array(t_struct(MapEntry)26770_storage)dyn_storage": {
+            "label": "struct EnumerableMapUpgradeable.MapEntry[]"
+          },
+          "t_struct(MapEntry)26770_storage": {
+>>>>>>> ee1f57d (feat: upgrade box rate)
             "label": "struct EnumerableMapUpgradeable.MapEntry",
             "members": [
               {
