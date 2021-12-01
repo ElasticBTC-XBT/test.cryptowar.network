@@ -37,23 +37,24 @@ contract BlindBox is
     Characters public characters;
     Weapons public weapons;
 
-    uint256 commonQty;
-    uint256 rareQty;
-    uint256 epicQty;
+    uint256 public commonQty;
+    uint256 public rareQty;
+    uint256 public epicQty;
 
-    uint256 commonPrice;
-    uint256 rarePrice;
-    uint256 epicPrice;
+    uint256 public commonPrice;
+    uint256 public rarePrice;
+    uint256 public epicPrice;
 
     event NewBlindBox(uint256 indexed boxId, address indexed minter);
     event Burned(address indexed owner, uint256 indexed burned);
     event Open(address indexed minter, uint256 stars);
 
-    function initialize() public initializer {
+    function initialize(address _weapon, address _character, address _xBlade, address _cwController) public initializer {
         __ERC721_init("CryptoWars BlindBox", "CBB");
         __AccessControl_init_unchained();
 
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _setupRole(GAME_ADMIN, msg.sender);
         commonQty = 100;
         rareQty = 100;
         epicQty = 100;
@@ -61,6 +62,18 @@ contract BlindBox is
         commonPrice = 1 ether;
         rarePrice = 2 ether;
         epicPrice = 2 ether;
+
+        require(_weapon != address(0));
+        weapons = Weapons(_weapon);
+
+        require(_character != address(0));
+        characters = Characters(_character);
+
+        require(_xBlade != address(0));
+        xBlade = IERC20(_xBlade);
+
+        require(_cwController != address(0));
+        cwController = CWController(_cwController);
     }
 
     /** MODIFIERS */

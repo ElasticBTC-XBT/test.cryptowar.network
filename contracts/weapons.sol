@@ -47,11 +47,11 @@ contract Weapons is Initializable, ERC721Upgradeable, AccessControlUpgradeable {
     //     _registerInterface(0xe62e6974); // TransferCooldownableInterfaceId.interfaceId()
     // }
 
-    // function migrateTo_surprise(Promos _promos) public {
-    //     require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Not admin");
+    function migrateTo_surprise(Promos _promos) public {
+        require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Not admin");
 
-    //     promos = _promos;
-    // }
+        promos = _promos;
+    }
 
     /*
         visual numbers start at 0, increment values by 1
