@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@openzeppelin/test-helpers": "^0.5.11",
-    "@openzeppelin/truffle-upgrades": "1.8.0",
+    "@openzeppelin/truffle-upgrades": "^1.11.0",
     "@truffle/config": "^1.2.41",
     "@truffle/provider": "^0.2.32",
     "bignumber.js": "^9.0.1",
