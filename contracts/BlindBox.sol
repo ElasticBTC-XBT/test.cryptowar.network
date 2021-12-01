@@ -221,7 +221,7 @@ contract BlindBox is
         if (_box.boxType == Type.EPIC) {
             stars = getEpicStars(seed);
         }
-        if (stars < 4) {
+        if (stars <= 4) {
             weapons.mintWeaponWithStars(msg.sender, stars, seed);
         }
         if (stars == 10) {
