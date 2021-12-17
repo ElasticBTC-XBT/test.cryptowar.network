@@ -18,6 +18,7 @@
 
         <b-dropdown-item href="https://www.cryptowar.network/" target="_blank"><i class="fa fa-book mr-2"></i>HomePage</b-dropdown-item>
         <b-dropdown-item href="https://wiki.cryptowar.network/" target="_blank"><i class="fa fa-book mr-2"></i>Wiki <b-icon scale="0.8" icon="question-circle"/></b-dropdown-item>
+        <b-dropdown-item href="https://wiki.cryptowar.network/backers-and-partners" target="_blank"><i class="fa fa-book mr-2"></i>Partners</b-dropdown-item>
         <b-dropdown-item href="https://discord.gg/MQBWnE8t2G" target="_blank"><i class="fa fa-book mr-2"></i>Discord</b-dropdown-item>
         <b-dropdown-item href="https://t.me/elasticbitcoinxbt" target="_blank"><i class="fa fa-book mr-2"></i>Telegram</b-dropdown-item>
         <b-dropdown-item href="https://twitter.com/xbladecryptowar" target="_blank"><i class="fa fa-book mr-2"></i>Twitter</b-dropdown-item>
