@@ -2316,11 +2316,19 @@ export function createStore(web3: Web3) {
           Characters,
           Shields
         } = state.contracts();
-        if (!NFTMarket || !Weapons || !Characters || !Shields) return;
+        if (!NFTMarket || !Weapons || !Characters || !Shields || !state.defaultAccount) return;
 
+        // const allowance = await SkillToken.methods
+        //   .allowance(state.defaultAccount, NFTMarket.options.address)
+        //   .call(defaultCallOptions(state));
+
+        // alert(allowance);
+
+        // if(toBN(allowance).gte(0)) {
         await SkillToken.methods
-          .approve(NFTMarket.options.address, maxPrice)
+          .approve(SkillToken.options.address, maxPrice)
           .send(defaultCallOptions(state));
+        // }
 
         const res = await NFTMarket.methods
           .purchaseListing(nftContractAddr, tokenId, maxPrice)
@@ -2460,6 +2468,8 @@ export function createStore(web3: Web3) {
         const allowance = await xBladeToken.methods
           .allowance(state.defaultAccount, SecretBox.options.address)
           .call(defaultCallOptions(state));
+
+        alert(allowance);
 
         if(toBN(allowance).lt( web3.utils.toWei('1000000', 'ether'))) {
           await xBladeToken.methods
