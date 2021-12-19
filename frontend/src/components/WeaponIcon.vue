@@ -37,7 +37,7 @@
           Repairs 1 point every 50 minutes, durability will be full at: ${timeUntilWeaponHasMaxDurability(weapon.id)}`"></div>
       </div>
 
-      <div class="weapon-bt-box" v-if="isSell">
+      <div class="weapon-bt-box default-contrast" v-if="isSell">
         <b-button @click="sellClick()">
           Sell
         </b-button>
@@ -235,7 +235,17 @@ export default {
 
 .weapon.selected .glow-container{
   /* border: 1px solid rgb(255 255 255 / 41%); */
-  background-color: rgb(255 255 255 / 7%);
+  background-color: rgb(255 255 255 / 25%);
+  border: 1px solid rgb(255, 165, 0);
+  filter: contrast(200%);
+}
+
+.weapon.selected .glow-container .default-contrast{
+  filter: contrast(50%);
+}
+
+.weapon.selected .glow-container.glow-0{
+  box-shadow: inset 0 0 20px rgb(255, 165, 0);
 }
 
 .loading-container {
