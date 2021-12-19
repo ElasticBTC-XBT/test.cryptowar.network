@@ -2322,8 +2322,6 @@ export function createStore(web3: Web3) {
           .allowance(state.defaultAccount, NFTMarket.options.address)
           .call(defaultCallOptions(state));
 
-        alert(allowance);
-
         if(toBN(allowance).lt( web3.utils.toWei('1000000', 'ether'))) {
           await SkillToken.methods
             .approve(NFTMarket.options.address, web3.utils.toWei('100000000', 'ether'))
