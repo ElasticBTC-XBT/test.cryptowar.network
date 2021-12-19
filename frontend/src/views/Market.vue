@@ -960,23 +960,27 @@ export default Vue.extend({
       if(val <= 0 || !val || isNaN(val)) return;
 
       this.waitingMarketOutcome = true;
+      try {
+        const results = await this.addMarketListing({
+          nftContractAddr: this.contractAddress,
+          // nft-list keys have a typeid format, e.g. shield0
+          tokenId: this.activeType === 'weapon' || this.activeType === 'character'
+            ? this.selectedNftId
+            : this.selectedNftId.split('.')[1],
+          price: this.convertSkillToWei(val.toString()),
+        });
 
-      const results = await this.addMarketListing({
-        nftContractAddr: this.contractAddress,
-        // nft-list keys have a typeid format, e.g. shield0
-        tokenId: this.activeType === 'weapon' || this.activeType === 'character'
-          ? this.selectedNftId
-          : this.selectedNftId.split('.')[1],
-        price: this.convertSkillToWei(val.toString()),
-      });
-
-      this.selectedNftId = null;
-      this.waitingMarketOutcome = false;
-      this.marketOutcome = true;
-      this.marketOutcomeHeading = 'Successfully listed ';
-      this.marketOutcomeActiveType = this.activeType;
-      this.marketOutcomeID = results.nftID;
-      this.marketOutcomePrice = this.convertWeiToSkill(results.price)+' xBlade';
+        this.selectedNftId = null;
+        this.waitingMarketOutcome = false;
+        this.marketOutcome = true;
+        this.marketOutcomeHeading = 'Successfully listed ';
+        this.marketOutcomeActiveType = this.activeType;
+        this.marketOutcomeID = results.nftID;
+        this.marketOutcomePrice = this.convertWeiToSkill(results.price)+' xBlade';
+      } catch(error) {
+        this.marketOutcome = false;
+        this.waitingMarketOutcome = false;
+      }
     },
 
     async updateNftListingPrice() {
@@ -988,22 +992,26 @@ export default Vue.extend({
       if(val <= 0 || !val || isNaN(val)) return;
 
       this.waitingMarketOutcome = true;
+      try {
+        const results = await this.changeMarketListingPrice({
+          nftContractAddr: this.contractAddress,
+          tokenId: this.activeType === 'weapon' || this.activeType === 'character'
+            ? this.selectedNftId
+            : this.selectedNftId.split('.')[1],
+          newPrice: this.convertSkillToWei(val.toString())
+        });
 
-      const results = await this.changeMarketListingPrice({
-        nftContractAddr: this.contractAddress,
-        tokenId: this.activeType === 'weapon' || this.activeType === 'character'
-          ? this.selectedNftId
-          : this.selectedNftId.split('.')[1],
-        newPrice: this.convertSkillToWei(val.toString())
-      });
-
-      this.selectedNftId = null;
-      this.waitingMarketOutcome = false;
-      this.marketOutcome = true;
-      this.marketOutcomeHeading = 'Successfully changed price';
-      this.marketOutcomeActiveType = this.activeType;
-      this.marketOutcomeID = results.nftID;
-      this.marketOutcomePrice = this.convertWeiToSkill(results.newPrice)+' xBlade';
+        this.selectedNftId = null;
+        this.waitingMarketOutcome = false;
+        this.marketOutcome = true;
+        this.marketOutcomeHeading = 'Successfully changed price';
+        this.marketOutcomeActiveType = this.activeType;
+        this.marketOutcomeID = results.nftID;
+        this.marketOutcomePrice = this.convertWeiToSkill(results.newPrice)+' xBlade';
+      } catch {
+        this.marketOutcome = false;
+        this.waitingMarketOutcome = false;
+      }
     },
 
     async purchaseNft() {
@@ -1032,28 +1040,32 @@ export default Vue.extend({
       }
 
       this.waitingMarketOutcome = true;
+      try {
+        const results: any = await this.purchaseMarketListing({
+          nftContractAddr: this.contractAddress,
+          tokenId: this.selectedNftId,
+          maxPrice: price
+        });
 
-      const results: any = await this.purchaseMarketListing({
-        nftContractAddr: this.contractAddress,
-        tokenId: this.selectedNftId,
-        maxPrice: price
-      });
+        const results2: any  = await this.fetchAllMarketNftIds({
+          nftContractAddr: this.contractAddress
+        });
 
-      const results2: any  = await this.fetchAllMarketNftIds({
-        nftContractAddr: this.contractAddress
-      });
+        this.allSearchResults = results2;
 
-      this.allSearchResults = results2;
+        this.allSearchResults = Array.from(this.allSearchResults as string[]).filter((x: any) => x.id !== this.selectedNftId);
 
-      this.allSearchResults = Array.from(this.allSearchResults as string[]).filter((x: any) => x.id !== this.selectedNftId);
-
-      this.waitingMarketOutcome = false;
-      this.marketOutcome = true;
-      this.marketOutcomeHeading = 'Successfully purchased ';
-      this.marketOutcomeActiveType = this.activeType;
-      this.marketOutcomeID = results.nftID;
-      this.marketOutcomePrice = this.convertWeiToSkill(results.price) + ' xBlade';
-      this.marketOutcomeSeller = results.seller;
+        this.waitingMarketOutcome = false;
+        this.marketOutcome = true;
+        this.marketOutcomeHeading = 'Successfully purchased ';
+        this.marketOutcomeActiveType = this.activeType;
+        this.marketOutcomeID = results.nftID;
+        this.marketOutcomePrice = this.convertWeiToSkill(results.price) + ' xBlade';
+        this.marketOutcomeSeller = results.seller;
+      } catch {
+        this.marketOutcome = false;
+        this.waitingMarketOutcome = false;
+      }
     },
 
     async cancelNftListing() {
@@ -1062,21 +1074,25 @@ export default Vue.extend({
       if(this.selectedNftId === null) return;
 
       this.waitingMarketOutcome = true;
+      try {
+        const results = await this.cancelMarketListing({
+          nftContractAddr: this.contractAddress,
+          tokenId: this.activeType === 'weapon' || this.activeType === 'character'
+            ? this.selectedNftId
+            : this.selectedNftId.split('.')[1],
+        });
 
-      const results = await this.cancelMarketListing({
-        nftContractAddr: this.contractAddress,
-        tokenId: this.activeType === 'weapon' || this.activeType === 'character'
-          ? this.selectedNftId
-          : this.selectedNftId.split('.')[1],
-      });
+        this.waitingMarketOutcome = false;
+        this.marketOutcome = true;
+        this.marketOutcomeHeading = 'Successfully taken off the market';
+        this.marketOutcomeActiveType = this.activeType;
+        this.marketOutcomeID = results.nftID;
 
-      this.waitingMarketOutcome = false;
-      this.marketOutcome = true;
-      this.marketOutcomeHeading = 'Successfully taken off the market';
-      this.marketOutcomeActiveType = this.activeType;
-      this.marketOutcomeID = results.nftID;
-
-      await this.searchOwnListings(this.activeType);
+        await this.searchOwnListings(this.activeType);
+      } catch {
+        this.marketOutcome = false;
+        this.waitingMarketOutcome = false;
+      }
     },
 
     async searchAllCharacterListings(page: number) {
@@ -1207,19 +1223,22 @@ export default Vue.extend({
       this.marketOutcome = true;
       this.waitingMarketOutcome = true;
       this.currentPage = page + 1;
+      try {
+        if(useBlockchain === true)
+          await this.searchAllWeaponListingsThroughChain(page);
+        else
+          await this.searchAllWeaponListingsThroughAPI(page);
 
-      if(useBlockchain === true)
-        await this.searchAllWeaponListingsThroughChain(page);
-      else
-        await this.searchAllWeaponListingsThroughAPI(page);
-
-      // searchResultsOwned does not mesh with this function
-      // will need per-result checking of it, OR filtering out own NFTs
-      //this.searchResultsOwned = nftSeller === this.defaultAccount;
-      this.searchResultsOwned = false; // temp
-
-      this.waitingMarketOutcome = false;
-      this.marketOutcome = false;
+        // searchResultsOwned does not mesh with this function
+        // will need per-result checking of it, OR filtering out own NFTs
+        //this.searchResultsOwned = nftSeller === this.defaultAccount;
+        this.searchResultsOwned = false; // temp
+        this.waitingMarketOutcome = false;
+        this.marketOutcome = false;
+      } catch {
+        this.waitingMarketOutcome = false;
+        this.marketOutcome = false;
+      }
     },
 
     async searchAllWeaponListingsThroughChain(page: number) {
@@ -1361,6 +1380,7 @@ export default Vue.extend({
       } catch {
         this.searchResultsOwned = false;
         this.waitingMarketOutcome = false;
+        this.marketOutcome = false;
         this.searchResults = [];
       }
 
@@ -1395,11 +1415,16 @@ export default Vue.extend({
       }
       this.waitingMarketOutcome = true;
 
-      await this.searchOwnListingsThroughChain();
+      try {
+        await this.searchOwnListingsThroughChain();
 
-      this.searchResultsOwned = true;
-      this.waitingMarketOutcome = false;
-      this.marketOutcome = false;
+        this.searchResultsOwned = true;
+        this.waitingMarketOutcome = false;
+        this.marketOutcome = false;
+      } catch {
+        this.waitingMarketOutcome = false;
+        this.marketOutcome = false;
+      }
     },
 
     async searchOwnListingsThroughChain() {
