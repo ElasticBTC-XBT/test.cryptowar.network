@@ -77,10 +77,8 @@
       <div class="row" v-if="currentCharacterStamina >= staminaPerFight">
         <div class="col">
           <div class="row">
-            <!-- <div style="flex: 0 0 26.3%; max-width: 27%;" s class="col-3"></div> -->
             <div class="col">
-              <div v-if="showModal" id="fight-overlay">
-                <!-- <div id="overlay"></div> -->
+              <div v-if="showModalFight" id="fight-overlay">
                 <div class="waiting" v-if="waitingResults" margin="auto">
                   <div class="fighting-img"></div>
                   <div class="waiting-text">
@@ -198,7 +196,7 @@
                       !weaponHasDurability(selectedWeaponId) ||
                       !charHasStamina()
                     "
-                    @click="onClickEncounter(e), (showModal = true)"
+                    @click="onClickEncounter(e), (showModalFight = true)"
                   />
                   <p v-if="isLoadingTargets">Loading...</p>
                 </div>
@@ -264,7 +262,7 @@ export default {
       soundFight: new Audio(require("../assets/sound/sound_fight.wav")),
       soundWin: new Audio(require("../assets/sound/sound_win.wav")),
       soundLose: new Audio(require("../assets/sound/sound_lose.wav")),
-      showModal: false,
+      showModalFight: false,
     };
   },
 
@@ -336,9 +334,8 @@ export default {
       if (this.resultsAvailable && error === null) {
         this.$bvModal.show("fightResultsModal");
       }
-      if (localStorage.getItem("offSound") === "true") {
+      if (localStorage.getItem("changeSound") === "true") {
         if (fightResults[0] !== false) {
-          console.log(fightResults[0]);
           this.soundWin.play();
         } else {
           this.soundLose.play();
@@ -461,7 +458,7 @@ export default {
       this.error = null;
       this.setIsInCombat(this.waitingResults);
       try {
-        if (localStorage.getItem("offSound") === "true") {
+        if (localStorage.getItem("changeSound") === "true") {
           this.soundFight.play();
         }
         const results = await this.doEncounter({
@@ -470,7 +467,7 @@ export default {
           targetString: targetToFight.original,
           fightMultiplier: this.fightMultiplier,
         });
-        this.showModal = false;
+        this.showModalFight = false;
         this.fightResults = results;
 
         await this.fetchFightRewardSkill();
@@ -488,7 +485,7 @@ export default {
         this.soundFight.currentTime = 0;
         localStorage.setItem("reject", "false");
 
-        this.showModal = false;
+        this.showModalFight = false;
       }
     },
 

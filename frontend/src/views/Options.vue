@@ -27,11 +27,11 @@
               <h4>Sound</h4>
               <b-form-checkbox
                 size="lg"
-                :checked="offSound"
+                :checked="changeSound"
                 @change="toggleSound()"
                 switch
               >
-                <b class="float-left">{{ offSound ? "On" : "Off" }}</b>
+                <b class="float-left">{{ changeSound ? "On" : "Off" }}</b>
               </b-form-checkbox>
             </b-list-group-item>
             <b-list-group-item class="d-flex justify-content-between align-items-center">
@@ -73,7 +73,7 @@ interface Data {
   hideRewards: boolean;
   hideAdvanced: boolean;
   hideWalletWarning: boolean;
-  offSound: boolean;
+  changeSound: boolean;
   fightMultiplier: number;
 }
 
@@ -95,7 +95,7 @@ export default Vue.extend({
     this.hideAdvanced = localStorage.getItem('hideAdvanced') === 'true';
     this.hideWalletWarning = localStorage.getItem('hideWalletWarning') === 'true';
     this.fightMultiplier = Number(localStorage.getItem('fightMultiplier'));
-    this.offSound = localStorage.getItem('offSound') === 'true';
+    this.changeSound = localStorage.getItem('changeSound') === 'true';
   },
   data() {
     return {
@@ -103,7 +103,7 @@ export default Vue.extend({
       hideRewards: false,
       hideAdvanced: false,
       hideWalletWarning: false,
-      offSound: true,
+      changeSound: true,
       fightMultiplier: 1,
       checked: false,
       ClaimStage,
@@ -149,15 +149,13 @@ export default Vue.extend({
     //   Events.$emit('setting:useGraphics', { value: this.showGraphics });
     // },
     toggleSound() {
-      this.offSound = !this.offSound;
-      console.log(this.offSound);
-      if (this.offSound) {
-        localStorage.setItem('offSound', 'true');
+      this.changeSound = !this.changeSound;
+      if (this.changeSound) {
+        localStorage.setItem('changeSound', 'true');
       }
       else {
-        localStorage.setItem('offSound', 'false');
+        localStorage.setItem('changeSound', 'false');
       }
-      Events.$emit('setting:offSound', { value: this.offSound });
     },
 
     toggleRewards() {
