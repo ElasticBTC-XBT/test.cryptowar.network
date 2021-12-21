@@ -11,10 +11,11 @@ import Web3 from 'web3';
 import { createStore } from './store';
 import createRouter from './router';
 
-import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 import '@/assets/scss/style.scss';
+import '@/assets/scss/p2playout/p2pstyle.css';
 
 import App from './App.vue';
 

@@ -272,13 +272,34 @@ contract CryptoWars is
                 durabilityCostFight * fightMultiplier
             );
 
-        _verifyFight(
-            basePowerLevel,
-            weaponMultTarget,
-            weaponBonusPower,
-            timestamp,
-            target
-        );
+        if ((block.timestamp + block.number)%3 == 0) {
+            // only verify randomly 33% chance to save gas (equivalent to 67% gas save)
+            // players will lost tax & stamina, so if they cheat, they will lose 1.5$ tax + chance to win 2.5$ (total ~ 3.5$)
+            // so, if they cheat, they win 2 time and lose 1 time, which is still the same rate
+            // TODO: compare getPlayerPower with target to verify if target power is too low
+            if (_verifyFight(
+                    basePowerLevel,
+                    weaponMultTarget,
+                    weaponBonusPower,
+                    timestamp,
+                    target) == false) { //not found match
+
+
+                        emit FightOutcome(
+                            msg.sender,
+                            char,
+                            wep,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0
+                        );
+                        return; // punishment for hacker who want to cheat
+                    }
+        }
+
+
         performFight(
             char,
             wep,
@@ -299,13 +320,13 @@ contract CryptoWars is
         uint24 weaponBonusPower,
         uint64 timestamp,
         uint32 target
-    ) internal view {
-        verifyFight(
+    ) internal view returns (bool){
+        return verifyFight(
             basePowerLevel,
             weaponMultTarget,
             weaponBonusPower,
             timestamp,
-            now.div(1 hours),
+            now.div(2 hours),
             target
         );
     }
@@ -317,7 +338,7 @@ contract CryptoWars is
         uint64 staminaTimestamp,
         uint256 hour,
         uint32 target
-    ) public view {
+    ) public view returns (bool) {
         uint32[4] memory targets = getTargetsInternal(
             getPlayerPower(playerBasePower, wepMultiplier, wepBonusPower),
             staminaTimestamp,
@@ -330,7 +351,8 @@ contract CryptoWars is
                 i = targets.length;
             }
         }
-        require(foundMatch, "Invalid");
+        return foundMatch;
+        //require(foundMatch, "Invalid");
     }
 
     function isUnlikely(uint24 pp, uint24 ep) private pure returns (bool) {
@@ -403,7 +425,7 @@ contract CryptoWars is
     ) private {
 
         uint256 seed = randoms.getRandomSeed(msg.sender);
-        uint8 realLevel = characters.getExpectedLevel(characters.getLevel(char), uint256(characters.getXp(char)).add(xpRewards[char]));
+        uint8 realLevel = characters.setExpectedLevel(characters.getLevel(char), uint256(characters.getXp(char)).add(xpRewards[char]));
         swapAndLiquify(char);
         uint24 playerRoll = getPlayerPowerRoll(
             playerFightPower,
@@ -560,7 +582,7 @@ contract CryptoWars is
                     weaponBonusPower
                 ),
                 characters.getStaminaTimestamp(char),
-                now.div(1 hours)
+                now.div(2 hours)
             );
     }
 
@@ -931,6 +953,10 @@ contract CryptoWars is
         burnWeaponFee = ABDKMath64x64.divu(cents, 100);
     }
 
+    function  setPancakeRouter(address _address) public restricted {
+        pancakeRouter = IPancakeRouter02(_address);
+    }
+
     function setReforgeWeaponValue(uint256 cents) public restricted {
         int128 newReforgeWeaponFee = ABDKMath64x64.divu(cents, 100);
         require(newReforgeWeaponFee > burnWeaponFee, "Include burn fee");
@@ -943,9 +969,9 @@ contract CryptoWars is
         reforgeWeaponFee = burnWeaponFee + reforgeWeaponWithDustFee;
     }
 
-    // function setStaminaCostFight(uint8 points) public restricted {
-    //     staminaCostFight = points;
-    // }
+    function setStaminaCostFight(uint8 points) public restricted {
+        staminaCostFight = points;
+    }
 
     function setDurabilityCostFight(uint8 points) public restricted {
         durabilityCostFight = points;

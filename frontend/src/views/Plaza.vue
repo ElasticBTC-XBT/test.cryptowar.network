@@ -73,7 +73,7 @@
               Rename Character
             </b-button> -->
             <div>
-              <b-button
+              <!-- <b-button
                 v-if="ownCharacters.length < 8"
                 :disabled="!canRecruit() || heroAmount < 1"
                 variant="primary"
@@ -91,7 +91,7 @@
                 >
                 xBlade)&nbsp;
                 <i class="fas fa-plus"></i>
-              </b-button>
+              </b-button> -->
               <div class="small-hero-left">
                 Only
                 <strong

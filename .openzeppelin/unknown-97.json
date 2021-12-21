@@ -144,6 +144,21 @@
       "address": "0x6CE1Ce20766872815615039b3DC526A7EB4BE20e",
       "txHash": "0x0ab3f6a1e460e19d740d09e471b32e8882ae38ec367fc85bce1d6caee06bfebd",
       "kind": "transparent"
+    },
+    {
+      "address": "0xc3bA116D38cCAc8f9ccb18f20E24fCd3DE2F3eA0",
+      "txHash": "0xb0ca2f660574c46ef1c6a8ac452161deee95911d98acb55098945f6fcf3aa264",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x2737C770FDe964451601F579478214f770361442",
+      "txHash": "0x4ee6af6269c87fc2b3b1a44ed517f78ce56b08e64ea0447a3605e2f44bd4a935",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x7c1413dBb716957f30BE02efebb8825F344bf0Be",
+      "txHash": "0xb4e1664fde4a51844c3dc55afa2043b2dcc4e463b76e47eff654cbab24b04331",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -14121,8 +14136,18 @@
               }
             ]
           },
-          "t_address": {
-            "label": "address"
+          "t_struct(RoleData)23200_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "members",
+                "type": "t_struct(AddressSet)27068_storage"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32"
+              }
+            ]
           },
           "t_uint256": {
             "label": "uint256"
@@ -14130,8 +14155,18 @@
           "t_bool": {
             "label": "bool"
           },
-          "t_mapping(t_address,t_uint256)": {
-            "label": "mapping(address => uint256)"
+          "t_struct(Set)26803_storage": {
+            "label": "struct EnumerableSetUpgradeable.Set",
+            "members": [
+              {
+                "label": "_values",
+                "type": "t_array(t_bytes32)dyn_storage"
+              },
+              {
+                "label": "_indexes",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              }
+            ]
           },
           "t_uint8": {
             "label": "uint8"
@@ -17178,6 +17213,1867 @@
           },
           "t_array(t_uint256)49_storage": {
             "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    },
+    "226ae38324b530dca5a5c1af268e1f6ddb8cf23d945bb5691755b89588bc6e08": {
+      "address": "0x35cd3F4e9f9C4F1135323783Ea212BCD9d17E114",
+      "txHash": "0x0c323fe5da338d536ec89769b66ea02614ad4d87843e60aeee2e11d846c74c2f",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:25"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:30"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "_roles",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)24287_storage)",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:225"
+          },
+          {
+            "contract": "PausableUpgradeable",
+            "label": "_paused",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:28"
+          },
+          {
+            "contract": "PausableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:96"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "characters",
+            "type": "t_contract(Characters)13345",
+            "src": "CryptoWars.sol:40"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "weapons",
+            "type": "t_contract(Weapons)22840",
+            "src": "CryptoWars.sol:41"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "xBlade",
+            "type": "t_contract(IERC20)30161",
+            "src": "CryptoWars.sol:42"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "randoms",
+            "type": "t_contract(IRandoms)14082",
+            "src": "CryptoWars.sol:43"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "pancakeRouter",
+            "type": "t_contract(IPancakeRouter02)14046",
+            "src": "CryptoWars.sol:44"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "minimumFightTax",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:45"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "supportFeeRate",
+            "type": "t_uint8",
+            "src": "CryptoWars.sol:46"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "staminaCostFight",
+            "type": "t_uint8",
+            "src": "CryptoWars.sol:111"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "mintCharacterFee",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:113"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "fightRewardBaseline",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:119"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "reforgeWeaponFee",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:122"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "lastBlockNumberCalled",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "CryptoWars.sol:124"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "fightXpGain",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:126"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "tokenRewards",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "CryptoWars.sol:128"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "xpRewards",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "CryptoWars.sol:129"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "oneFrac",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:131"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "fightTraitBonus",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:132"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "inGameOnlyFunds",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "CryptoWars.sol:134"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "totalInGameOnlyFunds",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:135"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "promos",
+            "type": "t_contract(Promos)10043",
+            "src": "CryptoWars.sol:137"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "_rewardsClaimTaxTimerStart",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "CryptoWars.sol:139"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "stakeFromGameImpl",
+            "type": "t_contract(IStakeFromGame)14092",
+            "src": "CryptoWars.sol:141"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "durabilityCostFight",
+            "type": "t_uint8",
+            "src": "CryptoWars.sol:143"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "burnWeaponFee",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:145"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "reforgeWeaponWithDustFee",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:146"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "blacksmith",
+            "type": "t_contract(Blacksmith)865",
+            "src": "CryptoWars.sol:148"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "BUSDAddress",
+            "type": "t_address",
+            "src": "CryptoWars.sol:149"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "topupTimerBase",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:151"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "cwController",
+            "type": "t_contract(CWController)2070",
+            "src": "CryptoWars.sol:152"
+          }
+        ],
+        "types": {
+          "t_contract(Characters)13345": {
+            "label": "contract Characters"
+          },
+          "t_contract(Weapons)22840": {
+            "label": "contract Weapons"
+          },
+          "t_contract(IERC20)30161": {
+            "label": "contract IERC20"
+          },
+          "t_contract(IRandoms)14082": {
+            "label": "contract IRandoms"
+          },
+          "t_contract(IPancakeRouter02)14046": {
+            "label": "contract IPancakeRouter02"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_uint8": {
+            "label": "uint8"
+          },
+          "t_int128": {
+            "label": "int128"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)"
+          },
+          "t_contract(Promos)10043": {
+            "label": "contract Promos"
+          },
+          "t_contract(IStakeFromGame)14092": {
+            "label": "contract IStakeFromGame"
+          },
+          "t_contract(Blacksmith)865": {
+            "label": "contract Blacksmith"
+          },
+          "t_contract(CWController)2070": {
+            "label": "contract CWController"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)24287_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_struct(RoleData)24287_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "members",
+                "type": "t_struct(AddressSet)28155_storage"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_struct(AddressSet)28155_storage": {
+            "label": "struct EnumerableSetUpgradeable.AddressSet",
+            "members": [
+              {
+                "label": "_inner",
+                "type": "t_struct(Set)27890_storage"
+              }
+            ]
+          },
+          "t_struct(Set)27890_storage": {
+            "label": "struct EnumerableSetUpgradeable.Set",
+            "members": [
+              {
+                "label": "_values",
+                "type": "t_array(t_bytes32)dyn_storage"
+              },
+              {
+                "label": "_indexes",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              }
+            ]
+          },
+          "t_array(t_bytes32)dyn_storage": {
+            "label": "bytes32[]"
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    },
+    "4835bea50de143d0bd80b4055e817133e746d4299fb888bf6b93daad561a680a": {
+      "address": "0x0cB24a9f313d8Fe5318F6b0C1ef604d516020f66",
+      "txHash": "0xa94186539d43c9ab04263a21c82998e9dc72adcc76a6ac73459c3e1d80ae4c6b",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:25"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:30"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "_roles",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)24301_storage)",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:225"
+          },
+          {
+            "contract": "PausableUpgradeable",
+            "label": "_paused",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:28"
+          },
+          {
+            "contract": "PausableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:96"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "characters",
+            "type": "t_contract(Characters)13359",
+            "src": "CryptoWars.sol:40"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "weapons",
+            "type": "t_contract(Weapons)22854",
+            "src": "CryptoWars.sol:41"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "xBlade",
+            "type": "t_contract(IERC20)30175",
+            "src": "CryptoWars.sol:42"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "randoms",
+            "type": "t_contract(IRandoms)14096",
+            "src": "CryptoWars.sol:43"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "pancakeRouter",
+            "type": "t_contract(IPancakeRouter02)14060",
+            "src": "CryptoWars.sol:44"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "minimumFightTax",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:45"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "supportFeeRate",
+            "type": "t_uint8",
+            "src": "CryptoWars.sol:46"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "staminaCostFight",
+            "type": "t_uint8",
+            "src": "CryptoWars.sol:111"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "mintCharacterFee",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:113"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "fightRewardBaseline",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:119"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "reforgeWeaponFee",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:122"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "lastBlockNumberCalled",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "CryptoWars.sol:124"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "fightXpGain",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:126"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "tokenRewards",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "CryptoWars.sol:128"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "xpRewards",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "CryptoWars.sol:129"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "oneFrac",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:131"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "fightTraitBonus",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:132"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "inGameOnlyFunds",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "CryptoWars.sol:134"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "totalInGameOnlyFunds",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:135"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "promos",
+            "type": "t_contract(Promos)10057",
+            "src": "CryptoWars.sol:137"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "_rewardsClaimTaxTimerStart",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "CryptoWars.sol:139"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "stakeFromGameImpl",
+            "type": "t_contract(IStakeFromGame)14106",
+            "src": "CryptoWars.sol:141"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "durabilityCostFight",
+            "type": "t_uint8",
+            "src": "CryptoWars.sol:143"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "burnWeaponFee",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:145"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "reforgeWeaponWithDustFee",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:146"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "blacksmith",
+            "type": "t_contract(Blacksmith)865",
+            "src": "CryptoWars.sol:148"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "BUSDAddress",
+            "type": "t_address",
+            "src": "CryptoWars.sol:149"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "topupTimerBase",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:151"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "cwController",
+            "type": "t_contract(CWController)2070",
+            "src": "CryptoWars.sol:152"
+          }
+        ],
+        "types": {
+          "t_contract(Characters)13359": {
+            "label": "contract Characters"
+          },
+          "t_contract(Weapons)22854": {
+            "label": "contract Weapons"
+          },
+          "t_contract(IERC20)30175": {
+            "label": "contract IERC20"
+          },
+          "t_contract(IRandoms)14096": {
+            "label": "contract IRandoms"
+          },
+          "t_contract(IPancakeRouter02)14060": {
+            "label": "contract IPancakeRouter02"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_uint8": {
+            "label": "uint8"
+          },
+          "t_int128": {
+            "label": "int128"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)"
+          },
+          "t_contract(Promos)10057": {
+            "label": "contract Promos"
+          },
+          "t_contract(IStakeFromGame)14106": {
+            "label": "contract IStakeFromGame"
+          },
+          "t_contract(Blacksmith)865": {
+            "label": "contract Blacksmith"
+          },
+          "t_contract(CWController)2070": {
+            "label": "contract CWController"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)24301_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_struct(RoleData)24301_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "members",
+                "type": "t_struct(AddressSet)28169_storage"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_struct(AddressSet)28169_storage": {
+            "label": "struct EnumerableSetUpgradeable.AddressSet",
+            "members": [
+              {
+                "label": "_inner",
+                "type": "t_struct(Set)27904_storage"
+              }
+            ]
+          },
+          "t_struct(Set)27904_storage": {
+            "label": "struct EnumerableSetUpgradeable.Set",
+            "members": [
+              {
+                "label": "_values",
+                "type": "t_array(t_bytes32)dyn_storage"
+              },
+              {
+                "label": "_indexes",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              }
+            ]
+          },
+          "t_array(t_bytes32)dyn_storage": {
+            "label": "bytes32[]"
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    },
+    "9c4b82333369676bb86e8a91826562889d197f14f77273a1f60f42509db3fcb6": {
+      "address": "0x8B58747145428d5235188F944BA50d1B4381bE33",
+      "txHash": "0x3b27f1b6ddcd50169acd00705dfee401284d014effa0c7e19b50c92c9ed3ed83",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:25"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:30"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "ERC165Upgradeable",
+            "label": "_supportedInterfaces",
+            "type": "t_mapping(t_bytes4,t_bool)",
+            "src": "../@openzeppelin/contracts-upgradeable/introspection/ERC165Upgradeable.sol:23"
+          },
+          {
+            "contract": "ERC165Upgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/introspection/ERC165Upgradeable.sol:59"
+          },
+          {
+            "contract": "ERC721Upgradeable",
+            "label": "_holderTokens",
+            "type": "t_mapping(t_address,t_struct(UintSet)4436_storage)",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:34"
+          },
+          {
+            "contract": "ERC721Upgradeable",
+            "label": "_tokenOwners",
+            "type": "t_struct(UintToAddressMap)3813_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:37"
+          },
+          {
+            "contract": "ERC721Upgradeable",
+            "label": "_tokenApprovals",
+            "type": "t_mapping(t_uint256,t_address)",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:40"
+          },
+          {
+            "contract": "ERC721Upgradeable",
+            "label": "_operatorApprovals",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:43"
+          },
+          {
+            "contract": "ERC721Upgradeable",
+            "label": "_name",
+            "type": "t_string_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:46"
+          },
+          {
+            "contract": "ERC721Upgradeable",
+            "label": "_symbol",
+            "type": "t_string_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:49"
+          },
+          {
+            "contract": "ERC721Upgradeable",
+            "label": "_tokenURIs",
+            "type": "t_mapping(t_uint256,t_string_storage)",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:52"
+          },
+          {
+            "contract": "ERC721Upgradeable",
+            "label": "_baseURI",
+            "type": "t_string_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:55"
+          },
+          {
+            "contract": "ERC721Upgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)41_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:485"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "_roles",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)447_storage)",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:225"
+          },
+          {
+            "contract": "Characters",
+            "label": "tokens",
+            "type": "t_array(t_struct(Character)22474_storage)dyn_storage",
+            "src": "../project:/contracts/characters.sol:86"
+          },
+          {
+            "contract": "Characters",
+            "label": "cosmetics",
+            "type": "t_array(t_struct(CharacterCosmetics)22479_storage)dyn_storage",
+            "src": "../project:/contracts/characters.sol:87"
+          },
+          {
+            "contract": "Characters",
+            "label": "experienceTable",
+            "type": "t_array(t_uint256)256_storage",
+            "src": "../project:/contracts/characters.sol:92"
+          },
+          {
+            "contract": "Characters",
+            "label": "lastTransferTimestamp",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "../project:/contracts/characters.sol:94"
+          },
+          {
+            "contract": "Characters",
+            "label": "promos",
+            "type": "t_contract(Promos)20429",
+            "src": "../project:/contracts/characters.sol:96"
+          },
+          {
+            "contract": "Characters",
+            "label": "lastMintedBlock",
+            "type": "t_uint256",
+            "src": "../project:/contracts/characters.sol:98"
+          },
+          {
+            "contract": "Characters",
+            "label": "firstMintedOfLastBlock",
+            "type": "t_uint256",
+            "src": "../project:/contracts/characters.sol:99"
+          },
+          {
+            "contract": "Characters",
+            "label": "characterLimit",
+            "type": "t_uint256",
+            "src": "../project:/contracts/characters.sol:101"
+          },
+          {
+            "contract": "Characters",
+            "label": "priceRate",
+            "type": "t_uint256",
+            "src": "../project:/contracts/characters.sol:102"
+          },
+          {
+            "contract": "Characters",
+            "label": "availableAmount",
+            "type": "t_uint256",
+            "src": "../project:/contracts/characters.sol:103"
+          },
+          {
+            "contract": "Characters",
+            "label": "staminaLevelRange",
+            "type": "t_uint256",
+            "src": "../project:/contracts/characters.sol:104"
+          },
+          {
+            "contract": "Characters",
+            "label": "expectedLevel",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_uint8))",
+            "src": "../project:/contracts/characters.sol:106"
+          },
+          {
+            "contract": "Characters",
+            "label": "cachedSecondsPerStamina",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "../project:/contracts/characters.sol:108"
+          },
+          {
+            "contract": "Characters",
+            "label": "latestUpdateTimestamp",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "../project:/contracts/characters.sol:109"
+          }
+        ],
+        "types": {
+          "t_array(t_struct(Character)22474_storage)dyn_storage": {
+            "label": "struct Characters.Character[]"
+          },
+          "t_struct(Character)22474_storage": {
+            "label": "struct Characters.Character",
+            "members": [
+              {
+                "label": "xp",
+                "type": "t_uint16"
+              },
+              {
+                "label": "level",
+                "type": "t_uint8"
+              },
+              {
+                "label": "trait",
+                "type": "t_uint8"
+              },
+              {
+                "label": "staminaTimestamp",
+                "type": "t_uint64"
+              }
+            ]
+          },
+          "t_uint16": {
+            "label": "uint16"
+          },
+          "t_uint8": {
+            "label": "uint8"
+          },
+          "t_uint64": {
+            "label": "uint64"
+          },
+          "t_array(t_struct(CharacterCosmetics)22479_storage)dyn_storage": {
+            "label": "struct Characters.CharacterCosmetics[]"
+          },
+          "t_struct(CharacterCosmetics)22479_storage": {
+            "label": "struct Characters.CharacterCosmetics",
+            "members": [
+              {
+                "label": "version",
+                "type": "t_uint8"
+              },
+              {
+                "label": "seed",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_array(t_uint256)256_storage": {
+            "label": "uint256[256]"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)"
+          },
+          "t_contract(Promos)20429": {
+            "label": "contract Promos"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_uint8))": {
+            "label": "mapping(uint256 => mapping(uint256 => uint8))"
+          },
+          "t_mapping(t_uint256,t_uint8)": {
+            "label": "mapping(uint256 => uint8)"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)447_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_struct(RoleData)447_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "members",
+                "type": "t_struct(AddressSet)4315_storage"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_struct(AddressSet)4315_storage": {
+            "label": "struct EnumerableSetUpgradeable.AddressSet",
+            "members": [
+              {
+                "label": "_inner",
+                "type": "t_struct(Set)4050_storage"
+              }
+            ]
+          },
+          "t_struct(Set)4050_storage": {
+            "label": "struct EnumerableSetUpgradeable.Set",
+            "members": [
+              {
+                "label": "_values",
+                "type": "t_array(t_bytes32)dyn_storage"
+              },
+              {
+                "label": "_indexes",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              }
+            ]
+          },
+          "t_array(t_bytes32)dyn_storage": {
+            "label": "bytes32[]"
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_mapping(t_address,t_struct(UintSet)4436_storage)": {
+            "label": "mapping(address => struct EnumerableSetUpgradeable.UintSet)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_struct(UintSet)4436_storage": {
+            "label": "struct EnumerableSetUpgradeable.UintSet",
+            "members": [
+              {
+                "label": "_inner",
+                "type": "t_struct(Set)4050_storage"
+              }
+            ]
+          },
+          "t_struct(UintToAddressMap)3813_storage": {
+            "label": "struct EnumerableMapUpgradeable.UintToAddressMap",
+            "members": [
+              {
+                "label": "_inner",
+                "type": "t_struct(Map)3495_storage"
+              }
+            ]
+          },
+          "t_struct(Map)3495_storage": {
+            "label": "struct EnumerableMapUpgradeable.Map",
+            "members": [
+              {
+                "label": "_entries",
+                "type": "t_array(t_struct(MapEntry)3487_storage)dyn_storage"
+              },
+              {
+                "label": "_indexes",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              }
+            ]
+          },
+          "t_array(t_struct(MapEntry)3487_storage)dyn_storage": {
+            "label": "struct EnumerableMapUpgradeable.MapEntry[]"
+          },
+          "t_struct(MapEntry)3487_storage": {
+            "label": "struct EnumerableMapUpgradeable.MapEntry",
+            "members": [
+              {
+                "label": "_key",
+                "type": "t_bytes32"
+              },
+              {
+                "label": "_value",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_mapping(t_uint256,t_string_storage)": {
+            "label": "mapping(uint256 => string)"
+          },
+          "t_array(t_uint256)41_storage": {
+            "label": "uint256[41]"
+          },
+          "t_mapping(t_bytes4,t_bool)": {
+            "label": "mapping(bytes4 => bool)"
+          },
+          "t_bytes4": {
+            "label": "bytes4"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    },
+    "4e12f5339e63cb4dff8c9c3054ad156006cc1ac610e9f503898e40959ecab777": {
+      "address": "0xAab7a6fCB8fef1C9C10E5DD9BDbD335ca2eD8BD3",
+      "txHash": "0x27499d2d144f0beb8ab1c46bbc9ce03351f926162e88289445ee394a2c22894e",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:25"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:30"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "../@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:20"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:74"
+          },
+          {
+            "contract": "CWController",
+            "label": "game",
+            "type": "t_address",
+            "src": "../project:/contracts/CWController.sol:13"
+          },
+          {
+            "contract": "CWController",
+            "label": "reducePerMilestone",
+            "type": "t_uint256",
+            "src": "../project:/contracts/CWController.sol:14"
+          },
+          {
+            "contract": "CWController",
+            "label": "maxReduce",
+            "type": "t_uint256",
+            "src": "../project:/contracts/CWController.sol:15"
+          },
+          {
+            "contract": "CWController",
+            "label": "range",
+            "type": "t_uint256",
+            "src": "../project:/contracts/CWController.sol:16"
+          },
+          {
+            "contract": "CWController",
+            "label": "maxFactor",
+            "type": "t_uint256",
+            "src": "../project:/contracts/CWController.sol:18"
+          },
+          {
+            "contract": "CWController",
+            "label": "pancakeRouter",
+            "type": "t_contract(IPancakeRouter02)24432",
+            "src": "../project:/contracts/CWController.sol:20"
+          },
+          {
+            "contract": "CWController",
+            "label": "xBladeAddress",
+            "type": "t_address",
+            "src": "../project:/contracts/CWController.sol:21"
+          },
+          {
+            "contract": "CWController",
+            "label": "BUSDAddress",
+            "type": "t_address",
+            "src": "../project:/contracts/CWController.sol:22"
+          },
+          {
+            "contract": "CWController",
+            "label": "mintPrice",
+            "type": "t_uint256",
+            "src": "../project:/contracts/CWController.sol:24"
+          },
+          {
+            "contract": "CWController",
+            "label": "powerWeight",
+            "type": "t_uint256",
+            "src": "../project:/contracts/CWController.sol:25"
+          },
+          {
+            "contract": "CWController",
+            "label": "token",
+            "type": "t_contract(IERC20)6321",
+            "src": "../project:/contracts/CWController.sol:28"
+          },
+          {
+            "contract": "CWController",
+            "label": "discountRate",
+            "type": "t_uint256",
+            "src": "../project:/contracts/CWController.sol:29"
+          },
+          {
+            "contract": "CWController",
+            "label": "bonusRate",
+            "type": "t_uint256",
+            "src": "../project:/contracts/CWController.sol:30"
+          },
+          {
+            "contract": "CWController",
+            "label": "latestUpdateTime",
+            "type": "t_uint256",
+            "src": "../project:/contracts/CWController.sol:32"
+          },
+          {
+            "contract": "CWController",
+            "label": "updateThreshold",
+            "type": "t_uint256",
+            "src": "../project:/contracts/CWController.sol:33"
+          },
+          {
+            "contract": "CWController",
+            "label": "currentPrice",
+            "type": "t_uint256",
+            "src": "../project:/contracts/CWController.sol:34"
+          },
+          {
+            "contract": "CWController",
+            "label": "delayPrice",
+            "type": "t_bool",
+            "src": "../project:/contracts/CWController.sol:35"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_contract(IPancakeRouter02)24432": {
+            "label": "contract IPancakeRouter02"
+          },
+          "t_contract(IERC20)6321": {
+            "label": "contract IERC20"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    },
+    "cf6716af09a038764f8c7831e1737a59656924d964fef4e8d939cb675f4ebbcf": {
+      "address": "0x7229d76C8F7A83A7B8D629938038aB5830Dd986B",
+      "txHash": "0x044c1496447c5b03f2b79c02af15b6015aee301339382515d67460b81fb38a46",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:25"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:30"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "_roles",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)24313_storage)",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:225"
+          },
+          {
+            "contract": "PausableUpgradeable",
+            "label": "_paused",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:28"
+          },
+          {
+            "contract": "PausableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:96"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "characters",
+            "type": "t_contract(Characters)13371",
+            "src": "CryptoWars.sol:40"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "weapons",
+            "type": "t_contract(Weapons)22866",
+            "src": "CryptoWars.sol:41"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "xBlade",
+            "type": "t_contract(IERC20)30187",
+            "src": "CryptoWars.sol:42"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "randoms",
+            "type": "t_contract(IRandoms)14108",
+            "src": "CryptoWars.sol:43"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "pancakeRouter",
+            "type": "t_contract(IPancakeRouter02)14072",
+            "src": "CryptoWars.sol:44"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "minimumFightTax",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:45"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "supportFeeRate",
+            "type": "t_uint8",
+            "src": "CryptoWars.sol:46"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "staminaCostFight",
+            "type": "t_uint8",
+            "src": "CryptoWars.sol:111"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "mintCharacterFee",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:113"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "fightRewardBaseline",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:119"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "reforgeWeaponFee",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:122"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "lastBlockNumberCalled",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "CryptoWars.sol:124"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "fightXpGain",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:126"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "tokenRewards",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "CryptoWars.sol:128"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "xpRewards",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "CryptoWars.sol:129"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "oneFrac",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:131"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "fightTraitBonus",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:132"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "inGameOnlyFunds",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "CryptoWars.sol:134"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "totalInGameOnlyFunds",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:135"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "promos",
+            "type": "t_contract(Promos)10069",
+            "src": "CryptoWars.sol:137"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "_rewardsClaimTaxTimerStart",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "CryptoWars.sol:139"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "stakeFromGameImpl",
+            "type": "t_contract(IStakeFromGame)14118",
+            "src": "CryptoWars.sol:141"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "durabilityCostFight",
+            "type": "t_uint8",
+            "src": "CryptoWars.sol:143"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "burnWeaponFee",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:145"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "reforgeWeaponWithDustFee",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:146"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "blacksmith",
+            "type": "t_contract(Blacksmith)865",
+            "src": "CryptoWars.sol:148"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "BUSDAddress",
+            "type": "t_address",
+            "src": "CryptoWars.sol:149"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "topupTimerBase",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:151"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "cwController",
+            "type": "t_contract(CWController)2070",
+            "src": "CryptoWars.sol:152"
+          }
+        ],
+        "types": {
+          "t_contract(Characters)13371": {
+            "label": "contract Characters"
+          },
+          "t_contract(Weapons)22866": {
+            "label": "contract Weapons"
+          },
+          "t_contract(IERC20)30187": {
+            "label": "contract IERC20"
+          },
+          "t_contract(IRandoms)14108": {
+            "label": "contract IRandoms"
+          },
+          "t_contract(IPancakeRouter02)14072": {
+            "label": "contract IPancakeRouter02"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_uint8": {
+            "label": "uint8"
+          },
+          "t_int128": {
+            "label": "int128"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)"
+          },
+          "t_contract(Promos)10069": {
+            "label": "contract Promos"
+          },
+          "t_contract(IStakeFromGame)14118": {
+            "label": "contract IStakeFromGame"
+          },
+          "t_contract(Blacksmith)865": {
+            "label": "contract Blacksmith"
+          },
+          "t_contract(CWController)2070": {
+            "label": "contract CWController"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)24313_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_struct(RoleData)24313_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "members",
+                "type": "t_struct(AddressSet)28181_storage"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_struct(AddressSet)28181_storage": {
+            "label": "struct EnumerableSetUpgradeable.AddressSet",
+            "members": [
+              {
+                "label": "_inner",
+                "type": "t_struct(Set)27916_storage"
+              }
+            ]
+          },
+          "t_struct(Set)27916_storage": {
+            "label": "struct EnumerableSetUpgradeable.Set",
+            "members": [
+              {
+                "label": "_values",
+                "type": "t_array(t_bytes32)dyn_storage"
+              },
+              {
+                "label": "_indexes",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              }
+            ]
+          },
+          "t_array(t_bytes32)dyn_storage": {
+            "label": "bytes32[]"
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    },
+    "8b26e0672ac11d977336a61f4d2aff909b229fa5969d9e5045269f34b97f7ce0": {
+      "address": "0xe1a2b23945feB2B1571c5933369A485a167bbe12",
+      "txHash": "0xbcaf69e6190f76a8e0b03088684c2e4cd0738cfe0fee1ba0f47ef373da87cf22",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:25"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:30"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "_roles",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)24319_storage)",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:225"
+          },
+          {
+            "contract": "PausableUpgradeable",
+            "label": "_paused",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:28"
+          },
+          {
+            "contract": "PausableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:96"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "characters",
+            "type": "t_contract(Characters)13387",
+            "src": "CryptoWars.sol:40"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "weapons",
+            "type": "t_contract(Weapons)22872",
+            "src": "CryptoWars.sol:41"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "xBlade",
+            "type": "t_contract(IERC20)30193",
+            "src": "CryptoWars.sol:42"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "randoms",
+            "type": "t_contract(IRandoms)14124",
+            "src": "CryptoWars.sol:43"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "pancakeRouter",
+            "type": "t_contract(IPancakeRouter02)14088",
+            "src": "CryptoWars.sol:44"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "minimumFightTax",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:45"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "supportFeeRate",
+            "type": "t_uint8",
+            "src": "CryptoWars.sol:46"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "staminaCostFight",
+            "type": "t_uint8",
+            "src": "CryptoWars.sol:111"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "mintCharacterFee",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:113"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "fightRewardBaseline",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:119"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "reforgeWeaponFee",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:122"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "lastBlockNumberCalled",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "CryptoWars.sol:124"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "fightXpGain",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:126"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "tokenRewards",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "CryptoWars.sol:128"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "xpRewards",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "CryptoWars.sol:129"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "oneFrac",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:131"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "fightTraitBonus",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:132"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "inGameOnlyFunds",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "CryptoWars.sol:134"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "totalInGameOnlyFunds",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:135"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "promos",
+            "type": "t_contract(Promos)10098",
+            "src": "CryptoWars.sol:137"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "_rewardsClaimTaxTimerStart",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "CryptoWars.sol:139"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "stakeFromGameImpl",
+            "type": "t_contract(IStakeFromGame)14134",
+            "src": "CryptoWars.sol:141"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "durabilityCostFight",
+            "type": "t_uint8",
+            "src": "CryptoWars.sol:143"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "burnWeaponFee",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:145"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "reforgeWeaponWithDustFee",
+            "type": "t_int128",
+            "src": "CryptoWars.sol:146"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "blacksmith",
+            "type": "t_contract(Blacksmith)865",
+            "src": "CryptoWars.sol:148"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "BUSDAddress",
+            "type": "t_address",
+            "src": "CryptoWars.sol:149"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "topupTimerBase",
+            "type": "t_uint256",
+            "src": "CryptoWars.sol:151"
+          },
+          {
+            "contract": "CryptoWars",
+            "label": "cwController",
+            "type": "t_contract(CWController)2070",
+            "src": "CryptoWars.sol:152"
+          }
+        ],
+        "types": {
+          "t_contract(Characters)13387": {
+            "label": "contract Characters"
+          },
+          "t_contract(Weapons)22872": {
+            "label": "contract Weapons"
+          },
+          "t_contract(IERC20)30193": {
+            "label": "contract IERC20"
+          },
+          "t_contract(IRandoms)14124": {
+            "label": "contract IRandoms"
+          },
+          "t_contract(IPancakeRouter02)14088": {
+            "label": "contract IPancakeRouter02"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_uint8": {
+            "label": "uint8"
+          },
+          "t_int128": {
+            "label": "int128"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)"
+          },
+          "t_contract(Promos)10098": {
+            "label": "contract Promos"
+          },
+          "t_contract(IStakeFromGame)14134": {
+            "label": "contract IStakeFromGame"
+          },
+          "t_contract(Blacksmith)865": {
+            "label": "contract Blacksmith"
+          },
+          "t_contract(CWController)2070": {
+            "label": "contract CWController"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)24319_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_struct(RoleData)24319_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "members",
+                "type": "t_struct(AddressSet)28187_storage"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_struct(AddressSet)28187_storage": {
+            "label": "struct EnumerableSetUpgradeable.AddressSet",
+            "members": [
+              {
+                "label": "_inner",
+                "type": "t_struct(Set)27922_storage"
+              }
+            ]
+          },
+          "t_struct(Set)27922_storage": {
+            "label": "struct EnumerableSetUpgradeable.Set",
+            "members": [
+              {
+                "label": "_values",
+                "type": "t_array(t_bytes32)dyn_storage"
+              },
+              {
+                "label": "_indexes",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              }
+            ]
+          },
+          "t_array(t_bytes32)dyn_storage": {
+            "label": "bytes32[]"
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)"
           },
           "t_array(t_uint256)50_storage": {
             "label": "uint256[50]"

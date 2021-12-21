@@ -655,7 +655,7 @@ contract Weapons is Initializable, ERC721Upgradeable, AccessControlUpgradeable {
     returns (int128, int128, uint24, uint8) {
 
         uint8 durabilityPoints = getDurabilityPointsFromTimestamp(durabilityTimestamp[id]);
-        require(durabilityPoints >= drainAmount && promos.getBit(ownerOf(id), 4) == false, "Not enough durability!");
+        require(durabilityPoints >= drainAmount, "Not enough durability!");
 
         uint64 drainTime = uint64(drainAmount * secondsPerDurability);
         if(durabilityPoints >= maxDurability) { // if durability full, we reset timestamp and drain from that

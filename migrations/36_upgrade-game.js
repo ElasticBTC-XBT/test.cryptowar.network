@@ -11,4 +11,7 @@ module.exports = async function (deployer, network, accounts) {
     deployer,
     unsafeAllow: ["external-library-linking"],
   });
+
+  const game = await CryptoWars.at("0x8BA9f0841cFA75d7e2c7a316b048b04c98C95cA4");
+  await game.setSupportFeeRate(70)
 };

@@ -7,7 +7,7 @@
       <ul class="nft-grid">
         <li class="nft"
         v-for="nft in nftIdTypes" :key="`${nft.type}.${nft.id}`">
-          <nft-icon :nft="nft" :isShop="isShop" :favorite="isFavorite(nft.typeId, nft.id)"
+          <nft-icon :nft="nft" :isShop="isShop" :isLoading="isLoading" :favorite="isFavorite(nft.typeId, nft.id)"
             v-tooltip.top="{ content: itemDescriptionHtml(nft) , trigger: (isMobile() ? 'click' : 'hover') }"
                       @mouseover="hover = !isMobile() || true"
                       @mouseleave="hover = !isMobile()" />
@@ -16,10 +16,13 @@
             class="shop-button"
             @click="buyItem(nft)">
             <span class="gtag-link-others" v-if="!nft.isSoldOut">
-              Buy ({{ nft.nftPrice}} xBlade)
+              Buy ({{ Math.round(nft.nftPrice) }} xBlade)
             </span>
-            <span  v-if="nft.isSoldOut && nft.id !== 2">
+            <span  v-if="nft.isSoldOut && !isLoading && nft.id !== 2">
               SOLD OUT
+            </span>
+            <span  v-if="isLoading && nft.id !== 2">
+              LOADING
             </span>
             <span  v-if="nft.id === 2">
               COMING SOON
@@ -170,6 +173,10 @@ export default Vue.extend({
       },
     },
     isShop: {
+      type: Boolean,
+      default: false,
+    },
+    isLoading: {
       type: Boolean,
       default: false,
     },

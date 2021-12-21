@@ -4,9 +4,9 @@
     <div v-if="referralAddress" style="color:#7F327C; text-align:center; background: white; padding:10px">
      ✨ Congratulations! You get 7% discount when mint new heroes ⚔️ only valid in 24 hours ⏰  </div>
     <b-navbar class="main-nav" toggleable="sm">
-      <b-navbar-brand href="#" class="nav-logo">
+      <b-navbar-brand href="/" class="nav-logo">
         <img
-          src="../assets/xBlade-logo-02.png"
+          src="../assets/logo250.png"
           class="logo d-inline-block align-top"
           alt="Logo"
         />
@@ -26,10 +26,11 @@
         <options class="options-display-mobile" />
       </div>
     </b-navbar>
+    <div class="nav-bottom-line"></div>
     <claim-rewards-bar v-if="canShowRewardsBar" />
     <div class="container_row">
       <!-- <img src="../assets/divider4.png" class="expander-divider" /> -->
-      <b-button
+      <!-- <b-button
         class="expander-button"
         @click="toggleCharacterView"
         v-if="ownCharacters.length > 0"
@@ -43,7 +44,7 @@
           v-if="getIsCharacterViewExpanded"
           aria-hidden="true"
         />
-      </b-button>
+      </b-button> -->
     </div>
   </div>
 </template>
@@ -157,8 +158,7 @@ a {
 
 <style scoped>
 .logo {
-  max-width: 80px;
-  padding-top: 7px;
+  max-width: 86px;
 }
 
 
@@ -206,6 +206,16 @@ a {
   grid-column: 1;
   grid-row: 1;
 }
+
+.nav-bottom-line{
+  height: 36px;
+  border-top: 3px solid;
+  border-image-slice: 1;
+  border-top-width: 3px;
+  border-image-source: linear-gradient(to left, #3ADD9A, #121154, #A54476);
+  background-image: radial-gradient(ellipse at top, #CBA938 -10%, transparent 35%), radial-gradient(ellipse at bottom, transparent, transparent);
+}
+
 </style>
 
 

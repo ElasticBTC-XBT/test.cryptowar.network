@@ -1,9 +1,9 @@
 const { upgradeProxy, deployProxy } = require("@openzeppelin/truffle-upgrades");
 
 const CWController = artifacts.require("CWController");
-const SecretBox = artifacts.require("SecretBox");
 const CryptoWars = artifacts.require("CryptoWars");
-const PancakeUtil = artifacts.require("PancakeUtil");
+const Weapons = artifacts.require("Weapons");
+const Characters = artifacts.require("Characters");
 
 module.exports = async function (deployer, network, accounts) {
   if (network === "bsctestnet") {
@@ -25,21 +25,15 @@ module.exports = async function (deployer, network, accounts) {
     // cryptoWar.setCWController(controller.address);
   }
   if (network === "bscmainnet") {
-    // const proxyAddress = "0xAadfa537ecA54d3d7655C4117bBFB83B9bF6035a";
-    // await upgradeProxy(proxyAddress, CWController, {
+    // Upgrade CW
+    // const cwAddress = "0x8BA9f0841cFA75d7e2c7a316b048b04c98C95cA4";
+    // await upgradeProxy(cwAddress, CryptoWars, {
     //   deployer,
     // });
 
-    // const controller = await CWController.at(proxyAddress);
-    // await controller.migrateTokenPrice();
-    // await deployer.deploy(PancakeUtil);
-    // await CryptoWars.link('PancakeUtil','0x4694737FD094f091C718698855A93DB235171315');
-
-    // Upgrade CW
-    const cwAddress = "0x8BA9f0841cFA75d7e2c7a316b048b04c98C95cA4";
-    await upgradeProxy(cwAddress, CryptoWars, {
-      deployer,
-      unsafeAllow: ["external-library-linking"],
-    });
+    const weaponsAddress = "0x52683412f6ea2b6302cea8406eff928510466c2c";
+    const characterAddress = "0xc38470bfe1b08c3bafdaf699eba2fca1fd2b040b";
+    await upgradeProxy(weaponsAddress, Weapons, { deployer });
+    await upgradeProxy(characterAddress, Characters, { deployer });
   }
 };

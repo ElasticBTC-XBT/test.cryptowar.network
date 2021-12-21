@@ -1,7 +1,7 @@
 <template>
   <div class="body main-font">
     <div class="shop-items">
-      <nft-list :isShop="true" :nftIdTypes="itemRender" />
+      <nft-list :isShop="true" :nftIdTypes="itemRender" :isLoading="isLoading" />
     </div>
   </div>
 </template>
@@ -69,7 +69,8 @@ export default Vue.extend({
       fetchCommonBoxSupplyInterval: 0,
       fetchRareBoxSupplyInterval: 0,
       commonBoxSupply: 0,
-      rareBoxSupply: 0
+      rareBoxSupply: 0,
+      isLoading: false,
     };
   },
   computed: {
@@ -182,6 +183,10 @@ export default Vue.extend({
     },
   },
 
+  beforeMount() {
+    this.isLoading = true;
+  },
+
   async mounted() {
     // @ts-ignore
     this.fetchBoxPriceInterval = setInterval(() => {
@@ -194,6 +199,9 @@ export default Vue.extend({
     // @ts-ignore
     this.fetchRareBoxSupplyInterval = setInterval(async () => {
       this.rareBoxSupply = await this.fetchTotalRareBoxSupply();
+    }, 3000);
+    setTimeout(() => {
+      this.isLoading = false;
     }, 3000);
   },
   beforeDestroy() {
