@@ -20884,6 +20884,8 @@ margin-bottom: 1.5rem;
     color: #ECD931;
     font-size: 1.4em;
     font-weight: bold;
+    position: relative;
+    z-index: 2;
   }
   .recruit.btn-secondary i{
     font-size: 2.5em;
