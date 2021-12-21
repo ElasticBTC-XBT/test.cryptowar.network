@@ -21,6 +21,19 @@
                 <b class="float-left">{{ hideWalletWarning ? 'On' : 'Off' }}</b>
               </b-form-checkbox>
             </b-list-group-item>
+            <b-list-group-item
+              class="d-flex justify-content-between align-items-center"
+            >
+              <h4>Sound</h4>
+              <b-form-checkbox
+                size="lg"
+                :checked="changeSound"
+                @change="toggleSound()"
+                switch
+              >
+                <b class="float-left">{{ changeSound ? "On" : "Off" }}</b>
+              </b-form-checkbox>
+            </b-list-group-item>
             <b-list-group-item class="d-flex justify-content-between align-items-center">
               <h4>Stamina Cost per Fight</h4>
               <b-form-select size="lg" v-model="fightMultiplier" @change="setFightMultiplier()">
@@ -60,6 +73,7 @@ interface Data {
   hideRewards: boolean;
   hideAdvanced: boolean;
   hideWalletWarning: boolean;
+  changeSound: boolean;
   fightMultiplier: number;
 }
 
@@ -81,6 +95,7 @@ export default Vue.extend({
     this.hideAdvanced = localStorage.getItem('hideAdvanced') === 'true';
     this.hideWalletWarning = localStorage.getItem('hideWalletWarning') === 'true';
     this.fightMultiplier = Number(localStorage.getItem('fightMultiplier'));
+    this.changeSound = localStorage.getItem('changeSound') === 'true';
   },
   data() {
     return {
@@ -88,6 +103,7 @@ export default Vue.extend({
       hideRewards: false,
       hideAdvanced: false,
       hideWalletWarning: false,
+      changeSound: true,
       fightMultiplier: 1,
       checked: false,
       ClaimStage,
@@ -132,6 +148,15 @@ export default Vue.extend({
 
     //   Events.$emit('setting:useGraphics', { value: this.showGraphics });
     // },
+    toggleSound() {
+      this.changeSound = !this.changeSound;
+      if (this.changeSound) {
+        localStorage.setItem('changeSound', 'true');
+      }
+      else {
+        localStorage.setItem('changeSound', 'false');
+      }
+    },
 
     toggleRewards() {
       this.hideRewards = !this.hideRewards;
