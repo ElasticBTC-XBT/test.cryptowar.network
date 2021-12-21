@@ -16,7 +16,7 @@
 
       <skill-balance-display class="ml-auto d-none d-sm-flex" />
 
-      <claim-rewards v-if="!canShowRewardsBar" />
+      <!-- <claim-rewards v-if="!canShowRewardsBar" /> -->
 
       <options class="d-none d-sm-flex" />
 
@@ -55,24 +55,24 @@ import Vue from "vue";
 import ViewLinks from "./ViewLinks.vue";
 import Options from "./Options.vue";
 import SkillBalanceDisplay from "./smart/SkillBalanceDisplay.vue";
-import ClaimRewards from "./smart/ClaimRewards.vue";
+// import ClaimRewards from "./smart/ClaimRewards.vue";
 import ClaimRewardsBar from "./smart/ClaimRewardsBar.vue";
 
-import Events from "../events";
+// import Events from "../events";
 import { mapGetters, mapMutations } from "vuex";
 
 export default Vue.extend({
   components: {
     ViewLinks,
     SkillBalanceDisplay,
-    ClaimRewards,
+    // ClaimRewards,
     ClaimRewardsBar,
     Options,
   },
 
   data() {
     return {
-      canShowRewardsBar: true,
+      // canShowRewardsBar: true,
     };
   },
 
@@ -90,9 +90,9 @@ export default Vue.extend({
 
   methods: {
     ...mapMutations(["setIsCharacterViewExpanded"]),
-    checkStorage(): void {
-      this.canShowRewardsBar = localStorage.getItem("hideRewards") === "false";
-    },
+    // checkStorage(): void {
+    //   this.canShowRewardsBar = localStorage.getItem("hideRewards") === "false";
+    // },
     toggleCharacterView(): void {
       this.setIsCharacterViewExpanded(!this.getIsCharacterViewExpanded);
       localStorage.setItem(
@@ -103,8 +103,8 @@ export default Vue.extend({
   },
 
   mounted() {
-    this.checkStorage();
-    Events.$on("setting:hideRewards", () => this.checkStorage());
+    // this.checkStorage();
+    // Events.$on("setting:hideRewards", () => this.checkStorage());
   },
 });
 </script>

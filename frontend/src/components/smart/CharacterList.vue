@@ -245,5 +245,10 @@ export default {
    margin-bottom: 20px;
 }
 
+@media (min-width: 1024px) {
+  .character-list {
+    padding: 0 100px;
+  }
+}
 
 </style>

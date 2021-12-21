@@ -20562,6 +20562,18 @@ button.swiper-pagination-bullet {
     margin-top: 2.35rem;
 }
 
+.app.app-v2 {
+    background-image: url('../../v2/bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.app.app-v2.bg2{
+    background-image: url('../../v2/lobbybackground.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .containerButtonSelectHeroes {
     margin-top: 4rem;
 }
@@ -20666,10 +20678,10 @@ margin-bottom: 1.5rem;
   display: flex;
   flex: 1;
   font-size: 21px;
-  
+
 }
 .containerAround input {
-  
+
 }
 .titleAmountHeroes {
   margin-left: 2rem;
@@ -20782,6 +20794,8 @@ margin-bottom: 1.5rem;
     background-image: radial-gradient(#cc7d3c -30%, transparent 70%);
     margin-left: 20px;
     margin-right: 20px;
+    will-change: border-color;
+    transition: all 0.3s;
   }
   .character-item::before{
     content: ' ';
@@ -20792,6 +20806,8 @@ margin-bottom: 1.5rem;
     position: absolute;
     right: -6px;
     top: -8px;
+    will-change: background;
+    transition: all 0.3s;
   }
   .character-item.addnew{
     background-image:linear-gradient(to bottom, #F56F56, transparent), url('../../../assets/v2/bg-recruit.svg');
@@ -20803,11 +20819,11 @@ margin-bottom: 1.5rem;
     justify-content: center;
     border-color: #F2BE3E;
   }
-  
+
   .character-item.addnew::before{
     background: url('../../../assets/v2/corner_yellow.svg') no-repeat 0 0;
   }
-  
+
   .recruit.btn-secondary{
     background: url('../../../assets/v2/recruit.svg') no-repeat 50% 50%;
     width: 141px;
@@ -20823,7 +20839,7 @@ margin-bottom: 1.5rem;
     font-size: 2.5em;
     color: #fff;
   }
-  
+
   .character-item .art {
     width: 100%;
     min-height: 0;
@@ -20833,20 +20849,28 @@ margin-bottom: 1.5rem;
     background-size: contain;
     position: relative;
   }
-  
+
   .valign-middle {
     vertical-align: middle;
   }
-  
+
   .character-item img {
     object-fit: contain;
   }
-  
+
   .character-item.selected {
-  
-      background-image: url('../../../assets/images/bg-item-top-select.png');
+    /* background-image: url('../../../assets/images/bg-item-top-select.png'); */
+    border-color: #F2BE3E;
+    will-change: border-color;
+    transition: all 0.3s;
   }
-  
+
+  .character-item.selected::before {
+    background: url('../../../assets/v2/corner_yellow.svg') no-repeat 0 0;
+    will-change: background;
+    transition: all 0.3s;
+  }
+
   .above-wrapper {
     position: absolute;
     top: 270px;
@@ -20855,7 +20879,7 @@ margin-bottom: 1.5rem;
     z-index: 100;
     text-shadow: 0 0 5px #333, 0 0 10px #333, 0 0 15px #333, 0 0 10px #333;
   }
-  
+
   .clear-filters-button {
     height: fit-content;
     display: flex;
@@ -20863,14 +20887,14 @@ margin-bottom: 1.5rem;
     align-self: flex-end;
     margin:0 15px;
   }
-  
+
   .character-list{
     list-style: none;
     flex-wrap: wrap;
     justify-content: center;
     padding-left: 0px;
   }
-  
+
   @media (max-width: 576px) {
     .character-list {
       display: flex;
@@ -20884,7 +20908,7 @@ margin-bottom: 1.5rem;
       justify-content: center;
     }
   }
-  
+
   .sold {
     height: 40px;
     width: 300px;
@@ -20895,7 +20919,7 @@ margin-bottom: 1.5rem;
     top: 150px;
     z-index: 100;
   }
-  
+
   .sold span {
       text-align: center;
       width: auto;
@@ -20907,18 +20931,18 @@ margin-bottom: 1.5rem;
       text-shadow: 0 0 5px #333, 0 0 10px #333, 0 0 15px #333, 0 0 10px #333;
       text-transform: uppercase;
   }
-  
+
   .fix-h24 {
     height: 24px;
   }
-  
+
   .sell-box{
     position: absolute;
     width: 100%;
     display: flex;
     justify-content: center;
   }
-  
+
   .isMarket{
     margin-bottom: 3rem;
   }

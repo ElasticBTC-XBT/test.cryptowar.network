@@ -62,7 +62,7 @@ export default {
   },
 
   async mounted() {
-
+    document.querySelector(".app.app-v2").classList.toggle("bg2");
   },
 
   components: {
@@ -100,10 +100,5 @@ export default {
   width: 100%;
   align-items: center;
   justify-content: center;
-}
-.app.app-v2{
-  background-image: url('../assets/v2/lobbybackground.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 </style>
