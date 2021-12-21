@@ -1,6 +1,6 @@
 <template>
   <div class="body main-font">
-
+    <claim-rewards-bar v-if="canShowRewardsBar" />
     <ul class="lobby-box">
       <li
             class="character-item addnew addmore"
@@ -41,6 +41,7 @@
                   >
                   <img src="../assets/v2/raid.svg" alt="" class="lobby-img">
                   </b-button>
+            <span class="lobby-item-annouce">Coming soon</span>
           </div>
           </li>
     </ul>
@@ -49,8 +50,15 @@
 </template>
 
 <script>
+import ClaimRewardsBar from "../components/smart/ClaimRewardsBar.vue";
 
 export default {
+  data() {
+    return {
+      canShowRewardsBar: true,
+    };
+  },
+
   computed: {
 
   },
@@ -62,17 +70,20 @@ export default {
   },
 
   async mounted() {
-    document.querySelector(".app.app-v2").classList.toggle("bg2");
+    document.querySelector(".app.app-v2").classList.add("bg2");
   },
 
   components: {
+    ClaimRewardsBar,
   },
 };
 </script>
 
 <style>
 
-
+.character-item {
+  position: relative;
+}
 
 .lobby-box{
   display: flex;
@@ -84,21 +95,37 @@ export default {
 .lobby-item.btn-secondary{
   background: none;
   border: 0px solid;
+  position: relative;
+  z-index: 2;
 }
 .lobby-box .addmore{
   width: calc(294px - 294px*20/100);
   height: calc(398px - 398px*20/100);
 }
-.character-item.addmore{
-  background-image:linear-gradient(#F47055, #04041Daa),
-   url(/img/bg-recruit.76484b7f.svg) !important;
-}
 .character-item .lobby-item-box{
-  background-image: radial-gradient(#FFFF90, #C6A02Fee 22%, #05052111 63%);
+  background-image: radial-gradient(#fdf2be, #C6A02Fee, transparent 60%);
   display: flex;
   height: 100%;
   width: 100%;
   align-items: center;
   justify-content: center;
+}
+
+.lobby-item-annouce {
+  position: absolute;
+  bottom: 25px;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+}
+
+@media (max-width: 575.98px) {
+  .lobby-box {
+    flex-direction: column;
+  }
+
+  .lobby-box .addmore{
+    width: 294px;
+    height: 398px;
+  }
 }
 </style>

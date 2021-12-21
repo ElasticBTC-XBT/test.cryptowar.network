@@ -6323,6 +6323,9 @@ pre code {
 }
 
 @media (max-width: 575.98px) {
+    .app.app-v2 {
+        background-position: center center;
+    }
     .table-responsive-sm {
         display: block;
         width: 100%;
@@ -20764,6 +20767,37 @@ margin-bottom: 1.5rem;
     cursor: pointer;
 }
 
+.btn-claim-xp {
+    background: url("../../v2/claimxp-btn.svg") no-repeat;
+    border: none;
+    border-radius: 0;
+    width: 210px;
+    height: 42px;
+    text-transform: uppercase;
+    font-weight: bold;
+    position: relative;
+}
+
+.btn-claim-xp::after {
+    content: "";
+    position: absolute;
+    height: 16px;
+    width: 117px;
+    bottom: -8px;
+    right: 10px;
+    background-image: radial-gradient(ellipse at center, #FFFF90 -10%, transparent 55%), radial-gradient(ellipse at center, transparent, transparent);
+}
+
+.btn-claim-xp::before {
+    content: "";
+    position: absolute;
+    height: 16px;
+    width: 117px;
+    top: -8px;
+    left: 10px;
+    background-image: radial-gradient(ellipse at center, #FFFF90 -10%, transparent 55%), radial-gradient(ellipse at center, transparent, transparent);
+}
+
 .contentModal {
     background: red;
 }
@@ -20810,14 +20844,30 @@ margin-bottom: 1.5rem;
     transition: all 0.3s;
   }
   .character-item.addnew{
-    background-image:linear-gradient(to bottom, #F56F56, transparent), url('../../../assets/v2/bg-recruit.svg');
-    background-color: linear-gradient(to bottom, #F56F56, transparent);
+    background-image: linear-gradient(to bottom, #f56f56, #f56f56, #bb5b5b, #794b60, #794b60, #231a43, #0f0c31, #030117);
     background-repeat: no-repeat;
     background-position: center;
     display: flex;
     align-items: center;
     justify-content: center;
     border-color: #F2BE3E;
+    position: relative;
+  }
+
+  .character-item.addnew::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    background-image: url('../../../assets/v2/bg-recruit.svg'), linear-gradient(to bottom, #F56F56, #8e5662, #281c44, #050320);
+    opacity: 0.07;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    background-position: center;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
   }
 
   .character-item.addnew::before{
