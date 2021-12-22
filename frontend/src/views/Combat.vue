@@ -79,7 +79,7 @@
           <div class="row">
             <div class="col">
               <div v-if="showModalFight" id="fight-overlay">
-                <div class="waiting" v-if="waitingResults" margin="auto">
+                <div class="waiting animation" v-if="waitingResults" margin="auto">
                   <div class="fighting-img"></div>
                   <div class="waiting-text">
                     <i class="fas fa-spinner fa-spin"></i>
@@ -648,13 +648,18 @@ export default {
   align-items: center;
   padding: 10px 0;
   position: fixed;
-  top: 30%;
-  left: 32%;
   z-index: 3;
 }
 
-.waiting .fighting-img {
-  background-image: url(../assets/images/Fighting-transparent.gif);
+.animation{
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.waiting.animation .fighting-img {
+  background-image: url(../assets/images/Fighting.gif);
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 40em;
@@ -847,8 +852,9 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
   .encounter-button {
     margin-top: 1.35em;
   }
-  .waiting{
-    left: 20%;
+  .waiting.animation .fighting-img{
+    width: 36em;
+    height: 18em;
   }
 }
 
@@ -910,6 +916,10 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
   .small-durability-bar {
     top: 35px;
   }
+  .waiting.animation .fighting-img{
+    width: 32em;
+    height: 16em;
+  }
 }
 
 @media (max-width: 575.98px) {
@@ -917,6 +927,10 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
     width: 100%;
     justify-content: center;
     display: block;
+  }
+  .waiting.animation .fighting-img{
+    width: 28em;
+    height: 14em;
   }
 }
 .element-icon {
