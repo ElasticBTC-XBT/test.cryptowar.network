@@ -222,11 +222,8 @@ contract Weapons is Initializable, ERC721Upgradeable, AccessControlUpgradeable {
         else if (roll < 175) {
             stars = 2;
         }
-        else if (roll < 735) {
-            stars = 1;
-        }
         else {
-            stars = 0;
+            stars = 1;
         }
 
         return mintWeaponWithStars(minter, stars, seed);
