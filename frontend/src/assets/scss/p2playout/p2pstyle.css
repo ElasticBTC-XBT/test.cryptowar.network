@@ -6338,6 +6338,9 @@ pre code {
 }
 
 @media (max-width: 767.98px) {
+    .character-list {
+        justify-content: flex-start
+    }
     .table-responsive-md {
         display: block;
         width: 100%;
@@ -20874,7 +20877,7 @@ margin-bottom: 1.5rem;
     background: url('../../../assets/v2/corner_yellow.svg') no-repeat 0 0;
   }
 
-  .recruit.btn-secondary{
+  .recruit.btn-secondary {
     background: url('../../../assets/v2/recruit.svg') no-repeat 50% 50%;
     width: 141px;
     height: 144px;
@@ -20886,6 +20889,8 @@ margin-bottom: 1.5rem;
     font-weight: bold;
     position: relative;
     z-index: 2;
+    padding: 0;
+    text-align: center;
   }
   .recruit.btn-secondary i{
     font-size: 2.5em;
@@ -20949,11 +20954,42 @@ margin-bottom: 1.5rem;
 
   @media (max-width: 576px) {
     .character-list {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+        justify-content: flex-start
     }
+    .character-item:not(.lobby-box-item-wrap) {
+        height: 257px;
+        width: 169px;
+        margin-left: 8px;
+        margin-right: 8px;
+        margin-top: 30px;
+    }
+
+    .character-item:not(.lobby-box-item-wrap)::before,
+    .character-item.selected::before,
+    .character-item.addnew:not(.lobby-box-item-wrap)::before {
+        width: 48px;
+        height: 42px;
+        right: -2px;
+        top: -5px;
+        background-size: cover;
+    }
+
+    .character-item.addnew {
+        display: flex;
+    }
+
+    .recruit.btn-secondary {
+        width: 89px;
+        height: 91px;
+        background-size: cover;
+        font-size: 12px;
+        margin: auto;
+    }
+
+    .recruit.btn-secondary i {
+        font-size: 24px;
+    }
+
     .clear-filters-button {
       width: 100%;
       text-align: center;

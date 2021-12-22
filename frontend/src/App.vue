@@ -941,7 +941,7 @@ div.bg-success {
 
 @media all and (max-width: 767.98px) {
   .content {
-    padding: 10px;
+    padding: 0px;
   }
   .dark-bg-text {
     width: 100%;

@@ -300,10 +300,6 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.nav-item {
-  /* margin-top: -24px; */
-}
-
 .navbar-expand {
   flex-wrap: wrap;
 }
@@ -325,8 +321,8 @@ export default Vue.extend({
   max-width: 800px;
   background: khaki;
 }
-.claim-reward-text:hover {
-  color: #F58B5B;
+.claim-reward-text {
+  color: #fff;
 }
 
 @media (max-width: 576px) {

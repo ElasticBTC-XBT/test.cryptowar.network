@@ -313,7 +313,7 @@ export default {
 
 .market-bot .lv {
   font-size: 1.2rem;
-  color: #dabf75;
+  color: #FEA829;
   font-weight: bold;
   line-height: 1;
 }
@@ -391,7 +391,7 @@ export default {
   color: #fff;
 }
 
-.water-bg, .fire-bg, .lightning-bg, .earth-bg{
+.water-bg, .fire-bg, .lightning-bg, .earth-bg {
   background-image: url('../assets/images/water.png');
   background-repeat: no-repeat;
   background-position: center bottom;
@@ -405,4 +405,49 @@ export default {
 .earth-bg{
   background-image: url('../assets/images/earth.png');
 }
+
+@media (max-width: 576px) {
+  .trait {
+    height: 45px;
+  }
+
+  .circle-element {
+    width: 27px;
+    height: 27px;
+  }
+
+  .black-outline {
+    font-size: 16px;
+    font-weight: normal;
+  }
+
+  .placeholder {
+    height: 164px;
+    background-size: 70% 60%;
+  }
+
+  .market-bot .name {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .market-bot .lv {
+    font-size: 14px;
+  }
+
+  .xp {
+    width: 145px;
+    border-radius: 16px;
+  }
+
+  .xp .bg-success {
+    width: 145px;
+  }
+
+  .xp-text {
+    font-weight: 500;
+
+  }
+}
+
 </style>

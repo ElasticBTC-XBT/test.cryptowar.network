@@ -3,7 +3,7 @@
     <claim-rewards-bar v-if="canShowRewardsBar" />
     <ul class="lobby-box">
       <li
-            class="character-item addnew addmore"
+            class="character-item addnew addmore lobby-box-item-wrap"
           >
           <div class="lobby-item-box">
             <b-button
@@ -16,7 +16,7 @@
                   </div>
           </li>
           <li
-            class="character-item addnew"
+            class="character-item addnew lobby-box-item-wrap"
           >
           <div class="lobby-item-box">
             <b-button
@@ -30,7 +30,7 @@
           </div>
           </li>
           <li
-            class="character-item addnew addmore"
+            class="character-item addnew addmore lobby-box-item-wrap"
           >
           <div class="lobby-item-box">
             <b-button
@@ -121,6 +121,8 @@ export default {
 @media (max-width: 575.98px) {
   .lobby-box {
     flex-direction: column;
+    margin-top: 37px;
+    padding-left: 0;
   }
 
   .lobby-box .addmore{

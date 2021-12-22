@@ -73,7 +73,7 @@
                 tagname="recruit_character"
               >
               <i class="fas fa-plus"></i><br>
-                Recruit
+              Recruit
               </b-button>
       </li>
     </ul>
