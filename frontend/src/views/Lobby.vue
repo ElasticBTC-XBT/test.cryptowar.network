@@ -111,6 +111,16 @@ export default {
   justify-content: center;
 }
 
+.addnew.lobby-box-item-wrap {
+  margin-left: 15px;
+  margin-right: 15px;
+  width: 298px;
+}
+
+.addnew.addmore.addnew.lobby-box-item-wrap {
+  width: 254px;
+}
+
 .lobby-item-annouce {
   position: absolute;
   bottom: 25px;
@@ -125,8 +135,8 @@ export default {
     padding-left: 0;
   }
 
-  .lobby-box .addmore{
-    width: 294px;
+  .addnew.addmore.addnew.lobby-box-item-wrap {
+    width: 298px;
     height: 398px;
   }
 }
