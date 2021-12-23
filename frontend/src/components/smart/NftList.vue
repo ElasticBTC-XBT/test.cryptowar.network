@@ -499,7 +499,7 @@ export default Vue.extend({
   width: 12rem;
 }
 
-.row.filters {
+/* .row.filters {
    justify-content: center;
    width: 100%;
    max-width: 900px;
@@ -507,7 +507,7 @@ export default Vue.extend({
    align-content: center;
    border-bottom: 0.2px solid rgba(102, 80, 80, 0.1);
    margin-bottom: 20px;
-}
+} */
 .dropdown-elem {
   margin-bottom: 20px;
   max-width: 300px;

@@ -48,7 +48,7 @@
       </li>
     </router-link> -->
 
-    <router-link :to="{ name: 'blacksmith' }" exact class="nav-link mr-3 ml-3"   v-if="!featureFlagStakeOnly">
+    <router-link :to="{ name: 'inventory' }" exact class="nav-link mr-3 ml-3"   v-if="!featureFlagStakeOnly">
       <li class="nav-item nav-top-links nav-img-item-box" >
         <span class="nav-img-item">
           <img src="../assets/v2/inventory.svg" alt="Inventory" class="nav-img">

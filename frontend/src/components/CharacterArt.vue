@@ -56,20 +56,22 @@
         </div>
       </div> -->
 
-      <div class="xp" v-if="!portrait">
-        <b-progress
-          :max="RequiredXp(character.level)"
-          variant="success"
-          v-tooltip.bottom="
-            `Claimable XP ${this.getCharacterUnclaimedXp(character.id)}`
-          "
-        >
-          <strong class="xp-text"
-            >{{ character.xp || 0 }} /
-            {{ RequiredXp(character.level) }} XP</strong
+      <div class="xp-wrap">
+        <div class="xp" v-if="!portrait">
+          <b-progress
+            :max="RequiredXp(character.level)"
+            variant="success"
+            v-tooltip.bottom="
+              `Claimable XP ${this.getCharacterUnclaimedXp(character.id)}`
+            "
           >
-          <b-progress-bar :value="character.xp || 0"></b-progress-bar>
-        </b-progress>
+            <strong class="xp-text"
+              >{{ character.xp || 0 }} /
+              {{ RequiredXp(character.level) }} XP</strong
+            >
+            <b-progress-bar :value="character.xp || 0"></b-progress-bar>
+          </b-progress>
+        </div>
       </div>
     </div>
   </div>
@@ -253,8 +255,12 @@ export default {
   white-space: nowrap;
 }
 
+.xp-wrap {
+  padding: 0 10px;
+}
+
 .xp {
-  width: 261px;
+  width: 100%;
   background-image: url("../assets/v2/xp_bg.svg");
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -263,14 +269,15 @@ export default {
   justify-content: center;
   align-items: center;
   padding: 0 0px;
-  margin: 7px auto;
+  margin: 7px 0;
+  border-radius: 16px;
 }
 
 .xp .bg-success {
   background-position: 0 0;
   background-image: url("../assets/v2/xp_progress.svg");
   background-repeat: no-repeat;
-  width: 261px;
+  width: 100%;
   height: 19px;
   background-color: transparent !important;
 }
@@ -427,21 +434,12 @@ export default {
   }
 
   .market-bot .name {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
   }
 
   .market-bot .lv {
     font-size: 14px;
-  }
-
-  .xp {
-    width: 145px;
-    border-radius: 16px;
-  }
-
-  .xp .bg-success {
-    width: 145px;
   }
 
   .xp-text {

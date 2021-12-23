@@ -1,19 +1,73 @@
 <template>
-  <div>
-    <div class="filters row mt-2 pl-2" v-if="showFilters" @change="saveFilters()">
-      <div class="col-sm-6 col-md-6 col-lg-2 mb-3">
+  <div :class="showFilters && 'row'">
+    <div
+      class="filters mt-1 pl-2"
+      :class="showFilters && 'col-12 col-xl-3'"
+      v-if="showFilters"
+      @change="saveFilters()"
+    >
+      <div
+        class="search-wrap"
+        @click="setFilterOnMobileState(true)"
+      >
+        <input
+          class="form-control search"
+          type="search"
+          placeholder="  Seller Address, NFT ID"
+        />
+      </div>
+
+      <div class="star-filter">
+        <span class="filter-title">Stars</span>
+        <ul class="stars-list">
+          <li
+            class="star-item"
+            v-for="star in 5"
+            v-bind:key="star"
+            @click="starFilterTemp = star === starFilterTemp ? 0 : star"
+            :class="star === starFilterTemp && 'selected'"
+          >
+              <span>{{ star }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="element-filter">
+        <span class="filter-title">Elements</span>
+        <ul class="element-list">
+          <li
+            class="element-item"
+            v-for="element in ['Earth', 'Fire', 'Lightning', 'Water']"
+            v-bind:key="element"
+            @click="elementFilterTemp = (element === elementFilterTemp ? '' : element)"
+            :class="element === elementFilterTemp && 'selected'"
+          >
+              <span
+                :class="element.toLowerCase() + '-icon'"
+              ></span>
+              <span class="element-text">{{ element }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="search-btn">
+        <b-button
+          class="gtag-link-others btn-claim-xp"
+          v-html="`Search`"
+          @click="filterAll"
+        ></b-button>
+      </div>
+
+      <div class="filters-close" @click="setFilterOnMobileState(false)">
+        <i class="fas fa-times"></i>
+      </div>
+
+      <!-- <div class="col-sm-6 col-md-6 col-lg-2 mb-3">
         <strong>Level</strong>
         <select class="form-control" v-model="levelFilter">
           <option v-for="x in ['', 1, 11, 21, 31, 41, 51, 61, 71, 81, 91]" :value="x" :key="x">
             {{ x ? `${x} - ${x + 9}` : 'Any' }}
           </option>
-        </select>
-      </div>
-
-      <div class="col-sm-6 col-md-6 col-lg-2 mb-3">
-        <strong>Element</strong>
-        <select class="form-control" v-model="elementFilter">
-          <option v-for="x in ['', 'Earth', 'Fire', 'Lightning', 'Water']" :value="x" :key="x">{{ x || 'Any' }}</option>
         </select>
       </div>
 
@@ -32,49 +86,50 @@
             <option v-for="x in sorts" :value="x.dir" :key="x.dir">{{ x.name || 'Any' }}</option>
           </select>
         </div>
-      </template>
-
-      <b-button class="clear-filters-button mb-3" @click="clearFilters" >
-          <span>
-            Clear Filters
-          </span>
-        </b-button>
+      </template> -->
     </div>
 
-    <ul class="character-list d-flex">
+    <ul class="character-list row" :class="showFilters && 'col-12 col-xl-9'">
       <li
-        class="character-item"
-        :class="[{ selected: value === c.id }, {isMarket: isSell}]"
+        class="col-6 col-lg-3"
         v-for="c in filteredCharacters"
         :key="c.id"
         @click="$emit('input', c.id)"
       >
-        <div class="above-wrapper" v-if="$slots.above || $scopedSlots.above">
-          <slot name="above" :character="c"></slot>
-        </div>
-        <slot name="sold" :character="c"></slot>
-        <div class="art">
-          <CharacterArt :character="c" :isMarket="isMarket"/>
-        </div>
-        <div class="sell-box" v-if="isSell">
-          <b-button @click="sellClick()">
-            Sell
-          </b-button>
+        <div
+          class="character-item"
+          :class="[{ selected: value === c.id }, {isMarket: isSell}]"
+        >
+          <div class="above-wrapper" v-if="$slots.above || $scopedSlots.above">
+            <slot name="above" :character="c"></slot>
+          </div>
+          <slot name="sold" :character="c"></slot>
+          <div class="art">
+            <CharacterArt :character="c" :isMarket="isMarket"/>
+          </div>
+          <div class="sell-box" v-if="isSell">
+            <b-button @click="sellClick()">
+              Sell
+            </b-button>
+          </div>
         </div>
       </li>
 
       <li
-        class="character-item addnew"
+        class="col-6 col-lg-3"
       >
-        <b-button
-                class="recruit"
-                @click="onMintCharacter"
-                v-tooltip="'Recruit new character'"
-                tagname="recruit_character"
-              >
-              <i class="fas fa-plus"></i><br>
-              Recruit
-              </b-button>
+        <div class="character-item addnew ">
+          <b-button
+            class="recruit"
+            @click="onMintCharacter"
+            v-tooltip="'Recruit new character'"
+            tagname="recruit_character"
+          >
+            <i class="fas fa-plus"></i>
+            <br>
+            Recruit
+          </b-button>
+        </div>
       </li>
     </ul>
   </div>
@@ -127,6 +182,10 @@ export default {
 
   data() {
     return {
+      starFilterTemp: 0,
+      elementFilterTemp: '',
+      searchValue: '',
+      starFilter: 0,
       levelFilter: '',
       elementFilter: '',
       minPriceFilter:'',
@@ -156,6 +215,10 @@ export default {
       let items = this.displayCharacters;
 
       if(this.showFilters) {
+        if(this.searchValue !== '') {
+          items = items.filter(x => x.id === parseInt(this.searchValue, 10));
+        }
+
         if(this.elementFilter) {
           items = items.filter(x => x.traitName.includes(this.elementFilter));
         }
@@ -183,6 +246,16 @@ export default {
     ...mapActions(['fetchCharacters']),
 
     getCharacterArt,
+
+    setFilterOnMobileState(filterState) {
+      document.querySelector('.filters').classList.toggle('active', filterState);
+    },
+
+    filterAll() {
+      this.searchValue = this.$el.querySelector(".search").value;
+      this.elementFilter = this.elementFilterTemp;
+      this.startFilter = this.startFilterTemp;
+    },
 
     saveFilters() {
       sessionStorage.setItem('character-levelfilter', this.levelFilter);
@@ -234,20 +307,20 @@ export default {
 </script>
 
 <style scoped>
-
-.filters {
-   justify-content: center;
-   width: 100%;
-   max-width: 900px;
-   margin: 0 auto;
-   align-content: center;
-   border-bottom: 0.2px solid rgba(102, 80, 80, 0.1);
-   margin-bottom: 20px;
+.character-list.col-12 {
+  padding-right: 0;
+  padding-left: 0;
+  box-sizing: border-box;
 }
 
 @media (min-width: 1024px) {
-  .character-list {
-    padding: 0 100px;
+  .character-list.col-xl-9 {
+    padding-left: 48px;
+    padding-right: 0;
+  }
+
+  .home .character-list {
+    padding: 0 295px;
   }
 }
 

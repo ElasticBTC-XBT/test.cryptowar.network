@@ -13,6 +13,7 @@ import Shop from './views/Shop.vue';
 import Referral from './views/Referral.vue';
 import P2PLayout from './views/P2PLayout.vue';
 import Lobby from './views/Lobby.vue';
+import Inventory from './views/Inventory.vue';
 
 import {
   raid as featureFlagRaid,
@@ -43,6 +44,7 @@ function createRouter() {
     routes: [
       { path: '/', name: 'plaza', component: Plaza },
       { path: '/blacksmith', name: 'blacksmith', component: Blacksmith },
+      { path: '/inventory', name: 'inventory', component: Inventory },
       { path: '/combat', name: 'combat', component: Combat },
       { path: '/leaderboard', name: 'leaderboard', component: Leaderboard },
       ...marketRoutes,
