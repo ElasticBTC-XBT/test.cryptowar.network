@@ -94,7 +94,7 @@
 
     <ul class="weapon-grid row col-12 col-xl-9">
       <li
-        class="col-6 col-lg-4 col-lg-3"
+        class="col-6 col-lg-4 col-xl-3"
         v-for="weapon in nonIgnoredWeapons"
         :key="weapon.id"
         @click="(!checkForDurability || getWeaponDurability(weapon.id) > 0) && onWeaponClick(weapon.id)"

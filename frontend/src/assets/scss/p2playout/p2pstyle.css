@@ -21326,3 +21326,10 @@ margin-bottom: 1.5rem;
         transition: all 0.5s;
     }
   }
+
+  @media (width: 768px) {
+    .character-list.col-12,
+    .weapon-grid.col-12 {
+        padding: 0 50px !important;
+    }
+  }

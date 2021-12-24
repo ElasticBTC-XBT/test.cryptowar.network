@@ -231,12 +231,13 @@ export default {
   font-style: italic;
 }
 
-.black-outline{
+.black-outline {
   color: #fff;
   font-weight: bold;
   font-size: 1.3em;
   text-shadow: none;
 }
+
 .black-outline .white{
   color: #fff;
 }
@@ -263,7 +264,7 @@ export default {
   width: 100%;
   background-image: url("../assets/v2/xp_bg.svg");
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: cover;
   height: 19px;
   display: flex;
   justify-content: center;
@@ -277,6 +278,7 @@ export default {
   background-position: 0 0;
   background-image: url("../assets/v2/xp_progress.svg");
   background-repeat: no-repeat;
+  background-size: cover;
   width: 100%;
   height: 19px;
   background-color: transparent !important;
@@ -289,7 +291,7 @@ export default {
   color: #000;
 }
 
-.xp .progress{
+.xp .progress {
   background-color: initial;
   width: 100%;
   height: 19px;
@@ -303,7 +305,6 @@ export default {
   -o-object-fit: contain;
   object-fit: contain;
   height: 300px;
-  margin-top: -30px;
 }
 
 .market-bot {
@@ -413,6 +414,12 @@ export default {
   background-image: url('../assets/images/earth.png');
 }
 
+@media (min-width: 768px) {
+  .placeholder {
+    margin-top: -30px;
+  }
+}
+
 @media (max-width: 576px) {
   .trait {
     height: 45px;
@@ -439,12 +446,27 @@ export default {
   }
 
   .market-bot .lv {
-    font-size: 14px;
+    font-size: 12px;
+  }
+
+  .name {
+    margin-top: 10px;
+  }
+
+  .xp {
+    height: 12px;
+  }
+
+  .xp .bg-success {
+    height: 12px;
+  }
+
+  .xp .progress {
+    height: 12px;
   }
 
   .xp-text {
     font-weight: 500;
-
   }
 }
 
