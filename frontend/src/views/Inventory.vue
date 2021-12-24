@@ -12,7 +12,9 @@
           </div>
         </b-tab>
         <b-tab title="Dust">
-          <div class="tab-content"></div>
+          <div class="tab-content">
+            <dust-balance-display />
+          </div>
         </b-tab>
         <b-tab title="Box">
           <div class="tab-content"></div>
@@ -25,6 +27,7 @@
 import Vue from 'vue';
 import CharaterList from '../components/smart/CharacterList.vue';
 import WeaponGrid from '../components/smart/WeaponGrid.vue';
+import DustBalanceDisplay from '../components/smart/DustBalanceDisplay.vue';
 
 export default Vue.extend({
   data() {
@@ -35,6 +38,7 @@ export default Vue.extend({
   components: {
     CharaterList,
     WeaponGrid,
+    DustBalanceDisplay,
   },
 
   mounted() {

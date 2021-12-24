@@ -1,49 +1,52 @@
 <template>
   <div>
-    <div class="col-lg-12">
-      <h1 class="text-center">Available Dust</h1>
-      <div class="row">
-        <div class="col-lg-3"></div>
-        <div class="col-lg-2 dust-container" align="center">
-          <div class="dust">
-            LB: <span class="text-warning">15 power per point</span>
-            <div class="dust-image1">
+    <div class="col-xl-12">
+      <div class="dust-list row">
+        <div class="col-lg-3">
+          <div class="character-item addnew dust-container">
+            <div class="dust-info">
+              <div class="dust-burn-point">LB</div>
+              <span class="dust-power">15 power per point</span>
             </div>
+            <div class="dust-image dust-image1"></div>
           </div>
-          <h1 class="text-center">Lesser</h1>
-          <div class="boxed">
-            <h2>
+          <h1 class="dust-label text-center">Lesser</h1>
+          <div class="dust-quantity-wrap">
+            <div class="dust-quantity text-center">
               <h2>{{getLesserDust()}}</h2>
-            </h2>
-          </div>
-        </div>
-        <div class="col-lg-2 dust-container" align="center">
-          <div class="dust">
-            4B: <span class="text-warning">30 power per point</span>
-            <div class="dust-image2">
             </div>
           </div>
-          <h1 class="text-center">Greater</h1>
-          <div class="boxed">
-            <h2>
+        </div>
+        <div class="col-lg-3">
+          <div class="character-item addnew dust-container">
+            <div class="dust-info">
+              <div class="dust-burn-point">4B</div>
+              <span class="dust-power">30 power per point</span>
+            </div>
+            <div class="dust-image dust-image2"></div>
+          </div>
+          <h1 class="dust-label text-center">Greater</h1>
+          <div class="dust-quantity-wrap">
+            <div class="dust-quantity text-center">
               <h2>{{getGreaterDust()}}</h2>
-            </h2>
-          </div>
-        </div>
-        <div class="col-lg-2 dust-container" align="center">
-          <div class="dust">
-            5B: <span class="text-warning">75 power per point</span>
-            <div class="dust-image3">
             </div>
           </div>
-          <h1 class="text-center">Powerful</h1>
-          <div class="boxed">
-            <h2>
+        </div>
+        <div class="col-lg-3">
+          <div class="character-item addnew dust-container">
+            <div class="dust-info">
+              <div class="dust-burn-point">5B</div>
+              <span class="dust-power">75 power per point</span>
+            </div>
+            <div class="dust-image dust-image3"></div>
+          </div>
+          <h1 class="dust-label text-center">Powerful</h1>
+          <div class="dust-quantity-wrap">
+            <div class="dust-quantity text-center">
               <h2>{{getPowerfulDust()}}</h2>
-            </h2>
+            </div>
           </div>
         </div>
-        <div class="col-lg-3"></div>
       </div>
     </div>
   </div>
@@ -78,51 +81,98 @@ export default {
 </script>
 
 <style>
-
-.dust-container {
-  margin: 1em auto 2em;
-  border-radius: 5px;
-  cursor: pointer;
-  align-items :center;
+.dust-list {
+  justify-content: space-around;
 }
 
-.dust {
-  min-height: 13em;
-  max-height: 12em;
-  border-style: dashed;
-  border-color: #9e8a57;
-  width: 12em;
-  border-radius: 5px;
+.character-item.addnew.dust-container {
+  margin: 0 35px;
   cursor: pointer;
-  margin-bottom: 2em;
+  align-items :center;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.dust-burn-point {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.dust-power {
+  font-size: 21px;
+}
+
+.dust-image {
+  width: 269px;
+  height: 269px;
 }
 
 .dust-image1 {
-  content: url("../../assets/dusts/LesserDust.png");
-  max-width: 12em;
-  max-height: 10em;
+  content: url("../../assets/dusts/lesserDust.svg");
 }
 
 .dust-image2 {
-  content: url("../../assets/dusts/greaterDust.png");
-  max-width: 12em;
-  max-height: 10em;
+  content: url("../../assets/dusts/greaterDust.svg");
 }
 
 .dust-image3 {
-  content: url("../../assets/dusts/powerfulDust.png");
-  max-width: 12em;
-  max-height: 10em;
+  content: url("../../assets/dusts/powerfulDust.svg");
 }
 
-.boxed {
-  max-width: 6em;
-  max-height: 6em;
-  border: 1px solid #9e8a57;
-  margin: 2em;
+.dust-label {
+  font-size: 34px !important;
+  font-weight: 400 !important;
+  margin: 16px 0;
 }
 
-.slidecontainer {
+.dust-quantity-wrap {
+  display: flex;
+  align-items: center;
+  padding: 0 100px;
+}
+
+.dust-quantity {
+  margin: auto;
+  background-color: #000;
+  width: 100%;
+  border: 1px solid #1385B7;
+  border-radius: 16px;
+}
+
+@media (max-width: 768px) {
+  .dust-list {
+    justify-content: center
+  }
+
+  .dust-image {
+    max-width: 200px;
+    max-height: 200px;
+  }
+
+  .dust-label {
+    margin: 0 0 16px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .character-item.addnew.dust-container {
+    margin: 50px auto 0;
+    height: 324px;
+    width: 225px;
+  }
+
+  .dust-quantity-wrap {
+    padding: 0 50px;
+  }
+
+  .dust-image {
+    max-width: 200px;
+    max-height: 200px;
+  }
+}
+
+/* .slidecontainer {
   width: 100%;
 }
 
@@ -198,6 +248,6 @@ export default {
   border-radius: 50%;
   border: 1px solid white;
   cursor: pointer;
-}
+} */
 
 </style>
