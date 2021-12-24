@@ -7,7 +7,9 @@
           </div>
         </b-tab>
         <b-tab title="Weapon">
-          <div class="tab-content"></div>
+          <div class="tab-content">
+            <weapon-grid />
+          </div>
         </b-tab>
         <b-tab title="Dust">
           <div class="tab-content"></div>
@@ -22,6 +24,7 @@
 <script lang='ts'>
 import Vue from 'vue';
 import CharaterList from '../components/smart/CharacterList.vue';
+import WeaponGrid from '../components/smart/WeaponGrid.vue';
 
 export default Vue.extend({
   data() {
@@ -31,6 +34,7 @@ export default Vue.extend({
   },
   components: {
     CharaterList,
+    WeaponGrid,
   },
 
   mounted() {

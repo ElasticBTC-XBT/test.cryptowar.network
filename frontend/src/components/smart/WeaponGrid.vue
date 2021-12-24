@@ -1,20 +1,68 @@
 <template>
-  <div>
-    <div class="filters row mt-2 pl-2" v-if="!newWeapon" @change="saveFilters()">
-      <div class="col-sm-6 col-md-6 mb-3" :class="showGivenWeaponIds && !isMarket? 'col-lg-6':'col-lg-2'">
-        <strong>Stars</strong>
-        <select class="form-control" v-model="starFilter" >
-          <option v-for="x in ['', 1, 2, 3, 4, 5]" :value="x" :key="x">{{ x || 'Any' }}</option>
-        </select>
+  <div class="row">
+    <div
+      class="filters mt-1 pl-2 col-12 col-xl-3"
+      @change="saveFilters()"
+    >
+      <div
+        class="search-wrap"
+        @click="setFilterOnMobileState(true)"
+      >
+        <input
+          class="form-control search"
+          type="search"
+          placeholder="  Seller Address, NFT ID"
+          v-model="searchValueTemp"
+        />
       </div>
 
-      <div class="col-sm-6 col-md-6 mb-3" :class="showGivenWeaponIds && !isMarket? 'col-lg-6':'col-lg-2'">
-        <strong>Element</strong>
-        <select class="form-control" v-model="elementFilter" >
-          <option v-for="x in ['', 'Earth', 'Fire', 'Lightning', 'Water']" :value="x" :key="x">{{ x || 'Any' }}</option>
-        </select>
+      <div class="star-filter">
+        <span class="filter-title">Stars</span>
+        <ul class="stars-list">
+          <li
+            class="star-item"
+            v-for="star in 5"
+            v-bind:key="star"
+            @click="starFilterTemp = star.toString() === starFilterTemp ? '' : star.toString()"
+            :class="star.toString() === starFilterTemp && 'selected'"
+          >
+              <span>{{ star }}</span>
+          </li>
+        </ul>
       </div>
 
+      <div class="element-filter">
+        <span class="filter-title">Elements</span>
+        <ul class="element-list">
+          <li
+            class="element-item"
+            v-for="element in ['Earth', 'Fire', 'Lightning', 'Water']"
+            v-bind:key="element"
+            @click="elementFilterTemp = (element === elementFilterTemp ? '' : element)"
+            :class="element === elementFilterTemp && 'selected'"
+          >
+              <span
+                :class="element.toLowerCase() + '-icon'"
+              ></span>
+              <span class="element-text">{{ element }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="search-btn">
+        <b-button
+          class="gtag-link-others btn-claim-xp"
+          v-html="`Search`"
+          @click="filterAll"
+        ></b-button>
+      </div>
+
+      <div class="filters-close" @click="setFilterOnMobileState(false)">
+        <i class="fas fa-times"></i>
+      </div>
+    </div>
+
+  <!-- <div>
       <template v-if="isMarket">
         <div class="col-sm-6 col-md-6 col-lg-2 mb-3">
           <strong>Min Price</strong>
@@ -42,35 +90,28 @@
         <b-check class="show-reforged-checkbox" v-model="showFavoriteWeapons" />
         <strong>Show Favorite</strong>
       </div>
+    </div> -->
 
-      <b-button
-        v-if="!newWeapon"
-        class="clear-filters-button mb-3 mt-3"
-        @click="clearFilters"
-      >
-        <span>
-          Clear Filters
-        </span>
-      </b-button>
-    </div>
-
-    <ul class="weapon-grid">
+    <ul class="weapon-grid row col-12 col-xl-9">
       <li
-        class="weapon"
-        :class="[{ selected: highlight !== null && weapon.id === highlight },isSell?'weapon-market':'']"
+        class="col-6 col-lg-3"
         v-for="weapon in nonIgnoredWeapons"
         :key="weapon.id"
-        @click=
-        "(!checkForDurability || getWeaponDurability(weapon.id) > 0) && onWeaponClick(weapon.id)"
+        @click="(!checkForDurability || getWeaponDurability(weapon.id) > 0) && onWeaponClick(weapon.id)"
         @contextmenu="canFavorite && toggleFavorite($event, weapon.id)"
       >
-        <div class="weapon-icon-wrapper">
-          <weapon-icon class="weapon-icon" :weapon="weapon" :favorite="isFavorite(weapon.id)" :isSell="isSell" :sellClick="sellClick"/>
-        </div>
-        <div class="above-wrapper" v-if="$slots.above || $scopedSlots.above">
-          <slot name="above" :weapon="weapon"></slot>
-        </div>
-        <slot name="sold" :weapon="weapon"></slot>
+        <div
+          class="character-item weapon"
+          :class="[{ selected: highlight !== null && weapon.id === highlight },isSell?'weapon-market':'']"
+        >
+          <div class="weapon-icon-wrapper">
+            <weapon-icon class="weapon-icon" :weapon="weapon" :favorite="isFavorite(weapon.id)" :isSell="isSell" :sellClick="sellClick"/>
+          </div>
+          <div class="above-wrapper" v-if="$slots.above || $scopedSlots.above">
+            <slot name="above" :weapon="weapon"></slot>
+          </div>
+          <slot name="sold" :weapon="weapon"></slot>
+          </div>
       </li>
     </ul>
   </div>
@@ -95,6 +136,10 @@ interface StoreMappedActions {
 }
 
 interface Data {
+  searchValueTemp: string;
+  starFilterTemp: string;
+  elementFilterTemp: string;
+  searchValue: string;
   starFilter: string;
   elementFilter: string;
   minPriceFilter: string;
@@ -195,6 +240,10 @@ export default Vue.extend({
 
   data() {
     return {
+      searchValueTemp: '',
+      starFilterTemp: '',
+      elementFilterTemp: '',
+      searchValue: '',
       starFilter: '',
       elementFilter: '',
       minPriceFilter:'',
@@ -247,6 +296,10 @@ export default Vue.extend({
       items = items.filter((x) => allIgnore.findIndex((y) => y === x.id.toString()) < 0);
 
 
+      if (this.searchValue !== '') {
+        items = items.filter((x) => x.id === parseInt(this.searchValue, 10));
+      }
+
       if (this.starFilter) {
         items = items.filter((x) => x.stars === +this.starFilter - 1);
       }
@@ -285,6 +338,16 @@ export default Vue.extend({
   methods: {
     ...(mapActions(['fetchWeapons']) as StoreMappedActions),
     ...(mapMutations(['setCurrentWeapon'])),
+
+    setFilterOnMobileState(filterState: boolean) {
+      this.$el.getElementsByClassName('filters')[0].classList.toggle('active', filterState);
+    },
+
+    filterAll() {
+      this.searchValue = this.searchValueTemp;
+      this.elementFilter = this.elementFilterTemp;
+      this.starFilter = this.starFilterTemp;
+    },
 
     saveFilters() {
       if(this.isMarket) {
@@ -386,17 +449,7 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-
-.filters {
-   justify-content: center;
-   width: 100%;
-   max-width: 900px;
-   margin: 0 auto;
-   align-content: center;
-   border-bottom: 0.2px solid rgba(102, 80, 80, 0.1);
-   margin-bottom: 20px;
-}
-.weapon-grid {
+/* .weapon-grid {
   list-style-type: none;
   justify-content: center;
   margin: 0;
@@ -405,22 +458,19 @@ export default Vue.extend({
   padding: 0.5em;
   grid-template-columns: repeat(auto-fit, 14em);
   gap: 2em;
-}
+} */
 
-.weapon {
-  width: 14em;
-  /* background: rgba(255, 255, 255, 0.05); */
-  border-radius: 6px;
+.character-item.weapon {
   cursor: pointer;
   position: relative;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  padding: 25px;
 }
 
 .weapon-icon-wrapper {
-  width: 14em;
-  height: 18em;
+  /* width: 14em; */
+  /* height: 18em; */
 }
 
 .weapon-market .weapon-icon-wrapper{
@@ -467,7 +517,6 @@ export default Vue.extend({
 
 @media (max-width: 576px) {
   .weapon-grid {
-    justify-content: center;
     margin-top: 10px;
   }
 
@@ -496,13 +545,17 @@ export default Vue.extend({
     padding-left: 0.2rem;
     padding-right: 0.2rem;
   }
+
+  .character-item.weapon {
+    padding: 12px;
+    height: 292px;
+  }
 }
 
 /* Needed to adjust weapon list */
 @media all and (max-width: 767.98px) {
   .weapon-grid {
     padding-left: 2em;
-    justify-content: center;
   }
   .stars-elem {
     margin-bottom: 20px;

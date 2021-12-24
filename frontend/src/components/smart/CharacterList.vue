@@ -254,7 +254,7 @@ export default {
     filterAll() {
       this.searchValue = this.$el.querySelector(".search").value;
       this.elementFilter = this.elementFilterTemp;
-      this.startFilter = this.startFilterTemp;
+      this.starFilter = this.starFilterTemp;
     },
 
     saveFilters() {
@@ -307,18 +307,7 @@ export default {
 </script>
 
 <style scoped>
-.character-list.col-12 {
-  padding-right: 0;
-  padding-left: 0;
-  box-sizing: border-box;
-}
-
 @media (min-width: 1024px) {
-  .character-list.col-xl-9 {
-    padding-left: 48px;
-    padding-right: 0;
-  }
-
   .home .character-list {
     padding: 0 295px;
   }
