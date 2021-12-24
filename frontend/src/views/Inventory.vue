@@ -16,9 +16,11 @@
             <dust-balance-display />
           </div>
         </b-tab>
-        <b-tab title="Box">
-          <div class="tab-content"></div>
-        </b-tab>
+        <!-- <b-tab title="Box">
+          <div class="tab-content">
+
+          </div>
+        </b-tab> -->
       </b-tabs>
     </div>
 </template>
