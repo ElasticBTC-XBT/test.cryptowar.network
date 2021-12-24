@@ -140,21 +140,6 @@ export default {
   border-radius: 16px;
 }
 
-@media (max-width: 768px) {
-  .dust-list {
-    justify-content: center
-  }
-
-  .dust-image {
-    max-width: 200px;
-    max-height: 200px;
-  }
-
-  .dust-label {
-    margin: 0 0 16px;
-  }
-}
-
 @media (max-width: 1024px) {
   .character-item.addnew.dust-container {
     margin: 50px auto 0;
@@ -169,6 +154,25 @@ export default {
   .dust-image {
     max-width: 200px;
     max-height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dust-list {
+    justify-content: center
+  }
+
+  .dust-image {
+    max-width: 200px;
+    max-height: 200px;
+  }
+
+  .dust-quantity-wrap {
+    padding: 0 260px;
+  }
+
+  .dust-label {
+    margin: 0 0 16px;
   }
 }
 
