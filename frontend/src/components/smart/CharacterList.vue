@@ -307,7 +307,7 @@ export default {
 </script>
 
 <style scoped>
-@media (min-width: 1024px) {
+@media (min-width: 1248px) {
   .home .character-list {
     padding: 0 295px;
   }
