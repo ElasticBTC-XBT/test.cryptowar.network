@@ -45,7 +45,7 @@ export default Vue.extend({
 
 <style>
 
-@media (min-width: 769px) {
+@media (min-width: 1025px) {
   .tab-content {
     margin-top: 119px;
   }

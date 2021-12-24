@@ -6403,10 +6403,6 @@ pre code {
 }
 
 @media (max-width: 767.98px) {
-    .character-list,
-    .weapon-grid {
-        justify-content: flex-start
-    }
     .table-responsive-md {
         display: block;
         width: 100%;
@@ -20942,7 +20938,7 @@ margin-bottom: 1.5rem;
     font-weight: bold;
 }
 
-.character-item{
+.character-item {
     height: 398px;
     /* width: 294px; */
     /* background-position: 50% 50%; */
@@ -21126,7 +21122,7 @@ margin-bottom: 1.5rem;
     }
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 1025px) {
     .character-list.col-xl-9,
     .weapon-grid.col-xl-9 {
         padding-left: 48px;
@@ -21284,13 +21280,14 @@ margin-bottom: 1.5rem;
       display: none;
   }
 
-  @media (max-width: 576px) {
+  @media (max-width: 1024px) {
     .filters {
         background-color: transparent;
         height: 128px;
         overflow: hidden;
         will-change: height, background-color;
         transition: height 0.5s, background-color 0.6s;
+        margin: auto;
     }
 
     .filters.active {

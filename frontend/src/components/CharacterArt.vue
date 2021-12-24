@@ -263,7 +263,7 @@ export default {
   width: 100%;
   background-image: url("../assets/v2/xp_bg.svg");
   background-repeat: no-repeat;
-  background-position: 50% 50%;
+  background-size: 100%;
   height: 19px;
   display: flex;
   justify-content: center;

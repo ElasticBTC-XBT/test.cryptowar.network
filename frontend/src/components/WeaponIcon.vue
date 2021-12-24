@@ -38,8 +38,8 @@
 
       <div>
         <div class="id">
-          ID {{ weapon.id }}<br>
-          <b-icon v-if="favorite" class="favorite-star" icon="star-fill" variant="warning" />
+          ID {{ weapon.id }}
+          <!-- <br><b-icon v-if="favorite" class="favorite-star" icon="star-fill" variant="warning" /> -->
         </div>
 
 
@@ -265,6 +265,12 @@ export default {
   height: 35px;
 }
 
+.glow-img-box{
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
 .placeholder {
   max-width: 180px;
   max-height: 180px;
@@ -353,9 +359,9 @@ export default {
 }
 
 .confirmReforge .glow-img-box img, .modal-body .glow-img-box img {
-    max-width: 7rem;
-    margin-top: 1.5rem;
-    padding-bottom: 0.5rem;
+  max-width: 7rem;
+  margin-top: 1.5rem;
+  padding-bottom: 0.5rem;
 }
 
 
@@ -388,12 +394,6 @@ export default {
 
 .weapon.selected .glow-container.glow-0{
   box-shadow: inset 0 0 10px rgb(255, 165, 0);
-}
-
-.glow-img-box{
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
 }
 
 .glow-img-box img{

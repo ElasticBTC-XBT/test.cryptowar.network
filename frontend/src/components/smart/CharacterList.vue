@@ -91,7 +91,7 @@
 
     <ul class="character-list row" :class="showFilters && 'col-12 col-xl-9'">
       <li
-        class="col-6 col-lg-3"
+        class="col-6 col-lg-4 col-lg-3"
         v-for="c in filteredCharacters"
         :key="c.id"
         @click="$emit('input', c.id)"
@@ -116,7 +116,7 @@
       </li>
 
       <li
-        class="col-6 col-lg-3"
+        class="col-6 col-lg-4 col-lg-3"
       >
         <div class="character-item addnew ">
           <b-button
