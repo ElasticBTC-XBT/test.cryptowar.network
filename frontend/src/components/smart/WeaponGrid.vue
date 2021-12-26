@@ -399,12 +399,13 @@ export default Vue.extend({
 .weapon-grid {
   list-style-type: none;
   justify-content: center;
-  margin: 0;
+  margin-right: 95px;
   padding: 0;
   display: grid;
   padding: 0.5em;
   grid-template-columns: repeat(auto-fit, 14em);
-  gap: 2em;
+  grid-column-gap: 105px;
+  grid-row-gap: 30px;
 }
 
 .weapon {
@@ -413,14 +414,14 @@ export default Vue.extend({
   border-radius: 6px;
   cursor: pointer;
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
   display: flex;
   flex-direction: column;
 }
 
 .weapon-icon-wrapper {
-  width: 14em;
-  height: 18em;
+  width: 20em;
+  height: 26em;
 }
 
 .weapon-market .weapon-icon-wrapper{

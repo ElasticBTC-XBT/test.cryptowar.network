@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="38.42" height="37.544" viewBox="0 0 38.42 37.544">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fcf738"/>
+      <stop offset="1" stop-color="#fab42b"/>
+    </linearGradient>
+    <filter id="Icon_awesome-star" x="0" y="0" width="38.42" height="37.544" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Icon_awesome-star)">
+    <path id="Icon_awesome-star-2" data-name="Icon awesome-star" d="M10.556.679,8.064,5.732l-5.576.813a1.222,1.222,0,0,0-.676,2.084l4.034,3.931-.954,5.553A1.221,1.221,0,0,0,6.663,19.4l4.989-2.622L16.64,19.4a1.222,1.222,0,0,0,1.771-1.286l-.954-5.553,4.034-3.931a1.222,1.222,0,0,0-.676-2.084l-5.576-.813L12.747.679a1.222,1.222,0,0,0-2.191,0Z" transform="translate(7.56 6)" fill="url(#linear-gradient)"/>
+  </g>
+</svg>

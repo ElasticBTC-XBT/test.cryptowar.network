@@ -1,0 +1,846 @@
+<template>
+  <div class="body main-font">
+    <div class="row combat">
+      <b-modal id="cancelRequestModal" hide-footer>
+          <div class="icon-close" @click="$bvModal.hide('cancelRequestModal'), cancelRequest= false"></div>
+          <div class="content-noti">Cancel Request Battle</div>
+          <!-- <CombatResults v-if="resultsAvailable" :results="fightResults" /> -->
+          <div class="cancelrequestmodal-btn">
+              <button @click="$bvModal.hide('cancelRequestModal')" class="btn-no">NO</button>
+              <button class="btn-confirm" block @click="$bvModal.hide('cancelRequestModal')">CONFIRM</button>
+          </div>
+      </b-modal>
+      <b-modal id="fightResultsModal" hide-footer>
+         <link rel="prefetch" as="image" href="/img/Congrats.5ac13bd5.gif">
+          <img src="/img/Congrats.5ac13bd5.gif" class="background-win">
+          <div class="icon-close" @click="$bvModal.hide('fightResultsModal')"></div>
+          <div class="title-results">Try again</div>
+          <div class="fight-results">DRAW</div>
+          <div class="content-results">Your Opponent went: <span>123</span></div>
+          <!-- <CombatResults v-if="resultsAvailable" :results="fightResults" /> -->
+          <button class="mt-3 btn-buy btn-close-fight-results" block @click="$bvModal.hide('fightResultsModal'), cancelRequest= false">Close</button>
+      </b-modal>
+      <div class="col-xl-3 col-12">
+      <div class="header-row">
+        <div class="header-row-title">Stamina Cost Per Fight</div>
+        <b-form-select v-model="fightMultiplier" :options='setStaminaSelectorValues()' @change="setFightMultiplier()" class="ml-3">
+        </b-form-select>
+        <div class="title-choose-weapon">Choose a Weapon</div>
+        <div class="info-weapon">
+          <div class="info-weapon-head">
+            <div class="info-weapon-head-1">
+              <div class="info-weapon-head-left"><span></span>
+                <div class="info-weapon-star">
+                  <div v-for="i in 5" :key="i"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327
+                  4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                  </svg> </div>
+                </div>
+              </div>
+              <div class="info-weapon-head-right">ID 456</div>
+            </div>
+            <div class="info-weapon-head-2">
+              <div class="info-weapon-head-2-left"><span></span>
+                <div>
+                  STR +286
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="info-weapon-body"></div>
+          <div class="info-weapon-footer">
+            <div class="can-use-weapon"></div>
+            <div class="weapon-name">Wind-forged Doombade</div>
+          </div>
+        </div>
+        <button class="choose-weapon">Choose new Weapon</button>
+      </div>
+    </div>
+    <div class="nav-line boder"></div>
+    <div class="enemy row">
+      <div class="enemy-box">
+        <div class="property-icon"></div>
+        <div class="list-enemy row">
+          <div class="enemy-item-container" v-for="i in 4" :key="i">
+            <div class="enemy-item">
+              <div class="enemy-item-head">
+                <span></span>
+                <span>ID 10</span>
+              </div>
+              <div class="enemy-item-body">
+                <div class="img-enemy"></div>
+                <div class="around-enemy"></div>
+              </div>
+              <div class="enemy-item-footer">
+                <div class="enemy-power">5109</div>
+                <div class="enemy-xp">+14XP</div>
+              </div>
+            </div>
+            <div class="Ability-win">Very Likely Victory</div>
+            <button @click="$bvModal.show('fightResultsModal')">FIGHT</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</template>
+
+<script>
+// import Character from "../components/Character.vue";
+// import BigButton from '../components/BigButton.vue';
+// import WeaponGrid from '../components/smart/WeaponGrid.vue';
+import {getEnemyArtAround} from '../enemy-art-around';
+import { getEnemyArt } from '../enemy-art';
+import { CharacterPower, CharacterTrait, GetTotalMultiplierForTrait, WeaponElement } from '../interfaces';
+// import Hint from '../components/Hint.vue';
+// import CombatResults from '../components/CombatResults.vue';
+import { toBN, fromWeiEther } from '../utils/common';
+// import WeaponIcon from '../components/WeaponIcon.vue';
+import { mapActions, mapGetters, mapState, mapMutations } from 'vuex';
+// import CharacterBar from "../components/CharacterBar.vue";
+
+export default {
+  props: ['propCancelRequest'],
+  data() {
+    return {
+      selectedWeaponId: null,
+      error: null,
+      waitingResults: false,
+      resultsAvailable: false,
+      fightResults: null,
+      intervalSeconds: null,
+      intervalMinutes: null,
+      timeSeconds: null,
+      timeMinutes: null,
+      fightXpGain: 16,
+      selectedWeapon: null,
+      fightMultiplier: Number(localStorage.getItem('fightMultiplier')),
+      staminaPerFight: 40,
+      titleResults: "",
+      cancelRequest: this.propCancelRequest,
+    };
+  },
+
+  created() {
+    this.intervalSeconds = setInterval(() => (this.timeSeconds = new Date().getSeconds()), 5000);
+    this.intervalMinutes = setInterval(() => (this.timeMinutes = new Date().getMinutes()), 20000);
+    this.staminaPerFight = 40 * Number(localStorage.getItem('fightMultiplier'));
+  },
+
+  mounted(){
+    if(this.cancelRequest){
+      this.$bvModal.show('cancelRequestModal');
+    }
+  },
+
+  computed: {
+    // cancel(){
+    //   console.log(this.cancelRequest);
+    //   if(this.cancelRequest === true){
+    //     console.log("hiep");
+    //     this.$bvModal.show('fightResultsModal');
+    //   }
+    //   return 0;
+    // },
+    ...mapState(['currentCharacterId']),
+    ...mapGetters([
+      'getTargetsByCharacterIdAndWeaponId',
+      'ownCharacters',
+      'ownWeapons',
+      'currentCharacter',
+      'currentCharacterStamina',
+      'getWeaponDurability',
+      'fightGasOffset',
+      'fightBaseline',
+    ]),
+
+    targets() {
+      return this.getTargetsByCharacterIdAndWeaponId(this.currentCharacterId, this.selectedWeaponId);
+    },
+
+    isLoadingTargets() {
+      return this.targets.length === 0 && this.currentCharacterId && this.selectedWeaponId;
+    },
+
+    selections() {
+      return [this.currentCharacterId, this.selectedWeaponId];
+    },
+
+    updateResults() {
+      return [this.fightResults, this.error];
+    },
+  },
+
+  watch: {
+    async selections([characterId, weaponId]) {
+      if (!this.ownWeapons.filter(Boolean).find((weapon) => weapon.id === weaponId)) {
+        this.selectedWeaponId = null;
+      }
+      await this.fetchTargets({ characterId, weaponId });
+    },
+
+    async updateResults([fightResults, error]) {
+      this.resultsAvailable = fightResults !== null;
+      this.waitingResults = fightResults === null && error === null;
+      this.setIsInCombat(this.waitingResults);
+      if (this.resultsAvailable && error === null) this.$bvModal.show('fightResultsModal');
+      if(this.fightResults[0] === true){
+        this.titleResults = "Congratulation!";
+      }
+      else{
+        this.titleResults = "Better luck Next Time";
+      }
+    },
+  },
+
+
+  methods: {
+    ...mapActions(['fetchTargets', 'doEncounter', 'fetchFightRewardSkill', 'fetchFightRewardXp', 'getXPRewardsIfWin']),
+    ...mapMutations(['setIsInCombat']),
+    getEnemyArt,
+    getEnemyArtAround,
+    weaponHasDurability(id) {
+      return this.getWeaponDurability(id) >= this.fightMultiplier * 3;
+    },
+    charHasStamina(){
+      return this.currentCharacterStamina >= this.staminaPerFight;
+    },
+    getCharacterTrait(trait) {
+      return CharacterTrait[trait];
+    },
+    getWinChance(enemyPower, enemyElement) {
+      const characterPower = CharacterPower(this.currentCharacter.level);
+      const playerElement = parseInt(this.currentCharacter.trait, 10);
+      const selectedWeapon = this.ownWeapons.filter(Boolean).find((weapon) => weapon.id === this.selectedWeaponId);
+      this.selectedWeapon = selectedWeapon;
+      const weaponElement = parseInt(WeaponElement[selectedWeapon.element], 10);
+      const weaponMultiplier = GetTotalMultiplierForTrait(selectedWeapon, playerElement);
+      const totalPower = characterPower * weaponMultiplier + selectedWeapon.bonusPower;
+      const totalMultiplier = 1 + 0.075 * (weaponElement === playerElement ? 1 : 0) + 0.075 * this.getElementAdvantage(playerElement, enemyElement);
+      const playerMin = totalPower * totalMultiplier * 0.9;
+      const playerMax = totalPower * totalMultiplier * 1.1;
+      const playerRange = playerMax - playerMin;
+      const enemyMin = enemyPower * 0.9;
+      const enemyMax = enemyPower * 1.1;
+      const enemyRange = enemyMax - enemyMin;
+      let rollingTotal = 0;
+      // shortcut: if it is impossible for one side to win, just say so
+      if (playerMin > enemyMax) return 'Very Likely';
+      if (playerMax < enemyMin) return 'Unlikely';
+
+      // case 1: player power is higher than enemy power
+      if (playerMin >= enemyMin) {
+        // case 1: enemy roll is lower than player's minimum
+        rollingTotal = (playerMin - enemyMin) / enemyRange;
+        // case 2: 1 is not true, and player roll is higher than enemy maximum
+        rollingTotal += (1 - rollingTotal) * ((playerMax - enemyMax) / playerRange);
+        // case 3: 1 and 2 are not true, both values are in the overlap range. Since values are basically continuous, we assume 50%
+        rollingTotal += (1 - rollingTotal) * 0.5;
+      } // otherwise, enemy power is higher
+      else {
+        // case 1: player rolls below enemy minimum
+        rollingTotal = (enemyMin - playerMin) / playerRange;
+        // case 2: enemy rolls above player maximum
+        rollingTotal += (1 - rollingTotal) * ((enemyMax - playerMax) / enemyRange);
+        // case 3: 1 and 2 are not true, both values are in the overlap range
+        rollingTotal += (1 - rollingTotal) * 0.5;
+        //since this is chance the enemy wins, we negate it
+        rollingTotal = 1 - rollingTotal;
+      }
+      if (rollingTotal <= 0.3) return 'Unlikely';
+      if (rollingTotal <= 0.5) return 'Possible';
+      if (rollingTotal <= 0.7) return 'Likely';
+      return 'Very Likely';
+    },
+    getElementAdvantage(playerElement, enemyElement) {
+      if ((playerElement + 1) % 4 === enemyElement) return 1;
+      if ((enemyElement + 1) % 4 === playerElement) return -1;
+      return 0;
+    },
+    async onClickEncounter(targetToFight) {
+      if (this.selectedWeaponId === null || this.currentCharacterId === null) {
+        return;
+      }
+
+      this.waitingResults = true;
+
+      // Force a quick refresh of targets
+      await this.fetchTargets({ characterId: this.currentCharacterId, weaponId: this.selectedWeaponId });
+      // If the targets list no longer contains the chosen target, return so a new target can be chosen
+      if (!this.targets.find((target) => target.original === targetToFight.original)) {
+        this.waitingResults = false;
+        return;
+      }
+
+      this.fightResults = null;
+      this.error = null;
+      this.setIsInCombat(this.waitingResults);
+
+      try {
+        const results = await this.doEncounter({
+          characterId: this.currentCharacterId,
+          weaponId: this.selectedWeaponId,
+          targetString: targetToFight.original,
+          fightMultiplier: this.fightMultiplier,
+        });
+
+        this.fightResults = results;
+
+        await this.fetchFightRewardSkill();
+        await this.fetchFightRewardXp();
+
+        this.error = null;
+      } catch (e) {
+        console.error(e);
+        this.error = e.message;
+      }
+    },
+
+    formattedSkill(skill) {
+      const skillBalance = fromWeiEther(skill, 'ether');
+      return `${toBN(skillBalance).toFixed(6)} xBlade`;
+    },
+
+    getPotentialXp(targetToFight) {
+      const characterPower = CharacterPower(this.currentCharacter.level);
+      const playerElement = parseInt(this.currentCharacter.trait, 10);
+      const selectedWeapon = this.ownWeapons.filter(Boolean).find((weapon) => weapon.id === this.selectedWeaponId);
+      const weaponMultiplier = GetTotalMultiplierForTrait(selectedWeapon, playerElement);
+      const totalPower = characterPower * weaponMultiplier + selectedWeapon.bonusPower;
+
+      //Formula taken from getXpGainForFight funtion of CryptoWars.sol
+      return Math.floor((targetToFight.power / totalPower) * this.fightXpGain) * this.fightMultiplier;
+    },
+
+    setFightMultiplier() {
+      localStorage.setItem('fightMultiplier', this.fightMultiplier.toString());
+    },
+
+    setStaminaSelectorValues() {
+      if(this.currentCharacterStamina < 40) {
+        return [{ value: this.fightMultiplier, text: 'You need more stamina to fight!', disabled: true}];
+      }
+
+      const choices = [
+        {value: null, text: 'Please select Stamina Cost per Fight', disabled: true},
+      ];
+
+      const addChoices = [];
+
+      if(this.currentCharacterStamina >= 200) {
+        addChoices.push({ value: 5, text: 200 });
+      }
+
+      if(this.currentCharacterStamina >= 160) {
+        addChoices.push({ value: 4, text: 160 });
+      }
+
+      if(this.currentCharacterStamina >= 120) {
+        addChoices.push({ value: 3, text: 120 });
+      }
+
+      if(this.currentCharacterStamina >= 80) {
+        addChoices.push({ value: 2, text: 80 });
+      }
+
+      if(this.currentCharacterStamina >= 40) {
+        addChoices.push({ value: 1, text: 40 });
+      }
+
+      choices.push(...addChoices.reverse());
+
+      return choices;
+    },
+  },
+
+  components: {
+    // BigButton,
+    // WeaponGrid,
+    // Hint,
+    // CombatResults,
+    // WeaponIcon,
+    // CharacterBar,
+  },
+};
+</script>
+
+<style scoped>
+.header-row-title{
+  font-size: 1.3em;
+  text-align: center;
+}
+
+.custom-select{
+  margin: 10px 0;
+}
+
+.title-choose-weapon{
+    font-size: 1.9em;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.info-weapon{
+  background-image: url(../assets/v2/bg-weapon.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 300px;
+  height: 400px;
+  margin: 0 auto;
+}
+
+.info-weapon-head{
+  position: relative;
+  top: 20px;
+}
+
+.info-weapon-head-1{
+  display: flex;
+  justify-content: space-between;
+}
+
+.info-weapon-head-left,
+.info-weapon-head-2-left{
+  display: flex;
+}
+
+.info-weapon-head-left span,
+.info-weapon-head-2-left span{
+  content: url(../assets/elements/earth.png);
+  /* background-color: #000; */
+  display: block;
+  width: 35px;
+  height: 35px;
+  margin-left: 20px;
+}
+
+.info-weapon-star{
+  display: flex;
+}
+
+.info-weapon-star div{
+  color: #FCF738;
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+}
+
+.info-weapon-head-right{
+  margin-right: 37px;
+  font-size: 1.3em;
+  display: flex;
+  align-items: center;
+}
+
+.info-weapon-head-2{
+  margin-top: 5px;
+}
+
+.info-weapon-head-2-left div{
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.info-weapon-body{
+  background-image: url(../assets/sword/sword-air-04.png);
+  background-size: cover;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+.info-weapon-footer{
+margin-top: 20px;
+}
+
+.can-use-weapon{
+  height: 16px;
+  background-color: #FCF738;
+  margin: 0 40px;
+  border-radius: 10px;
+}
+
+.weapon-name{
+  margin-top: 5px;
+  font-size: 1.1em;
+}
+
+.choose-weapon{
+  margin-top: 30px;
+  width: 15rem;
+  height: 42px;
+  background-color: transparent;
+  border: none;
+  background-image: url(../assets/v2/Choose-new-weapon.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 0;
+  font-size: 1.3em;
+  color: #fff;
+}
+
+.property-icon{
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url('../assets/v2/Property-system.png');
+  width: 360px;
+  height: 80px;
+  margin-bottom: 20px !important;
+}
+
+.combat{
+  display: flex;
+}
+
+.enemy{
+  width: calc(100% - 431px);
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+
+.enemy-box{
+  margin-top: 40px;
+}
+
+.enemy-box div{
+  margin: 0 auto;
+  /* margin-bottom: 20px; */
+}
+
+.enemy-item{
+    background-image: url(../assets/images/bg-item-top.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 300px;
+    height: 400px;
+}
+
+.enemy-item-head{
+  position: relative;
+  top: 17px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.enemy-item-head span:first-child{
+  content: url(../assets/elements/fire.png);
+  width: 35px;
+  height: 35px;
+  margin-left: 20px;
+}
+
+.enemy-item-head span:last-child{
+  /* margin-left: 10px; */
+  margin-right: 40px;
+  display: flex;
+  align-items: center;
+  font-size: 1.2em;
+}
+
+.enemy-item-body {
+    position: relative;
+    width: 210px;
+    height: 242px;
+}
+.img-enemy{
+  background-image: url(../assets/enemies/HumanMale_Bandit.png);
+  width: 180px;
+  height: 240px;
+  background-size: cover;
+  bottom: -5px;
+  position: relative;
+}
+.around-enemy{
+  display: flex;
+  background-image: url(../assets/images/fire.png);
+  width: 180px;
+  height: 240px;
+  background-size: cover;
+  position: relative;
+  z-index: 1;
+  top: -220px;
+}
+
+.enemy-item .enemy-item-footer{
+  margin-top: 40px;
+}
+
+.enemy-power,
+.enemy-xp{
+  text-align: center;
+  font-size: 1.2em;
+}
+
+.Ability-win{
+text-align: center;
+font-size: 1.3em;
+}
+
+.enemy-item-container button{
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+  background-color: transparent;
+  border: none;
+  background-image: url(../assets/v2/Btn-fight.svg);
+  background-size: cover;
+  width: 150px;
+  height: 60px;
+  font-size: 1.4em;
+  color: #fff;
+}
+
+.btn-confirm{
+  display: block;
+  background-color: transparent;
+  border: none;
+  background-image: url(../assets/v2/Btn-fight.svg);
+  background-size: cover;
+  width: 150px;
+  height: 60px;
+  font-size: 1.4em;
+  color: #fff;
+}
+
+.btn-no{
+  background-color: transparent;
+  border: none;
+  background-image: url(../assets/v2/Btn-blue.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 163px;
+  height: 48px;
+  display: block;
+  color: #fff;
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
+.cancelrequestmodal-btn{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 50px 0 10px 0;
+}
+
+#cancelRequestModal .icon-close{
+  background-image: url(../assets/v2/icon-close.svg);
+  width: 50px;
+  height: 47px;
+  position: relative;
+  right: -36em;
+  z-index: 2;
+}
+
+.custom-select{
+  background-color: #000;
+  border: 1px solid #5bc7f5;
+  width: 300px;
+  height: 60px;
+  border-radius: 10px;
+}
+
+.nav-line.boder{
+  width: 2px;
+  height: 668px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url('../assets/v2/boder.png');
+  position: relative;
+  right: 35px;
+}
+
+.content-noti,
+.fight-results{
+  text-align: center;
+  font-size: 1.8em;
+  font-weight: 600;
+  color: #F58B5B;
+  margin: 10px 0;
+}
+
+.background-win{
+  background-size: 100%;
+  background-repeat: no-repeat;
+  width: 473px;
+  height: 226px;
+  position: fixed;
+}
+
+#fightResultsModal .icon-close{
+  background-image: url(../assets/v2/icon-close.svg);
+  width: 50px;
+  height: 47px;
+  position: relative;
+  right: -24em;
+  z-index: 2;
+}
+
+.content-results{
+  text-align: center;
+  font-size: 1.3em;
+}
+
+.content-results span{
+  color: #F58B5B;
+}
+
+
+.title-results{
+  font-size: 1.3em;
+  color: #fff;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.btn-close-fight-results{
+  border-radius: 0;
+  border: none;
+  background-image: url(../assets/v2/Btn-fight.svg);
+  width: 130px;
+  height: 50px;
+  background-size: cover;
+  margin: 0 auto;
+  background-color: transparent;
+  margin: 0 auto;
+  display: block;
+}
+
+
+@media (max-width: 1334px) {
+  .enemy-list {
+    flex-flow: row wrap;
+    align-items: center;
+  }
+  .enemy-list > .enemy-list-child{
+     flex-basis: 50%;
+  }
+  .encounter-button {
+    margin-top: 1.35em;
+  }
+  .nav-line.boder{
+    height: 0;
+  }
+}
+
+/* Needed to asjust image size, not just image column-size and other classes to accommodate that */
+@media all and (max-width: 767.98px) {
+  /* .encounter img {
+    width: calc(100% - 60px);
+  } */
+  .enemy-list{
+    flex-direction:column;
+    align-items:center;
+  }
+  .combat-enemy-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .weapon-selection {
+    border-right: none;
+  }
+  .results-panel {
+    width: 100%;
+  }
+  .nav-line.boder{
+    height: 0;
+  }
+}
+.hint.has-tooltip {
+  font-size: 1.8rem;
+  display: inline-block;
+  margin-left: 10px;
+}
+.dark-bg-text {
+  width: 100% !important;
+}
+.content {
+  padding: 0 !important;
+}
+
+/* - */
+.combat-hints {
+  margin-top: 30px;
+}
+#gtag-link-others {
+  margin-top: 30px;
+}
+.ml-3 {
+  margin-left: 0px !important;
+}
+.header-row {
+  display: block;
+  text-align: center;
+}
+.weapon-icon-wrapper {
+  margin: 0 auto;
+  width: 14em;
+  height: 26em;
+}
+
+.modal-content {
+  border-radius: 20px;
+  width: 500px;
+}
+
+@media (max-width: 767.98px){
+  .button.encounter-button{
+    top: 10vw;
+  }
+  .small-durability-bar{
+    top: 35px
+  }
+  .nav-line.boder{
+    height: 0;
+  }
+  .content{
+    padding: 0;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .show-reforged {
+    width: 100%;
+    justify-content: center;
+    display: block;
+  }
+  .row{
+    margin: 0;
+  }
+  .nav-line.boder{
+    height: 0;
+  }
+  .enemy{
+    width: 100%;
+  }
+}
+.element-icon {
+  width: 3em;
+  height: 3em;
+}
+@media (min-width: 768px){
+  .offset-md-3 {
+    margin: 0;
+  }
+  .col-md-6 {
+    max-width: 100%;
+  }
+  .col-md-2 {
+    max-width: 100%;
+  }
+  .offset-md-5 {
+    margin-left: 0;
+  }
+}
+
+.circle-element {
+  width: 3.3rem;
+  height: 3.3rem;
+  border-radius: 50%;
+  padding: 0.5rem;
+}
+</style>

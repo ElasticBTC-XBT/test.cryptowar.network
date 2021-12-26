@@ -15,6 +15,7 @@
       <div class="glow-img-box">
       <img v-if="showPlaceholder" class="placeholder" :src="getWeaponArt(weapon)" />
       </div>
+      <div>
       <div class="trait">
         <span :class="weapon.element.toLowerCase() + '-icon'"></span>
         {{Array(this.weapon.stars + 1).fill('★').join('')}}
@@ -34,7 +35,9 @@
         <div class="small-durability-bar"
         :style="`--durabilityReady: ${(getWeaponDurability(weapon.id)/maxDurability)*100}%;`"
         v-tooltip.bottom="`Durability: ${getWeaponDurability(weapon.id)}/${maxDurability}<br>
-          Repairs 1 point every 50 minutes, durability will be full at: ${timeUntilWeaponHasMaxDurability(weapon.id)}`"></div>
+        Repairs 1 point every 50 minutes, durability will be full at: ${timeUntilWeaponHasMaxDurability(weapon.id)}`">
+        {{`${getWeaponDurability(weapon.id)}/${maxDurability}`}} XP</div>
+      </div>
       </div>
 
       <div class="weapon-bt-box default-contrast" v-if="isSell">
@@ -211,13 +214,31 @@ export default {
 <style scoped>
 .small-durability-bar {
   position: relative;
-  top: 0px;
-  height: 12px;
-  width: 80%;
-  margin: 0 auto;
-  border-radius: 4px;
-  border: 2px solid rgb(252, 252, 252);
-  background : linear-gradient(to right, rgb(142, 30, 165) var(--durabilityReady), rgba(255, 255, 255, 0.1) 0);
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 20px;
+  height: 20px;
+  width: 87%;
+  font-size: 16px;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  background: linear-gradient(
+    to right,
+    #DDB73C var(--durabilityReady),
+    #fff 0
+  );
+  border-radius: 10px;
+  /* margin: 0 auto; */
+  /* border-radius: 6px; */
+  /* background : linear-gradient(to right, #F3BF2B var(--durabilityReady), rgba(255, 255, 255, 0.1) 0); */
+  /* background-image: url(../assets/v2/bg-can-use-weapon.svg);
+  background-repeat: no-repeat;
+  background-size: cover; */
 }
 
 .weapon-icon {
@@ -231,6 +252,8 @@ export default {
   width: 100%;
   border-radius: 5px;
   z-index: 540;
+  background-image: url(../assets/v2/bg-weapon.svg);
+  background-repeat: no-repeat;
 }
 
 .weapon.selected .glow-container{
@@ -264,8 +287,16 @@ export default {
 }
 
 .trait {
-  top: 10px;
-  left: 10px;
+  top: 15px;
+  left: 20px;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.trait span{
+  display: block;
+  margin-right: 5px;
 }
 
 .favorite-star {
@@ -275,14 +306,26 @@ export default {
 }
 
 .id {
-  top: 8px;
-  right: 10px;
+  top: 25px;
+  right: 46px;
+  font-size: 1.3rem;
   font-style: italic;
 }
 
 .stats {
-  top: 35px;
-  left: 10px;
+  top: 65px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.stats div{
+  display: flex;
+  align-items: center;
+}
+
+.stats span{
+  color: #fff;
 }
 
 .icon {
@@ -293,17 +336,17 @@ export default {
 .placeholder {
   max-width: 180px;
   max-height: 180px;
-  margin-left: 16px;
+  /* margin-left: 16px; */
   margin-top: 0px;
   transform: scale(0.8);
 }
 
 .name {
   position: absolute;
-  bottom: 2rem;
+  bottom: 4rem;
   left: 12%;
   right: 12%;
-  font-size: 0.9em;
+  font-size: 1.2em;
   text-align: center;
 }
 
@@ -327,10 +370,11 @@ export default {
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  height: 300px;
 }
 
 .glow-img-box img{
-  margin: 0;
+  margin-top: 20px;
 }
 
 .confirmReforge .glow-img-box img, .modal-body .glow-img-box img {
@@ -353,7 +397,7 @@ export default {
    /* display: flex; */
   justify-content: center;
   align-items: center;
-  box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.411);;
+  /* box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.411); */
 }
 
 .glow-1 {
@@ -384,7 +428,7 @@ export default {
   text-align: right;
 }
 
-@keyframes glow-1 {
+/* @keyframes glow-1 {
   0% {
     box-shadow: inset 0 0 10px rgba(9, 163, 252, 1);
   }
@@ -418,5 +462,5 @@ export default {
   100% {
     box-shadow: inset 0 0 30px rgba(197, 77, 233, 1);
   }
-}
+} */
 </style>
