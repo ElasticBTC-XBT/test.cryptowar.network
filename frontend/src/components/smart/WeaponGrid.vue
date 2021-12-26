@@ -465,12 +465,11 @@ export default Vue.extend({
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 25px;
+  padding: 25px 15px;
 }
 
 .weapon-icon-wrapper {
-  /* width: 14em; */
-  /* height: 18em; */
+  height: 100%;
 }
 
 .weapon-market .weapon-icon-wrapper{

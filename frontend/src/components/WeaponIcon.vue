@@ -15,7 +15,7 @@
       <div>
         <div class="trait">
           <span :class="weapon.element.toLowerCase() + '-icon'"></span>
-          <span class="weapon-star" v-for="n in this.weapon.stars + 1" :key="n">
+          <span class="weapon-star" v-for="n in this.weapon.stars + 4" :key="n">
             <i class="fas fa-star"></i>
           </span>
         </div>
@@ -36,7 +36,7 @@
         </div>
       </div>
 
-      <div>
+      <div class="left">
         <div class="id">
           ID {{ weapon.id }}
           <!-- <br><b-icon v-if="favorite" class="favorite-star" icon="star-fill" variant="warning" /> -->
@@ -55,17 +55,19 @@
       <img v-if="showPlaceholder" class="placeholder" :src="getWeaponArt(weapon)" />
     </div>
 
-    <div class="name">
-      {{ getCleanWeaponName(weapon.id, weapon.stars) }}
-    </div>
+    <div class="weapon-footer">
+      <div class="name">
+        {{ getCleanWeaponName(weapon.id, weapon.stars) }}
+      </div>
 
-    <div class="small-durability-bar-wrap">
-      <div
-        class="small-durability-bar"
-        :style="`--durabilityReady: ${(getWeaponDurability(weapon.id)/maxDurability)*100}%;`"
-        v-tooltip.bottom="`Durability: ${getWeaponDurability(weapon.id)}/${maxDurability}<br>
-        Repairs 1 point every 50 minutes, durability will be full at: ${timeUntilWeaponHasMaxDurability(weapon.id)}`"
-      ></div>
+      <div class="small-durability-bar-wrap">
+        <div
+          class="small-durability-bar"
+          :style="`--durabilityReady: ${(getWeaponDurability(weapon.id)/maxDurability)*100}%;`"
+          v-tooltip.bottom="`Durability: ${getWeaponDurability(weapon.id)}/${maxDurability}<br>
+          Repairs 1 point every 50 minutes, durability will be full at: ${timeUntilWeaponHasMaxDurability(weapon.id)}`"
+        ></div>
+      </div>
     </div>
       <!--
       <div class="weapon-bt-box default-contrast" v-if="isSell">
@@ -229,19 +231,28 @@ export default {
   padding: 0;
 }
 
+.weapon-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
 .weapon-header {
   display: flex;
   justify-content: space-between;
 }
 
-.weapon-header .id {
+.weapon-header .left {
   font-size: 21px;
+  text-align: right;
 }
 
 .weapon-header .trait,
 .weapon-header .stats div {
   display: flex;
   align-items: center;
+  margin: 5px 0;
 }
 
 .weapon-header .stats {
@@ -251,6 +262,8 @@ export default {
 
 .weapon-header .trait span:first-child {
   margin-right: 4.5px;
+  width: 25px;
+  height: 25px;
 }
 
 .weapon-star {
@@ -261,14 +274,19 @@ export default {
 }
 
 .weapon-icon .icon {
-  width: 35px;
-  height: 35px;
+  width: 25px;
+  height: 25px;
 }
 
 .glow-img-box{
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .placeholder {
@@ -304,7 +322,7 @@ export default {
 @media (max-width: 576px) {
   .weapon-header {
     position: relative;
-    padding-top: 20px !important;
+    padding-top: 23px !important;
   }
 
   .weapon-header .trait span:first-child,
@@ -318,9 +336,11 @@ export default {
     font-size: 14px;
   }
 
-  .weapon-header .id {
+  .weapon-header .left {
     font-size: 14px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     position: absolute;
     top: 0;
     left: 0;
@@ -426,14 +446,6 @@ export default {
 
 .no-durability {
   opacity: 0.6;
-}
-
-.bonus-power {
-  position: absolute;
-  top: 45px;
-  right: 5%;
-  font-size: 0.6em;
-  text-align: right;
 }
 
 /* @keyframes glow-1 {
