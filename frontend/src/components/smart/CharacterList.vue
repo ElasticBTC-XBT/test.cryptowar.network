@@ -94,10 +94,10 @@
         class="col-6 col-lg-4 col-xl-3"
         v-for="c in filteredCharacters"
         :key="c.id"
-        @click="$emit('input', c.id)"
       >
         <div
           class="character-item"
+          @click="$emit('input', c.id)"
           :class="[{ selected: value === c.id }, {isMarket: isSell}]"
         >
           <div class="above-wrapper" v-if="$slots.above || $scopedSlots.above">
