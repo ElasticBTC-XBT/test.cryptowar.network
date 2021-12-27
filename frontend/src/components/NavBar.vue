@@ -208,6 +208,8 @@ a {
 }
 
 .nav-bottom-line{
+  position: relative;
+  z-index: 2;
   height: 36px;
   border-top: 3px solid;
   border-image-slice: 1;

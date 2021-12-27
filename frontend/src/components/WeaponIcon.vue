@@ -15,6 +15,7 @@
       <div class="glow-img-box">
       <img v-if="showPlaceholder" class="placeholder" :src="getWeaponArt(weapon)" />
       </div>
+      <div>
       <div class="trait">
         <span :class="weapon.element.toLowerCase() + '-icon'"></span>
         {{Array(this.weapon.stars + 1).fill('★').join('')}}
@@ -24,17 +25,19 @@
         {{ getCleanWeaponName(weapon.id, weapon.stars) }}
       </div>
 
+      <div class="small-durability-bar"
+        :style="`--durabilityReady: ${(getWeaponDurability(weapon.id)/maxDurability)*100}%;`"
+        v-tooltip.bottom="`Durability: ${getWeaponDurability(weapon.id)}/${maxDurability}<br>
+        Repairs 1 point every 50 minutes, durability will be full at: ${timeUntilWeaponHasMaxDurability(weapon.id)}`">
+        {{`${getWeaponDurability(weapon.id)}/${maxDurability}`}} XP
+      </div>
+
       <div class="bonus-power">
         <div v-if="weapon.lowStarBurnPoints > 0"><span>{{ weapon.lowStarBurnPoints }} LB</span></div>
         <div v-if="weapon.fourStarBurnPoints > 0"><span>{{ weapon.fourStarBurnPoints }} 4B</span></div>
         <div v-if="weapon.fiveStarBurnPoints > 0"><span>{{ weapon.fiveStarBurnPoints }} 5B</span></div>
       </div>
 
-      <div>
-        <div class="small-durability-bar"
-        :style="`--durabilityReady: ${(getWeaponDurability(weapon.id)/maxDurability)*100}%;`"
-        v-tooltip.bottom="`Durability: ${getWeaponDurability(weapon.id)}/${maxDurability}<br>
-          Repairs 1 point every 50 minutes, durability will be full at: ${timeUntilWeaponHasMaxDurability(weapon.id)}`"></div>
       </div>
 
       <div class="weapon-bt-box default-contrast" v-if="isSell">
@@ -114,7 +117,7 @@ export default {
       }
 
       if(this.weapon.stat1Value) {
-        ttHtml += `<br>${wrapInSpan(this.weapon.stat1, this.weapon.stat1)}: +${this.weapon.stat1Value}`;
+        ttHtml += `<br>${wrapInSpan(this.weapon.stat1, this.weapon.stat1)}<span>: +${this.weapon.stat1Value}</span>`;
         if(this.currentCharacter) {
           ttHtml += ` (${wrapInSpanTextOnly(
             this.currentCharacter.traitName,
@@ -124,7 +127,7 @@ export default {
       }
 
       if(this.weapon.stat2Value) {
-        ttHtml += `<br>${wrapInSpan(this.weapon.stat2, this.weapon.stat2)}: +${this.weapon.stat2Value}`;
+        ttHtml += `<br>${wrapInSpan(this.weapon.stat2, this.weapon.stat2)}<span>: +${this.weapon.stat2Value}</span>`;
         if(this.currentCharacter) {
           ttHtml += ` (${wrapInSpanTextOnly(
             this.currentCharacter.traitName,
@@ -134,7 +137,7 @@ export default {
       }
 
       if(this.weapon.stat3Value) {
-        ttHtml += `<br>${wrapInSpan(this.weapon.stat3, this.weapon.stat3)}: +${this.weapon.stat3Value}`;
+        ttHtml += `<br>${wrapInSpan(this.weapon.stat3, this.weapon.stat3)}<span>: +${this.weapon.stat3Value}</span>`;
         if(this.currentCharacter) {
           ttHtml += ` (${wrapInSpanTextOnly(
             this.currentCharacter.traitName,
@@ -211,13 +214,28 @@ export default {
 <style scoped>
 .small-durability-bar {
   position: relative;
-  top: 0px;
-  height: 12px;
-  width: 80%;
   margin: 0 auto;
-  border-radius: 4px;
-  border: 2px solid rgb(252, 252, 252);
-  background : linear-gradient(to right, rgb(142, 30, 165) var(--durabilityReady), rgba(255, 255, 255, 0.1) 0);
+  margin-top: 10px;
+  height: 16px;
+  width: 80%;
+  font-size: 14px;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  background: linear-gradient(
+    to right,
+    #DDB73C var(--durabilityReady),
+    #fff 0
+  );
+  border-radius: 10px;
+  /* margin: 0 auto; */
+  /* border-radius: 6px; */
+  /* background : linear-gradient(to right, #F3BF2B var(--durabilityReady), rgba(255, 255, 255, 0.1) 0); */
+  /* background-image: url(../assets/v2/bg-can-use-weapon.svg);
+  background-repeat: no-repeat;
+  background-size: cover; */
 }
 
 .weapon-icon {
@@ -227,10 +245,14 @@ export default {
 }
 
 .glow-container {
-  height: 100%;
-  width: 100%;
+  width: 17em;
+  height: 23em;
   border-radius: 5px;
   z-index: 540;
+  background-image: url(../assets/v2/bg-weapon.svg);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  margin: 0 auto;
 }
 
 .weapon.selected .glow-container{
@@ -264,25 +286,51 @@ export default {
 }
 
 .trait {
-  top: 10px;
-  left: 10px;
+  top: 13px;
+  left: 45px;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.trait span{
+  display: block;
+  margin-right: 5px;
+  width: 30px;
+  height: 30px;
 }
 
 .favorite-star {
   position: absolute;
-  right: 4px;
   font-size: 0.8rem;
 }
 
 .id {
-  top: 8px;
-  right: 10px;
+  top: 20px;
+  right: 60px;
+  font-size: 1rem;
   font-style: italic;
 }
 
 .stats {
-  top: 35px;
-  left: 10px;
+  top: 50px;
+  left: 45px;
+}
+
+.stats div{
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.stats span{
+  color: #fff;
+}
+
+.stats .icon{
+  width: 30px;
+  height: 30px;
+  /* margin-left: 25px; */
 }
 
 .icon {
@@ -292,19 +340,22 @@ export default {
 
 .placeholder {
   max-width: 180px;
-  max-height: 180px;
-  margin-left: 16px;
+  max-height: 170px;
+  /* margin-left: 16px; */
   margin-top: 0px;
   transform: scale(0.8);
 }
 
 .name {
-  position: absolute;
-  bottom: 2rem;
-  left: 12%;
-  right: 12%;
-  font-size: 0.9em;
+  position: relative;
+  margin: 0 auto;
   text-align: center;
+  font-size: 1em;
+  width: 90%;
+  height: 40px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
 
 .weapon-market .name{
@@ -327,10 +378,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: flex-end;
-}
-
-.glow-img-box img{
-  margin: 0;
+  height: 270px;
 }
 
 .confirmReforge .glow-img-box img, .modal-body .glow-img-box img {
@@ -353,7 +401,7 @@ export default {
    /* display: flex; */
   justify-content: center;
   align-items: center;
-  box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.411);;
+  /* box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.411); */
 }
 
 .glow-1 {
@@ -379,12 +427,16 @@ export default {
 .bonus-power {
   position: absolute;
   top: 45px;
-  right: 5%;
+  right: 19%;
   font-size: 0.6em;
   text-align: right;
 }
 
-@keyframes glow-1 {
+.bonus-power > div > span{
+  font-size: 1rem;
+}
+
+/* @keyframes glow-1 {
   0% {
     box-shadow: inset 0 0 10px rgba(9, 163, 252, 1);
   }
@@ -418,5 +470,5 @@ export default {
   100% {
     box-shadow: inset 0 0 30px rgba(197, 77, 233, 1);
   }
-}
+} */
 </style>

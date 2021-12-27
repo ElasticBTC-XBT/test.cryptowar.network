@@ -9,7 +9,7 @@
 
     <li class="nav-line"></li>
 
-    <router-link :to="{ name: 'combat' }" exact class="nav-link mr-4 ml-4"
+    <router-link :to="{ name: 'arena' }" exact class="nav-link mr-4 ml-4"
     v-if="!featureFlagStakeOnly">
       <li class="nav-item nav-top-links nav-icon-box">
         <img src="../assets/v2/arena_icon.svg" alt="" class="nav-icon">
@@ -221,6 +221,7 @@ a.router-link-active .lobby .gtag-link-others{
   justify-content: center;
   align-items: center;
   font-size: 0.8em;
+  z-index: 100;
 }
 .nav-img-item-box:hover .nav-item-hover{
   display: flex;
