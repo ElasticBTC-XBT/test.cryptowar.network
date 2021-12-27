@@ -325,6 +325,10 @@ export default Vue.extend({
   color: #fff;
 }
 
+.btn-claim-xp {
+  font-size: 0.8rem;
+}
+
 @media (max-width: 576px) {
     .navbar-expand {
       justify-content: center;
