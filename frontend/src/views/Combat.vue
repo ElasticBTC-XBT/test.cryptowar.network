@@ -553,7 +553,7 @@ export default {
   width: 20px;
   height: 20px;
   position: relative;
-  top: 92px;
+  top: 123px;
   right: -120px;
   z-index: 1;
 }

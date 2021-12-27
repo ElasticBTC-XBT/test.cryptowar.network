@@ -6,7 +6,7 @@
             class="character-item addnew addmore"
           >
           <div class="lobby-item-box">
-            <router-link :to="{ name: 'pve' }" exact class="">
+            <router-link :to="{ name: 'combat' }" exact class="">
               <b-button
                     class="lobby-item"
                     v-tooltip="'PvE'"

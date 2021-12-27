@@ -2,7 +2,7 @@ import VueRouter, { RouteConfig } from 'vue-router';
 
 import Plaza from './views/Plaza.vue';
 import Blacksmith from './views/Blacksmith.vue';
-import CombatPVE from './views/CombatPVE.vue';
+import Combat from './views/Combat.vue';
 import Stake from './views/Stake.vue';
 import SelectStakeType from './views/SelectStakeType.vue';
 import Raid from './views/Raid.vue';
@@ -47,7 +47,7 @@ function createRouter() {
     routes: [
       { path: '/', name: 'plaza', component: Plaza },
       { path: '/blacksmith', name: 'blacksmith', component: Blacksmith },
-      { path: '/combat-pve', name: 'pve', component: CombatPVE },
+      { path: '/combat', name: 'combat', component: Combat },
       { path: '/combat-pvp', name: 'pvp', component: CombatPVP },
       { path: '/combat-pvp-fight', name: 'pvp-fight', component: CombatPVPFight },
       { path: '/arena', name: 'arena', component: Arena },
