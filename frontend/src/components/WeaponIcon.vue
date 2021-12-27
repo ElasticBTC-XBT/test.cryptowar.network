@@ -15,7 +15,7 @@
       <div>
         <div class="trait">
           <span :class="weapon.element.toLowerCase() + '-icon'"></span>
-          <span class="weapon-star" v-for="n in this.weapon.stars + 4" :key="n">
+          <span class="weapon-star" v-for="n in this.weapon.stars + 1" :key="n">
             <i class="fas fa-star"></i>
           </span>
         </div>
