@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="filters row mt-2 pl-2" v-if="!newWeapon" @change="saveFilters()">
+    <div class="filters row mt-2 pl-2" v-if="!newWeapon && checkBar" @change="saveFilters()">
       <div class="col-sm-6 col-md-6 mb-3" :class="showGivenWeaponIds && !isMarket? 'col-lg-6':'col-lg-2'">
-        <strong>Stars</strong>
+        <strong>Stars {{checkBar}}</strong>
         <select class="form-control" v-model="starFilter" >
           <option v-for="x in ['', 1, 2, 3, 4, 5]" :value="x" :key="x">{{ x || 'Any' }}</option>
         </select>
@@ -54,7 +54,7 @@
       </b-button>
     </div>
 
-    <ul class="weapon-grid">
+    <ul class="weapon-grid row">
       <li
         class="weapon"
         :class="[{ selected: highlight !== null && weapon.id === highlight },isSell?'weapon-market':'']"
@@ -190,6 +190,10 @@ export default Vue.extend({
     sellClick:{
       type: ()=>{},
       default: null
+    },
+    checkBar:{
+      type:Boolean,
+      default: true
     }
   },
 
@@ -388,44 +392,67 @@ export default Vue.extend({
 <style scoped>
 
 .filters {
-   justify-content: center;
-   width: 100%;
-   max-width: 900px;
-   margin: 0 auto;
-   align-content: center;
-   border-bottom: 0.2px solid rgba(102, 80, 80, 0.1);
-   margin-bottom: 20px;
+  justify-content: center;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  align-content: center;
+  border-bottom: 0.2px solid rgba(102, 80, 80, 0.1);
+  margin-bottom: 20px;
 }
 .weapon-grid {
-  list-style-type: none;
-  justify-content: center;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  padding: 0.5em;
-  grid-template-columns: repeat(auto-fit, 14em);
-  gap: 2em;
+  /* display: flex; */
+  padding: 0 39px;
 }
 
 .weapon {
-  width: 14em;
   /* background: rgba(255, 255, 255, 0.05); */
-  border-radius: 6px;
+  /* border-radius: 6px; */
   cursor: pointer;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  padding: 50px 0 60px 0;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .weapon-icon-wrapper {
-  width: 14em;
-  height: 18em;
+  /* width: 306px;
+  height: 436px;
+  margin: auto;
+  background: url("../../assets/v2/market_background_weapon.svg");
+  background-repeat: no-repeat;
+  background-size: contain; */
+
+  height: 415px;
+  width: 300px;
+  /* background-position: 50% 50%; */
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+  border: 1px solid #3CDE9B;
+  border-radius: 15px 40px 15px 15px;
+  background: #0D2F9Cbb;
+  background-image: radial-gradient(#F5EFC2 -30%, transparent 70%);
+  margin: auto;
 }
 
-.weapon-market .weapon-icon-wrapper{
-  height: 20em;
+.weapon-icon-wrapper::before{
+  content: '';
+  width: 76px;
+  height: 72px;
+  background: url("../../assets/v2/corner_green.svg") no-repeat 0 0;
+  background-size: cover;
+  position: absolute;
+  right: -6px;
+  top: -8px;
 }
+
+/* .weapon-market .weapon-icon-wrapper{
+  height: 20em;
+} */
 
 .above-wrapper {
   padding: 0.1rem 0.1rem 1rem;
@@ -501,8 +528,8 @@ export default Vue.extend({
 /* Needed to adjust weapon list */
 @media all and (max-width: 767.98px) {
   .weapon-grid {
-    padding-left: 2em;
     justify-content: center;
+    padding: 0;
   }
   .stars-elem {
     margin-bottom: 20px;
@@ -513,29 +540,32 @@ export default Vue.extend({
     display: inline-block;
     margin: auto;
   }
+  .weapon{
+    padding: 40px 0 60px 0;
+  }
 }
 
 .sold {
-    height: 40px;
-    width: 230px;
-    background-color: rgb(187, 33, 0);
-    transform: rotate(15deg);
-    left: -20px;
-    position: absolute;
-    top: 110px;
-    z-index: 100;
+  height: 40px;
+  width: 230px;
+  background-color: rgb(187, 33, 0);
+  transform: rotate(15deg);
+  left: -20px;
+  position: absolute;
+  top: 110px;
+  z-index: 100;
 }
 
 .sold span {
-    text-align: center;
-    width: auto;
-    color: white;
-    display: block;
-    font-size: 30px;
-    font-weight: bold;
-    line-height: 40px;
-    text-shadow: 0 0 5px #333, 0 0 10px #333, 0 0 15px #333, 0 0 10px #333;
-    text-transform: uppercase;
+  text-align: center;
+  width: auto;
+  color: white;
+  display: block;
+  font-size: 30px;
+  font-weight: bold;
+  line-height: 40px;
+  text-shadow: 0 0 5px #333, 0 0 10px #333, 0 0 15px #333, 0 0 10px #333;
+  text-transform: uppercase;
 }
 
 .fix-h24 {

@@ -61,8 +61,7 @@
   height: calc(100vh);
   overflow-y: auto;
   background: url('../images/bg.png') no-repeat 0 0;
-  background-size: 100% 100%
-
+  background-size: 100% 100%;
 }
 
 .main-font .nav-item a{
@@ -75,6 +74,7 @@
 
 .main-font .navbar{
   padding-top: 0;
+  display: none;
 }
 
 .gtag-link-others{
@@ -108,7 +108,6 @@ li:not(:last-child){
   margin-right: 40px;
   margin-left: 40px;
   min-width: 70px;
-
 }
 
 .navbar-light .navbar-nav .show > .nav-link{
@@ -194,72 +193,13 @@ select.form-control option, .custom-select option{
   margin: 0.5rem auto;
   display: flex;
   justify-content: center;
+  align-items: center;
   max-width: 100%;
-  width: 80%;
+  width: 95%;
   min-width: 11rem;
 }
 .shop-items .gtag-link-others{
   margin-right: 0;
-}
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.425);
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  font-size: 3rem;
-  color: #fff;
-  z-index: 999;
-}
-
-.marketoutcome-panel {
-  width: 50rem;
-  height: calc(50rem * 0.69);
-  max-width:  100%;
-  background-image: url('../images/bg-modal.svg');
-  background-position: 50% 50%;
-  background-size: contain;
-  background-repeat: no-repeat;
-  border-radius: 5px;
-  padding: 0.5em;
-  margin: auto;
-  overflow: auto auto;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.marketoutcome-panel-heading {
-  margin-left: 15px;
-  margin-top: 3rem;
-  font-size: 2.8rem;
-  font-weight: bold;
-  color: #F58B5B;
-  display: block;
-  text-align: center;
-}
-
-.marketoutcome-panel .button-div{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 2rem;
-  text-align: center;
-}
-
-.marketoutcome-list {
-  padding: 30px 20px 15px 10px;
-  font-size: 1.3rem;
-  list-style: none;
-  padding-left: 0;
 }
 
 
@@ -310,19 +250,5 @@ select.form-control option, .custom-select option{
   }
   .navbar-nav .dropdown-menu{
     position: absolute;
-  }
-  .marketoutcome-panel-heading {
-    font-size: 1.5rem;
-    margin-top: 1.2rem;
-  }
-  .marketoutcome-list {
-    font-size: 0.8rem;
-  }
-  .marketoutcome-panel .button-div {
-    margin-top: 0;
-  }
-  .marketoutcome-panel .button-div button {
-    font-size: 15px;
-    padding-left: 8px;
   }
 }

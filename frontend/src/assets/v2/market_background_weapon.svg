@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="293.759" height="398.241" viewBox="0 0 293.759 398.241">
+  <defs>
+    <filter id="Path_10650" x="-9.5" y="-6.5" width="312.759" height="417.241" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-path">
+      <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Path_10650)">
+        <path id="Path_10650-2" data-name="Path 10650" d="M19.6,0H242.52a51.238,51.238,0,0,1,51.238,51.238v327.4a19.6,19.6,0,0,1-19.6,19.6H19.6A19.6,19.6,0,0,1,0,378.637V19.6A19.6,19.6,0,0,1,19.6,0Z" transform="translate(12814.15 3020.46)" fill="rgba(13,47,156,0.8)" stroke="#3cde9b" stroke-width="1"/>
+      </g>
+    </clipPath>
+    <radialGradient id="radial-gradient" cx="0.5" cy="0.5" r="0.5" gradientTransform="translate(0.5 -0.207) rotate(45)" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ffff90"/>
+      <stop offset="0.028" stop-color="#f4ed7e"/>
+      <stop offset="0.102" stop-color="#dbc353"/>
+      <stop offset="0.159" stop-color="#cba938"/>
+      <stop offset="0.194" stop-color="#c6a02f"/>
+      <stop offset="0.336" stop-color="#896000"/>
+      <stop offset="0.366" stop-color="#7e5800"/>
+      <stop offset="0.513" stop-color="#513900"/>
+      <stop offset="0.654" stop-color="#2e2000"/>
+      <stop offset="0.785" stop-color="#140e00"/>
+      <stop offset="0.905" stop-color="#050300"/>
+      <stop offset="1"/>
+    </radialGradient>
+  </defs>
+  <g id="Mask_Group_4" data-name="Mask Group 4" transform="translate(-12814.154 -3020.455)" clip-path="url(#clip-path)">
+    <circle id="Ellipse_534" data-name="Ellipse 534" cx="179.869" cy="179.869" r="179.869" transform="translate(12711.627 3200.5) rotate(-45)" fill="url(#radial-gradient)" style="mix-blend-mode: screen;isolation: isolate"/>
+  </g>
+</svg>

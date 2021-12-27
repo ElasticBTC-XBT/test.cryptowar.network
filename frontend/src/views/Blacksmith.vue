@@ -488,8 +488,8 @@ export default Vue.extend({
     const skillBurnCost =  await this.contracts.CryptoWars.methods.usdToxBlade(burnCost).call({ from: this.defaultAccount });
     this.burnCost = new BN(skillBurnCost).div(new BN(10).pow(18)).toFixed(4);
 
-    if(!this.contracts.WeaponRenameTagConsumables) return;
-    this.haveRename = await this.contracts.WeaponRenameTagConsumables.methods.getItemCount().call({ from: this.defaultAccount });
+    // if(!this.contracts.WeaponRenameTagConsumables) return;
+    // this.haveRename = await this.contracts.WeaponRenameTagConsumables.methods.getItemCount().call({ from: this.defaultAccount });
   },
 
   methods: {

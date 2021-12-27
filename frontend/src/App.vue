@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div class="app app-v2">
     <div class="container-box">
       <nav-bar />
       <character-bar
@@ -126,7 +126,7 @@ import BigButton from "./components/BigButton.vue";
 import SmallButton from "./components/SmallButton.vue";
 import NavBar from "./components/NavBar.vue";
 import CharacterBar from "./components/CharacterBar.vue";
-import { apiUrl, defaultOptions } from "./utils/common";
+// import { apiUrl, defaultOptions } from "./utils/common";
 
 Vue.directive("visible", (el, bind) => {
   el.style.visibility = bind.value ? "visible" : "hidden";
@@ -274,7 +274,8 @@ export default {
                     symbol: "BNB",
                     decimals: 18,
                   },
-                  rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
+                  // rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
+                  rpcUrls:["https://speedy-nodes-nyc.moralis.io/eba7d2e0234f08d2741c13aa/bsc/testnet"],
                   blockExplorerUrls: ["https://testnet.bscscan.com"],
                 },
               ],
@@ -402,37 +403,6 @@ export default {
       }
     },
 
-    async checkNotifications() {
-      const response = await fetch(
-        apiUrl("static/notifications"),
-        defaultOptions
-      );
-      const notifications = await response.json();
-
-      const lastHash = localStorage.getItem("lastnotification");
-      let shouldContinue = true;
-
-      notifications.forEach((notif) => {
-        if (!shouldContinue) return;
-
-        if (lastHash === notif.hash) {
-          shouldContinue = false;
-          return;
-        }
-
-        this.$dialog.notify.warning(
-          `${notif.title}
-          <br>
-          <a href="${notif.link}" target="_blank">Check it out!</a>
-          `,
-          {
-            timeout: 300000,
-          }
-        );
-      });
-
-      localStorage.setItem("lastnotification", notifications[0].hash);
-    },
   },
 
   mounted() {
@@ -521,7 +491,6 @@ export default {
     if (!localStorage.getItem("fightMultiplier"))
       localStorage.setItem("fightMultiplier", "1");
 
-    this.checkNotifications();
     this.initializeRecruitCost();
   },
 
@@ -607,7 +576,7 @@ button,
 
 .earth,
 .dex {
-  color: green;
+  color: white;
 }
 
 .water,
@@ -624,32 +593,36 @@ button,
 .str-icon {
   color: red;
   content: url("assets/elements/fire.png");
-  width: 1em;
-  height: 1em;
+  width: 2.3rem;
+  height: 2.3rem;
+  margin-right: 4px;
 }
 
 .earth-icon,
 .dex-icon {
   color: green;
   content: url("assets/elements/earth.png");
-  width: 1em;
-  height: 1em;
+  width: 2.3rem;
+  height: 2.3rem;
+  margin-right: 4px;
 }
 
 .water-icon,
 .int-icon {
   color: cyan;
   content: url("assets/elements/water.png");
-  width: 1em;
-  height: 1em;
+  width: 2.3rem;
+  height: 2.3rem;
+  margin-right: 4px;
 }
 
 .lightning-icon,
 .cha-icon {
   color: yellow;
   content: url("assets/elements/lightning.png");
-  width: 1em;
-  height: 1em;
+  width: 2.3rem;
+  height: 2.3rem;
+  margin-right: 4px;
 }
 
 .loading-container {
@@ -745,15 +718,9 @@ button.close {
   border-radius: 20px;
 }
 .modal-header {
-  color: #fff !important;
-  background: rgb(31, 31, 34);
-  border-color: rgba(24, 27, 30, 0.5) !important;
-  font-weight: 600;
 }
 
 .modal-body {
-  color: rgb(187, 187, 187) !important;
-  background: rgb(31, 31, 34);
 }
 
 .modal-footer {
@@ -798,8 +765,19 @@ button.close {
   display: flex;
   justify-content: center;
 }
+
+.nav.nav-tabs.nav-justified{
+  background-color: rgba(0, 0, 0, .5);
+  border-radius: 20px;
+  padding: 0 30px;
+}
+
 .nav-tabs {
   border-bottom: none !important;
+}
+
+.tab-categories.nav-tabs{
+  // border-bottom: 1px solid #f76d00 !important;
 }
 
 .nav-justified > .nav-link, .nav-justified .nav-item{
@@ -819,6 +797,7 @@ button.close {
   border-left-color: transparent !important;
   border-right-color: transparent !important;
   background-color: transparent !important;
+  font-family: 'Rubik';
 }
 
 .nav-tabs .nav-link:hover {
