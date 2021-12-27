@@ -404,17 +404,15 @@ export default Vue.extend({
   display: grid;
   padding: 0.5em;
   grid-template-columns: repeat(auto-fit, 14em);
-  grid-column-gap: 105px;
-  grid-row-gap: 30px;
+  grid-column-gap: 75px;
+  /* grid-row-gap: 30px; */
 }
 
 .weapon {
   width: 14em;
-  /* background: rgba(255, 255, 255, 0.05); */
   border-radius: 6px;
   cursor: pointer;
   position: relative;
-  /* overflow: hidden; */
   display: flex;
   flex-direction: column;
 }

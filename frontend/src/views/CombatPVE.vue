@@ -128,15 +128,13 @@
                 <div class="victory-chance">
                   {{ getWinChance(e.power, e.trait) }} Victory
                 </div>
-                <div>
-                  <big-button
+                <big-button
                     style="margin: 0 auto"
                     class="encounter-button btn-styled"
                     :mainText="`FIGHT`"
                     :disabled="(timeMinutes === 59 && timeSeconds >= 30) || waitingResults || !weaponHasDurability(selectedWeaponId) || !charHasStamina()"
                     @click="onClickEncounter(e)"
                   />
-                </div>
                 <p v-if="isLoadingTargets">Loading...</p>
                 </div>
               </div>
@@ -449,7 +447,7 @@ export default {
 .btn-close-fight-results{
   border-radius: 0;
   border: none;
-  background-image: url(../assets/v2/Btn-fight.svg);
+  background-image: url(../assets/v2/btn-fight.png);
   width: 130px;
   height: 50px;
   background-size: cover;
@@ -461,8 +459,8 @@ export default {
 
 .enemy-character {
   position: relative;
-  width: 19em;
-  height: 25em;
+  width: 17em;
+  height: 23em;
   background-position: left;
   background-repeat: no-repeat;
   background-size: contain;
@@ -511,8 +509,8 @@ export default {
 
 .combat-hints .property-icon{
   background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url('../assets/v2/Property-system.png');
+  background-size: contain;
+  background-image: url(../assets/v2/Property-system.svg);
   width: 360px;
   height: 80px;
 }
@@ -555,8 +553,8 @@ export default {
   width: 20px;
   height: 20px;
   position: relative;
-  top: 78px;
-  right: -133px;
+  top: 92px;
+  right: -120px;
   z-index: 1;
 }
 
@@ -576,9 +574,10 @@ export default {
 .custom-select{
   background-color: #000;
   border: 1px solid #5bc7f5;
-  width: 300px;
+  width: 272px;
   height: 60px;
   border-radius: 10px;
+  margin-top: 15px;
 }
 
 div.encounter.text-center {
@@ -587,7 +586,6 @@ div.encounter.text-center {
 
 .weapon-icon-wrapper {
   /* background: rgba(255, 255, 255, 0.1); */
-  background-image: url(../assets/v2/bg-weapon.svg);
   width: 20em;
   height: 24em;
   margin-top: 55px !important;
@@ -673,7 +671,7 @@ div.encounter.text-center {
 }
 
 .combat-enemy-container .weapon-icon-wrapper{
-  height: 26rem;
+  height: 24rem;
   width: 19.5rem;
 }
 
@@ -745,24 +743,24 @@ button.encounter-button {
   display: flex;
   position: relative;
   /* margin-right: 0; */
-  top: 2vw;
+  top: 3.3vw;
   text-align: center;
   line-height: 1;
   justify-content: center;
   align-items: center;
-  background-image: url(../assets/v2/Btn-fight.svg);
+  background-image: url(../assets/v2/btn-fight.png);
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   border: none;
   background-color: transparent;
   height: 60px;
-  width: calc(100% - 125px) !important;
+  width: 152px !important;
   overflow: hidden;
   margin: 0 auto;
 }
 
 button.encounter-button:hover{
-  background-image: url(../assets/v2/Btn-fight-opcity.svg);
+  background-image: url(../assets/v2/Btn-fight-opcity.png);
   transition: 0.9s;
   background-color: transparent;
 }
@@ -786,14 +784,18 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
 }
 
 .choose_weapon{
-  max-width: 15rem;
-  height: 42px;
+  width: 15rem;
+  height: 46px;
   background-color: transparent !important;
   border: none !important;
   background-image: url(../assets/v2/Choose-new-weapon.svg);
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   border-radius: 0;
+  margin: 0;
+  font-size: 1.2em;
+  padding: 0;
+  margin: 0 auto;
 }
 
 @media (max-width: 1334px) {
@@ -849,9 +851,6 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
 
 /* - */
 .combat-hints {
-  margin-top: 30px;
-}
-#gtag-link-others {
   margin-top: 30px;
 }
 .ml-3 {

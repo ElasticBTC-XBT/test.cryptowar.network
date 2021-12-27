@@ -75,7 +75,15 @@
           :key="c.id"
           @click="!getIsInCombat && setCurrentCharacter(c.id) && alert(c.id)"
         >
-          <div class="name-list">
+          <div class="element-icon"><span
+                :class="
+                  traits[c.trait].toLowerCase() +
+                  '-icon trait-icon'
+                "
+              ></span>
+            </div>
+          <div>
+            <div class="name-list">
             {{ getCleanCharacterName(c.id) }} Lv.{{ c.level + 1 }}
           </div>
           <div
@@ -90,6 +98,7 @@
             <div class="stamina-text">
               STA {{ getCharacterStamina(c.id) }} / 200
             </div>
+          </div>
           </div>
         </li>
       </ul>
@@ -250,24 +259,41 @@ ul.character-list {
 
 li.character {
   background: #F58B5B;
-  padding: 0.5rem 3.5rem 0.5rem;
+  padding: 0.5rem 0.5rem 0.5rem;
   margin: 5px;
   vertical-align: middle;
   cursor: pointer;
   border-radius: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
   /* border: 2px solid #5D5A62; */
+}
+
+li.character .element-icon{
+  width: 50px;
+  height: 45px;
 }
 
 li.character-highlight {
   border: solid #9e8a57 3px;
   font-weight: 800;
   /* padding: 5px; */
-  padding: 0.5rem 3.5rem 0.5rem;
+  padding: 0.5rem 0.5rem 0.5rem;
   border-radius: 10px;
   margin: 10x;
   vertical-align: middle;
   cursor: pointer;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
+
+li.character-highlight .element-icon{
+  width: 50px;
+  height: 45px;
+}
+
 
 .name-list {
   margin: auto;
@@ -277,6 +303,7 @@ li.character-highlight {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow-x: hidden;
+  width: 200px;
 }
 
 .character-list-mobile {
@@ -328,7 +355,7 @@ li.character-highlight {
 
 .character-full-list .character,
 .character-full-list .character-highlight {
-  width: 290px;
+  width: 280px;
   margin: 10px 20px 10px 0;
 }
 

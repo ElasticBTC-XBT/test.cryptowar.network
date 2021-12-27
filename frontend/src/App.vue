@@ -1014,26 +1014,13 @@ div.bg-success {
   .blank-slate .button h1{
     font-size: 1.5rem;
   }
-  #selectHeroOrWeaponModal ::-webkit-scrollbar{
-  /* width: 0px; */
-  display: none;
-  width: 0;
-}
 }
 
 @media (max-width: 767px){
-#selectHeroOrWeaponModal ::-webkit-scrollbar{
-  /* width: 0px; */
-  display: none !important;
-  width: 0 !important;
-}
+
 }
 
 @media (max-width: 575.98px) {
-#selectHeroOrWeaponModal ::-webkit-scrollbar{
-  /* width: 0px; */
-  display: none;
-  width: 0;
-}
+
 }
 </style>

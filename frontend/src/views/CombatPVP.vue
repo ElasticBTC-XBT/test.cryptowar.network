@@ -11,16 +11,18 @@
         </div>
       </div>
       <b-modal id="listHeroToCareerModal" hide-footer>
-        <div class="icon-close" @click="$bvModal.hide('listHeroToCareerModal')"></div>
+        <div class="icon-close-container"><div class="icon-close" @click="$bvModal.hide('listHeroToCareerModal')"></div></div>
         <div class="listHeroToCareerModal-head">CryptoWar Message</div>
         <div class="listHeroToCareerModal-body">Listing HERO to Career: <span>Done</span></div>
-        <button @click="$bvModal.hide('listHeroToCareerModal')" class="listHeroToCareerModal-btn confirm">GO TO CHECK</button>
+        <button @click="$bvModal.hide('listHeroToCareerModal'), careerMode = true, changeMode = false, requestChallenge = false,
+          checkSelect = false, addClass = ''" class="listHeroToCareerModal-btn confirm">GO TO CHECK</button>
       </b-modal>
       <b-modal id="listHeroToChallengeModal" hide-footer>
-        <div class="icon-close" @click="$bvModal.hide('listHeroToChallengeModal')"></div>
+        <div class="icon-close-container"><div class="icon-close" @click="$bvModal.hide('listHeroToChallengeModal')"></div></div>
         <div class="listHeroToChallengeModal-head">CryptoWar Message</div>
         <div class="listHeroToChallengeModal-body">Listing HERO to Challenge: <span>Done</span></div>
-        <button @click="$bvModal.hide('listHeroToChallengeModal')" class="listHeroToChallengeModal-btn confirm">GO TO CHECK</button>
+        <button @click="$bvModal.hide('listHeroToChallengeModal'), careerMode = false, changeMode = true, requestChallenge = false,
+          checkSelect = false, addClass = ''" class="listHeroToChallengeModal-btn confirm">GO TO CHECK</button>
       </b-modal>
       <div class="row">
         <div :class="addClass" class="col-12 info-box">
@@ -98,7 +100,7 @@
         </div>
       </div>
       <b-modal id="selectHeroOrWeaponModal" class="modal-box" hide-footer>
-        <div class="icon-close" @click="$bvModal.hide('selectHeroOrWeaponModal')"></div>
+        <div class="icon-close-container"><div class="icon-close" @click="$bvModal.hide('selectHeroOrWeaponModal')"></div></div>
         <!-- <div class="title-results">{{titleResults}}</div>
         <CombatResults v-if="resultsAvailable" :results="fightResults" /> -->
         <div class="row list" v-if="selectHero">
@@ -121,7 +123,7 @@
                 <div class="cost"><div></div> 100</div>
               </div>
             </div>
-            <div><button @click="checkSelect = true, (changeMode = true), (careerMode = false), (requestChallenge = false),
+            <div><button @click="checkSelect = true, checkCurrentMode(),
               $bvModal.hide('selectHeroOrWeaponModal'), addClass = 'background'" class="btn-request-fight">SELECT</button></div>
           </div>
         </div>
@@ -147,7 +149,7 @@
                 <div class="bar-xp-weapon"></div>
               </div>
             </div>
-            <div><button @click="checkSelect = true, (changeMode = true), (careerMode = false), (requestChallenge = false),
+            <div><button @click="checkSelect = true, checkCurrentMode(),
               $bvModal.hide('selectHeroOrWeaponModal'),  addClass = 'background'" class="btn-request-fight">SELECT</button></div>
           </div>
         </div>
@@ -351,33 +353,6 @@ export default {
       checkSelectFromRPS: this.propCheckSelect,
     };
   },
-  // created() {
-  //   this.intervalSeconds = setInterval(() => (this.timeSeconds = new Date().getSeconds()), 5000);
-  //   this.intervalMinutes = setInterval(() => (this.timeMinutes = new Date().getMinutes()), 20000);
-  //   this.staminaPerFight = 40 * Number(localStorage.getItem('fightMultiplier'));
-  // },
-  // created(){
-  //   // this.checkSelect = true;
-  //   console.log("nam");
-  //   Events.$on('hello', (i) => {
-  //     if(i === "true"){
-  //       this.select = true;
-  //       this.a = true;
-  //       console.log("nam");
-  //     }
-  //   });
-  //   // console.log(this.str);
-  // },
-  // updated(){
-  //   console.log("nam");
-  //   Events.$on('hello', (i) => {
-  //     if(i === "true"){
-  //       this.select = true;
-  //       console.log("nam");
-  //     }
-  //   });
-  // },
-
 
   mounted(){
     if(this.checkSelectFromRPS){
@@ -461,6 +436,14 @@ export default {
       if(this.changeMode || this.careerMode || this.requestChallenge){
         this.addClass = "";
         this.checkSelect = false;
+      }
+    },
+    checkCurrentMode(){
+      if(this.changeMode){
+        this.careerMode = false;
+      }
+      else if(this.careerMode){
+        this.changeMode = false;
       }
     },
     getEnemyArt,
@@ -675,8 +658,7 @@ export default {
   background-image: url(../assets/v2/icon-close-2.svg);
   width: 50px;
   height: 47px;
-  position: relative;
-  right: -64em;
+  margin-right: 40px;
 }
 
 #requestSelect .icon-close,
@@ -693,10 +675,15 @@ export default {
 #listHeroToChallengeModal .icon-close{
   background-image: url(../assets/v2/icon-close.svg);
   width: 50px;
-  height: 47px;
-  position: relative;
-  right: -25em;
-  top: -5px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+#listHeroToChallengeModal .icon-close-container,
+#listHeroToCareerModal .icon-close-container,
+#selectHeroOrWeaponModal .icon-close-container{
+  display: flex;
+  justify-content: flex-end;
 }
 
 .quantity-heroes {
@@ -1068,7 +1055,7 @@ export default {
 .requestSelect-btn{
   background-color: transparent;
   border: none;
-  background-image: url(../assets/v2/Btn-fight.svg);
+  background-image: url(../assets/v2/btn-fight.png);
   background-repeat: no-repeat;
   background-size: contain;
   width: 163px;
@@ -1194,7 +1181,7 @@ export default {
 }
 
 .listHeroToCareerModal-body span,
-.listHeroToChallengeModal span{
+.listHeroToChallengeModal-body span{
   color: #D858F7;
 }
 
@@ -1229,9 +1216,6 @@ export default {
     flex-direction: column;
     align-items: center;
   }
-  #selectHeroOrWeaponModal .icon-close{
-  right: -41em;
-}
 }
 
 @media (max-width: 575.98px) {
@@ -1257,24 +1241,21 @@ export default {
   justify-content: center;
   /* width: 200px; */
 }
-  #selectHeroOrWeaponModal .icon-close{
-  right: -25em;
-}
 }
 
 @media (max-width: 376px) {
   #selectHeroOrWeaponModal .icon-close{
-  right: -18em;
+    margin-right: 10px;
+  }
 }
 
-}
-
-@media (max-width: 414px) {
+@media (max-width: 767px) {
   #selectHeroOrWeaponModal .icon-close{
-  right: -17em;
+    margin-right: 10px;
   }
 }
 
 @media (min-width: 768px) {
+
 }
 </style>

@@ -57,8 +57,9 @@
       </div>
     </div>
     <div class="nav-line boder"></div>
-    <div class="enemy row">
-      <div class="enemy-box">
+    <div class="enemy">
+      <div class="row">
+        <div class="enemy-box">
         <div class="property-icon"></div>
         <div class="list-enemy row">
           <div class="enemy-item-container" v-for="i in 4" :key="i">
@@ -80,6 +81,7 @@
             <button @click="$bvModal.show('fightResultsModal')">FIGHT</button>
           </div>
         </div>
+      </div>
       </div>
     </div>
     </div>
@@ -471,7 +473,7 @@ margin-top: 20px;
 .choose-weapon{
   margin-top: 30px;
   width: 15rem;
-  height: 42px;
+  height: 44px;
   background-color: transparent;
   border: none;
   background-image: url(../assets/v2/Choose-new-weapon.svg);
@@ -484,22 +486,24 @@ margin-top: 20px;
 
 .property-icon{
   background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url('../assets/v2/Property-system.png');
+  background-size: contain;
+  background-image: url('../assets/v2/Property-system.svg');
   width: 360px;
   height: 80px;
   margin-bottom: 20px !important;
+  margin: 0 auto;
 }
 
 .combat{
   display: flex;
+  justify-content: center;
 }
 
 .enemy{
-  width: calc(100% - 431px);
+  /* max-width: calc(100% - 431px); */
+  width: 74%;
   display: flex;
-  justify-content: flex-end;
-  flex-direction: column;
+  justify-content: center;
 }
 
 .enemy-box{
@@ -507,7 +511,7 @@ margin-top: 20px;
 }
 
 .enemy-box div{
-  margin: 0 auto;
+  /* margin: 0 auto; */
   /* margin-bottom: 20px; */
 }
 
@@ -515,8 +519,8 @@ margin-top: 20px;
     background-image: url(../assets/images/bg-item-top.png);
     background-repeat: no-repeat;
     background-size: cover;
-    width: 300px;
-    height: 400px;
+    width: 280px;
+    height: 380px;
 }
 
 .enemy-item-head{
@@ -545,6 +549,7 @@ margin-top: 20px;
     position: relative;
     width: 210px;
     height: 242px;
+    margin: 0 auto;
 }
 .img-enemy{
   background-image: url(../assets/enemies/HumanMale_Bandit.png);
@@ -553,6 +558,7 @@ margin-top: 20px;
   background-size: cover;
   bottom: -5px;
   position: relative;
+  margin: 0 auto;
 }
 .around-enemy{
   display: flex;
@@ -563,10 +569,11 @@ margin-top: 20px;
   position: relative;
   z-index: 1;
   top: -220px;
+  margin: 0 auto;
 }
 
 .enemy-item .enemy-item-footer{
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 .enemy-power,
@@ -586,10 +593,11 @@ font-size: 1.3em;
   margin-top: 20px;
   background-color: transparent;
   border: none;
-  background-image: url(../assets/v2/Btn-fight.svg);
-  background-size: cover;
+  background-image: url(../assets/v2/btn-fight.png);
+  background-size: contain;
+  background-repeat: no-repeat;
   width: 150px;
-  height: 60px;
+  height: 45px;
   font-size: 1.4em;
   color: #fff;
 }
@@ -598,10 +606,11 @@ font-size: 1.3em;
   display: block;
   background-color: transparent;
   border: none;
-  background-image: url(../assets/v2/Btn-fight.svg);
-  background-size: cover;
-  width: 150px;
-  height: 60px;
+  background-image: url(../assets/v2/btn-fight.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 168px;
+  height: 50px;
   font-size: 1.4em;
   color: #fff;
 }
@@ -700,7 +709,7 @@ font-size: 1.3em;
 .btn-close-fight-results{
   border-radius: 0;
   border: none;
-  background-image: url(../assets/v2/Btn-fight.svg);
+  background-image: url(../assets/v2/btn-fight.png);
   width: 130px;
   height: 50px;
   background-size: cover;
@@ -785,6 +794,11 @@ font-size: 1.3em;
 .modal-content {
   border-radius: 20px;
   width: 500px;
+}
+
+.list-enemy{
+  display: flex;
+  justify-content: center;
 }
 
 @media (max-width: 767.98px){

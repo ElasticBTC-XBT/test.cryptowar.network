@@ -26,7 +26,7 @@
         </div>
       </div>
       <b-modal id="selectHeroOrWeaponModal" class="modal-box" hide-footer>
-        <div class="icon-close" @click="$bvModal.hide('selectHeroOrWeaponModal')"></div>
+        <div class="icon-close-container"><div class="icon-close" @click="$bvModal.hide('selectHeroOrWeaponModal')"></div></div>
         <!-- <div class="title-results">{{titleResults}}</div>
         <CombatResults v-if="resultsAvailable" :results="fightResults" /> -->
         <div class="row list" v-if="selectHero">
@@ -276,33 +276,16 @@ export default {
   max-width: 1650px;
 }
 
+#selectHeroOrWeaponModal .icon-close-container{
+  display: flex;
+  justify-content: flex-end;
+}
 
 #selectHeroOrWeaponModal .icon-close{
   background-image: url(../assets/v2/icon-close-2.svg);
   width: 50px;
   height: 47px;
-  position: relative;
-  right: -64em;
-}
-
-#requestSelect .icon-close,
-#fightModal .icon-close{
-  background-image: url(../assets/v2/icon-close.svg);
-  width: 50px;
-  height: 47px;
-  position: relative;
-  right: -36em;
-  top: -15px;
-}
-
-#listHeroToCareerModal .icon-close,
-#listHeroToChallengeModal .icon-close{
-  background-image: url(../assets/v2/icon-close.svg);
-  width: 50px;
-  height: 47px;
-  position: relative;
-  right: -25em;
-  top: -5px;
+  margin-right: 40px;
 }
 
 .quantity-heroes {
@@ -318,7 +301,6 @@ export default {
 }
 
 .info-box {
-  margin-top: 40px;
   padding:50px 100px;
   display: flex;
   justify-content: center;
@@ -458,8 +440,8 @@ export default {
 }
 
 .item{
-  width: 18em;
-  height: 25.5em;
+  width: 17.3em;
+  height: 24.5em;
   background-position: left;
   background-repeat: no-repeat;
   background-size: contain;
@@ -696,7 +678,7 @@ export default {
 .requestSelect-btn{
   background-color: transparent;
   border: none;
-  background-image: url(../assets/v2/Btn-fight.svg);
+  background-image: url(../assets/v2/btn-fight.png);
   background-repeat: no-repeat;
   background-size: contain;
   width: 163px;
@@ -738,6 +720,7 @@ export default {
 .background{
   background-image: linear-gradient(rgba(245, 111, 86, 0.3), rgba(86, 82, 219, 0.3));
   border: 1px solid #3CDE9B;
+  margin-top: 40px;
   margin-bottom: 3.5em;
 }
 
@@ -1055,7 +1038,7 @@ export default {
   display: block;
   background-color: transparent;
   border: none;
-  background-image: url(../assets/v2/Btn-fight.svg);
+  background-image: url(../assets/v2/btn-fight.png);
   width: 190px;
   height: 72px;
   background-size: cover;
@@ -1083,9 +1066,6 @@ export default {
     flex-direction: column;
     align-items: center;
   }
-  #selectHeroOrWeaponModal .icon-close{
-  right: -41em;
-}
   .nav-line.boder{
     height: 0;
   }
@@ -1117,21 +1097,18 @@ export default {
   justify-content: center;
   /* width: 200px; */
 }
-  #selectHeroOrWeaponModal .icon-close{
-  right: -25em;
-}
-  .nav-line.boder{
+.nav-line.boder{
     height: 0;
   }
-    .row-left{
+.row-left{
   justify-content: center;
+}
+.item-modal{
+  min-width: 18.5em;
 }
 }
 
 @media (max-width: 375.98px) {
-  #selectHeroOrWeaponModal .icon-close{
-  right: -19em;
-}
   .nav-line.boder{
     height: 0;
   }

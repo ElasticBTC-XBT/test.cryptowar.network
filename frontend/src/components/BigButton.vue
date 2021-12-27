@@ -5,10 +5,8 @@
     class="button main-font dark-bg-text"
     @click="$emit('click')"
   >
-    <div>
-      <h1>{{ mainText }}</h1>
-      <h2>{{ subText }}</h2>
-    </div>
+    <h1>{{ mainText }}</h1>
+    <h2>{{ subText }}</h2>
   </b-button>
 </template>
 
@@ -48,20 +46,15 @@ h1 {
 }
 
 .button h1 {
-  font-size: 1.2em;
-  position: relative;
-  left: 32px;
-  margin-top: 14px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-size: 1.3em;
+  margin-bottom: 10px;
 }
 
-.button div{
+/* .button div{
   width: 161px;
   position: relative;
   left: -32px;
-}
+} */
 
 /* .button:hover{
   background-image: url(../assets/v2/Btn-fight-opcity.svg);

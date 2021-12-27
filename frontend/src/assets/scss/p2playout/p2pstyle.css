@@ -20885,6 +20885,9 @@ margin-bottom: 1.5rem;
       text-align: center;
       justify-content: center;
     }
+    ::-webkit-scrollbar{
+        display: none;
+    }
   }
   
   .sold {
