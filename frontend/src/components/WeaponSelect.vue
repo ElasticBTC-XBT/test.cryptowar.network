@@ -260,10 +260,10 @@ export default {
 }
 
 .weapon-icon {
-    display: flex;
-    flex-direction: column;
-    /* justify-content: center; */
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
   background-image: url("../assets/images/bg-item-top.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -297,7 +297,7 @@ export default {
 }
 
 .stats {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .trait {
