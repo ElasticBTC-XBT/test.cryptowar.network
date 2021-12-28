@@ -958,10 +958,6 @@ div.bg-success {
   .button-div {
     margin-top: 0;
   }
-
-  .starter-panel .button-div h1 {
-    font-size: 14px !important;
-  }
 }
 
 @media all and (max-width: 767.98px) {

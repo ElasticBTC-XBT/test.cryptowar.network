@@ -40,6 +40,12 @@ h1 {
   font-size: 1.3rem;
 }
 
+@media (max-width: 767.98px) {
+  .starter-panel .button-div h1 {
+    font-size: 16px;
+  }
+}
+
 h2 {
   white-space: pre;
 }
