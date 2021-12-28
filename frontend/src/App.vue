@@ -1,10 +1,7 @@
 <template>
-  <div class="app">
+  <div class="app app-v2">
     <div class="container-box">
       <nav-bar />
-      <character-bar
-        v-if="!featureFlagStakeOnly && currentCharacterId !== null"
-      />
       <div class="content dark-bg-text">
         <router-view v-if="canShowApp" />
       </div>
@@ -125,8 +122,8 @@ import MetaMaskOnboarding from "@metamask/onboarding";
 import BigButton from "./components/BigButton.vue";
 import SmallButton from "./components/SmallButton.vue";
 import NavBar from "./components/NavBar.vue";
-import CharacterBar from "./components/CharacterBar.vue";
-import { apiUrl, defaultOptions } from "./utils/common";
+// import CharacterBar from "./components/CharacterBar.vue";
+// import { apiUrl, defaultOptions } from "./utils/common";
 
 Vue.directive("visible", (el, bind) => {
   el.style.visibility = bind.value ? "visible" : "hidden";
@@ -141,7 +138,7 @@ export default {
   ],
   components: {
     NavBar,
-    CharacterBar,
+    // CharacterBar,
     BigButton,
     SmallButton,
   },
@@ -274,7 +271,8 @@ export default {
                     symbol: "BNB",
                     decimals: 18,
                   },
-                  rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
+                  // rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
+                  rpcUrls:["https://speedy-nodes-nyc.moralis.io/eba7d2e0234f08d2741c13aa/bsc/testnet"],
                   blockExplorerUrls: ["https://testnet.bscscan.com"],
                 },
               ],
@@ -402,37 +400,6 @@ export default {
       }
     },
 
-    async checkNotifications() {
-      const response = await fetch(
-        apiUrl("static/notifications"),
-        defaultOptions
-      );
-      const notifications = await response.json();
-
-      const lastHash = localStorage.getItem("lastnotification");
-      let shouldContinue = true;
-
-      notifications.forEach((notif) => {
-        if (!shouldContinue) return;
-
-        if (lastHash === notif.hash) {
-          shouldContinue = false;
-          return;
-        }
-
-        this.$dialog.notify.warning(
-          `${notif.title}
-          <br>
-          <a href="${notif.link}" target="_blank">Check it out!</a>
-          `,
-          {
-            timeout: 300000,
-          }
-        );
-      });
-
-      localStorage.setItem("lastnotification", notifications[0].hash);
-    },
   },
 
   mounted() {
@@ -521,7 +488,6 @@ export default {
     if (!localStorage.getItem("fightMultiplier"))
       localStorage.setItem("fightMultiplier", "1");
 
-    this.checkNotifications();
     this.initializeRecruitCost();
   },
 
@@ -534,6 +500,16 @@ export default {
 </script>
 
 <style lang="scss">
+#fightResultsModal .modal-header .close,
+#selectHeroOrWeaponModal .modal-header .close,
+#requestSelect .modal-header .close,
+#fightModal .modal-header .close,
+#listHeroToCareerModal  .modal-header .close,
+#listHeroToChallengeModal .modal-header .close,
+#cancelRequestModal .modal-header .close{
+  font-size: 0;
+}
+
 button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.btn-primary
   > h1 {
   font-weight: 600;
@@ -620,36 +596,56 @@ button,
   color: yellow;
 }
 
+
+// .tooltil-icon-element{
+//   width: 1.5rem;
+//   height: 1.5rem;
+//   margin-left: 5px;
+// }
+
+.fire-icon.tooltil-icon-element,
+.earth-icon.tooltil-icon-element,
+.water-icon.tooltil-icon-element,
+.lightning-icon.tooltil-icon-element,
+.dex-icon.tooltil-icon-element,
+.int-icon.tooltil-icon-element,
+.cha-icon.tooltil-icon-element,
+.str-icon.tooltil-icon-element{
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: 5px;
+}
+
 .fire-icon,
 .str-icon {
   color: red;
   content: url("assets/elements/fire.png");
-  width: 1em;
-  height: 1em;
+  width: 2.3rem;
+  height: 2.3rem;
 }
 
 .earth-icon,
 .dex-icon {
   color: green;
   content: url("assets/elements/earth.png");
-  width: 1em;
-  height: 1em;
+  width: 2.3rem;
+  height: 2.3rem;
 }
 
 .water-icon,
 .int-icon {
   color: cyan;
   content: url("assets/elements/water.png");
-  width: 1em;
-  height: 1em;
+  width: 2.3rem;
+  height: 2.3rem;
 }
 
 .lightning-icon,
 .cha-icon {
   color: yellow;
   content: url("assets/elements/lightning.png");
-  width: 1em;
-  height: 1em;
+  width: 2.3rem;
+  height: 2.3rem;
 }
 
 .loading-container {
@@ -741,19 +737,65 @@ button.close {
 .btn-outline-primary {
   color: #a50eb3 !important;
 }
-.modal-content {
-  border-radius: 20px;
-}
-.modal-header {
-  color: #fff !important;
-  background: rgb(31, 31, 34);
-  border-color: rgba(24, 27, 30, 0.5) !important;
-  font-weight: 600;
+#fightResultsModal .modal-dialog,
+#listHeroToCareerModal .modal-dialog,
+#listHeroToChallengeModal .modal-dialog{
+  top: 350px;
+  max-width: 500px;
 }
 
-.modal-body {
-  color: rgb(187, 187, 187) !important;
-  background: rgb(31, 31, 34);
+#requestSelect .modal-dialog,
+#fightModal .modal-dialog,
+#cancelRequestModal .modal-dialog{
+  top: 350px;
+  max-width: 700px;
+}
+
+#selectHeroOrWeaponModal .modal-dialog{
+  // top: 50px;
+  max-width: 1150px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#requestSelect .modal-content,
+#fightModal .modal-content{
+  padding: 20px 0;
+}
+
+#fightResultsModal .modal-body{
+  color: #fff;
+}
+
+#selectHeroOrWeaponModal .modal-content{
+  background-image: url(./assets/v2/bg-modal.png);
+}
+
+.modal-header {
+  padding: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #fff;
+  border-radius: 10px;
+}
+
+#selectHeroOrWeaponModal ::-webkit-scrollbar{
+  width: 10px;
+  background: #707070;
+  border-radius: 10px;
+  right: 10px;
+}
+
+#selectHeroOrWeaponModal .list {
+  color: #fff;
+  overflow-y: scroll;
+  padding: 0;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  scroll-margin-left: 50px;
 }
 
 .modal-footer {
@@ -802,6 +844,10 @@ button.close {
   border-bottom: none !important;
 }
 
+.tab-categories.nav-tabs{
+  // border-bottom: 1px solid #f76d00 !important;
+}
+
 .nav-justified > .nav-link, .nav-justified .nav-item{
   flex-basis: initial;
   flex-grow: initial;
@@ -819,6 +865,7 @@ button.close {
   border-left-color: transparent !important;
   border-right-color: transparent !important;
   background-color: transparent !important;
+  font-family: 'Rubik';
 }
 
 .nav-tabs .nav-link:hover {
@@ -971,6 +1018,7 @@ div.bg-success {
   border: 1px solid #a50eb3;
 }
 
+
 @media all and (max-width: 767.98px) {
   .content {
     padding: 10px;
@@ -990,6 +1038,13 @@ div.bg-success {
   .blank-slate .button h1{
     font-size: 1.5rem;
   }
+}
+
+@media (max-width: 767px){
+
+}
+
+@media (max-width: 575.98px) {
 
 }
 </style>
