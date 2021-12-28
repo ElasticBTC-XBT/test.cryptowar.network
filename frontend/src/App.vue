@@ -576,7 +576,7 @@ button,
 
 .earth,
 .dex {
-  color: green;
+  color: white;
 }
 
 .water,
@@ -595,6 +595,7 @@ button,
   content: url("assets/elements/fire.png");
   width: 2.3rem;
   height: 2.3rem;
+  margin-right: 4px;
 }
 
 .earth-icon,
@@ -603,6 +604,7 @@ button,
   content: url("assets/elements/earth.png");
   width: 2.3rem;
   height: 2.3rem;
+  margin-right: 4px;
 }
 
 .water-icon,
@@ -611,6 +613,7 @@ button,
   content: url("assets/elements/water.png");
   width: 2.3rem;
   height: 2.3rem;
+  margin-right: 4px;
 }
 
 .lightning-icon,
@@ -619,6 +622,7 @@ button,
   content: url("assets/elements/lightning.png");
   width: 2.3rem;
   height: 2.3rem;
+  margin-right: 4px;
 }
 
 .loading-container {
@@ -761,6 +765,13 @@ button.close {
   display: flex;
   justify-content: center;
 }
+
+.nav.nav-tabs.nav-justified{
+  background-color: rgba(0, 0, 0, .5);
+  border-radius: 20px;
+  padding: 0 30px;
+}
+
 .nav-tabs {
   border-bottom: none !important;
 }
