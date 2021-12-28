@@ -870,8 +870,7 @@ div.bg-success {
 }
 
 .starter-panel-heading {
-  margin-left: 15px;
-  margin-top: 3rem;
+  margin-top: 1.2rem;
   font-size: 2.8rem;
   font-weight: bold;
   color: #F58B5B;
@@ -886,7 +885,6 @@ div.bg-success {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 2rem;
 }
 
 .starter-panel p{
@@ -939,12 +937,14 @@ div.bg-success {
   border: 1px solid #a50eb3;
 }
 
-@media all and (max-width: 767.98px) {
-  .content {
-    padding: 0px;
+@media (max-width: 767.98px) {
+  .hide-modal {
+    right: 0;
+    top: 5px;
   }
-  .dark-bg-text {
-    width: 100%;
+
+  .starter-panel {
+    padding-top: 0;
   }
 
   .starter-panel-heading {
@@ -961,6 +961,15 @@ div.bg-success {
 
   .button-div h1 {
     font-size: 14px;
+  }
+}
+
+@media all and (max-width: 767.98px) {
+  .content {
+    padding: 0px;
+  }
+  .dark-bg-text {
+    width: 100%;
   }
 
   .fullscreen-warning .button{
