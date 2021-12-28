@@ -36,6 +36,10 @@ h1 {
   padding-top: 10px;
 }
 
+.starter-panel .button-div h1{
+  font-size: 1.3rem;
+}
+
 h2 {
   white-space: pre;
 }

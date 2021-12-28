@@ -960,7 +960,7 @@ div.bg-success {
   }
 
   .starter-panel .button-div h1 {
-    font-size: 14px;
+    font-size: 14px !important;
   }
 }
 
