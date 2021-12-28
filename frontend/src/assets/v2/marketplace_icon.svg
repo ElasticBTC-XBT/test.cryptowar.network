@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="44.851" height="41.868" viewBox="0 0 44.851 41.868">
+  <defs>
+    <filter id="Icon_metro-shop" x="0" y="0" width="44.851" height="41.868" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Icon_metro-shop)">
+    <path id="Icon_metro-shop-2" data-name="Icon metro-shop" d="M11.755,12.459l1.18-7.832H6.8L4.234,11.34a2.353,2.353,0,0,0-.121.746c0,1.647,1.715,2.983,3.835,2.983,1.954,0,3.57-1.14,3.807-2.611Zm5.783,2.611c2.118,0,3.835-1.337,3.835-2.983,0-.061,0-.122-.007-.18l-.759-7.278H14.47L13.709,11.9c0,.061-.006.122-.006.186,0,1.647,1.717,2.983,3.835,2.983ZM25,16.63v5.9H10.08V16.639a6.277,6.277,0,0,1-2.132.37,6.15,6.15,0,0,1-.852-.073v9.471a2.093,2.093,0,0,0,2.085,2.088h16.71a2.1,2.1,0,0,0,2.088-2.088V16.937a6.409,6.409,0,0,1-.852.073A6.2,6.2,0,0,1,25,16.63Zm5.848-5.29L28.278,4.627H22.142l1.178,7.82c.23,1.477,1.845,2.622,3.808,2.622,2.118,0,3.835-1.337,3.835-2.983A2.4,2.4,0,0,0,30.845,11.34Z" transform="translate(4.89 1.37)" fill="#fff"/>
+  </g>
+</svg>

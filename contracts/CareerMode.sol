@@ -1,4 +1,5 @@
 pragma solidity ^0.6.0;
+pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
@@ -34,13 +35,21 @@ contract CareerMode is
     IRandoms public randoms;
 
     struct Room {
+        uint256 id;
         address owner;
         uint256 matchReward;
         uint256 totalDeposit;
         uint256 weaponId;
         uint256 characterId;
         bool claimed;
-        uint256 maxLevelFight;
+    }
+
+    struct RequestFight {
+        uint256 id;
+        address requester;
+        uint256 char;
+        uint256 wep;
+        bool done;
     }
 
     Room[] careerModeRooms;
@@ -51,7 +60,10 @@ contract CareerMode is
     uint8 staminaCostFight;
 
     mapping(uint256 => uint256) roomTimerStart;
+    mapping(uint256 => RequestFight[]) requestFightList;
+    mapping(address => mapping(uint256 => uint256[])) requestFightByAddress; // requester => (roomId => requestId)
     uint256 minimumRoundDuration;
+    mapping(address => uint256[]) roomsByAddress;
 
     /** EVENTS */
 
@@ -66,11 +78,16 @@ contract CareerMode is
     event FightOutCome(
         address opponent,
         address roomOwner,
-        uint256 char,
-        uint256 wep,
         uint256 opponentRoll,
         uint256 ownerRoll,
         uint256 opponentIncome
+    );
+
+    event RequestFightOutcome(
+        address requester,
+        uint256 roomId,
+        uint256 char,
+        uint256 wep
     );
 
     event ClaimReward(uint256 reward);
@@ -154,16 +171,16 @@ contract CareerMode is
         uint256 _char,
         uint256 _wep,
         uint256 _matchReward,
-        uint256 _totalDeposit,
-        uint256 _maxLevel
+        uint256 _totalDeposit
     ) public isWeaponOwner(_wep) isCharacterOwner(_char) {
         require(
-            _totalDeposit > _matchReward,
-            "Match reward mod total deposit must be 0"
+            _totalDeposit > _matchReward.mul(210).div(100),
+            "Total deposit must be larger than 210% match reward "
         );
         require(xBlade.balanceOf(msg.sender) > _totalDeposit);
 
         xBlade.transferFrom(msg.sender, address(this), _totalDeposit);
+        // To prevent room owner sell NFT
         IERC721(address(characters)).safeTransferFrom(
             msg.sender,
             address(this),
@@ -175,15 +192,17 @@ contract CareerMode is
             _wep
         );
         roomTimerStart[careerModeRooms.length] = block.timestamp;
+        uint256 roomId = careerModeRooms.length;
+        roomsByAddress[msg.sender].push(roomId);
         careerModeRooms.push(
             Room(
+                roomId,
                 msg.sender,
                 _matchReward,
                 _totalDeposit,
                 _wep,
                 _char,
-                false,
-                _maxLevel
+                false
             )
         );
         emit CreateCareerRoom(
@@ -195,42 +214,54 @@ contract CareerMode is
         );
     }
 
-    function fight(
+    function requestFight(
         uint256 _roomId,
         uint256 _wep,
         uint256 _char
     ) public isWeaponOwner(_wep) isCharacterOwner(_char) {
-        require(canFight(_roomId), "Cannot fight");
         Room memory r = careerModeRooms[_roomId];
-        require(
-            characters.getLevel(_char) <= r.maxLevelFight,
-            "Your level is higher than max level room"
-        );
-
         require(
             xBlade.balanceOf(msg.sender) > r.matchReward,
             "Not enough xBlade to fight"
         );
-        require(msg.sender != r.owner, "Cannot fight your self");
+        require(msg.sender != r.owner, "Cannot fight yourself");
         require(r.totalDeposit >= r.matchReward, "This career room is ended");
+        xBlade.transferFrom(msg.sender, address(this), r.matchReward);
+
+        uint256 requestId = requestFightList[_roomId].length;
+        requestFightList[_roomId].push(
+            RequestFight(requestId, msg.sender, _char, _wep, false)
+        );
+        requestFightByAddress[msg.sender][_roomId].push(requestId);
+        emit RequestFightOutcome(msg.sender, _roomId, _char, _wep);
+    }
+
+    function fight(uint256 _roomId, uint256 _requestId) public {
+        require(canFight(_roomId, _requestId), "Cannot fight");
+        RequestFight memory _requestFight = requestFightList[_roomId][
+            _requestId
+        ];
+        Room memory r = careerModeRooms[_roomId];
 
         performFight(
             _roomId,
-            _char,
-            _wep,
+            _requestId,
             getPlayerPower(r.characterId, r.weaponId),
-            getPlayerPower(_char, _wep)
+            getPlayerPower(_requestFight.char, _requestFight.wep)
         );
     }
 
     function performFight(
         uint256 _roomId,
-        uint256 _char,
-        uint256 _wep,
+        uint256 _requestId,
         uint24 _playerPower,
         uint24 _opponentPower
     ) internal {
-        uint256 seed = randoms.getRandomSeed(msg.sender);
+        RequestFight storage _requestFight = requestFightList[_roomId][
+            _requestId
+        ];
+        _requestFight.done = true;
+        uint256 seed = randoms.getRandomSeed(_requestFight.requester);
 
         uint24 playerRoll = getPlayerPowerRoll(_playerPower, seed);
         uint24 opponentRoll = getPlayerPowerRoll(_opponentPower, seed);
@@ -242,19 +273,35 @@ contract CareerMode is
         if (opponentRoll <= playerRoll) {
             tokensWin = 0;
             r.totalDeposit = r.totalDeposit.add(r.matchReward.mul(2));
-            xBlade.transferFrom(msg.sender, address(this), r.matchReward);
         }
 
-        tokenRewards[msg.sender] += tokensWin;
+        tokenRewards[_requestFight.requester] = tokenRewards[
+            _requestFight.requester
+        ].add(tokensWin);
+
         emit FightOutCome(
-            msg.sender,
+            _requestFight.requester,
             r.owner,
-            _char,
-            _wep,
             opponentRoll,
             playerRoll,
             tokensWin
         );
+    }
+
+    function cancelRequestFight(uint256 _roomId, uint256 _requestId) public {
+        Room storage r = careerModeRooms[_roomId];
+        RequestFight storage _requestFight = requestFightList[_roomId][
+            _requestId
+        ];
+
+        require(
+            r.owner == msg.sender || _requestFight.requester == msg.sender,
+            "Not room owner nor requester"
+        );
+        // Mark as this request is done
+        _requestFight.done = true;
+        // Get back match reward deposit by request
+        xBlade.transfer(_requestFight.requester, r.matchReward);
     }
 
     function claimTokenRewards() public {
@@ -396,9 +443,23 @@ contract CareerMode is
         return tokenRewards[account];
     }
 
-    function canFight(uint256 id) public view returns (bool) {
+    function canFight(uint256 id, uint256 requestId)
+        public
+        view
+        returns (bool)
+    {
         Room memory r = careerModeRooms[id];
-        return r.totalDeposit > 0 && !r.claimed;
+        RequestFight memory rf = requestFightList[id][requestId];
+
+        if (r.owner != msg.sender) {
+            return false;
+        }
+        return
+            r.totalDeposit > 0 &&
+            !r.claimed &&
+            weapons.ownerOf(rf.wep) == rf.requester &&
+            characters.ownerOf(rf.char) == rf.requester &&
+            !rf.done;
     }
 
     function totalRooms() public view returns (uint256) {
@@ -407,5 +468,42 @@ contract CareerMode is
 
     function getStartTime(uint256 id) public view returns (uint256) {
         return roomTimerStart[id];
+    }
+
+    function getRooms(uint256 cursor) public view returns (Room[] memory) {
+        uint256 length = 20;
+        if (length > totalRooms() - cursor) {
+            length = totalRooms() - cursor;
+        }
+
+        Room[] memory values = new Room[](length);
+        for (uint256 i = 0; i < length; i++) {
+            values[i] = careerModeRooms[i + cursor];
+        }
+        return values;
+    }
+
+    function getRequests(uint256 cursor, uint256 roomId)
+        public
+        view
+        returns (RequestFight[] memory)
+    {
+        uint256 length = 20;
+        if (length > requestFightList[roomId].length - cursor) {
+            length = requestFightList[roomId].length - cursor;
+        }
+        RequestFight[] memory values = new RequestFight[](length);
+        for (uint256 i = 0; i < length; i++) {
+            values[i] = requestFightList[roomId][i + cursor];
+        }
+        return values;
+    }
+
+    function getRoomsByAddress(address account)
+        public
+        view
+        returns (uint256[] memory)
+    {
+        return roomsByAddress[account];
     }
 }
