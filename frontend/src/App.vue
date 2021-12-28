@@ -906,7 +906,7 @@ div.bg-success {
 }
 .instructions-list {
   text-align: center;
-  padding: 30px 20px 15px 10px;
+  padding: 30px 20px 15px 0;
   font-size: 1.3rem;
 }
 
@@ -945,6 +945,22 @@ div.bg-success {
   }
   .dark-bg-text {
     width: 100%;
+  }
+
+  .starter-panel-heading {
+    font-size: 32px;
+  }
+
+  .instructions-list {
+    font-size: 16px;
+  }
+
+  .button-div {
+    margin-top: 0;
+  }
+
+  .button-div h1 {
+    font-size: 14px;
   }
 
   .fullscreen-warning .button{

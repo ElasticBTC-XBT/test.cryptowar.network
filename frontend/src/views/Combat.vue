@@ -138,6 +138,7 @@
                 v-if="!selectedWeaponId"
                 v-model="selectedWeaponId"
                 :checkForDurability="true"
+                showFilters
               />
             </div>
             <div class="row mb-3 enemy-container" v-if="targets.length > 0">

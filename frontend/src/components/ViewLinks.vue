@@ -221,6 +221,7 @@ a.router-link-active .lobby .gtag-link-others{
   justify-content: center;
   align-items: center;
   font-size: 0.8em;
+   z-index: 2;
 }
 .nav-img-item-box:hover .nav-item-hover{
   display: flex;

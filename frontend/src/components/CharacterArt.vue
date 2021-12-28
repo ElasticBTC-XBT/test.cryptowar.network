@@ -8,13 +8,6 @@
           ID <span class="white">{{ character.id }}</span>
       </div>
     </div>
-
-    <!-- <div class="trait" v-if="!portrait">
-      <span
-        :class="characterTrait.toLowerCase() + '-icon circle-element'"
-      ></span>
-    </div> -->
-
     <div class="placeholder d-flex align-items-start justify-content-center " :class="characterTrait.toLowerCase() + '-bg'">
       <div
         :style="{

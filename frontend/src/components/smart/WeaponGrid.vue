@@ -3,6 +3,7 @@
     <div
       class="filters mt-1 pl-2 col-12 col-xl-3"
       @change="saveFilters()"
+      v-if="showFilters"
     >
       <div
         class="search-wrap"
@@ -235,6 +236,10 @@ export default Vue.extend({
     sellClick:{
       type: ()=>{},
       default: null
+    },
+    showFilters: {
+      type: Boolean,
+      default: false
     }
   },
 

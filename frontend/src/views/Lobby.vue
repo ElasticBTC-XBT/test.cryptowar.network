@@ -126,6 +126,7 @@ export default {
   bottom: 25px;
   font-size: 1.3rem;
   text-transform: uppercase;
+  color: #fff;
 }
 
 @media (max-width: 575.98px) {

@@ -10,10 +10,10 @@
             </div>
             <div class="dust-image dust-image1"></div>
           </div>
-          <h1 class="dust-label text-center">Lesser</h1>
+          <h2 class="dust-label text-center">Lesser</h2>
           <div class="dust-quantity-wrap">
             <div class="dust-quantity text-center">
-              <h2>{{getLesserDust()}}</h2>
+              <span>{{getLesserDust()}}</span>
             </div>
           </div>
         </div>
@@ -25,10 +25,10 @@
             </div>
             <div class="dust-image dust-image2"></div>
           </div>
-          <h1 class="dust-label text-center">Greater</h1>
+          <h2 class="dust-label text-center">Greater</h2>
           <div class="dust-quantity-wrap">
             <div class="dust-quantity text-center">
-              <h2>{{getGreaterDust()}}</h2>
+              <span>{{getGreaterDust()}}</span>
             </div>
           </div>
         </div>
@@ -40,10 +40,10 @@
             </div>
             <div class="dust-image dust-image3"></div>
           </div>
-          <h1 class="dust-label text-center">Powerful</h1>
+          <h2 class="dust-label text-center">Powerful</h2>
           <div class="dust-quantity-wrap">
             <div class="dust-quantity text-center">
-              <h2>{{getPowerfulDust()}}</h2>
+              <span>{{getPowerfulDust()}}</span>
             </div>
           </div>
         </div>
@@ -138,6 +138,7 @@ export default {
   width: 100%;
   border: 1px solid #1385B7;
   border-radius: 16px;
+  font-size: 32px;
 }
 
 @media (max-width: 1024px) {
@@ -176,6 +177,11 @@ export default {
   }
 }
 
+@media (max-width: 576px) {
+  .dust-quantity-wrap {
+    padding: 0 100px;
+  }
+}
 /* .slidecontainer {
   width: 100%;
 }

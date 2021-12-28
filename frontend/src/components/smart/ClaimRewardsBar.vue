@@ -23,7 +23,7 @@
 
       <b-nav-item :disabled="!canClaimXp" @click="onClaimXp">
         <b-button
-          class="gtag-link-others btn-claim-xp"
+          class="gtag-link-others btn-blue-bg btn-claim-xp"
           v-html="`Claim Heroes XP`"
           v-tooltip.bottom="formattedXpRewards"
         ></b-button>

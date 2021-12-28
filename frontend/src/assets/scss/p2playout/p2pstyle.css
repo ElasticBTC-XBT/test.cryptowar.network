@@ -6998,6 +6998,7 @@ textarea.form-control.is-invalid {
 .btn.disabled,
 .btn:disabled {
     opacity: 0.65;
+    background-color: transparent;
 }
 
 .btn:not(:disabled):not(.disabled) {
@@ -7074,7 +7075,8 @@ fieldset:disabled a.btn {
 .btn-secondary.disabled,
 .btn-secondary:disabled {
     color: #fff;
-    background-color: #6c757d;
+    background-color: transparent;
+    /* background-color: #6c757d; */
     border-color: #6c757d;
 }
 
@@ -17263,7 +17265,8 @@ a:hover {
 .btn-secondary.disabled,
 .btn-secondary:disabled {
     color: var(--white);
-    background-color: var(--secondary);
+    /* background-color: var(--secondary); */
+    background-color: transparent;
     border-color: var(--secondary);
     cursor: not-allowed;
 }
@@ -20605,6 +20608,8 @@ button.swiper-pagination-bullet {
     align-items:center;
     justify-content: space-around;
     margin-top: 2.7rem;
+    padding-left: 0;
+    list-style: none;
 
 }
 
@@ -20891,8 +20896,8 @@ margin-bottom: 1.5rem;
     cursor: pointer;
 }
 
-.btn-claim-xp {
-    background: url("../../v2/claimxp-btn.svg") no-repeat;
+.btn-blue-bg {
+    background: url("../../v2/btn-blue-bg.svg") no-repeat;
     border: none;
     border-radius: 0;
     width: 210px;
@@ -20902,7 +20907,7 @@ margin-bottom: 1.5rem;
     position: relative;
 }
 
-.btn-claim-xp::after {
+.btn-blue-bg::after {
     content: "";
     position: absolute;
     height: 16px;
@@ -20912,7 +20917,7 @@ margin-bottom: 1.5rem;
     background-image: radial-gradient(ellipse at center, #FFFF90 -10%, transparent 55%), radial-gradient(ellipse at center, transparent, transparent);
 }
 
-.btn-claim-xp::before {
+.btn-blue-bg::before {
     content: "";
     position: absolute;
     height: 16px;

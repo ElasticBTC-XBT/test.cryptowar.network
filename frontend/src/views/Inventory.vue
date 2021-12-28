@@ -8,7 +8,7 @@
         </b-tab>
         <b-tab title="Weapon">
           <div class="tab-content">
-            <weapon-grid />
+            <weapon-grid showFilters/>
           </div>
         </b-tab>
         <b-tab title="Dust">
@@ -18,7 +18,7 @@
         </b-tab>
         <b-tab title="Box">
           <div class="tab-content">
-
+            <box-balance-display />
           </div>
         </b-tab>
       </b-tabs>
@@ -30,6 +30,7 @@ import Vue from 'vue';
 import CharaterList from '../components/smart/CharacterList.vue';
 import WeaponGrid from '../components/smart/WeaponGrid.vue';
 import DustBalanceDisplay from '../components/smart/DustBalanceDisplay.vue';
+import BoxBalanceDisplay from '../components/smart/BoxBalanceDisplay.vue';
 
 export default Vue.extend({
   data() {
@@ -41,6 +42,7 @@ export default Vue.extend({
     CharaterList,
     WeaponGrid,
     DustBalanceDisplay,
+    BoxBalanceDisplay,
   },
 
   mounted() {
