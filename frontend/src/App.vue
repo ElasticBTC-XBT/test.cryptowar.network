@@ -877,7 +877,7 @@ div.bg-success {
   display: block;
 }
 
-.starter-panel .button-div h1{
+.starter-panel .button-div h1 {
   font-size: 1.3rem;
 }
 
@@ -959,7 +959,7 @@ div.bg-success {
     margin-top: 0;
   }
 
-  .button-div h1 {
+  .starter-panel .button-div h1 {
     font-size: 14px;
   }
 }
