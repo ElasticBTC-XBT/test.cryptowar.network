@@ -34,7 +34,8 @@ export function characterFromContract(id: string | number, data: string[]): ICha
   const legs = data[7];
   const boots = data[8];
   const race = data[9];
-  return { id: +id, xp, level, trait, traitName, staminaTimestamp, head, arms, torso, legs, boots, race };
+  const owner = data[10];
+  return { id: +id, xp, level, trait, traitName, staminaTimestamp, head, arms, torso, legs, boots, race, owner };
 }
 
 export function getStatPatternFromProperties(properties: number): number {
