@@ -51,7 +51,7 @@
           </div>
           <div class="btn-open-wrap">
             <b-button
-              class="gtag-link-others btn-blue-bg btn-open btn-open-box"
+              class="gtag-link-others btn-blue-bg  btn-open-box"
               v-html="`COMING SOON`"
               disabled
             ></b-button>
@@ -151,6 +151,26 @@ export default {
   margin-right: 0 !important;
 }
 
+@media (max-width: 576px) {
+  .box-label {
+    font-size: 21px !important;
+  }
+
+  .box-quantity {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .box-list {
+    justify-content: center
+  }
+
+  .box-label {
+    margin: 0 0 16px;
+  }
+}
+
 @media (max-width: 1024px) {
   .character-item.addnew.box-container {
     margin: 50px auto 0;
@@ -164,28 +184,4 @@ export default {
   }
 }
 
-@media (max-width: 768px) {
-  .box-list {
-    justify-content: center
-  }
-
-  .box-image {
-    max-width: 200px;
-    max-height: 200px;
-  }
-
-  .box-label {
-    margin: 0 0 16px;
-  }
-}
-
-@media (max-width: 576px) {
-  .box-label {
-    font-size: 21px !important;
-  }
-
-  .box-quantity {
-    font-size: 18px;
-  }
-}
 </style>
