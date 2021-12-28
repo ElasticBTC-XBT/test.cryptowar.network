@@ -235,6 +235,10 @@ export default {
 
 <style scoped>
 
+.character{
+  margin: 10px 0;
+}
+
 .filters {
    justify-content: center;
    width: 100%;

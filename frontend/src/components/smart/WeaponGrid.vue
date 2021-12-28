@@ -399,28 +399,27 @@ export default Vue.extend({
 .weapon-grid {
   list-style-type: none;
   justify-content: center;
-  margin: 0;
+  margin-right: 95px;
   padding: 0;
   display: grid;
   padding: 0.5em;
   grid-template-columns: repeat(auto-fit, 14em);
-  gap: 2em;
+  grid-column-gap: 75px;
+  /* grid-row-gap: 30px; */
 }
 
 .weapon {
   width: 14em;
-  /* background: rgba(255, 255, 255, 0.05); */
   border-radius: 6px;
   cursor: pointer;
   position: relative;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
 .weapon-icon-wrapper {
-  width: 14em;
-  height: 18em;
+  width: 20em;
+  height: 26em;
 }
 
 .weapon-market .weapon-icon-wrapper{
