@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="15" viewBox="0 0 25 15">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fcf738"/>
+      <stop offset="1" stop-color="#fab42b"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_3418" data-name="Group 3418" transform="translate(-364.971 -444.755)">
+    <path id="Polygon_16" data-name="Polygon 16" d="M10.964,1.844a2,2,0,0,1,3.073,0l8.23,9.876A2,2,0,0,1,20.73,15H4.27a2,2,0,0,1-1.536-3.28Z" transform="translate(389.971 459.755) rotate(180)" fill="url(#linear-gradient)"/>
+  </g>
+</svg>

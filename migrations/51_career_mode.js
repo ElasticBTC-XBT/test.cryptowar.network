@@ -1,6 +1,8 @@
 const { deployProxy } = require("@openzeppelin/truffle-upgrades");
 
 const CareerMode = artifacts.require("CareerMode");
+const Weapons = artifacts.require("Weapons")
+const Characters = artifacts.require("Characters");
 
 module.exports = async function (deployer, network, accounts) {
   let weaponAddress, characterAddress, randomAddress, xBladeAddress;
@@ -17,11 +19,22 @@ module.exports = async function (deployer, network, accounts) {
     randomAddress = "";
     xBladeAddress = "";
   }
-  await deployProxy(
+  const careerMode = await deployProxy(
     CareerMode,
     [xBladeAddress, characterAddress, weaponAddress, randomAddress],
     {
       deployer,
     }
   );
+
+  const weapons = await Weapons.at(weaponAddress);
+  const weapons_GAME_ADMIN = await weapons.GAME_ADMIN();
+  weapons.grantRole(weapons_GAME_ADMIN, careerMode.address);
+
+  const characters = await Characters.at(characterAddress);
+  const characters_GAME_ADMIN = await characters.GAME_ADMIN();
+  const characters_NO_OWNED_LIMIT = await characters.NO_OWNED_LIMIT();
+  characters.grantRole(characters_GAME_ADMIN, careerMode.address);
+  characters.grantRole(characters_NO_OWNED_LIMIT, careerMode.address);
+
 };

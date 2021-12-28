@@ -4,9 +4,18 @@
       <span
         :class="characterTrait.toLowerCase() + '-icon circle-element'"
       ></span>
+      <div class="black-outline" v-if="!portrait">
+          ID <span class="white">{{ character.id }}</span>
+      </div>
     </div>
 
-    <div class="placeholder d-flex align-items-start justify-content-center">
+    <!-- <div class="trait" v-if="!portrait">
+      <span
+        :class="characterTrait.toLowerCase() + '-icon circle-element'"
+      ></span>
+    </div> -->
+
+    <div class="placeholder d-flex align-items-start justify-content-center " :class="characterTrait.toLowerCase() + '-bg'">
       <div
         :style="{
           'background-image': 'url(' + getCharacterArt(character) + ')',
@@ -30,22 +39,6 @@
         <div class="lv" v-if="!portrait">
           Lv.<span class="">{{ character.level + 1 }}</span>
         </div>
-      </div>
-      <div class="score-id-container">
-        <div class="black-outline" v-if="!portrait">
-          ID <span class="white">{{ character.id }}</span>
-        </div>
-        <!-- <div class="black-outline score" v-if="!portrait">
-          <span class="">{{ heroScore.toLocaleString() }}</span>
-           <b-icon-question-circle
-          class="centered-icon"
-          scale="0.8"
-          v-tooltip.bottom="
-            `Hero score is a measure of your hero's combat prowess so far.
-        It goes up when you win and down when you lose. It is also temporarily disabled!`
-          "
-        />
-        </div> -->
       </div>
 
       <!-- <div
@@ -93,12 +86,6 @@ export default {
   components: {
     //SmallButton,
   },
-  watch: {
-    character() {
-      this.clearScene();
-    },
-  },
-
   data() {
     return {
       allLoaded: false,
@@ -225,22 +212,31 @@ export default {
   background-position: 0 0;
 }
 
-.xp {
-  position: absolute;
-}
-
 .trait {
-  top: -8px;
-  justify-self: center;
   margin: 0 auto;
   position: relative;
   display: flex;
+  height: 75px;
+  width: 100%;
+  justify-content: space-between;
+  padding: 0 1.5em 0 0.8em;
+  align-items: center;
 }
 
 .id {
   top: 5px;
   right: 5px;
   font-style: italic;
+}
+
+.black-outline{
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.3em;
+  text-shadow: none;
+}
+.black-outline .white{
+  color: #fff;
 }
 
 .hero-score {
@@ -258,26 +254,24 @@ export default {
 }
 
 .xp {
-  left: 40px;
-  width: 238px;
-  right: 0;
-
-  background-image: url("../assets/images/bg-process-box.png");
+  width: 261px;
+  background-image: url("../assets/v2/xp_bg.svg");
   background-repeat: no-repeat;
-  background-position: 0 0;
-  height: 50px;
+  background-position: 50% 50%;
+  height: 19px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 14px;
+  padding: 0 0px;
+  margin: 7px auto;
 }
 
 .xp .bg-success {
   background-position: 0 0;
-  background-image: url("../assets/images/chara-process.png");
+  background-image: url("../assets/v2/xp_progress.svg");
   background-repeat: no-repeat;
-  width: 218px;
-  height: 27px;
+  width: 261px;
+  height: 19px;
   background-color: transparent !important;
 }
 
@@ -285,13 +279,13 @@ export default {
   width: 100%;
   text-align: center;
   position: absolute;
-  color: #fff;
+  color: #000;
 }
 
 .xp .progress{
   background-color: initial;
   width: 100%;
-  height: 24px;
+  height: 19px;
   align-items: center;
 }
 
@@ -306,13 +300,10 @@ export default {
 }
 
 .market-bot {
-  height: 160px;
+  height: 95px;
   overflow: hidden;
   background-position: 0 0;
   background-repeat: no-repeat;
-  /* background-image: url("../assets/images/bg-item-bot.png"); */
-  /* border-top: 2px solid #f48757; */
-  margin-right: 17px;
 }
 
 .market-bot .name {
@@ -321,9 +312,10 @@ export default {
 }
 
 .market-bot .lv {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   color: #dabf75;
   font-weight: bold;
+  line-height: 1;
 }
 
 .market-bot .score {
@@ -339,15 +331,13 @@ export default {
 }
 
 .circle-element {
-  width: 4.5rem;
-  height: 4.5rem;
-  border: 1px solid #f48757;
+  width: 43px;
+  height: 43px;
+  border: 0px solid #f48757;
   border-radius: 50%;
-  padding: 0.5rem;
   background-color: #15052e;
 }
 
-.name-lvl-container,
 .score-id-container {
   display: flex;
   justify-content: space-between;
@@ -355,8 +345,15 @@ export default {
   padding: 0 3rem;
 }
 
-.market-bot .name-lvl-container {
-  margin-top: 1.5rem;
+.name-lvl-container{
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.name-lvl-container .name{
+  max-width: 100%;
+  max-height: inherit;
+  font-size: 1.2em;
 }
 
 .market-bot .score-id-container {
@@ -392,5 +389,20 @@ export default {
   right: 0;
   text-align: center;
   color: #fff;
+}
+
+.water-bg, .fire-bg, .lightning-bg, .earth-bg{
+  background-image: url('../assets/images/water.png');
+  background-repeat: no-repeat;
+  background-position: center bottom;
+}
+.fire-bg{
+  background-image: url('../assets/images/fire.png');
+}
+.lightning-bg{
+  background-image: url('../assets/images/lightning.png');
+}
+.earth-bg{
+  background-image: url('../assets/images/earth.png');
 }
 </style>

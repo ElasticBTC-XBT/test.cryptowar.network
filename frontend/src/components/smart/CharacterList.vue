@@ -62,6 +62,20 @@
           </b-button>
         </div>
       </li>
+
+      <li
+        class="character-item addnew"
+      >
+        <b-button
+                class="recruit"
+                @click="onMintCharacter"
+                v-tooltip="'Recruit new character'"
+                tagname="recruit_character"
+              >
+              <i class="fas fa-plus"></i><br>
+                Recruit
+              </b-button>
+      </li>
     </ul>
   </div>
 </template>
@@ -69,6 +83,7 @@
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex';
 import { getCharacterArt } from '../../character-arts-placeholder';
+// import BackgroundItem from '../BackgroundItem.vue';
 import CharacterArt from '../CharacterArt.vue';
 
 const sorts = [
@@ -198,10 +213,12 @@ export default {
 
       this.$emit('character-filters-changed');
     },
+
   },
 
   components: {
     CharacterArt,
+    // BackgroundItem,
   },
 
   mounted() {
@@ -218,6 +235,10 @@ export default {
 
 <style scoped>
 
+.character{
+  margin: 10px 0;
+}
+
 .filters {
    justify-content: center;
    width: 100%;
@@ -228,112 +249,5 @@ export default {
    margin-bottom: 20px;
 }
 
-.character-item{
-  width: 340px;
-  max-width: 100%;
-  background-image: url('../../assets/images/bg-item-top.png');
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  margin-top: 50px;
-  background-size: cover;
-  position: relative;
-}
 
-.character-item .art {
-  width: 100%;
-  min-height: 0;
-  height: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-.valign-middle {
-  vertical-align: middle;
-}
-
-.character-item img {
-  object-fit: contain;
-}
-
-.character-item.selected {
-
-    background-image: url('../../assets/images/bg-item-top-select.png');
-}
-
-.above-wrapper {
-  position: absolute;
-  top: 270px;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  text-shadow: 0 0 5px #333, 0 0 10px #333, 0 0 15px #333, 0 0 10px #333;
-}
-
-.clear-filters-button {
-  height: fit-content;
-  display: flex;
-  flex-direction: row;
-  align-self: flex-end;
-  margin:0 15px;
-}
-
-.character-list{
-  list-style: none;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding-left: 0px;
-}
-
-@media (max-width: 576px) {
-  .character-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  .clear-filters-button {
-    width: 100%;
-    text-align: center;
-    justify-content: center;
-  }
-}
-
-.sold {
-  height: 40px;
-  width: 300px;
-  background-color: rgb(187, 33, 0);
-  transform: rotate(30deg);
-  left: -40px;
-  position: absolute;
-  top: 150px;
-  z-index: 100;
-}
-
-.sold span {
-    text-align: center;
-    width: auto;
-    color: white;
-    display: block;
-    font-size: 30px;
-    font-weight: bold;
-    line-height: 40px;
-    text-shadow: 0 0 5px #333, 0 0 10px #333, 0 0 15px #333, 0 0 10px #333;
-    text-transform: uppercase;
-}
-
-.fix-h24 {
-  height: 24px;
-}
-
-.sell-box{
-  position: absolute;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.isMarket{
-  margin-bottom: 3rem;
-}
 </style>
