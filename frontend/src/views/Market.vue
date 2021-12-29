@@ -94,7 +94,7 @@
               <i class="fas fa-spinner fa-spin"></i>
               Loading...
             </div>
-            <div class="outcome" v-if="marketOutcome !== null">{{ marketOutcome }}</div>
+            <!-- <div class="outcome" v-if="marketOutcome !== null">{{ marketOutcome }}</div> -->
           </div>
         </div>
       </b-tab>
@@ -200,7 +200,7 @@
               <i class="fas fa-spinner fa-spin"></i>
               Loading...
             </div>
-            <div class="outcome" v-if="marketOutcome !== null">{{ marketOutcome }}</div>
+            <!-- <div class="outcome" v-if="marketOutcome !== null">{{ marketOutcome }}</div> -->
           </div>
         </div>
       </b-tab>
