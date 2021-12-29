@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="filters col-12 col-xl-3 col-lg-6" v-if="!newWeapon && checkBar" @change="saveFilters()">
+    <div class="filters col-12 col-xl-3 col-lg-6" v-if="!newWeapon && checkBar">
       <div>
         <div>
           <input class="form-control" type="text" placeholder="Seller Address, NFT ID" />
@@ -12,7 +12,7 @@
             <div v-for="x in ['1', '2', '3', '4', '5']"
             :style="starFilter>=x?'background: url('+require('../../assets/v2/market-star-click.svg')+'); background-repeat: no-repeat; background-size: contain; color: black':''"
             :key="x"
-            @click="starFilter = x"
+            @click="starFilter===x?starFilter='':starFilter=x"
             >{{x}}</div>
           </div>
         </div>
@@ -26,16 +26,16 @@
 
         <div class="element">
           <strong>ELEMENT</strong>
-          <div @click="elementFilter='Earth'" :class="elementFilter + ' earth'">
+          <div @click="elementFilter==='Earth'?elementFilter='':elementFilter='Earth'" :class="elementFilter + ' earth'">
             <img src="../../assets/elements/earth.png" alt=""> Earth
           </div>
-          <div @click="elementFilter='Fire'" :class="elementFilter + ' fire'">
+          <div @click="elementFilter==='Fire'?elementFilter='':elementFilter='Fire'" :class="elementFilter + ' fire'">
             <img src="../../assets/elements/fire.png" alt=""> Fire
           </div>
-          <div @click="elementFilter='Lightning'" :class="elementFilter + ' lightning'">
+          <div @click="elementFilter==='Lightning'?elementFilter='':elementFilter='Lightning'" :class="elementFilter + ' lightning'">
             <img src="../../assets/elements/lightning.png" alt=""> Lightning
           </div>
-          <div @click="elementFilter='Water'" :class="elementFilter + ' water'">
+          <div @click="elementFilter==='Water'?elementFilter='':elementFilter='Water'" :class="elementFilter + ' water'">
             <img src="../../assets/elements/water.png" alt=""> Water
           </div>
           <!-- <select class="form-control" v-model="elementFilter">
@@ -87,7 +87,7 @@
             Clear Filters
           </span>
         </b-button> -->
-        <b-button class="search-button" @click="search" >
+        <b-button class="search-button" @click="saveFilters()" >
           SEARCH
         </b-button>
       </div>
@@ -511,6 +511,26 @@ export default Vue.extend({
   opacity: .6;
 }
 
+.Earth.earth{
+  opacity: 1;
+  filter: contrast(200%);
+}
+
+.Fire.fire{
+  opacity: 1;
+  filter: contrast(200%);
+}
+
+.Lightning.lightning{
+  opacity: 1;
+  filter: contrast(200%);
+}
+
+.Water.water{
+  opacity: 1;
+  filter: contrast(200%);
+}
+
 .start > div{
   display: flex;
   margin-top: 10px;
@@ -664,6 +684,7 @@ input::-webkit-inner-spin-button{
 .weapon-container .clear-filters-button{
   margin-bottom: 0rem !important;
 }
+
 
 @media (max-width: 576px) {
   .weapon-grid {

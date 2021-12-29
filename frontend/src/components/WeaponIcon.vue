@@ -242,17 +242,13 @@ export default {
   z-index: 540;
 }
 
-.weapon.selected .glow-container{
-  /* border: 1px solid rgb(255 255 255 / 41%); */
-  /* background-color: rgb(255 255 255 / 7%); */
-  /* background-color: rgb(255 255 255 / 30%);
-  border: 1px solid rgb(255, 165, 0); */
+.weapon.selected .glow-container,
+.weapon.selected .stats{
   filter: contrast(200%);
 }
 
-
-.weapon.selected .glow-container.glow-0{
-  /* box-shadow: inset 0 0 10px rgb(255, 165, 0); */
+.weapon.selected .weapon-bt-box{
+  filter: contrast(0.5);
 }
 
 .loading-container {
@@ -397,9 +393,9 @@ export default {
 
 .bonus-power {
   position: absolute;
-  top: 45px;
-  right: 5%;
-  font-size: 0.6em;
+  top: -40px;
+  right: 15px;
+  font-size: 18px;
   text-align: right;
 }
 

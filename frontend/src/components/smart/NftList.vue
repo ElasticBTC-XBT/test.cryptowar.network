@@ -5,13 +5,12 @@
         <span>Nothing to buy at this time</span>
       </div>
       <ul class="nft-grid">
-        <li class="nft" v-b-modal.modal-buyitem @click="checkBuy = nft" v-for="nft in nftIdTypes" :key="`${nft.type}.${nft.id}`">
+        <li class="nft" :disabled="nft.isSoldOut" v-b-modal.modal-buyitem @click="checkBuy = nft" v-for="nft in nftIdTypes" :key="`${nft.type}.${nft.id}`">
           <nft-icon :nft="nft" :isShop="isShop" :isLoading="isLoading" :favorite="isFavorite(nft.typeId, nft.id)"
             v-tooltip.top="{ content: itemDescriptionHtml(nft) , trigger: (isMobile() ? 'click' : 'hover') }"
               @mouseover="hover = !isMobile() || true"
               @mouseleave="hover = !isMobile()" />
           <b-button
-            :disabled="nft.isSoldOut"
             class="shop-button">
             <span class="gtag-link-others" v-if="!nft.isSoldOut">
               BUY
@@ -29,7 +28,7 @@
           </b-button>
         </li>
         <b-modal id="modal-buyitem">
-          <img :src="require('../../assets/rare-box.png')" />
+          <div :class="checkBuy.image?checkBuy.image.split('.')[0]:''"></div>
           <div>
             <div>
               <b-button class="mt-3" block @click="$bvModal.hide('modal-buyitem')">LATER</b-button>
@@ -437,11 +436,6 @@ export default Vue.extend({
       return this.favorites && this.favorites[type] && this.favorites[type][id];
     },
 
-    imgPath(){
-      // console.log('../../assets/' +  String(this.checkBuy.image));
-      return require('../../assets/rare-box.png');
-    },
-
     async buyItem(item: nftItem) {
       if(item.type === 'shield'){
         console.log('buying shield');
@@ -583,9 +577,26 @@ export default Vue.extend({
   padding: 30px;
 }
 
-#modal-buyitem .modal-body img{
+#modal-buyitem .modal-body .rare-box{
+  background: url("../../assets/rare-box.png");
+}
+
+#modal-buyitem .modal-body .common-box{
+  background: url("../../assets/common-box.png");
+}
+
+#modal-buyitem .modal-body .epic-box{
+  background: url("../../assets/epic-box.png");
+}
+
+#modal-buyitem .modal-body .rare-box,
+#modal-buyitem .modal-body .common-box,
+#modal-buyitem .modal-body .epic-box{
+  background-repeat: no-repeat;
+  background-size: contain;
   display: block;
   width: 40%;
+  height: 90%;
   margin: auto;
   margin-top: -65px;
   margin-bottom: 20px;
@@ -831,6 +842,7 @@ export default Vue.extend({
   width: 150px;
   height: 36px;
 }
+
 
 @media (max-width: 576px) {
   .weapon-grid {
