@@ -738,7 +738,6 @@ export default Vue.extend({
 
       // filter price character
       this.minPriceFilter(parseFloat(this.characterMinPriceFilter()));
-
       this.maxPriceFilter(parseFloat(this.characterMaxPriceFilter()));
       this.sortPrice(this.characterPriceOrder());
       // filter price weapon
@@ -772,7 +771,7 @@ export default Vue.extend({
       }
     },
 
-    maxPriceFilter(maxPrice: number){
+    async maxPriceFilter(maxPrice: number){
       if(maxPrice && maxPrice > 0){
         const arrStr: string[] = [];
         const arr = this.allSearchResults;
