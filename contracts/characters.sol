@@ -107,6 +107,7 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
 
     mapping(uint256 => uint256) public cachedSecondsPerStamina;
     mapping(uint256 => uint256) public latestUpdateTimestamp;
+    mapping(uint256 => mapping(uint256 => uint8)) public expectedLevel_v2;
 
     event NewCharacter(uint256 indexed character, address indexed minter);
     event LevelUp(address indexed owner, uint256 indexed character, uint16 level);
@@ -219,8 +220,8 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
     }
 
     function getExpectedLevel(uint8 level, uint256 xp) public view returns (uint8) {
-        if (expectedLevel[level][xp] > 0){
-            return expectedLevel[level][xp];
+        if (expectedLevel_v2[level][xp] > 0){
+            return expectedLevel_v2[level][xp];
         }
         uint requiredToLevel = experienceTable[level]; // technically next level
         while(xp >= requiredToLevel) {
@@ -261,11 +262,12 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
     }
 
     function setExpectedLevel(uint8 level, uint256 xp) public restricted returns (uint8) {
-        if (expectedLevel[level][xp] > 0){
-            return expectedLevel[level][xp];
+        if (expectedLevel_v2[level][xp] > 0){
+            return expectedLevel_v2[level][xp];
         }
         uint requiredToLevel = experienceTable[level]; // technically next level
         uint8 oldLevel = level;
+        uint256 oldXp = xp;
         while(xp >= requiredToLevel) {
             xp = xp - requiredToLevel;
             level += 1;
@@ -274,7 +276,7 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
             else
                 xp = 0;
         }
-        expectedLevel[oldLevel][xp] = level;
+        expectedLevel_v2[oldLevel][oldXp] = level;
         return level;
     }
 
@@ -288,9 +290,10 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
     }
 
     function getSecondsPerStamina(uint256 id) public view returns (uint256) {
-        // if (cachedSecondsPerStamina[id] > 0 ) {
-        //     return cachedSecondsPerStamina[id];
-        // }
+        // Only get cache if cache time < 5 days
+        if (cachedSecondsPerStamina[id] > 0 && block.timestamp.sub(latestUpdateTimestamp[id]) < 432000) {
+            return cachedSecondsPerStamina[id];
+        }
         return _calculateSecondsPerStamina(id);
     }
 
@@ -331,7 +334,7 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
         uint8 staminaPoints = getStaminaPointsFromTimestamp(char.staminaTimestamp, id);
         require(staminaPoints >= amount, "Not enough stamina!");
 
-        uint64 drainTime = uint64(amount *  _calculateSecondsPerStamina(id));
+        uint64 drainTime = uint64(amount *  setSecondsPerStamina(id));
         uint64 preTimestamp = char.staminaTimestamp;
         if(staminaPoints >= maxStamina) { // if stamina full, we reset timestamp and drain from that
             char.staminaTimestamp = uint64(now - getStaminaMaxWait(id) + drainTime);
