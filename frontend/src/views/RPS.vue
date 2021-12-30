@@ -34,10 +34,10 @@
             <div class="info">
               <div class="info-head">
                 <span class="property"></span>
-                <div class="info-head-right">
-                  <span>#123456</span>
-                  <div class="leve">Lv.1</div>
-                </div>
+              </div>
+              <div class="item-id">
+                <span>#123456</span>
+                <div class="leve">Lv.1</div>
               </div>
               <div class="img-hero-around">
                 <div class="img-hero"></div>
@@ -49,7 +49,7 @@
                 <div class="cost"><div></div> 100</div>
               </div>
             </div>
-            <div>
+            <div class="button-container">
                 <button @click="checkSelect = true,
                 $bvModal.hide('selectHeroOrWeaponModal')" class="btn-request-fight">SELECT</button>
             </div>
@@ -86,10 +86,10 @@
               <div class="info">
                 <div class="info-head">
                   <span class="property"></span>
-                  <div>
-                    <span>#123456</span>
-                    <div>Lv.1</div>
-                  </div>
+                </div>
+                <div class="item-id">
+                  <span>#123456</span>
+                  <div>Lv.1</div>
                 </div>
                 <div class="img-hero-around">
                   <div class="img-hero"></div>
@@ -100,7 +100,7 @@
                   <div class="remain-hero">Room Status: <span>1/2</span> or <span>2/2</span></div>
                 </div>
               </div>
-              <button @click="$bvModal.show('fightModal')" class="btn-request-fight">JOIN</button>
+              <div class="button-container"><button @click="$bvModal.show('fightModal')" class="btn-request-fight">JOIN</button></div>
               <!-- <router-link :to="{ name: 'pvp-fight' }">
               </router-link> -->
           </div>
@@ -125,10 +125,10 @@
               <div class="info">
                 <div class="info-head">
                   <span class="property"></span>
-                  <div>
-                    <span>#123456</span>
-                    <div>Lv.1</div>
-                  </div>
+                </div>
+                <div class="item-id">
+                  <span>#123456</span>
+                  <div>Lv.1</div>
                 </div>
                 <div class="img-hero-around">
                   <div class="img-hero"></div>
@@ -157,10 +157,10 @@
               <div class="info">
                 <div class="info-head">
                   <span class="property"></span>
-                  <div>
-                    <span>#123456</span>
-                    <div>Lv.1</div>
-                  </div>
+                </div>
+                <div class="item-id">
+                  <span>#123456</span>
+                  <div>Lv.1</div>
                 </div>
                 <div class="img-hero-around">
                   <div class="img-hero"></div>
@@ -355,10 +355,15 @@ export default {
   border: none;
   width: 180px;
   height: 42px;
-  font-size: 1.2em;
+  font-size: 1em;
   margin: 15px;
   font-weight: 600;
   color: #fff;
+}
+
+.info-user-btn button:hover{
+  background-image: url(../assets/v2/btn-fight-big-opcity.svg);
+  transition: 0.9s;
 }
 
 .list-heroes{
@@ -447,6 +452,7 @@ export default {
   background-size: contain;
   background-image: url(/img/bg-item-top.9aaeb3bd.png);
   margin: 1.6em 0 4em 0;
+  position: relative;
 }
 
 .item-modal{
@@ -457,6 +463,7 @@ export default {
   background-size: contain;
   background-image: url(../assets/images/bg-item-top.png);
   margin: 1.6em 0 4em 0;
+  position: relative;
 }
 
 .info {
@@ -466,11 +473,15 @@ export default {
 
 .info .property{
   content: url(../assets/elements/earth.png);
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
+  display: block;
+  margin-top: 10px;
   /* position: relative;
   top: 30px;
   left: 20px; */
+  position: relative;
+  top: 0;
 }
 
 .info-head > div{
@@ -478,23 +489,23 @@ export default {
   margin-right: 28px;
 }
 
-.info-head > div > div{
+.item-id{
+  position: absolute;
+  right: 30px;
+  top: 30px;
+}
+
+.item-id > div{
   text-align: end;
   font-size: 1em;
   line-height: 15px;
-}
-
-.info-head > div .leve{
   color: #F2BE3E;
 }
 
 .info-head{
-  display: flex;
   position: relative;
-  top: 32px;
-  left: 20px;
-  width: 245px;
-  justify-content: space-between;
+  top: 30px;
+  left: 15px;
 }
 
 .img-hero-around{
@@ -505,9 +516,9 @@ export default {
   background-size: contain;
   margin: 0 auto;
   margin-top: 20px;
-  position: relative;
-  position: relative;
-  top: 16px;
+  position: absolute;
+  bottom: 100px;
+  left: 70px;
   /* z-index: 1; */
 }
 
@@ -533,6 +544,12 @@ export default {
   margin-top: 20px;
   position: relative;
   top: 35px;
+}
+
+.info-footer{
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
 }
 
 .info-footer div{
@@ -563,6 +580,12 @@ export default {
   margin-right: 6px;
 }
 
+.button-container{
+  width: 100%;
+  position: absolute;
+  bottom: -70px;
+}
+
 .remain-hero span:first-child{
   color: #29FD2E;
 }
@@ -581,16 +604,21 @@ export default {
   display: block;
   background-color: transparent;
   border: none;
-  background-image:  url(../assets/v2/btn-fight-big.svg);
-  width: 190px;
-  height: 42px;
+  background-image:  url(../assets/v2/btn-fight.png);
+  width: 150px;
+  height: 44px;
   background-size: cover;
   background-repeat: no-repeat;
   color: #fff;
   font-weight: 600;
-  font-size: 1.2em;
+  font-size: 1em;
   /* margin-top: 20px; */
   margin-bottom: 20px;
+}
+
+.btn-request-fight:hover{
+  background-image: url(../assets/v2/btn-fight-big-opcity.svg);
+  transition: 0.9s;
 }
 
 .info-head-left{
@@ -893,8 +921,8 @@ export default {
   background-image: url(../assets/v2/bg-weapon.svg);
   background-repeat: no-repeat;
   background-size: cover;
-  width: 300px;
-  height: 400px;
+  width: 280px;
+  height: 380px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -921,7 +949,7 @@ export default {
   border-radius: 0;
   margin: 0 auto;
   margin-top: 30px;
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: 600;
   color: #fff;
   display: block;
@@ -983,6 +1011,8 @@ export default {
 
 .create-room-body > div > div{
   background-image: url(../assets/v2/bg.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
   width: 7em;
   height: 7em;
   margin: 0 10px;
@@ -1040,15 +1070,20 @@ export default {
   border: none;
   background-image: url(../assets/v2/btn-fight.png);
   width: 190px;
-  height: 72px;
-  background-size: cover;
+  height: 60px;
+  background-size: contain;
   background-repeat: no-repeat;
   color: #fff;
   font-weight: 600;
-  font-size: 1.2em;
+  font-size: 1em;
   /* margin-top: 20px; */
   margin-right: 11px;
   margin-bottom: 20px;
+}
+
+.btn-leave-room button:hover{
+  background-image: url(../assets/v2/Btn-fight-opcity.png);
+  transition: 0.9s;
 }
 
 @media (max-width: 767.98px) {
@@ -1071,6 +1106,32 @@ export default {
   }
   .row-left{
   justify-content: center;
+}
+.create-room{
+  height: 75em;
+}
+
+.create-room > div{
+  display: flex;
+  flex-direction: column;
+}
+
+.create-room-body > div > div{
+  width: 5em;
+  height: 5em;
+}
+
+.btn-leave-room{
+  justify-content: center;
+}
+
+.nav-option{
+  width: fit-content;
+}
+
+.create-room .item{
+  margin-top: 0;
+  margin-bottom: 0;
 }
 }
 
@@ -1105,6 +1166,88 @@ export default {
 }
 .item-modal{
   min-width: 18.5em;
+}
+
+.info-user-btn{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.background{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item{
+  margin-top: 70px;
+  margin-bottom: 0;
+}
+
+.item-selected{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 0;
+}
+
+.info-user{
+  width: 285px;
+  padding: 20px;
+}
+
+.info-user-footer{
+  width: 230px;
+}
+
+.info-user-title{
+  font-size: 1em;
+}
+
+.info-user-body span{
+  font-size: 1em;
+  padding: 0;
+}
+
+.info-user-body > div{
+  font-size: 1.3em;
+  width: 140px;
+}
+
+.info-user-btn button{
+  width: 140px;
+  height: 42px;
+  font-size: 0.8em;
+  background-image: url(../assets/v2/btn-fight.png);
+}
+
+.info-user-footer-item > div{
+  font-size: 1em;
+}
+
+.info-user-footer-item > div > div{
+  width: 120px;
+  height: 40px;
+  margin: 0 5px;
+  padding: 0 12px;
+  margin-right: 12px;
+}
+
+.info-user-footer-item > div > div > div{
+  width: 23px;
+  height: 22px;
+}
+
+.info-user-footer-item > div > div > span{
+  font-size: 1em;
+}
+
+.info-user-footer button{
+  font-size: 1em;
+}
+
+.btn-request-fight{
+  font-size: 0.8em;
 }
 }
 

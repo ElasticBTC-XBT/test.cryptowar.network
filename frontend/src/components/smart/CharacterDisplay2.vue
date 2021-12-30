@@ -81,24 +81,24 @@
                   '-icon trait-icon'
                 "
               ></span>
-            </div>
+          </div>
           <div>
             <div class="name-list">
             {{ getCleanCharacterName(c.id) }} Lv.{{ c.level + 1 }}
-          </div>
-          <div
-            class="small-stamina-char"
-            :style="`--staminaReady: ${
-              (getCharacterStamina(c.id) / maxStamina) * 100
-            }%;`"
-            v-tooltip.bottom="
-              toolTipHtml(timeUntilCharacterHasMaxStamina(c.id), getSecondPerStamina(c.id))
-            "
-          >
-            <div class="stamina-text">
-              STA {{ getCharacterStamina(c.id) }} / 200
             </div>
-          </div>
+            <div
+              class="small-stamina-char"
+              :style="`--staminaReady: ${
+                (getCharacterStamina(c.id) / maxStamina) * 100
+              }%;`"
+              v-tooltip.bottom="
+                toolTipHtml(timeUntilCharacterHasMaxStamina(c.id), getSecondPerStamina(c.id))
+              "
+            >
+              <div class="stamina-text">
+                STA {{ getCharacterStamina(c.id) }} / 200
+              </div>
+            </div>
           </div>
         </li>
       </ul>

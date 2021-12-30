@@ -7,26 +7,14 @@
       <div class="row" v-if="error !== null">
         <div class="col error">Error: {{ error }}</div>
       </div>
-<<<<<<< HEAD
-
-      <b-modal id="fightResultsModal" hide-footer title="Fight Results">
-        <CombatResults v-if="resultsAvailable" :results="fightResults" />
-        <b-button
-          class="mt-3 btn-buy"
-          block
-          @click="$bvModal.hide('fightResultsModal'), pauseSound()"
-          >Close</b-button
-        >
-=======
 <!-- v-if="fightResults[0]" -->
       <b-modal id="fightResultsModal" hide-footer>
          <link rel="prefetch" as="image" href="/img/Congrats.5ac13bd5.gif">
           <img src="../assets/v2/Congrats.gif" class="background-win">
-          <div class="icon-close" @click="$bvModal.hide('fightResultsModal')"></div>
-          <div class="title-results">{{titleResults}}</div>
+          <div class="icon-close-container"><div class="icon-close" @click="$bvModal.hide('fightResultsModal')"></div></div>
+          <div class="title-results">Fight Results</div>
           <CombatResults v-if="resultsAvailable" :results="fightResults" />
-          <button class="mt-3 btn-buy btn-close-fight-results" block @click="$bvModal.hide('fightResultsModal')">Close</button>
->>>>>>> feat/ui-v2-combat
+          <button class="mt-3 btn-buy btn-close-fight-results" block @click="$bvModal.hide('fightResultsModal'), pauseSound()">Close</button>
       </b-modal>
 
       <b-modal
@@ -45,28 +33,6 @@
 
       <div class="row">
         <div class="col">
-<<<<<<< HEAD
-          <div class="message-box" v-if="!currentCharacter">
-            You need to select a character to do battle.
-          </div>
-
-          <div class="row">
-            <div class="col-12 col-md-2 offset-md-5 text-center">
-              <div
-                class="message-box flex-column"
-                v-if="
-                  currentCharacter && currentCharacterStamina < staminaPerFight
-                "
-              >
-                You need {{ staminaPerFight }} stamina to do battle.
-                <h4>Stamina Cost Per Fight</h4>
-                <b-form-select
-                  v-model="fightMultiplier"
-                  :options="setStaminaSelectorValues()"
-                  @change="setFightMultiplier()"
-                  class="ml-3"
-                ></b-form-select>
-=======
           <div class="message-box" v-if="!currentCharacter">You need to select a character to do battle.</div>
           <div class="row">
             <div class="col-12 text-center out-stamina">
@@ -75,7 +41,6 @@
                 <h4>Stamina Cost Per Fight</h4>
                 <b-form-select v-model="fightMultiplier" :options='setStaminaSelectorValues()' @change="setFightMultiplier()" class="ml-3">
                 </b-form-select>
->>>>>>> feat/ui-v2-combat
               </div>
             </div>
           </div>
@@ -106,10 +71,10 @@
               <div v-if="showModalFight" id="fight-overlay">
                 <div class="waiting animation" v-if="waitingResults" margin="auto">
                   <div class="fighting-img"></div>
-                  <div class="waiting-text">
+                  <!-- <div class="waiting-text">
                     <i class="fas fa-spinner fa-spin"></i>
                     Waiting for fight results...
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -117,30 +82,14 @@
           <div class="combat-enemy-container">
             <div class="col weapon-selection">
               <div class="header-row">
-<<<<<<< HEAD
-                <div class="row mb-3 mt-3">
-                  <div
-                    :class="[
-                      'col-12',
-                      selectedWeaponId
-                        ? 'col-md-6 offset-md-3'
-                        : 'col-md-2 offset-md-5',
-                    ]"
-                  >
-                    <h4>Stamina Cost per Fight</h4>
-                    <b-form-select
-                      v-model="fightMultiplier"
-                      :options="setStaminaSelectorValues()"
-                      @change="setFightMultiplier()"
-                    ></b-form-select>
-=======
                 <div class="info-weapon">
                   <div :class="['col-12', selectedWeaponId ? 'col-md-6 offset-md-3' : 'col-md-2 offset-md-5']">
-                    <div class="dropdown-icon"></div>
                     <h4>Stamina Cost per Fight</h4>
-                    <b-form-select v-model="fightMultiplier" :options='setStaminaSelectorValues()' @change="setFightMultiplier()">
-                    </b-form-select>
->>>>>>> feat/ui-v2-combat
+                    <div>
+                      <b-form-select id="select-stamina" v-model="fightMultiplier" :options='setStaminaSelectorValues()' @change="setFightMultiplier()">
+                      </b-form-select>
+                      <div class="dropdown-icon"></div>
+                    </div>
                   </div>
                 </div>
 
@@ -174,67 +123,33 @@
                 :checkForDurability="true"
               />
             </div>
-            <div class="nav-line boder"></div>
+            <div v-if="targets.length > 0" class="nav-line boder"></div>
             <div class="row mb-3 enemy-container" v-if="targets.length > 0">
               <div class="col-12 text-center">
                 <div class="combat-hints">
-<<<<<<< HEAD
-                  <span class="fire-icon" /> » <span class="earth-icon" /> »
-                  <span class="lightning-icon" /> »
-                  <span class="water-icon" /> »
-                  <span class="fire-icon" />
-                  <Hint
-=======
                   <!-- <span class="fire-icon" /> » <span class="earth-icon" /> » <span class="lightning-icon" /> » <span class="water-icon" /> » -->
                   <!-- <span class="fire-icon" /> -->
                   <div class="property-icon"></div>
                   <!-- <Hint
->>>>>>> feat/ui-v2-combat
                     text="The elements affect power:<br>
                     <br>Character vs Enemy: bonus or penalty as shown above
                     <br>Character and Weapon match gives bonus"
                   /> -->
                 </div>
               </div>
-
-<<<<<<< HEAD
-              <div
-                class="col-12 col-md-6 col-xl-3 encounter"
-                v-for="(e, i) in targets"
-                :key="i"
-              >
-                <div class="encounter-container">
-                  <div class="enemy-character">
-                    <div class="encounter-element">
-                      <span
-                        :class="
-                          getCharacterTrait(e.trait).toLowerCase() +
-                          '-icon element-icon circle-element'
-                        "
-                      />
-=======
               <div class="row list-enemy">
                 <div class="encounter" v-for="(e, i) in targets" :key="i">
                 <div class="encounter-container">
                 <div class="enemy-character">
                     <div class="encounter-element">
                       <span :class="getCharacterTrait(e.trait).toLowerCase() + '-icon element-icon circle-element' " />
->>>>>>> feat/ui-v2-combat
                     </div>
 
                     <div class="enemy-id">ID {{i}}</div>
 
                     <div class="">
-<<<<<<< HEAD
-                      <img
-                        class="mx-auto enemy-img"
-                        :src="getEnemyArt(e.power)"
-                        alt="Enemy"
-                      />
-=======
                       <img class="mx-auto enemy-img" :src="getEnemyArt(e.power)" alt="Enemy" />
                       <img class="enemy-around-img" :src="getEnemyArtAround(e.trait)" alt="Enemy Around">
->>>>>>> feat/ui-v2-combat
                     </div>
 
                     <div class="encounter-power">{{ e.power }} Power</div>
@@ -242,23 +157,6 @@
                     <div class="xp-gain">+{{ getPotentialXp(e) }} XP</div>
                   </div>
 
-<<<<<<< HEAD
-                  <div class="victory-chance">
-                    {{ getWinChance(e.power, e.trait) }} Victory
-                  </div>
-                  <big-button
-                    class="encounter-button btn-styled"
-                    :mainText="`Fight!`"
-                    :disabled="
-                      (timeMinutes === 59 && timeSeconds >= 30) ||
-                      waitingResults ||
-                      !weaponHasDurability(selectedWeaponId) ||
-                      !charHasStamina()
-                    "
-                    @click="onClickEncounter(e), (showModalFight = true)"
-                  />
-                  <p v-if="isLoadingTargets">Loading...</p>
-=======
                 <div class="victory-chance">
                   {{ getWinChance(e.power, e.trait) }} Victory
                 </div>
@@ -267,10 +165,9 @@
                     class="encounter-button btn-styled"
                     :mainText="`FIGHT`"
                     :disabled="(timeMinutes === 59 && timeSeconds >= 30) || waitingResults || !weaponHasDurability(selectedWeaponId) || !charHasStamina()"
-                    @click="onClickEncounter(e)"
+                    @click="onClickEncounter(e), (showModalFight = true)"
                   />
                 <p v-if="isLoadingTargets">Loading...</p>
->>>>>>> feat/ui-v2-combat
                 </div>
               </div>
               </div>
@@ -301,22 +198,6 @@
 
 <script>
 // import Character from "../components/Character.vue";
-<<<<<<< HEAD
-import BigButton from "../components/BigButton.vue";
-import WeaponGrid from "../components/smart/WeaponGrid.vue";
-import { getEnemyArt } from "../enemy-art";
-import {
-  CharacterPower,
-  CharacterTrait,
-  GetTotalMultiplierForTrait,
-  WeaponElement,
-} from "../interfaces";
-import Hint from "../components/Hint.vue";
-import CombatResults from "../components/CombatResults.vue";
-import { toBN, fromWeiEther } from "../utils/common";
-import WeaponIcon from "../components/WeaponIcon.vue";
-import { mapActions, mapGetters, mapState, mapMutations } from "vuex";
-=======
 import BigButton from '../components/BigButton.vue';
 import WeaponGrid from '../components/smart/WeaponGrid.vue';
 import {getEnemyArtAround} from '../enemy-art-around';
@@ -328,7 +209,6 @@ import { toBN, fromWeiEther } from '../utils/common';
 import WeaponIcon from '../components/WeaponIcon.vue';
 import { mapActions, mapGetters, mapState, mapMutations } from 'vuex';
 import CharacterBar from "../components/CharacterBar.vue";
->>>>>>> feat/ui-v2-combat
 
 export default {
   data() {
@@ -346,14 +226,10 @@ export default {
       selectedWeapon: null,
       fightMultiplier: Number(localStorage.getItem("fightMultiplier")),
       staminaPerFight: 40,
-<<<<<<< HEAD
       soundFight: new Audio(require("../assets/sound/sound_fight.wav")),
       soundWin: new Audio(require("../assets/sound/sound_win.wav")),
       soundLose: new Audio(require("../assets/sound/sound_lose.wav")),
       showModalFight: false,
-=======
-      titleResults: "",
->>>>>>> feat/ui-v2-combat
     };
   },
 
@@ -426,7 +302,6 @@ export default {
       this.resultsAvailable = fightResults !== null;
       this.waitingResults = fightResults === null && error === null;
       this.setIsInCombat(this.waitingResults);
-<<<<<<< HEAD
       if (this.resultsAvailable && error === null) {
         this.$bvModal.show("fightResultsModal");
       }
@@ -436,15 +311,13 @@ export default {
         } else {
           this.soundLose.play();
         }
-=======
-      if (this.resultsAvailable && error === null) this.$bvModal.show('fightResultsModal');
-      if(this.fightResults[0] === true){
-        this.titleResults = "Congratulation!";
       }
-      else{
-        this.titleResults = "Better luck Next Time";
->>>>>>> feat/ui-v2-combat
-      }
+      // if(this.fightResults[0] === true){
+      //   this.titleResults = "Congratulation!";
+      // }
+      // else{
+      //   this.titleResults = "Better luck Next Time";
+      // }
     },
   },
 
@@ -683,7 +556,7 @@ export default {
 </script>
 
 <style scoped>
-<<<<<<< HEAD
+
 #fight-overlay {
   position: fixed;
   z-index: 2;
@@ -694,7 +567,8 @@ export default {
   background-color: rgba(0, 0, 0, 0.5);
   display: table;
   transition: opacity 0.3s ease;
-=======
+}
+
 .background-win{
   background-size: 100%;
   background-repeat: no-repeat;
@@ -707,17 +581,24 @@ export default {
   background-image: url(../assets/v2/icon-close.svg);
   width: 50px;
   height: 47px;
+  margin-right: 20px;
   position: relative;
-  right: -24em;
   z-index: 2;
+}
+
+#fightResultsModal .icon-close-container{
+  display: flex;
+  justify-content: flex-end;
 }
 
 
 .title-results{
   font-size: 1.3em;
   color: #fff;
+  margin-left: 5px;
+  position: relative;
+  top: -30px;
   text-align: center;
-  margin-top: 30px;
 }
 
 .btn-close-fight-results{
@@ -728,11 +609,12 @@ export default {
   height: 42px;
   background-size: contain;
   background-repeat: no-repeat;
-  margin: 0 auto;
   background-color: transparent;
   margin: 0 auto;
   display: block;
->>>>>>> feat/ui-v2-combat
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 3;
 }
 
 .enemy-character {
@@ -741,13 +623,8 @@ export default {
   height: 23em;
   background-position: left;
   background-repeat: no-repeat;
-<<<<<<< HEAD
-  background-size: 112%;
-  background-image: url("../assets/images/bg-item-top.png");
-=======
   background-size: contain;
   background-image: url('../assets/images/bg-item-top.png');
->>>>>>> feat/ui-v2-combat
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -851,21 +728,24 @@ export default {
 
 .info-weapon > div > div{
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  /* justify-content: center; */
   position: relative;
+  align-items: center;
+  text-align: end;
 }
 
-.info-weapon > div > div::before{
-  content: "";
+.info-weapon > div > div > div{
   background-repeat: no-repeat;
   background-size: contain;
   background-image: url('../assets/v2/dropdown-icon.svg');
   width: 20px;
   height: 20px;
-  position: relative;
-  top: 123px;
-  right: -120px;
-  z-index: 1;
+  /* position: relative; */
+  /* top: 123px; */
+  /* right: -120px; */
+  margin-left: 235px;
+  margin-top: -35px;
 }
 
 .message-box {
@@ -888,6 +768,19 @@ export default {
   height: 60px;
   border-radius: 10px;
   margin-top: 15px;
+}
+
+.custom-select::before{
+  content: "";
+  background-image: url('../assets/v2/dropdown-icon.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 100px;
+  height: 100px;
+  /* position: relative;
+  top: 123px;
+  right: -120px;
+  z-index: 1; */
 }
 
 div.encounter.text-center {
@@ -929,13 +822,8 @@ div.encounter.text-center {
 
 /* .xp-gain,
 .encounter-power {
-<<<<<<< HEAD
-  color: #f58b5b !important;
-}
-=======
   color: #F58B5B !important;
 } */
->>>>>>> feat/ui-v2-combat
 
 .xp-gain,
 .encounter-power,
@@ -985,14 +873,9 @@ div.encounter.text-center {
   margin-top: 50px;
 }
 
-<<<<<<< HEAD
-.combat-enemy-container .weapon-icon-wrapper {
-  height: 13rem;
-=======
 .combat-enemy-container .weapon-icon-wrapper{
   height: 24rem;
   width: 19.5rem;
->>>>>>> feat/ui-v2-combat
 }
 
 .combat-enemy-container .small-durability-bar {
@@ -1016,11 +899,7 @@ div.encounter.text-center {
 
 .enemy-container {
   flex: 3;
-<<<<<<< HEAD
-  border-left: 1px solid #f58b5b;
-=======
   /* border-left: 1px solid #F58B5B; */
->>>>>>> feat/ui-v2-combat
 }
 
 .enemy-divider {
@@ -1072,9 +951,6 @@ button.encounter-button {
   line-height: 1;
   justify-content: center;
   align-items: center;
-<<<<<<< HEAD
-  width: calc(100% - 44px) !important;
-=======
   background-image: url(../assets/v2/btn-fight.png);
   background-repeat: no-repeat;
   background-size: contain;
@@ -1090,7 +966,6 @@ button.encounter-button:hover{
   background-image: url(../assets/v2/Btn-fight-opcity.png);
   transition: 0.9s;
   background-color: transparent;
->>>>>>> feat/ui-v2-combat
 }
 
 .encounter-button:active {
@@ -1112,10 +987,6 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
   top: -129px;
 }
 
-<<<<<<< HEAD
-.choose_weapon {
-  max-width: 12rem;
-=======
 .choose_weapon{
   width: 15rem;
   height: 46px;
@@ -1138,7 +1009,6 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
 .out-stamina .message-box.flex-column{
   align-items: center;
   min-height: 70vh;
->>>>>>> feat/ui-v2-combat
 }
 
 @media (max-width: 1334px) {
@@ -1152,14 +1022,8 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
   .encounter-button {
     margin-top: 1.35em;
   }
-<<<<<<< HEAD
-  .waiting.animation .fighting-img{
-    width: 36em;
-    height: 18em;
-=======
   .nav-line.boder{
     height: 0;
->>>>>>> feat/ui-v2-combat
   }
 }
 
@@ -1167,17 +1031,10 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
 @media all and (max-width: 767.98px) {
   /* .encounter img {
     width: calc(100% - 60px);
-<<<<<<< HEAD
-  }
-  .enemy-list {
-    flex-direction: column;
-    align-items: center;
-=======
   } */
   .enemy-list{
     flex-direction:column;
     align-items:center;
->>>>>>> feat/ui-v2-combat
   }
   .combat-enemy-container {
     flex-direction: column;
@@ -1221,10 +1078,6 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
   width: 14em;
   height: 26em;
 }
-<<<<<<< HEAD
-@media (max-width: 767.98px) {
-  .button.encounter-button {
-=======
 
 .modal-content {
   border-radius: 20px;
@@ -1233,7 +1086,6 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
 
 @media (max-width: 767.98px){
   .button.encounter-button{
->>>>>>> feat/ui-v2-combat
     top: 10vw;
   }
   .small-durability-bar {
@@ -1263,17 +1115,11 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
     justify-content: center;
     display: block;
   }
-<<<<<<< HEAD
-  .waiting.animation .fighting-img{
-    width: 28em;
-    height: 14em;
-=======
   .row{
     margin: 0;
   }
   .nav-line.boder{
     height: 0;
->>>>>>> feat/ui-v2-combat
   }
 }
 .element-icon {

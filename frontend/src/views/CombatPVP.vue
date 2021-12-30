@@ -30,11 +30,11 @@
             <div class="item">
               <div class="info">
                 <div class="info-head">
-                  <span class="property"></span>
-                  <div class="info-head-right">
+                    <span class="property"></span>
+                </div>
+                <div class="item-id">
                     <span>#123456</span>
                     <div class="leve">Lv.1</div>
-                  </div>
                 </div>
                 <div class="img-hero-around">
                   <div class="img-hero"></div>
@@ -55,7 +55,7 @@
                     <div>STR+56</div>
                   </div>
                 </div>
-                <div>
+                <div class="info-head-right">
                   <span class="id-weapon">ID426</span>
                   <div>6LB</div>
                 </div>
@@ -107,11 +107,11 @@
           <div class="item" v-for="i in 10" :key="i">
             <div class="info">
               <div class="info-head">
-                <span class="property"></span>
-                <div class="info-head-right">
+                  <span class="property"></span>
+              </div>
+              <div class="item-id">
                   <span>#123456</span>
                   <div class="leve">Lv.1</div>
-                </div>
               </div>
               <div class="img-hero-around">
                 <div class="img-hero"></div>
@@ -123,7 +123,7 @@
                 <div class="cost"><div></div> 100</div>
               </div>
             </div>
-            <div><button @click="checkSelect = true, checkCurrentMode(),
+            <div class="button-container"><button @click="checkSelect = true, checkCurrentMode(),
               $bvModal.hide('selectHeroOrWeaponModal'), addClass = 'background'" class="btn-request-fight">SELECT</button></div>
           </div>
         </div>
@@ -138,7 +138,7 @@
                     <div>STR+56</div>
                   </div>
                 </div>
-                <div>
+                <div class="info-head-right">
                   <span class="id-weapon">ID426</span>
                   <div>6LB</div>
                 </div>
@@ -149,7 +149,7 @@
                 <div class="bar-xp-weapon"></div>
               </div>
             </div>
-            <div><button @click="checkSelect = true, checkCurrentMode(),
+            <div class="button-container"><button @click="checkSelect = true, checkCurrentMode(),
               $bvModal.hide('selectHeroOrWeaponModal'),  addClass = 'background'" class="btn-request-fight">SELECT</button></div>
           </div>
         </div>
@@ -215,11 +215,11 @@
         <div class="item" v-for="i in 10" :key="i">
             <div class="info">
               <div class="info-head">
-                <span class="property"></span>
-                <div>
+                  <span class="property"></span>
+              </div>
+              <div class="item-id">
                   <span>#123456</span>
                   <div class="leve">Lv.1</div>
-                </div>
               </div>
               <div class="img-hero-around">
                 <div class="img-hero"></div>
@@ -231,7 +231,7 @@
                 <div class="cost"><div></div> 100</div>
               </div>
             </div>
-            <div><button @click="$bvModal.show('requestSelect')" class="btn-request-fight">REQUEST SELECT</button></div>
+            <div class="button-container"><button @click="$bvModal.show('requestSelect')" class="btn-request-fight">REQUEST SELECT</button></div>
           </div>
         </div>
       </div>
@@ -253,11 +253,11 @@
           <div class="item" v-for="i in 10" :key="i">
               <div class="info">
                 <div class="info-head">
-                  <span class="property"></span>
-                  <div>
+                    <span class="property"></span>
+                </div>
+                <div class="item-id">
                     <span>#123456</span>
-                    <div>Lv.1</div>
-                  </div>
+                    <div class="leve">Lv.1</div>
                 </div>
                 <div class="img-hero-around">
                   <div class="img-hero"></div>
@@ -269,7 +269,7 @@
                   <div class="cost"><div></div> 100</div>
                 </div>
               </div>
-              <button @click="$bvModal.show('fightModal')" class="btn-request-fight">FIGHT</button>
+              <div class="button-container"><button @click="$bvModal.show('fightModal')" class="btn-request-fight">FIGHT</button></div>
               <!-- <router-link :to="{ name: 'pvp-fight' }">
               </router-link> -->
           </div>
@@ -279,13 +279,13 @@
           <div class="row list-heroes" style="margin-left: 0;">
         <div class="item">
             <div class="info">
-              <div class="info-head">
-                <span class="property"></span>
-                <div>
-                  <span>#123456</span>
-                  <div>Lv.1</div>
+                <div class="info-head">
+                    <span class="property"></span>
                 </div>
-              </div>
+                <div class="item-id">
+                    <span>#123456</span>
+                    <div class="leve">Lv.1</div>
+                </div>
               <div class="img-hero-around">
                 <div class="img-hero"></div>
               </div>
@@ -296,7 +296,7 @@
                 <div class="cost"><div></div> 100</div>
               </div>
             </div>
-            <div><button @click="cancelRequest = true, checkFight =true" class="btn-request-fight">CANCEL REQUEST</button></div>
+            <div class="button-container"><button @click="cancelRequest = true, checkFight =true" class="btn-request-fight">CANCEL REQUEST</button></div>
           </div>
         </div>
       </div>
@@ -753,10 +753,15 @@ export default {
   border: none;
   width: 180px;
   height: 42px;
-  font-size: 1.2em;
+  font-size: 1em;
   margin: 15px;
   font-weight: 600;
   color: #fff;
+}
+
+.info-user-btn button:hover{
+  background-image: url(../assets/v2/btn-fight-big-opcity.svg);
+  transition: 0.9s;
 }
 
 .list-heroes{
@@ -841,6 +846,7 @@ export default {
   background-size: contain;
   background-image: url(../assets/images/bg-item-top.png);
   margin: 1.6em 0 4em 0;
+  position: relative;
 }
 
 .info {
@@ -849,47 +855,64 @@ export default {
 
 .info .property{
   content: url(../assets/elements/earth.png);
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
+  display: block;
+  margin-top: 10px;
   /* position: relative;
   top: 30px;
   left: 20px; */
+  position: relative;
+  top: 0;
+}
+
+.element-container{
+  position: relative;
+  top: 0;
 }
 
 .info-head > div{
   font-size: 1.3em;
 }
 
-.info-head > div > div{
+.item-id{
+  position: absolute;
+  right: 30px;
+  top: 30px;
+}
+
+.item-id > div{
   text-align: end;
   font-size: 1em;
   line-height: 15px;
-}
-
-.info-head > div .leve{
   color: #F2BE3E;
 }
 
+
 .info-head{
-  display: flex;
+  /* display: flex; */
   position: relative;
-  top: 32px;
-  left: 20px;
-  width: 245px;
-  justify-content: space-between;
+  top: 30px;
+  left: 15px;
+  /* width: 245px; */
+  /* justify-content: space-between; */
+}
+
+.info-head span:first-child{
+  margin: 0;
 }
 
 .img-hero-around{
   width: 151px;
-  height: 227px;
+  height: 207px;
   background-image: url(../assets/images/water.png);
   background-repeat: no-repeat;
   background-size: contain;
-  margin: 0 auto;
-  margin-top: 20px;
-  position: relative;
-  position: relative;
-  top: 16px;
+  /* margin: 0 auto; */
+  /* margin-top: -42px; */
+  position: absolute;
+  bottom: 150px;
+  left: 80px;
   /* z-index: 1; */
 }
 
@@ -917,19 +940,25 @@ export default {
   top: 35px;
 }
 
+.info-footer{
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+}
+
 .info-footer div{
   font-weight: 600;
   text-align: center;
 }
 
 .info-footer .weapon-name{
-  margin-top: 40px;
-  margin-bottom: 10px;
+  /* margin-top: 40px;
+  margin-bottom: 10px; */
 }
 
 .info-footer .bar-xp-weapon{
-  margin-top: 10px;
-  margin-bottom: 40px;
+  /* margin-top: 10px;
+  margin-bottom: 40px; */
 }
 
 .info-footer > div > span{
@@ -954,6 +983,12 @@ export default {
   margin-right: 6px;
 }
 
+.button-container{
+  width: 100%;
+  position: absolute;
+  bottom: -70px;
+}
+
 .btn-request-fight{
   margin: 0 auto;
   display: block;
@@ -966,8 +1001,13 @@ export default {
   background-repeat: no-repeat;
   color: #fff;
   font-weight: 600;
-  font-size: 1.2em;
+  font-size: 1em;
   margin-bottom: 20px;
+}
+
+.btn-request-fight:hover{
+  background-image: url(../assets/v2/btn-fight-big-opcity.svg);
+  transition: 0.9s;
 }
 
 .info-head-left{
@@ -995,9 +1035,20 @@ export default {
   border-radius: 10px;
 }
 
+.info-head-right{
+  position: absolute;
+  right: 40px;
+  top: 0;
+}
+
+.info-head > div{
+  font-size: 1em;
+}
+
 .id-weapon{
   margin-bottom: 5px;
   display: block;
+  font-size: 1em;
 }
 
 .requestSelect-head,
@@ -1059,7 +1110,7 @@ export default {
   background-repeat: no-repeat;
   background-size: contain;
   width: 163px;
-  height: 66px;
+  height: 50px;
   margin: 0 10px;
   display: block;
   color: #fff;
@@ -1216,6 +1267,40 @@ export default {
     flex-direction: column;
     align-items: center;
   }
+  .background{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .item{
+    margin-top: 70px;
+    margin-bottom: 0;
+  }
+
+  .item-selected{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 0;
+  }
+
+  .info-user{
+    width: 450px;
+    padding: 20px;
+  }
+
+  .info-user-footer{
+    width: 390px;
+  }
+
+    .info-user-btn button{
+    font-size: 1em;
+  }
+
+  .btn-request-fight{
+    font-size: 1em;
+  }
 }
 
 @media (max-width: 575.98px) {
@@ -1240,6 +1325,88 @@ export default {
   flex-direction: column;
   justify-content: center;
   /* width: 200px; */
+}
+
+.info-user-btn{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.background{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item{
+  margin-top: 70px;
+  margin-bottom: 0;
+}
+
+.item-selected{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 0;
+}
+
+.info-user{
+  width: 285px;
+  padding: 20px;
+}
+
+.info-user-footer{
+  width: 230px;
+}
+
+.info-user-title{
+  font-size: 1em;
+}
+
+.info-user-body span{
+  font-size: 1em;
+  padding: 0;
+}
+
+.info-user-body > div{
+  font-size: 1.3em;
+  width: 140px;
+}
+
+.info-user-btn button{
+  width: 140px;
+  height: 42px;
+  font-size: 0.8em;
+  background-image: url(../assets/v2/btn-fight.png);
+}
+
+.info-user-footer-item > div{
+  font-size: 1em;
+}
+
+.info-user-footer-item > div > div{
+  width: 120px;
+  height: 40px;
+  margin: 0 5px;
+  padding: 0 12px;
+  margin-right: 12px;
+}
+
+.info-user-footer-item > div > div > div{
+  width: 23px;
+  height: 22px;
+}
+
+.info-user-footer-item > div > div > span{
+  font-size: 1em;
+}
+
+.info-user-footer button{
+  font-size: 1em;
+}
+
+.btn-request-fight{
+  font-size: 0.8em;
 }
 }
 

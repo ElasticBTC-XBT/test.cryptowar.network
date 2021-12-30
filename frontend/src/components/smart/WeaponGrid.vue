@@ -395,6 +395,7 @@ export default Vue.extend({
    align-content: center;
    border-bottom: 0.2px solid rgba(102, 80, 80, 0.1);
    margin-bottom: 20px;
+   margin-top: 30px !important;
 }
 .weapon-grid {
   list-style-type: none;

@@ -1,8 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="112.311" height="116.271" viewBox="0 0 112.311 116.271">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="108.311" height="110.948" viewBox="0 0 108.311 110.948">
   <defs>
-    <clipPath id="clip-path">
-      <rect width="112.311" height="116.271" fill="none"/>
-    </clipPath>
     <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
       <stop offset="0.087" stop-color="#f56f56"/>
       <stop offset="0.224" stop-color="#f26b65"/>
@@ -10,27 +7,6 @@
       <stop offset="0.859" stop-color="#e151d0"/>
       <stop offset="1" stop-color="#dd4bec"/>
     </linearGradient>
-    <radialGradient id="radial-gradient" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(-0.707, 0.707, 0.707, 0.707, 0.5, -0.207)" gradientUnits="objectBoundingBox">
-      <stop offset="0" stop-color="#ffff90"/>
-      <stop offset="0.028" stop-color="#f4ed7e"/>
-      <stop offset="0.102" stop-color="#dbc353"/>
-      <stop offset="0.159" stop-color="#cba938"/>
-      <stop offset="0.194" stop-color="#c6a02f"/>
-      <stop offset="0.336" stop-color="#896000"/>
-      <stop offset="0.366" stop-color="#7e5800"/>
-      <stop offset="0.513" stop-color="#513900"/>
-      <stop offset="0.654" stop-color="#2e2000"/>
-      <stop offset="0.785" stop-color="#140e00"/>
-      <stop offset="0.905" stop-color="#050300"/>
-      <stop offset="1"/>
-    </radialGradient>
   </defs>
-  <g id="Repeat_Grid_46" data-name="Repeat Grid 46" clip-path="url(#clip-path)">
-    <g id="Group_3404" data-name="Group 3404" transform="translate(-964.52 -726.225)">
-      <g id="Group_2760" data-name="Group 2760" transform="translate(966.021 727.725)">
-        <path id="Path_5516" data-name="Path 5516" d="M-2628.23-713.379H-2711.8l-10.872,11.333v85.282l10.872,11.333h83.568l10.871-11.333v-85.282Z" transform="translate(2722.67 713.379)" stroke="#f2be3e" stroke-miterlimit="10" stroke-width="3" fill="url(#linear-gradient)" style="isolation: isolate"/>
-      </g>
-      <ellipse id="Ellipse_481" data-name="Ellipse 481" cx="6.824" cy="49.682" rx="6.824" ry="49.682" transform="translate(1068.459 828.849) rotate(90)" fill="url(#radial-gradient)" style="mix-blend-mode: screen;isolation: isolate"/>
-    </g>
-  </g>
+  <path id="Path_13727" data-name="Path 13727" d="M-2628.23-713.379H-2711.8l-10.872,11.333v85.282l10.872,11.333h83.568l10.871-11.333v-85.282Z" transform="translate(2724.17 714.879)" stroke="#f2be3e" stroke-miterlimit="10" stroke-width="3" fill="url(#linear-gradient)" style="isolation: isolate"/>
 </svg>
