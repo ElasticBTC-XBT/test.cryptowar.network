@@ -475,6 +475,11 @@ font-size: 1.3em;
   color: #fff;
 }
 
+.enemy-item-container button:hover{
+  background-image: url(../assets/v2/Btn-fight-opcity.png);
+  transition: 0.9s;
+}
+
 .btn-confirm{
   display: block;
   background-color: transparent;

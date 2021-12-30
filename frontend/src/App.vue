@@ -737,22 +737,26 @@ button.close {
 .btn-outline-primary {
   color: #a50eb3 !important;
 }
+
 #fightResultsModal .modal-dialog,
 #listHeroToCareerModal .modal-dialog,
 #listHeroToChallengeModal .modal-dialog{
-  top: 350px;
   max-width: 500px;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 #requestSelect .modal-dialog,
 #fightModal .modal-dialog,
 #cancelRequestModal .modal-dialog{
-  top: 400px;
   max-width: 700px;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 #selectHeroOrWeaponModal .modal-dialog{
-  // top: 50px;
   max-width: 1150px;
   height: 100%;
   display: flex;
