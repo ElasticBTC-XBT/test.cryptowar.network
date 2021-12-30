@@ -747,7 +747,7 @@ button.close {
 #requestSelect .modal-dialog,
 #fightModal .modal-dialog,
 #cancelRequestModal .modal-dialog{
-  top: 350px;
+  top: 400px;
   max-width: 700px;
 }
 

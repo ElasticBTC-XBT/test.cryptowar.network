@@ -1059,7 +1059,7 @@ export default {
   background-repeat: no-repeat;
   background-size: contain;
   width: 163px;
-  height: 66px;
+  height: 50px;
   margin: 0 10px;
   display: block;
   color: #fff;

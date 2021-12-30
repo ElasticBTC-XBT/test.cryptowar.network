@@ -983,6 +983,8 @@ export default {
 
 .create-room-body > div > div{
   background-image: url(../assets/v2/bg.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
   width: 7em;
   height: 7em;
   margin: 0 10px;
@@ -1040,8 +1042,8 @@ export default {
   border: none;
   background-image: url(../assets/v2/btn-fight.png);
   width: 190px;
-  height: 72px;
-  background-size: cover;
+  height: 60px;
+  background-size: contain;
   background-repeat: no-repeat;
   color: #fff;
   font-weight: 600;
@@ -1071,6 +1073,27 @@ export default {
   }
   .row-left{
   justify-content: center;
+}
+.create-room{
+  height: 75em;
+}
+
+.create-room > div{
+  display: flex;
+  flex-direction: column;
+}
+
+.create-room-body > div > div{
+  width: 5em;
+  height: 5em;
+}
+
+.btn-leave-room{
+  justify-content: center;
+}
+
+.nav-option{
+  width: fit-content;
 }
 }
 

@@ -1,22 +1,26 @@
 <template>
   <div class="results-panel">
     <div class="background-win"></div>
-    <span v-if="checkResults" class="outcome"><div class="win-results"></div>YOU {{ getSuccessText() }}</span>
-    <span v-if="!checkResults" class="outcome"><div class="lose-results"></div>YOU {{ getSuccessText() }}</span>
-    <!-- <span class="roll">{{ "You rolled "+results[1]+", Enemy rolled "+results[2] }}</span> -->
-    <!-- <span v-if="results[0]" class="reward">
+    <span v-if="checkResults && !propResultsFromPVP" class="outcome">{{ getSuccessText() }}</span>
+    <span v-if="!checkResults && !propResultsFromPVP" class="outcome">{{ getSuccessText() }}</span>
+
+    <span v-if="results === 1 && propResultsFromPVP" class="outcome"><div class="win-results"></div>{{ getSuccessText() }}</span>
+    <span v-if="results === 2 && propResultsFromPVP" class="outcome"><div class="lose-results"></div>{{ getSuccessText() }}</span>
+    <span v-if="results === 3" class="outcome">DRAW</span>
+    <span v-if="!propResultsFromPVP" class="roll">{{ "You rolled "+results[1]+", Enemy rolled "+results[2] }}</span>
+    <div v-if="results[0] && !resultsPVP" class="reward">
       {{ "You earned "+results[3]+" xp"}}
       <br>
-      <span v-tooltip="convertWei(results[4])+' xBlade'">{{"and "+formattedXBlade}}</span>
+      <span v-if="!propResultsFromPVP" v-tooltip="convertWei(results[4])+' xBlade'">{{"and "+formattedXBlade}}</span>
         <Hint text="xBlade earned is based on gas costs of the network plus a factor of your power" />
-    </span> -->
-    <!-- <span>
+    </div>
+    <span v-if="!propResultsFromPVP">
          {{ "You spent ~" + results[5]+" BNB with gas taxes"}}
-    </span> -->
-    <div class="results-body">
+    </span>
+    <div v-if="propResultsFromPVP" class="results-body">
       Your Opponent Went: <span> 123</span>
     </div>
-    <div class="results-footer">{{ getSuccessText() }}: <div><span></span> 100</div></div>
+    <div v-if="propResultsFromPVP && results !== 3" class="results-footer">{{ getSuccessText() }}: <div><span></span> 100</div></div>
   </div>
 </template>
 
@@ -25,11 +29,12 @@ import { toBN, fromWeiEther } from '../utils/common';
 // import Hint from '../components/Hint.vue';
 
 export default {
-  props: ['results'],
+  props: ['results', 'propResultsFromPVP'],
 
   data(){
     return{
       checkResults: this.results[0],
+      checkResultsFromPVP: false,
     };
   },
 
@@ -42,7 +47,16 @@ export default {
 
   methods: {
     getSuccessText() {
-      return this.results[0] ? 'Win' : 'Lost';
+      if(this.propResultsFromPVP){
+        this.checkResultsFromPVP = true;
+        if(this.results === 1) return 'YOU WIN';
+        else if(this.results === 2) return 'YOU LOST';
+      }
+      else
+      {
+        this.checkResultsFromPVP = false;
+        return this.results[0] ? 'You won the fight!' : 'You lost the fight!';
+      }
     },
     convertWei(wei) {
       return fromWeiEther(wei);
@@ -68,20 +82,7 @@ export default {
   align-items: center;
   margin: auto;
   text-align: center;
-  /* background-color: #fff; */
 }
-
-/* .background-win{
-  background-image: url(../assets/shield1.png);
-  background-size: 100%;
-  background-repeat: no-repeat;
-  width: 400px;
-  height: 500px;
-  position: fixed;
-  top: 25em;
-  z-index: 5;
-  left: 655px;
-} */
 
 .outcome {
   font-size: 2em;
@@ -90,7 +91,7 @@ export default {
   display: flex;
   align-items: center;
   color: #F58B5B;
-  text-transform: uppercase;
+  padding-top: 0;
 }
 
 .outcome .win-results{
@@ -119,6 +120,7 @@ export default {
 .results-footer{
   font-size: 1.3em;
   display: flex;
+  margin-top: 10px;
 }
 
 .results-body span{
@@ -152,6 +154,7 @@ export default {
   font-size: 1.25em;
 }
 .reward {
-  font-size: 1.5em;
+  width: 100%;
+  font-size: 1.25em;
 }
 </style>

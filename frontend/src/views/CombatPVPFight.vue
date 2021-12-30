@@ -14,10 +14,8 @@
          <link rel="prefetch" as="image" href="/img/Congrats.5ac13bd5.gif">
           <img src="/img/Congrats.5ac13bd5.gif" class="background-win">
           <div class="icon-close" @click="$bvModal.hide('fightResultsModal')"></div>
-          <div class="title-results">Try again</div>
-          <div class="fight-results">DRAW</div>
-          <div class="content-results">Your Opponent went: <span>123</span></div>
-          <!-- <CombatResults v-if="resultsAvailable" :results="fightResults" /> -->
+          <div class="title-results">{{titleResults}}</div>
+          <CombatResults :results="fightResults" :propResultsFromPVP="resultsFromPVP" />
           <button class="mt-3 btn-buy btn-close-fight-results" block @click="$bvModal.hide('fightResultsModal'), cancelRequest= false">Close</button>
       </b-modal>
       <div class="col-xl-3 col-12">
@@ -78,7 +76,7 @@
               </div>
             </div>
             <div class="Ability-win">Very Likely Victory</div>
-            <button @click="$bvModal.show('fightResultsModal')">FIGHT</button>
+            <button @click="$bvModal.show('fightResultsModal'), onClickEncounter()">FIGHT</button>
           </div>
         </div>
       </div>
@@ -89,16 +87,7 @@
 </template>
 
 <script>
-// import Character from "../components/Character.vue";
-// import BigButton from '../components/BigButton.vue';
-// import WeaponGrid from '../components/smart/WeaponGrid.vue';
-import {getEnemyArtAround} from '../enemy-art-around';
-import { getEnemyArt } from '../enemy-art';
-import { CharacterPower, CharacterTrait, GetTotalMultiplierForTrait, WeaponElement } from '../interfaces';
-// import Hint from '../components/Hint.vue';
-// import CombatResults from '../components/CombatResults.vue';
-import { toBN, fromWeiEther } from '../utils/common';
-// import WeaponIcon from '../components/WeaponIcon.vue';
+import CombatResults from '../components/CombatResults.vue';
 import { mapActions, mapGetters, mapState, mapMutations } from 'vuex';
 // import CharacterBar from "../components/CharacterBar.vue";
 
@@ -106,27 +95,15 @@ export default {
   props: ['propCancelRequest'],
   data() {
     return {
-      selectedWeaponId: null,
-      error: null,
-      waitingResults: false,
-      resultsAvailable: false,
-      fightResults: null,
-      intervalSeconds: null,
-      intervalMinutes: null,
-      timeSeconds: null,
-      timeMinutes: null,
-      fightXpGain: 16,
-      selectedWeapon: null,
       fightMultiplier: Number(localStorage.getItem('fightMultiplier')),
       staminaPerFight: 40,
       titleResults: "",
       cancelRequest: this.propCancelRequest,
+      resultsFromPVP: false,
     };
   },
 
   created() {
-    this.intervalSeconds = setInterval(() => (this.timeSeconds = new Date().getSeconds()), 5000);
-    this.intervalMinutes = setInterval(() => (this.timeMinutes = new Date().getMinutes()), 20000);
     this.staminaPerFight = 40 * Number(localStorage.getItem('fightMultiplier'));
   },
 
@@ -175,145 +152,46 @@ export default {
   },
 
   watch: {
-    async selections([characterId, weaponId]) {
-      if (!this.ownWeapons.filter(Boolean).find((weapon) => weapon.id === weaponId)) {
-        this.selectedWeaponId = null;
-      }
-      await this.fetchTargets({ characterId, weaponId });
-    },
+    // async selections([characterId, weaponId]) {
+    //   if (!this.ownWeapons.filter(Boolean).find((weapon) => weapon.id === weaponId)) {
+    //     this.selectedWeaponId = null;
+    //   }
+    //   await this.fetchTargets({ characterId, weaponId });
+    // },
 
-    async updateResults([fightResults, error]) {
-      this.resultsAvailable = fightResults !== null;
-      this.waitingResults = fightResults === null && error === null;
-      this.setIsInCombat(this.waitingResults);
-      if (this.resultsAvailable && error === null) this.$bvModal.show('fightResultsModal');
-      if(this.fightResults[0] === true){
-        this.titleResults = "Congratulation!";
-      }
-      else{
-        this.titleResults = "Better luck Next Time";
-      }
-    },
+    // async updateResults([fightResults, error]) {
+    //   this.resultsAvailable = fightResults !== null;
+    //   this.waitingResults = fightResults === null && error === null;
+    //   this.setIsInCombat(this.waitingResults);
+    //   if (this.resultsAvailable && error === null) this.$bvModal.show('fightResultsModal');
+    // },
   },
 
 
   methods: {
     ...mapActions(['fetchTargets', 'doEncounter', 'fetchFightRewardSkill', 'fetchFightRewardXp', 'getXPRewardsIfWin']),
     ...mapMutations(['setIsInCombat']),
-    getEnemyArt,
-    getEnemyArtAround,
     weaponHasDurability(id) {
       return this.getWeaponDurability(id) >= this.fightMultiplier * 3;
     },
     charHasStamina(){
       return this.currentCharacterStamina >= this.staminaPerFight;
     },
-    getCharacterTrait(trait) {
-      return CharacterTrait[trait];
-    },
-    getWinChance(enemyPower, enemyElement) {
-      const characterPower = CharacterPower(this.currentCharacter.level);
-      const playerElement = parseInt(this.currentCharacter.trait, 10);
-      const selectedWeapon = this.ownWeapons.filter(Boolean).find((weapon) => weapon.id === this.selectedWeaponId);
-      this.selectedWeapon = selectedWeapon;
-      const weaponElement = parseInt(WeaponElement[selectedWeapon.element], 10);
-      const weaponMultiplier = GetTotalMultiplierForTrait(selectedWeapon, playerElement);
-      const totalPower = characterPower * weaponMultiplier + selectedWeapon.bonusPower;
-      const totalMultiplier = 1 + 0.075 * (weaponElement === playerElement ? 1 : 0) + 0.075 * this.getElementAdvantage(playerElement, enemyElement);
-      const playerMin = totalPower * totalMultiplier * 0.9;
-      const playerMax = totalPower * totalMultiplier * 1.1;
-      const playerRange = playerMax - playerMin;
-      const enemyMin = enemyPower * 0.9;
-      const enemyMax = enemyPower * 1.1;
-      const enemyRange = enemyMax - enemyMin;
-      let rollingTotal = 0;
-      // shortcut: if it is impossible for one side to win, just say so
-      if (playerMin > enemyMax) return 'Very Likely';
-      if (playerMax < enemyMin) return 'Unlikely';
 
-      // case 1: player power is higher than enemy power
-      if (playerMin >= enemyMin) {
-        // case 1: enemy roll is lower than player's minimum
-        rollingTotal = (playerMin - enemyMin) / enemyRange;
-        // case 2: 1 is not true, and player roll is higher than enemy maximum
-        rollingTotal += (1 - rollingTotal) * ((playerMax - enemyMax) / playerRange);
-        // case 3: 1 and 2 are not true, both values are in the overlap range. Since values are basically continuous, we assume 50%
-        rollingTotal += (1 - rollingTotal) * 0.5;
-      } // otherwise, enemy power is higher
-      else {
-        // case 1: player rolls below enemy minimum
-        rollingTotal = (enemyMin - playerMin) / playerRange;
-        // case 2: enemy rolls above player maximum
-        rollingTotal += (1 - rollingTotal) * ((enemyMax - playerMax) / enemyRange);
-        // case 3: 1 and 2 are not true, both values are in the overlap range
-        rollingTotal += (1 - rollingTotal) * 0.5;
-        //since this is chance the enemy wins, we negate it
-        rollingTotal = 1 - rollingTotal;
-      }
-      if (rollingTotal <= 0.3) return 'Unlikely';
-      if (rollingTotal <= 0.5) return 'Possible';
-      if (rollingTotal <= 0.7) return 'Likely';
-      return 'Very Likely';
-    },
     getElementAdvantage(playerElement, enemyElement) {
       if ((playerElement + 1) % 4 === enemyElement) return 1;
       if ((enemyElement + 1) % 4 === playerElement) return -1;
       return 0;
     },
-    async onClickEncounter(targetToFight) {
-      if (this.selectedWeaponId === null || this.currentCharacterId === null) {
-        return;
-      }
-
-      this.waitingResults = true;
-
-      // Force a quick refresh of targets
-      await this.fetchTargets({ characterId: this.currentCharacterId, weaponId: this.selectedWeaponId });
-      // If the targets list no longer contains the chosen target, return so a new target can be chosen
-      if (!this.targets.find((target) => target.original === targetToFight.original)) {
-        this.waitingResults = false;
-        return;
-      }
-
-      this.fightResults = null;
-      this.error = null;
-      this.setIsInCombat(this.waitingResults);
-
-      try {
-        const results = await this.doEncounter({
-          characterId: this.currentCharacterId,
-          weaponId: this.selectedWeaponId,
-          targetString: targetToFight.original,
-          fightMultiplier: this.fightMultiplier,
-        });
-
-        this.fightResults = results;
-
-        await this.fetchFightRewardSkill();
-        await this.fetchFightRewardXp();
-
-        this.error = null;
-      } catch (e) {
-        console.error(e);
-        this.error = e.message;
-      }
+    async onClickEncounter() {
+      this.resultsFromPVP = true;
+      console.log(this.resultsFromPVP);
+      this.fightResults = Math.floor(Math.random() * (4 - 1)) + 1;
+      if(this.fightResults === 1) this.titleResults = "Congratulation!";
+      else if(this.fightResults === 2) this.titleResults = "Better luck Next Time";
+      else if(this.fightResults === 3) this.titleResults = "Try again";
     },
 
-    formattedSkill(skill) {
-      const skillBalance = fromWeiEther(skill, 'ether');
-      return `${toBN(skillBalance).toFixed(6)} xBlade`;
-    },
-
-    getPotentialXp(targetToFight) {
-      const characterPower = CharacterPower(this.currentCharacter.level);
-      const playerElement = parseInt(this.currentCharacter.trait, 10);
-      const selectedWeapon = this.ownWeapons.filter(Boolean).find((weapon) => weapon.id === this.selectedWeaponId);
-      const weaponMultiplier = GetTotalMultiplierForTrait(selectedWeapon, playerElement);
-      const totalPower = characterPower * weaponMultiplier + selectedWeapon.bonusPower;
-
-      //Formula taken from getXpGainForFight funtion of CryptoWars.sol
-      return Math.floor((targetToFight.power / totalPower) * this.fightXpGain) * this.fightMultiplier;
-    },
 
     setFightMultiplier() {
       localStorage.setItem('fightMultiplier', this.fightMultiplier.toString());
@@ -357,12 +235,7 @@ export default {
   },
 
   components: {
-    // BigButton,
-    // WeaponGrid,
-    // Hint,
-    // CombatResults,
-    // WeaponIcon,
-    // CharacterBar,
+    CombatResults,
   },
 };
 </script>
@@ -711,12 +584,14 @@ font-size: 1.3em;
   border: none;
   background-image: url(../assets/v2/btn-fight.png);
   width: 130px;
-  height: 50px;
-  background-size: cover;
+  height: 42px;
+  background-size: contain;
+  background-repeat: no-repeat;
   margin: 0 auto;
   background-color: transparent;
   margin: 0 auto;
   display: block;
+  margin-bottom: 20px;
 }
 
 
