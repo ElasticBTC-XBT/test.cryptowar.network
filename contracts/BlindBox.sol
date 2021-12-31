@@ -3,7 +3,6 @@ pragma solidity ^0.6.0;
 import "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
-import "@openzeppelin/contracts/math/SafeMath.sol";
 import "abdk-libraries-solidity/ABDKMath64x64.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
@@ -16,8 +15,6 @@ contract BlindBox is
     ERC721Upgradeable,
     AccessControlUpgradeable
 {
-    using SafeMath for uint256;
-
     bytes32 public constant GAME_ADMIN = keccak256("GAME_ADMIN");
     bytes32 public constant BOX_OPENER = keccak256("BOX_SELLER");
 
@@ -44,12 +41,19 @@ contract BlindBox is
     uint256 public commonPrice;
     uint256 public rarePrice;
     uint256 public epicPrice;
+    mapping(address => uint256) fragmentQty;
+    uint256 public fragmentPerBox;
 
     event NewBlindBox(uint256 indexed boxId, address indexed minter);
     event Burned(address indexed owner, uint256 indexed burned);
     event Open(address indexed minter, uint256 stars);
 
-    function initialize(address _weapon, address _character, address _xBlade, address _cwController) public initializer {
+    function initialize(
+        address _weapon,
+        address _character,
+        address _xBlade,
+        address _cwController
+    ) public initializer {
         __ERC721_init("CryptoWars BlindBox", "CBB");
         __AccessControl_init_unchained();
 
@@ -168,7 +172,7 @@ contract BlindBox is
                 address(this),
                 cwController.usdToxBlade(commonPrice)
             );
-            commonQty = commonQty - 1;
+            commonQty = commonQty.sub(1);
             tokens.push(Box(Type.COMMON));
         } else if (_type == Type.RARE) {
             require(
@@ -182,7 +186,7 @@ contract BlindBox is
                 address(this),
                 cwController.usdToxBlade(rarePrice)
             );
-            rareQty = rareQty - 1;
+            rareQty = rareQty.sub(1);
             tokens.push(Box(Type.RARE));
         } else if (_type == Type.EPIC) {
             require(
@@ -196,7 +200,7 @@ contract BlindBox is
                 address(this),
                 cwController.usdToxBlade(epicPrice)
             );
-            epicQty = epicQty - 1;
+            epicQty = epicQty.sub(1);
             tokens.push(Box(Type.EPIC));
         }
 
@@ -232,6 +236,50 @@ contract BlindBox is
 
         _burn(id);
         emit Burned(burnOwner, id);
+    }
+
+    function addFragment(address account, uint256 qty) public onlyGameAdmin {
+        require(qty < 30, "Max 30 fragment");
+        fragmentQty[account] = fragmentQty[account].add(qty);
+    }
+
+    function convertFragmentToNBox(uint256 boxAmount) public {
+        require(
+            boxAmount.mul(fragmentPerBox) >= fragmentQty[msg.sender],
+            "Not enough fragment"
+        );
+        while (boxAmount > 0) {
+            boxAmount = boxAmount.sub(1);
+            convertFragmentToBox();
+        }
+    }
+
+    function convertFragmentToBox() public {
+        require(
+            fragmentQty[msg.sender] >= fragmentPerBox,
+            "Not egough fragment"
+        );
+        fragmentQty[msg.sender] = fragmentQty[msg.sender].sub(fragmentPerBox);
+        uint256 seed = uint256(
+            keccak256(abi.encodePacked(blockhash(block.number - 1), msg.sender))
+        );
+        tokens.push(Box(getBoxTypeForFragment(seed)));
+        uint256 tokenId = tokens.length;
+        _mint(msg.sender, tokenId);
+        emit NewBlindBox(tokenId, msg.sender);
+    }
+
+    function getBoxTypeForFragment(uint256 seed) internal pure returns (Type) {
+        Type _type;
+        uint256 roll = seed % 1000;
+        if (roll < 50) {
+            _type = Type.EPIC;
+        } else if (roll < 110) {
+            _type = Type.RARE;
+        } else {
+            _type = Type.COMMON;
+        }
+        return _type;
     }
 
     function getCommonStars(uint256 seed) internal pure returns (uint256) {
