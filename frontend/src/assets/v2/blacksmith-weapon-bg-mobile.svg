@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="461.121" height="941" viewBox="0 0 461.121 941">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0.087" stop-color="#f56f56"/>
+      <stop offset="0.178" stop-color="#e96c5f" stop-opacity="0.937"/>
+      <stop offset="0.355" stop-color="#ca6779" stop-opacity="0.769"/>
+      <stop offset="0.601" stop-color="#995ea3" stop-opacity="0.494"/>
+      <stop offset="0.904" stop-color="#5652db" stop-opacity="0.125"/>
+      <stop offset="1" stop-color="#404eef" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="radial-gradient" cx="0.5" cy="0.5" r="0.5" gradientTransform="translate(0.5 -0.207) rotate(45)" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ffff90"/>
+      <stop offset="0.028" stop-color="#f4ed7e"/>
+      <stop offset="0.102" stop-color="#dbc353"/>
+      <stop offset="0.159" stop-color="#cba938"/>
+      <stop offset="0.194" stop-color="#c6a02f"/>
+      <stop offset="0.336" stop-color="#896000"/>
+      <stop offset="0.366" stop-color="#7e5800"/>
+      <stop offset="0.513" stop-color="#513900"/>
+      <stop offset="0.654" stop-color="#2e2000"/>
+      <stop offset="0.785" stop-color="#140e00"/>
+      <stop offset="0.905" stop-color="#050300"/>
+      <stop offset="1"/>
+    </radialGradient>
+  </defs>
+  <g id="Group_3869" data-name="Group 3869" transform="translate(22.561 -1015)">
+    <g id="Group_3870" data-name="Group 3870">
+      <g id="Group_3871" data-name="Group 3871">
+        <g id="Rectangle_7990" data-name="Rectangle 7990" transform="translate(20 1015)" stroke="#3cde9b" stroke-width="1" opacity="0.5" fill="url(#linear-gradient)">
+          <rect width="388" height="941" stroke="none"/>
+          <rect x="0.5" y="0.5" width="387" height="940" fill="none"/>
+        </g>
+        <circle id="Ellipse_534" data-name="Ellipse 534" cx="163.031" cy="163.031" r="163.031" transform="translate(-22.561 1258.529) rotate(-45)" fill="url(#radial-gradient)" style="mix-blend-mode: screen;isolation: isolate"/>
+      </g>
+    </g>
+  </g>
+</svg>

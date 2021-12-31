@@ -52,7 +52,7 @@
 
       <div class="search-btn">
         <b-button
-          class="gtag-link-others btn-claim-xp"
+          class="gtag-link-others btn-blue-bg"
           v-html="`Search`"
           @click="filterAll"
         ></b-button>

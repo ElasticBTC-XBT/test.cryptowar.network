@@ -1,50 +1,66 @@
 <template>
   <div>
-    <div class="col-xl-12">
-      <div class="dust-list row">
-        <div class="col-lg-3">
-          <div class="character-item addnew dust-container">
-            <div class="dust-info">
-              <div class="dust-burn-point">LB</div>
-              <span class="dust-power">15 power per point</span>
-            </div>
-            <div class="dust-image dust-image1"></div>
+    <div class="dust-list row">
+      <div
+        class="col-lg-4 d-flex flex-column align-items-center"
+        :class="isBlacksmith ? 'col-6' : 'col-12'"
+      >
+        <div
+          class="character-item addnew dust-container"
+          :class="isBlacksmith && 'no-corner'"
+        >
+          <div class="dust-info">
+            <div class="dust-burn-point">LB</div>
+            <span class="dust-power">15 power per point</span>
           </div>
-          <h2 class="dust-label text-center">Lesser</h2>
-          <div class="dust-quantity-wrap">
-            <div class="dust-quantity text-center">
-              <span>{{getLesserDust()}}</span>
-            </div>
+          <div class="dust-image dust-image1"></div>
+        </div>
+        <h2 class="dust-label text-center" v-if="!isBlacksmith">Lesser</h2>
+        <div class="dust-quantity-wrap">
+          <div class="dust-quantity text-center">
+            <span>{{getLesserDust()}}</span>
           </div>
         </div>
-        <div class="col-lg-3">
-          <div class="character-item addnew dust-container">
-            <div class="dust-info">
-              <div class="dust-burn-point">4B</div>
-              <span class="dust-power">30 power per point</span>
-            </div>
-            <div class="dust-image dust-image2"></div>
+      </div>
+      <div
+        class="col-lg-4 d-flex flex-column align-items-center"
+        :class="isBlacksmith ? 'col-6' : 'col-12'"
+      >
+        <div
+          class="character-item addnew dust-container"
+          :class="isBlacksmith && 'no-corner'"
+        >
+          <div class="dust-info">
+            <div class="dust-burn-point">4B</div>
+            <span class="dust-power">30 power per point</span>
           </div>
-          <h2 class="dust-label text-center">Greater</h2>
-          <div class="dust-quantity-wrap">
-            <div class="dust-quantity text-center">
-              <span>{{getGreaterDust()}}</span>
-            </div>
+          <div class="dust-image dust-image2"></div>
+        </div>
+        <h2 class="dust-label text-center" v-if="!isBlacksmith">Greater</h2>
+        <div class="dust-quantity-wrap">
+          <div class="dust-quantity text-center">
+            <span>{{getGreaterDust()}}</span>
           </div>
         </div>
-        <div class="col-lg-3">
-          <div class="character-item addnew dust-container">
-            <div class="dust-info">
-              <div class="dust-burn-point">5B</div>
-              <span class="dust-power">75 power per point</span>
-            </div>
-            <div class="dust-image dust-image3"></div>
+      </div>
+      <div
+        class="col-lg-4 d-flex flex-column align-items-center"
+          :class="isBlacksmith ? 'col-6' : 'col-12'"
+      >
+        <div
+          class="character-item addnew dust-container"
+          :class="isBlacksmith && 'no-corner'"
+        >
+          <div class="dust-info">
+            <div class="dust-burn-point">5B</div>
+            <span class="dust-power">75 power per point</span>
           </div>
-          <h2 class="dust-label text-center">Powerful</h2>
-          <div class="dust-quantity-wrap">
-            <div class="dust-quantity text-center">
-              <span>{{getPowerfulDust()}}</span>
-            </div>
+          <div class="dust-image dust-image3"></div>
+        </div>
+        <h2 class="dust-label text-center" v-if="!isBlacksmith">Powerful</h2>
+        <div class="dust-quantity-wrap">
+          <div class="dust-quantity text-center">
+            <span>{{getPowerfulDust()}}</span>
           </div>
         </div>
       </div>
@@ -56,7 +72,7 @@
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  props: [],
+  props: ['isBlacksmith'],
 
   data() {
     return {
@@ -86,11 +102,16 @@ export default {
 }
 
 .character-item.addnew.dust-container {
-  margin: 0 35px;
+  margin: 0 90px;
   cursor: pointer;
   align-items :center;
   flex-direction: column;
   justify-content: space-around;
+}
+
+.character-item.addnew.dust-container.no-corner {
+  height: 213px !important;
+  margin: 0;
 }
 
 .dust-burn-point {
@@ -103,9 +124,18 @@ export default {
   font-size: 21px;
 }
 
+.no-corner .dust-power {
+  font-size: 18px;
+}
+
 .dust-image {
   width: 269px;
   height: 269px;
+}
+
+.dust-container.no-corner .dust-image {
+  width: 135px;
+  height: 135px;
 }
 
 .dust-image1 {
@@ -129,7 +159,7 @@ export default {
 .dust-quantity-wrap {
   display: flex;
   align-items: center;
-  padding: 0 100px;
+  padding: 0 160px;
 }
 
 .dust-quantity {
@@ -139,6 +169,16 @@ export default {
   border: 1px solid #1385B7;
   border-radius: 16px;
   font-size: 32px;
+}
+
+.blacksmith .dust-quantity-wrap {
+  margin-top: 8px;
+  padding: 0;
+}
+
+.blacksmith .dust-quantity {
+  width: 100px;
+  font-size: 24px;
 }
 
 @media (max-width: 1024px) {
@@ -178,6 +218,16 @@ export default {
 }
 
 @media (max-width: 576px) {
+  .character-item.addnew.dust-container.no-corner {
+    width: 100% !important;
+    padding: 5px;
+  }
+  .no-corner .dust-burn-point {
+    font-size: 21px;
+  }
+  .no-corner .dust-power{
+    font-size: 16px;
+  }
   .dust-quantity-wrap {
     padding: 0 100px;
   }

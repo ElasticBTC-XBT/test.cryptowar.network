@@ -1,7 +1,7 @@
 <template>
   <div class="body main-font">
-    <b-tabs justified>
-      <b-tab title="Weapons">
+    <b-tabs class="heading">
+      <b-tab title="Reforge Weapons">
         <div class="blank-slate" v-if="ownWeapons.length === 0">
           You do not currently have any weapons.
           <br>
@@ -12,12 +12,11 @@
             @click="$router.push({name: 'shop'})"
           />
         </div>
-        <div class="row mt-3" v-if="ownWeapons.length > 0 && !showReforge">
+        <div class="row mt-3" v-if="ownWeapons.length > 0">
           <div class="col">
             <div class="d-flex justify-content-space-between">
-              <h1>Weapons ({{ ownWeapons.length }})</h1>
               <div class="d-flex justify-content-flex-end ml-auto">
-                <b-button
+                <!-- <b-button
                   class="btn-buy"
                   v-if="canRename()"
                   @click="openRenameWeapon"
@@ -25,25 +24,25 @@
                   v-tooltip="'Rename Weapon'">
                   Rename Weapon
                 </b-button>
-                <b-button
-                        class="ml-3 btn-buy"
-                        v-if="reforgeWeaponId !== null && ownWeapons.length > 0"
-                        @click="displayDustReforge()"
-                        tagname="reforge_weapon"
-                        v-tooltip="'Burn weapons to buff selected weapon'">
-                  Reforge with Dust
-                </b-button>
+
                 <b-button
                         class="ml-3 btn-buy"
                         @click="displayDustCreation()"
                         tagname="reforge_weapon"
                         v-tooltip="'Burn weapons to buff selected weapon'">
                   Create Dust
-                </b-button>
+                </b-button> -->
+                <!-- <b-button
+                        class="ml-3 btn-buy"
+                        v-if="reforgeWeaponId !== null && ownWeapons.length > 0"
+                        @click="displayDustReforge()"
+                        tagname="reforge_weapon"
+                        v-tooltip="'Burn weapons to buff selected weapon'">
+                  Reforge with Dust
+                </b-button> -->
 
-
-                <b-icon-question-circle class="centered-icon" scale="1.5"
-                  v-on:click="onShowForgeDetails" v-tooltip.bottom="'Click for forge percentages'"/>
+                <!-- <b-icon-question-circle class="centered-icon" scale="1.5"
+                  v-on:click="onShowForgeDetails" v-tooltip.bottom="'Click for forge percentages'"/> -->
 
                 <b-modal hide-footer ref="forge-details-modal" title="Forge Percentages">
                   <div>
@@ -63,32 +62,163 @@
                   </div>
                 </b-modal>
 
-                <b-modal size="xl" class="centered-modal " ref="new-weapons" ok-only>
+                <b-modal
+                  size="xl" class="centered-modal " ref="new-weapons"
+                  @ok="closeNewWeaponsModal"
+                  :ok-disabled="spin"
+                  :cancel-disabled="spin"
+                >
                   <template #modal-header>
                     <div v-if="!spin" class="new-weapon-header-text text-center">
-                      <strong>Forge results</strong>
+                      <h4 class="modal-title">Forge results</h4>
                     </div>
                     <div v-if="spin" class="new-weapon-header-text text-center">
-                      <strong>Forging swords...</strong>
+                      <h4 class="modal-title">Forging weapon...</h4>
                     </div>
                   </template>
                   <div class="text-center">
-                    <b-spinner v-if="spin" type="grow" label="Loading..."></b-spinner>
-                    <b-spinner v-if="spin" type="grow" label="Loading..."></b-spinner>
-                    <b-spinner v-if="spin" type="grow" label="Loading..."></b-spinner>
+                    <b-spinner class="mx-2" v-if="spin" type="grow" label="Loading..."></b-spinner>
+                    <b-spinner class="mx-2" v-if="spin" type="grow" label="Loading..."></b-spinner>
+                    <b-spinner class="mx-2" v-if="spin" type="grow" label="Loading..."></b-spinner>
                   </div>
-                  <weapon-grid v-if="!spin" :showGivenWeaponIds="true" :weaponIds="newForged" :newWeapon="true"/>
+                  <div class="character-item weapon no-corner" v-if="!spin">
+                    <div class="weapon-icon-wrapper">
+                      <weapon-icon v-if="getWeaponToUpgrade()" :weapon="getWeaponToUpgrade()" :isBlacksmith="true"/>
+                    </div>
+                    <div v-if="$slots.above || $scopedSlots.above">
+                      <slot name="above" :weapon="getWeaponToUpgrade()"></slot>
+                    </div>
+                  </div>
+                  <template #modal-footer></template>
+                </b-modal>
+
+                 <b-modal
+                  size="xl" class="centered-modal " ref="new-dust"
+                  @ok="closeNewWeaponsModal"
+                  :ok-disabled="spin"
+                  :cancel-disabled="spin"
+                >
+                  <template #modal-header>
+                    <div v-if="!spin" class="new-weapon-header-text text-center">
+                      <h4 class="modal-title">
+                        Burn weapons successfully
+                        <br>
+                        Total dusts now
+                      </h4>
+                    </div>
+                    <div v-if="spin" class="new-weapon-header-text text-center">
+                      <h4 class="modal-title">Burning weapons...</h4>
+                    </div>
+                  </template>
+                  <div class="text-center">
+                    <b-spinner class="mx-2" v-if="spin" type="grow" label="Loading..."></b-spinner>
+                    <b-spinner class="mx-2" v-if="spin" type="grow" label="Loading..."></b-spinner>
+                    <b-spinner class="mx-2" v-if="spin" type="grow" label="Loading..."></b-spinner>
+                  </div>
+                   <div class="dust-list row" v-if="!spin">
+                      <div class="dust-container dust-1 no-corner col-4">
+                        <div class="dust-image dust-image1"></div>
+                        <div class="dust-quantity-burn">{{getLesserDust()}}</div>
+                      </div>
+                      <div class="dust-container dust-2 no-corner col-4">
+                        <div class="dust-image dust-image2"></div>
+                        <div class="dust-quantity-burn">{{getGreaterDust()}}</div>
+                      </div>
+                      <div class="dust-container dust-3 no-corner col-4">
+                        <div class="dust-image dust-image3"></div>
+                        <div class="dust-quantity-burn">{{getPowerfulDust()}}</div>
+                      </div>
+                    </div>
                   <template #modal-footer></template>
                 </b-modal>
               </div>
             </div>
-            <div class="" v-if="showBlacksmith">
-              <weapon-grid v-model="reforgeWeaponId" />
+            <div class="row" v-if="showBlacksmith">
+              <weapon-grid class="col-xl-8 justify-content-lg-between" v-model="reforgeWeaponId" showFilters isBlacksmith />
+              <div class="col-xl-4 reforge-ta">
+                <div class="reforge-tab">
+                  <div class="confirmReforge">
+                    <div class="weapon">
+                      <div class="blank" v-if="!getWeaponToUpgrade()">
+                        You haven't chosen any weapons
+                      </div>
+                      <div v-if="$slots.above || $scopedSlots.above">
+                        <slot name="above" :weapon="getWeaponToUpgrade()"></slot>
+                      </div>
+                      <div class="weapon-icon-wrapper">
+                        <weapon-icon v-if="getWeaponToUpgrade()" class="weapon-icon isBlacksmith" :weapon="getWeaponToUpgrade()" />
+                      </div>
+                      <div class="text-center"></div>
+                    </div>
+                    <div class="seperate"></div>
+                    <div class="dust-list row">
+                      <div class="dust-container dust-1 no-corner col-4">
+                        <div class="dust-image dust-image1"></div>
+                        <span class="dust-quantity-reforge">{{lesserDust}}/{{getLesserDust()}}</span>
+                        <div class="range">
+                          <div class="value left">0</div>
+                          <input v-model="lesserDust" type="range" min="0" :max="getLesserDust()" value="0" steps="1">
+                          <div class="value right">{{getLesserDust()}}</div>
+                        </div>
+                      </div>
+                      <div class="dust-container dust-2 no-corner col-4">
+                        <div class="dust-image dust-image2"></div>
+                        <span class="dust-quantity-reforge">{{greaterDust}}/{{getGreaterDust()}}</span>
+                        <div class="range">
+                          <div class="value left">0</div>
+                          <input v-model="greaterDust" type="range" min="0" :max="getGreaterDust()" value="0" steps="1">
+                          <div class="value right">{{getGreaterDust()}}</div>
+                        </div>
+                      </div>
+                      <div class="dust-container dust-3 no-corner col-4">
+                        <div class="dust-image dust-image3"></div>
+                        <span class="dust-quantity-reforge">{{powerfulDust}}/{{getPowerfulDust()}}</span>
+                        <div class="range">
+                          <div class="value left">0</div>
+                          <input v-model="powerfulDust" type="range" min="0" :max="getPowerfulDust()" value="0" steps="1">
+                          <div class="value right">{{getPowerfulDust()}}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-around mt-5">
+                      <div class="position-relative">
+                        <b-button
+                          tagname="confirm_forge_weapon"
+                          class="btn-pink-bg btn-confirm-reforge"
+                          :class="!getWeaponToUpgrade() && (lesserDust === '0' || greaterDust === '0' || powerfulDust === '0') && 'disabled'"
+                          @click="showDustReforgeConfirmation"
+                          v-tooltip="'Reforge selected weapon with dust'"
+                          v-html="'Confirm reforge'"
+                        >
+                        </b-button>
+                        <div class="reforge-info">
+                          Use: <span>{{lesserDust}}</span> Lesser
+                          <br>
+                          Use: <span>{{greaterDust}}</span> Greater
+                          <br>
+                          Use: <span>{{powerfulDust}}</span> Powerful
+                          <br>
+                          (<span>{{ dustReforgeCost }}</span> xBlade)
+                        </div>
+                      </div>
+                      <b-button
+                        tagname="confirm_forge_weapon"
+                        class="btn-buy btn-blue-bg btn-cancel-reforge"
+                        :class="(!getWeaponToUpgrade() && (lesserDust === '0' || greaterDust === '0' || powerfulDust === '0')) && 'disabled'"
+                        @click="cancelReforge()"
+                        v-tooltip="'Cancel Reforge'"
+                        v-html="'Cancel'"
+                      >
+                      </b-button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="row mt-3 dust-box" v-if="showReforge && !showReforgeDust">
+        <!-- <div class="row mt-3 dust-box" v-if="showReforge && !showReforgeDust">
           <div class="col">
             <div class="d-flex justify-content-space-between">
               <h1>Create Dust</h1>
@@ -112,9 +242,9 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
-        <div class="row mt-3">
+        <!-- <div class="row mt-3">
           <div class="col-md-12" v-if="showReforge && showReforgeDust === true">
             <div>
               <div class="col-lg-12 weapon-container">
@@ -224,9 +354,9 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
-        <div class="row mt-3">
+        <!-- <div class="row mt-3">
           <div class="col-md-12" v-if="showReforge && showReforgeDust === false">
             <div>
               <div class="col-md-12">
@@ -273,12 +403,12 @@
           </div>
         </div>
           </div>
-        </div>
+        </div> -->
       </b-tab>
-      <b-tab>
-        <!-- <template #title>
+      <!-- <b-tab>
+        <teplate #title>
           Shields <b-icon-question-circle class="centered-icon" scale="0.8" v-tooltip.bottom="`You can buy shield in Skill shop tab in the market!`"/>
-        </template> -->
+        </template>
         <div class="row mt-3">
           <div class="col">
             <div class="d-flex justify-content-space-between">
@@ -287,12 +417,45 @@
             <nft-list v-if="nftsCount > 0" v-model="selectedNft"/>
           </div>
         </div>
-      </b-tab>
-      <b-tab>
-        <template #title>
-          Dust Storage <b-icon-question-circle class="centered-icon" scale="0.8" v-tooltip.bottom="`Dust is gained by destroying weapons!`"/>
-        </template>
-        <dust-balance-display/>
+      </b-tab> -->
+      <b-tab title="Create Dust">
+        <div class="row" v-if="showBlacksmith">
+          <weapon-grid
+            class="col-xl-8 justify-content-lg-between" v-model="burnWeaponId" :ignore="burnWeaponIds"
+            :showGivenWeaponIds="true" :weaponIds="hideWeapons" @chooseweapon="addBurnWeapon" showFilters isBlacksmith
+          />
+          <div class="col-xl-4">
+            <div class="burn-tab">
+              <div class="confirmBurn">
+                <h2 style="font-size: 24px;">Weapons chosen ({{burnWeaponIds.length}})</h2>
+                <div class="burn-weapons">
+                  <weapon-grid :showGivenWeaponIds="true" :weaponIds="burnWeaponIds" @chooseweapon="removeBurnWeapon" :isBurnWeapon="true"/>
+                </div>
+                <div class="seperate"></div>
+                <div class="burn-footer">
+                  <b-button
+                    tagname="confirm_burn_weapons"
+                    class="btn-pink-bg btn-confirm-reforge"
+                    :class="burnWeaponIds.length === 0 && 'disabled'"
+                    @click="showMassDustConfirmation"
+                    v-tooltip="'Burn selected weapons to get dust'"
+                    v-html="'Mass burn'"
+                  >
+                  </b-button>
+                  <b-button
+                    tagname="confirm_burn_weapons"
+                    class="btn-buy btn-blue-bg btn-cancel-reforge"
+                    :class="burnWeaponIds.length === 0 && 'disabled'"
+                    @click="clearAllMassBurn()"
+                    v-tooltip="'Cancel burn weapons'"
+                    v-html="'Cancel'"
+                  >
+                  </b-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </b-tab>
     </b-tabs>
     <b-modal class="centered-modal" ref="weapon-rename-modal"
@@ -309,35 +472,32 @@
 
     <b-modal class="centered-modal text-center dust-box-modal" ref="dustreforge-confirmation-modal"
              title="Dust Reforge Confirmation" @ok="onReforgeWeaponWithDust">
-      <div class="row">
-        <div class="headings">
-          <h2 class="text-center">Upgrade</h2>
-          <div class="weapon" v-if="reforgeWeaponId">
-            <div v-if="$slots.above || $scopedSlots.above">
-              <slot name="above" :weapon="getWeaponToUpgrade()"></slot>
-            </div>
-            <div class="weapon-icon-wrapper">
-              <weapon-icon v-if="getWeaponToUpgrade()" class="weapon-icon" :weapon="getWeaponToUpgrade()" />
-            </div>
-          </div>
+      <div class="character-item weapon no-corner" v-if="reforgeWeaponId">
+        <div class="weapon-icon-wrapper">
+          <weapon-icon v-if="getWeaponToUpgrade()" :weapon="getWeaponToUpgrade()" :isBlacksmith="true"/>
+        </div>
+        <div v-if="$slots.above || $scopedSlots.above">
+          <slot name="above" :weapon="getWeaponToUpgrade()"></slot>
         </div>
       </div>
-      <br/>
-      <div class="text-center" v-text="'Are you sure you want to reforge this weapon using:'" />
-      <p class="text-center">
-        {{lesserDust}} Lesser Dust
+      <div class="text-center mt-3" v-text="'Are you sure you want to reforge this weapon using:'" />
+      <div class="reforge-info-modal text-center">
+        <span>{{lesserDust}}</span> Lesser Dust
         <br>
-        {{greaterDust}} Greater Dust
+        <span>{{greaterDust}}</span> Greater Dust
         <br>
-        {{powerfulDust}} Powerful Dust
-      </p>
-      <div class="text-center">
+        <span>{{powerfulDust}}</span> Powerful Dust
+      </div>
+      <div class="modal-alert text-center">
         <b-icon icon="exclamation-circle" variant="danger" /> This process cannot be undone!
       </div>
     </b-modal>
 
-    <b-modal class="centered-modal text-center" ref="mass-dust-confirmation-modal" title="Reforge Confirmation" @ok="onMassBurnWeapons">
-      <div class="text-center">
+    <b-modal class="centered-modal text-center" ref="mass-dust-confirmation-modal" title="Burn Weapons Confirmation" @ok="onMassBurnWeapons">
+      <div class="burn-weapons modal-weapons">
+        <weapon-grid :showGivenWeaponIds="true" :weaponIds="burnWeaponIds" @chooseweapon="removeBurnWeapon" :isBurnWeapon="true"/>
+      </div>
+      <div class="text-center mt-3">
         <b-icon icon="exclamation-circle" variant="danger" /> [WARNING] Please make sure you want to burn these weapons to dust the process is irreversible!
       </div>
       <div class="text-center">
@@ -373,10 +533,8 @@ import Vue from 'vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import WeaponIcon from '../components/WeaponIcon.vue';
 import { BModal } from 'bootstrap-vue';
-import NftList from '@/components/smart/NftList.vue';
 import { Contracts, IState } from '@/interfaces';
 import { Accessors } from 'vue/types/options';
-import DustBalanceDisplay from '@/components/smart/DustBalanceDisplay.vue';
 import { getCleanName, isProfaneIsh } from '../rename-censor';
 // import VueRouter from 'vue-router';
 
@@ -389,7 +547,6 @@ interface StoreMappedGetters {
 }
 
 interface Data {
-  showReforge: boolean;
   showBlacksmith: boolean,
   showDustForge: boolean,
   showReforgeDust: boolean,
@@ -419,7 +576,6 @@ interface Data {
 export default Vue.extend({
   data() {
     return {
-      showReforge: false,
       showBlacksmith: true,
       showDustForge: false,
       showReforgeDust: false,
@@ -465,7 +621,6 @@ export default Vue.extend({
 
   watch: {
     reforgeWeaponId() {
-      this.showReforge = false;
       this.burnWeaponId = null;
     }
   },
@@ -487,7 +642,7 @@ export default Vue.extend({
     const burnCost = await this.contracts.CryptoWars.methods.burnWeaponFee().call({ from: this.defaultAccount });
     const skillBurnCost =  await this.contracts.CryptoWars.methods.usdToxBlade(burnCost).call({ from: this.defaultAccount });
     this.burnCost = new BN(skillBurnCost).div(new BN(10).pow(18)).toFixed(4);
-
+    this.hideWeapons = this.ownedWeaponIds;
     // if(!this.contracts.WeaponRenameTagConsumables) return;
     // this.haveRename = await this.contracts.WeaponRenameTagConsumables.methods.getItemCount().call({ from: this.defaultAccount });
   },
@@ -510,7 +665,9 @@ export default Vue.extend({
     },
 
     showDustReforgeConfirmation() {
-      (this.$refs['dustreforge-confirmation-modal'] as BModal).show();
+      if (this.reforgeWeaponId !== null && (this.lesserDust !== '0' || this.greaterDust !== '0'|| this.powerfulDust !== '0')) {
+        (this.$refs['dustreforge-confirmation-modal'] as BModal).show();
+      }
     },
 
     showMassDustConfirmation() {
@@ -518,7 +675,6 @@ export default Vue.extend({
     },
 
     displayDustReforge() {
-      this.showReforge = true;
       this.showBlacksmith = false;
       this.showReforgeDust = true;
       this.showDustForge = false;
@@ -527,20 +683,17 @@ export default Vue.extend({
       this.powerfulDust = '0';
     },
     displayDustCreation(){
-      return this.showReforge = true,
-      this.showBlacksmith = false,
+      return this.showBlacksmith = false,
       this.showDustForge = true,
       this.showReforgeDust = false,
       this.hideWeapons = this.ownedWeaponIds;
     },
     displayBlacksmith(){
-      this.showReforge = false;
       this.showBlacksmith = true;
       this.showDustForge = false;
       this.showReforgeDust = false;
     },
     cancelReforge() {
-      this.showReforge = false;
       this.showBlacksmith = true;
       this.showDustForge = false;
       this.showReforgeDust = false;
@@ -549,6 +702,7 @@ export default Vue.extend({
       this.lesserDust = '0';
       this.greaterDust = '0';
       this.powerfulDust = '0';
+      this.reforgeWeaponId = null;
     },
     clearAllMassBurn(){
       return this.burnWeaponIds = [],
@@ -590,8 +744,14 @@ export default Vue.extend({
 
     },
 
+    closeNewWeaponsModal() {
+      (this.$refs['new-weapons'] as BModal).hide();
+    },
+
     async onReforgeWeaponWithDust() {
       try {
+        (this.$refs['new-weapons'] as BModal).show();
+        this.spin = true;
         await this.reforgeWeaponWithDust({
           reforgeWeaponId: this.reforgeWeaponId,
           lesserDust: this.lesserDust,
@@ -602,22 +762,30 @@ export default Vue.extend({
         this.lesserDust = '0';
         this.greaterDust = '0';
         this.powerfulDust = '0';
+        this.spin = false;
 
       } catch (e) {
         console.error(e);
         (this as any).$dialog.notify.error('Could not ReForge sword: insufficient funds / Dust or transaction denied.');
+        (this.$refs['new-weapons'] as BModal).hide();
+        this.spin = false;
       }
     },
 
     async onMassBurnWeapons() {
       try {
+        (this.$refs['new-dust'] as BModal).show();
+        this.spin = true;
         await this.massBurnWeapons({
           burnWeaponIds: this.burnWeaponIds,
         });
         this.burnWeaponIds = [];
         this.burnWeaponId = null;
+        this.spin = false;
       } catch (e) {
         console.error(e);
+        (this.$refs['new-dust'] as BModal).hide();
+        this.spin = false;
         (this as any).$dialog.notify.error('Could not burn sword: insufficient funds or transaction denied.');
       }
     },
@@ -640,20 +808,21 @@ export default Vue.extend({
   },
 
   components: {
-    DustBalanceDisplay,
     WeaponGrid,
     BigButton,
     WeaponIcon,
     BModal,
-    NftList,
   },
 });
 </script>
 
 <style scoped>
+.tab-content {
+  margin-top: 47px !important;
+}
 
 .new-weapon-header-text{
-   color: #9e8a57;
+  color: #9e8a57;
   font-size: 34px;
 }
 
@@ -665,45 +834,121 @@ export default Vue.extend({
   font-size: 2rem;
 }
 
+.burn-tab,
+.reforge-tab {
+  background-image: url("../assets/v2/blacksmith-weapon-bg.svg");
+  background-size: 100%;
+  background-position: top center;
+  background-repeat: no-repeat;
+  max-height: 868px;
+  height: 100%;
+  padding: 26px 20px;
+  border: 0.5px solid #3CDE9B;
+}
+
+.burn-tab {
+  padding-top: 10px;
+}
+
 .confirmReforge{
-  margin: 1em auto 2em;
   border-radius:0.15em;
   text-decoration:none;
   font-weight:400;
   text-align:center;
-  width: 12em;
+  height: 100%;
 }
+
 .confirmReforge:active{
   top:0.1em;
 }
 
 .weapon {
-  min-height: 12em;
-  max-height: 13em;
-  border-style: dashed;
-  border-color: #9e8a57;
-  width: 12em;
+  width: 100%;
+  height: 58%;
+  padding-bottom: 50px;
   border-radius: 5px;
-  cursor: pointer;
-  margin-bottom: 2em;
+  position: relative;
+}
+
+.weapon .blank {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.dust-box-modal .weapon {
+  height: auto;
+}
+
+.dust-container {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.confirmReforge .dust-list {
+  padding-top: 50px;
+}
+
+.confirmReforge .dust-quantity-reforge {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.btn-confirm-reforge {
+  background-size: contain !important;
+  padding-left: 0;
+  position: relative;
+}
+
+.reforge-info {
+  position: absolute;
+  top: 130%;
+  left: 10px;
+  width: 160px;
+  height: 110px;
+  border-radius: 16px;
+  background-color: #000;
+  border: 1px solid #ECD931;
+  text-align: left;
+  padding-left: 27px;
+  padding-top: 8px;
+}
+
+.reforge-info::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-style: solid;
+  border-width: 10px;
+  border-color: transparent transparent #ECD931 transparent;
+}
+
+.reforge-info span,
+.reforge-info-modal span {
+  color: #ECD931;
+}
+
+.modal-alert {
+  color: #CA6779;
 }
 
 .multiForging {
   align-items: center;
 }
 
-.headings {
+/* .headings {
   min-height: 13em;
   min-width: 13em;
-  /* max-height: 13em; */
+  max-height: 13em;
   max-width: 13em;
   border-radius:0.15em;
   box-sizing: border-box;
   font-weight:400;
   width: 13em;
   margin: 1em auto 2em;
-}
+} */
 
 .upgrade-container {
   border-top: 1px solid #9e8a57;
@@ -725,12 +970,136 @@ export default Vue.extend({
 }
 
 .confirmReforge .weapon-icon-wrapper, .modal-body .weapon-icon-wrapper{
-  display: flex;
   width: 100%;
+  height: 100%;
 }
 
-.confirmReforge .weapon, .modal-body .weapon{
-  height: 13rem;
+.seperate {
+  width: 100%;
+  height: 12px;
+  background-image: url("../assets/v2/blacksmith-seperate.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.range {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.range input {
+  -webkit-appearance: none;
+  height: 3px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  width: 60%;
+  margin: 0 5px;
+}
+
+.range input::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 0.3px solid #fff;
+  cursor: pointer;
+}
+
+.dust-1 .dust-quantity-burn,
+.dust-1 .range  {
+  color: #53adf7;
+}
+
+.dust-2 .dust-quantity-burn,
+.dust-2 .range  {
+  color: #5ee146;
+}
+
+.dust-3 .dust-quantity-burn,
+.dust-3 .range  {
+  color: #f03559;
+}
+
+.dust-1 .range input {
+  background-color: #53adf7;
+}
+
+.dust-2 .range input {
+  background-color: #5ee146;
+}
+
+.dust-3 .range input {
+  background-color: #f03559;
+}
+
+.dust-1 .range input::-webkit-slider-thumb {
+  background-color: #53adf7;
+}
+
+.dust-2 .range input::-webkit-slider-thumb {
+  background-color: #5ee146;
+}
+
+.dust-3 .range input::-webkit-slider-thumb {
+  background-color: #f03559;
+}
+
+.btn-cancel-reforge {
+  background-image: url("../assets/v2/btn-blue-bg-small.svg");
+  background-position: center;
+  max-width: 145px;
+}
+
+.character-item.weapon.no-corner {
+  padding: 10px;
+}
+
+.spinner-grow {
+  color: #f48761;
+}
+
+.burn-weapons {
+  height: 590px;
+  max-height: 590px;
+  overflow-y: auto;
+}
+
+.burn-weapons::-webkit-scrollbar {
+  display: block;
+  width: 8px;
+}
+
+.burn-weapons::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.3)
+}
+
+.burn-weapons::-webkit-scrollbar-thumb {
+  background: #f48761;
+}
+
+.burn-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 70px 0;
+}
+
+.burn-weapons.modal-weapons {
+  height: 320px;
+  max-height: 320px;
+  width: 90%;
+}
+
+.dust-quantity-burn {
+  font-size: 20px;
+  font-weight: bold;
+  width: 135px;
+  text-align: center;
 }
 
 @media (max-width: 1000px) {
@@ -739,6 +1108,18 @@ export default Vue.extend({
     flex-flow: column-reverse;
   }
 }
+
+@media (max-width: 1024px) {
+  .burn-tab,
+  .reforge-tab {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 28px;
+    max-width: 590px;
+    height: 990px;
+  }
+}
+
 @media all and (max-width: 767.98px) {
   .dust-box .d-flex{
     flex-wrap: wrap;
@@ -748,6 +1129,37 @@ export default Vue.extend({
   .dust-box .d-flex .btn-secondary{
     margin: inherit;
     margin-bottom: 1rem;
+  }
+
+  .burn-tab,
+  .reforge-tab {
+    max-height: none;
+    height: 880px;
+  }
+
+  .weapon {
+    height: 45%;
+  }
+
+  .seperate {
+    background-size: contain;
+  }
+
+  .btn-cancel-reforge {
+    background-size: 120px 40px !important;
+    font-size: 14px;
+  }
+
+  .btn-confirm-reforge {
+    width: 160px;
+    background-size: 160px 45px !important;
+    background-position: center;
+    font-size: 14px;
+    padding: 0;
+  }
+
+  .burn-weapons.modal-weapons {
+    height: 220px;
   }
 }
 </style>

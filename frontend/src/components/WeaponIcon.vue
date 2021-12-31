@@ -20,7 +20,7 @@
           </span>
         </div>
 
-        <div class="stats">
+        <div class="stats" v-if="!isBlacksmith">
           <div v-if="weapon.stat1Value">
             <span :class="weapon.stat1.toLowerCase() + '-icon'" class="mr-2 icon"></span>
             <span :class="weapon.stat1.toLowerCase()">{{ weapon.stat1 }} +{{ weapon.stat1Value }}</span>
@@ -34,10 +34,14 @@
             <span :class="weapon.stat3.toLowerCase()">{{ weapon.stat3 }} +{{ weapon.stat3Value }}</span>
           </div>
         </div>
+         <div class="id" v-if="isBlacksmith">
+          ID {{ weapon.id }}
+          <!-- <br><b-icon v-if="favorite" class="favorite-star" icon="star-fill" variant="warning" /> -->
+        </div>
       </div>
 
       <div class="left">
-        <div class="id">
+        <div class="id" v-if="!isBlacksmith">
           ID {{ weapon.id }}
           <!-- <br><b-icon v-if="favorite" class="favorite-star" icon="star-fill" variant="warning" /> -->
         </div>
@@ -60,7 +64,7 @@
         {{ getCleanWeaponName(weapon.id, weapon.stars) }}
       </div>
 
-      <div class="small-durability-bar-wrap">
+      <div class="small-durability-bar-wrap" v-if="!isBlacksmith">
         <div
           class="small-durability-bar"
           :style="`--durabilityReady: ${(getWeaponDurability(weapon.id)/maxDurability)*100}%;`"
@@ -91,7 +95,7 @@ import { getCleanName } from '../rename-censor';
 
 
 export default {
-  props: ['weapon', 'favorite', 'isSell', 'sellClick'],
+  props: ['weapon', 'favorite', 'isSell', 'sellClick', 'isBlacksmith'],
 
   computed: {
     ...mapState(['maxDurability']),
@@ -289,12 +293,22 @@ export default {
   right: 0;
 }
 
-.placeholder {
-  max-width: 180px;
-  max-height: 180px;
-  margin-left: 16px;
-  margin-top: 0px;
+.weapon-icon .placeholder {
+  max-width: 208px;
+  max-height: 208px;
+  margin-top: -20px;
   transform: scale(0.8);
+}
+
+.weapon-icon.isBlacksmith .placeholder {
+  max-width: 287px;
+  max-height: 287px;
+  margin-top: 0;
+}
+
+.character-item.weapon.no-corner .placeholder {
+  max-width: 90px;
+  max-height: 90px;
 }
 
 .weapon-icon .name {
@@ -308,8 +322,20 @@ export default {
   overflow: hidden;
 }
 
+.weapon-icon.isBlacksmith .name {
+  font-size: 32px;
+}
+
+.character-item.weapon.no-corner .bonus-power {
+  font-size: 14px;
+}
+
 .small-durability-bar-wrap {
   margin-top: 15px;
+}
+
+.weapon-icon.isBlacksmith .small-durability-bar-wrap {
+  padding: 0 165px;
 }
 
 .small-durability-bar {
@@ -323,6 +349,21 @@ export default {
   .weapon-header {
     position: relative;
     padding-top: 23px !important;
+  }
+
+  .character-item.weapon.no-corner .weapon-header {
+    padding-top: 0 !important;
+  }
+
+  .weapon-icon .placeholder {
+    max-width: 160px;
+    max-height: 160px;
+  }
+
+  .weapon-icon.isBlacksmith .placeholder {
+    max-width: 195px;
+    max-height: 195px;
+    margin-top: -40px;
   }
 
   .weapon-header .trait span:first-child,
@@ -345,6 +386,12 @@ export default {
     top: 0;
     left: 0;
     right: 0;
+  }
+
+  .no-corner .weapon-header .left {
+    left: auto;
+    right: 10px;
+    top: 10px;
   }
 
   .placeholder {

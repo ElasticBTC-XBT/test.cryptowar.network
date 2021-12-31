@@ -717,12 +717,15 @@ button.close {
 }
 
 .modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.modal-footer {
-  background: rgb(31, 31, 34);
-  border-color: rgba(24, 27, 30, 0.5) !important;
-}
+// .modal-footer {
+//   background: rgb(31, 31, 34);
+//   border-color: rgba(24, 27, 30, 0.5) !important;
+// }
 
 .b-pagination > li > .page-link {
   color: #a50eb3;
