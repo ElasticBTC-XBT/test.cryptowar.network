@@ -5248,7 +5248,6 @@ pre code {
     flex: 0 0 16.666667%;
     max-width: 16.666667%;
 }
-
 .col-3 {
     flex: 0 0 25%;
     max-width: 25%;
@@ -20773,6 +20772,8 @@ margin-bottom: 1.5rem;
 .character-item{
     height: 398px;
     width: 294px;
+    /* height: 415px;
+    width: 300px; */
     /* background-position: 50% 50%; */
     background-repeat: no-repeat;
     margin-top: 50px;
@@ -20845,7 +20846,6 @@ margin-bottom: 1.5rem;
   }
   
   .character-item.selected {
-  
       background-image: url('../../../assets/images/bg-item-top-select.png');
   }
   

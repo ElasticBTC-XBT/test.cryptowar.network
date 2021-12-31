@@ -8,7 +8,6 @@
     </router-link>
 
     <li class="nav-line"></li>
-
     <router-link :to="{ name: 'arena' }" exact class="nav-link mr-4 ml-4"
     v-if="!featureFlagStakeOnly">
       <li class="nav-item nav-top-links nav-icon-box">

@@ -37,12 +37,17 @@
         <div v-if="weapon.fourStarBurnPoints > 0"><span>{{ weapon.fourStarBurnPoints }} 4B</span></div>
         <div v-if="weapon.fiveStarBurnPoints > 0"><span>{{ weapon.fiveStarBurnPoints }} 5B</span></div>
       </div>
-
+      <div class="small-durability-bar">
+        <div
+        :style="`--durabilityReady: ${(getWeaponDurability(weapon.id)/maxDurability)*100}%;`"
+        v-tooltip.bottom="`Durability: ${getWeaponDurability(weapon.id)}/${maxDurability}<br>
+          Repairs 1 point every 50 minutes, durability will be full at: ${timeUntilWeaponHasMaxDurability(weapon.id)}`">
+        </div>
       </div>
 
-      <div class="weapon-bt-box default-contrast" v-if="isSell">
+      <div class="weapon-bt-box" v-if="isSell">
         <b-button @click="sellClick()">
-          Sell
+          SELL
         </b-button>
       </div>
     </div>
@@ -213,35 +218,28 @@ export default {
 </script>
 
 <style scoped>
+
 .small-durability-bar {
-  position: relative;
-  margin: 0 auto;
-  margin-top: 10px;
-  height: 16px;
-  width: 80%;
-  font-size: 14px;
-  color: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  background: linear-gradient(
-    to right,
-    #DDB73C var(--durabilityReady),
-    #fff 0
-  );
-  border-radius: 10px;
-  /* margin: 0 auto; */
-  /* border-radius: 6px; */
-  /* background : linear-gradient(to right, #F3BF2B var(--durabilityReady), rgba(255, 255, 255, 0.1) 0); */
-  /* background-image: url(../assets/v2/bg-can-use-weapon.svg);
+  background: url("../assets/v2/xp_bg.svg");
   background-repeat: no-repeat;
-  background-size: cover; */
+  background-size: contain;
+  height: 16px;
+  width: 210px;
+  margin: auto;
+  margin-top: 70px;
+}
+
+.small-durability-bar > div {
+  width: var(--durabilityReady);
+  height: 15px;
+  border-radius: 4px;
+  background: url("../assets/v2/xp_progress.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* background : linear-gradient(to right, rgb(142, 30, 165) var(--durabilityReady), rgba(255, 255, 255, 0.1) 0); */
 }
 
 .weapon-icon {
-  height: 100%;
-  width: 100%;
   position: relative;
 }
 
@@ -256,20 +254,13 @@ export default {
   margin: 0 auto;
 }
 
-.weapon.selected .glow-container{
-  /* border: 1px solid rgb(255 255 255 / 41%); */
-  /* background-color: rgb(255 255 255 / 7%); */
-  background-color: rgb(255 255 255 / 30%);
-  border: 1px solid rgb(255, 165, 0);
+.weapon.selected .glow-container,
+.weapon.selected .stats{
   filter: contrast(200%);
 }
 
-.weapon.selected .glow-container .default-contrast{
-  filter: contrast(40%);
-}
-
-.weapon.selected .glow-container.glow-0{
-  box-shadow: inset 0 0 10px rgb(255, 165, 0);
+.weapon.selected .weapon-bt-box{
+  filter: contrast(0.5);
 }
 
 .loading-container {
@@ -286,19 +277,18 @@ export default {
   position: absolute;
 }
 
-.trait {
-  top: 13px;
-  left: 45px;
-  font-size: 1.5rem;
+.stats > div {
   display: flex;
   align-items: center;
 }
 
-.trait span{
-  display: block;
-  margin-right: 5px;
-  width: 30px;
-  height: 30px;
+.trait {
+  top: -75px;
+  left: 15px;
+  display: flex;
+  align-items: center;
+  color: yellow;
+  font-size: 25px;
 }
 
 .favorite-star {
@@ -307,31 +297,14 @@ export default {
 }
 
 .id {
-  top: 20px;
-  right: 60px;
-  font-size: 1rem;
-  font-style: italic;
+  top: -70px;
+  right: 15px;
+  font-size: 18px;
 }
 
 .stats {
-  top: 50px;
-  left: 45px;
-}
-
-.stats div{
-  margin-top: 5px;
-  display: flex;
-  align-items: center;
-}
-
-.stats span{
-  color: #fff;
-}
-
-.stats .icon{
-  width: 30px;
-  height: 30px;
-  /* margin-left: 25px; */
+  top: -30px;
+  left: 15px;
 }
 
 .icon {
@@ -340,39 +313,46 @@ export default {
 }
 
 .placeholder {
-  max-width: 180px;
-  max-height: 170px;
-  /* margin-left: 16px; */
-  margin-top: 0px;
+  max-width: 220px;
+  max-height: 220px;
   transform: scale(0.8);
 }
 
 .name {
-  position: relative;
-  margin: 0 auto;
-  text-align: center;
+  position: absolute;
+  bottom: 2rem;
+  left: 12%;
+  right: 12%;
   font-size: 1em;
-  width: 90%;
-  height: 40px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-
-.weapon-market .name{
-  bottom: 4rem;
+  text-align: center;
+  bottom: 30px;
+  font-weight: bold;
+  margin-bottom: 30px;
 }
 
 .weapon-bt-box{
   position: absolute;
-  bottom: 15px;
+  bottom: -77px;
   display: flex;
   width: 100%;
   justify-content: center;
 }
 
+.weapon-bt-box button{
+  background: url("../assets/v2/shop_nft_btn.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 170px;
+  height: 40px;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  font-weight: bold;
+  font-size: 18px;
+}
+
 .sell-grid .glow-img-box, .weapon-grid .glow-img-box{
-  padding-top: 1rem;
+  margin-top: 90px;
 }
 
 .glow-img-box{
@@ -383,14 +363,9 @@ export default {
 }
 
 .confirmReforge .glow-img-box img, .modal-body .glow-img-box img {
-    max-width: 7rem;
-    margin-top: 1.5rem;
-    padding-bottom: 0.5rem;
-}
-
-
-.confirmReforge .small-durability-bar, .modal-body .small-durability-bar{
-  top: -10px
+  max-width: 7rem;
+  margin-top: 1.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .confirmReforge .name, .modal-body .name{
@@ -402,7 +377,6 @@ export default {
    /* display: flex; */
   justify-content: center;
   align-items: center;
-  /* box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.411); */
 }
 
 .glow-1 {
@@ -427,19 +401,10 @@ export default {
 
 .bonus-power {
   position: absolute;
-  top: 45px;
-  right: 19%;
-  font-size: 0.6em;
+  top: -40px;
+  right: 15px;
+  font-size: 18px;
   text-align: right;
-}
-
-.bonus-power > div > span{
-  font-size: 1rem;
-}
-
-.tooltil-icon-element{
-  width: 10px;
-  height: 10px;
 }
 
 /* @keyframes glow-1 {

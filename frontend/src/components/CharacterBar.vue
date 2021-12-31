@@ -1,6 +1,7 @@
 <template>
   <div class="character-bar">
     <character-display2 />
+    <!-- <character-display /> -->
     <!-- <div class="character-bar-divider"/> -->
     <!-- <img src="../assets/infoDivider.png" class="info-divider"> -->
     <div class="nav-bottom-line"></div>

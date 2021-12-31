@@ -61,8 +61,7 @@
   height: calc(100vh);
   overflow-y: auto;
   background: url('../images/bg.png') no-repeat 0 0;
-  background-size: 100% 100%
-
+  background-size: 100% 100%;
 }
 
 .main-font .nav-item a{
@@ -75,6 +74,7 @@
 
 .main-font .navbar{
   padding-top: 0;
+  display: none;
 }
 
 .gtag-link-others{
@@ -108,7 +108,6 @@ li:not(:last-child){
   margin-right: 40px;
   margin-left: 40px;
   min-width: 70px;
-
 }
 
 .navbar-light .navbar-nav .show > .nav-link{
@@ -149,9 +148,9 @@ select.form-control option, .custom-select option{
   align-items: center;
 }
 
-.search-results{
-  margin-top: 1rem;
-}
+// .search-results{
+//   margin-top: 1rem;
+// }
 
 .character-portrait {
   width: 17.625rem;
@@ -194,8 +193,9 @@ select.form-control option, .custom-select option{
   margin: 0.5rem auto;
   display: flex;
   justify-content: center;
+  align-items: center;
   max-width: 100%;
-  width: 80%;
+  width: 95%;
   min-width: 11rem;
 }
 .shop-items .gtag-link-others{

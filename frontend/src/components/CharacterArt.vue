@@ -14,7 +14,6 @@
         :class="characterTrait.toLowerCase() + '-icon circle-element'"
       ></span>
     </div> -->
-
     <div class="placeholder d-flex align-items-start justify-content-center " :class="characterTrait.toLowerCase() + '-bg'">
       <div
         :style="{
@@ -23,7 +22,7 @@
         :class="{
           'w-100': portrait,
           'h-100': !isMarket,
-          'h-75': isMarket,
+          'h-100': isMarket,
         }"
       ></div>
       <!--<small-button class="button" :text="`Purchase`" v-if="isMarket"/>-->
@@ -251,6 +250,7 @@ export default {
   max-height: 24px;
   max-width: 170px;
   white-space: nowrap;
+  text-align: center;
 }
 
 .xp {
@@ -276,7 +276,7 @@ export default {
 }
 
 .xp-text {
-  width: 100%;
+  width: 87%;
   text-align: center;
   position: absolute;
   color: #000;
@@ -289,14 +289,23 @@ export default {
   align-items: center;
 }
 
+.xp .progress .progress-bar{
+  background-size: cover;
+  height: 19px;
+}
+
 .placeholder {
-  max-width: 100%;
   position: relative;
-  padding-top: 0;
   -o-object-fit: contain;
   object-fit: contain;
-  height: 300px;
-  margin-top: -30px;
+  display: flex;
+  align-items: flex-end;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 70%;
+  margin: auto;
+  height: 85%;
+  margin-top: -40px;
 }
 
 .market-bot {

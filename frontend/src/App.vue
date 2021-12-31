@@ -583,7 +583,7 @@ button,
 
 .earth,
 .dex {
-  color: green;
+  color: white;
 }
 
 .water,
@@ -844,6 +844,13 @@ button.close {
   display: flex;
   justify-content: center;
 }
+
+.nav.nav-tabs.nav-justified{
+  background-color: rgba(0, 0, 0, .5);
+  border-radius: 20px;
+  padding: 0 30px;
+}
+
 .nav-tabs {
   border-bottom: none !important;
 }

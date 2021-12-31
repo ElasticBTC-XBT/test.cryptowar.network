@@ -17,7 +17,6 @@ import CombatPVP from './views/CombatPVP.vue';
 import Arena from './views/Arena.vue';
 import CombatPVPFight from './views/CombatPVPFight.vue';
 import RPS from './views/RPS.vue';
-
 import {
   raid as featureFlagRaid,
   stakeOnly as featureFlagStakeOnly,
