@@ -92,7 +92,11 @@
                 xBlade)&nbsp;
                 <i class="fas fa-plus"></i>
               </b-button> -->
+<<<<<<< HEAD
               <!-- <div class="small-hero-left">
+=======
+              <div class="small-hero-left">
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
                 Only
                 <strong
                   class="upper-text promotion-number"

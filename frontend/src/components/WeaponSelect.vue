@@ -260,10 +260,17 @@ export default {
 }
 
 .weapon-icon {
+<<<<<<< HEAD
     display: flex;
     flex-direction: column;
     /* justify-content: center; */
     align-items: center;
+=======
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
   background-image: url("../assets/images/bg-item-top.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -297,7 +304,11 @@ export default {
 }
 
 .stats {
+<<<<<<< HEAD
     margin-top: 10px;
+=======
+  margin-top: 10px;
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
 }
 
 .trait {

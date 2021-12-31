@@ -288,9 +288,9 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
     }
 
     function getSecondsPerStamina(uint256 id) public view returns (uint256) {
-        if (cachedSecondsPerStamina[id] > 0 ) {
-            return cachedSecondsPerStamina[id];
-        }
+        // if (cachedSecondsPerStamina[id] > 0 ) {
+        //     return cachedSecondsPerStamina[id];
+        // }
         return _calculateSecondsPerStamina(id);
     }
 
@@ -331,7 +331,7 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
         uint8 staminaPoints = getStaminaPointsFromTimestamp(char.staminaTimestamp, id);
         require(staminaPoints >= amount, "Not enough stamina!");
 
-        uint64 drainTime = uint64(amount * setSecondsPerStamina(id));
+        uint64 drainTime = uint64(amount *  _calculateSecondsPerStamina(id));
         uint64 preTimestamp = char.staminaTimestamp;
         if(staminaPoints >= maxStamina) { // if stamina full, we reset timestamp and drain from that
             char.staminaTimestamp = uint64(now - getStaminaMaxWait(id) + drainTime);

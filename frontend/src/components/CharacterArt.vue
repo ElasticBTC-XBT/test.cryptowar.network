@@ -8,6 +8,15 @@
           ID <span class="white">{{ character.id }}</span>
       </div>
     </div>
+<<<<<<< HEAD
+=======
+
+    <!-- <div class="trait" v-if="!portrait">
+      <span
+        :class="characterTrait.toLowerCase() + '-icon circle-element'"
+      ></span>
+    </div> -->
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
     <div class="placeholder d-flex align-items-start justify-content-center " :class="characterTrait.toLowerCase() + '-bg'">
       <div
         :style="{
@@ -16,7 +25,7 @@
         :class="{
           'w-100': portrait,
           'h-100': !isMarket,
-          'h-75': isMarket,
+          'h-100': isMarket,
         }"
       ></div>
       <!--<small-button class="button" :text="`Purchase`" v-if="isMarket"/>-->
@@ -224,13 +233,20 @@ export default {
   font-style: italic;
 }
 
+<<<<<<< HEAD
 .black-outline {
+=======
+.black-outline{
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
   color: #fff;
   font-weight: bold;
   font-size: 1.3em;
   text-shadow: none;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
 .black-outline .white{
   color: #fff;
 }
@@ -247,8 +263,10 @@ export default {
   max-height: 24px;
   max-width: 170px;
   white-space: nowrap;
+  text-align: center;
 }
 
+<<<<<<< HEAD
 .xp-wrap {
   padding: 0 10px;
 }
@@ -258,27 +276,42 @@ export default {
   background-image: url("../assets/v2/xp_bg.svg");
   background-repeat: no-repeat;
   background-size: cover;
+=======
+.xp {
+  width: 261px;
+  background-image: url("../assets/v2/xp_bg.svg");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
   height: 19px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0 0px;
+<<<<<<< HEAD
   margin: 7px 0;
   border-radius: 16px;
+=======
+  margin: 7px auto;
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
 }
 
 .xp .bg-success {
   background-position: 0 0;
   background-image: url("../assets/v2/xp_progress.svg");
   background-repeat: no-repeat;
+<<<<<<< HEAD
   background-size: cover;
   width: 100%;
+=======
+  width: 261px;
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
   height: 19px;
   background-color: transparent !important;
 }
 
 .xp-text {
-  width: 100%;
+  width: 87%;
   text-align: center;
   position: absolute;
   color: #000;
@@ -291,13 +324,27 @@ export default {
   align-items: center;
 }
 
+.xp .progress .progress-bar{
+  background-size: cover;
+  height: 19px;
+}
+
 .placeholder {
-  max-width: 100%;
   position: relative;
-  padding-top: 0;
   -o-object-fit: contain;
   object-fit: contain;
+<<<<<<< HEAD
   height: 300px;
+=======
+  display: flex;
+  align-items: flex-end;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 70%;
+  margin: auto;
+  height: 85%;
+  margin-top: -40px;
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
 }
 
 .market-bot {
@@ -314,7 +361,11 @@ export default {
 
 .market-bot .lv {
   font-size: 1.2rem;
+<<<<<<< HEAD
   color: #FEA829;
+=======
+  color: #dabf75;
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
   font-weight: bold;
   line-height: 1;
 }
@@ -392,7 +443,11 @@ export default {
   color: #fff;
 }
 
+<<<<<<< HEAD
 .water-bg, .fire-bg, .lightning-bg, .earth-bg {
+=======
+.water-bg, .fire-bg, .lightning-bg, .earth-bg{
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
   background-image: url('../assets/images/water.png');
   background-repeat: no-repeat;
   background-position: center bottom;
@@ -406,6 +461,7 @@ export default {
 .earth-bg{
   background-image: url('../assets/images/earth.png');
 }
+<<<<<<< HEAD
 
 @media (min-width: 768px) {
   .placeholder {
@@ -463,4 +519,6 @@ export default {
   }
 }
 
+=======
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
 </style>

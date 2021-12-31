@@ -4,6 +4,10 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
+<<<<<<< HEAD
+=======
+          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Modal Header</h4>
         </div>
@@ -11,8 +15,12 @@
           <p>Some text in the modal.</p>
         </div>
         <div class="modal-footer">
+<<<<<<< HEAD
           <button type="button" class="btn btn-blue-bg" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-pink-bg" data-dismiss="modal">OK</button>
+=======
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
         </div>
       </div>
     </div>
@@ -71,9 +79,12 @@ export default Vue.extend ({
 
 .modal-body {
   margin: 20px 0;
+<<<<<<< HEAD
     display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
+=======
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
 }
 
 .modal-default-button {

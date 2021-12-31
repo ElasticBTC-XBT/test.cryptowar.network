@@ -11,6 +11,7 @@
       <i class="fas fa-spinner fa-spin"></i>
     </div>
 
+<<<<<<< HEAD
     <div class="weapon-header">
       <div>
         <div class="trait">
@@ -52,6 +53,46 @@
           <div v-if="weapon.fourStarBurnPoints > 0"><span>{{ weapon.fourStarBurnPoints }} 4B</span></div>
           <div v-if="weapon.fiveStarBurnPoints > 0"><span>{{ weapon.fiveStarBurnPoints }} 5B</span></div>
         </div>
+=======
+    <div class="glow-container" ref="el" :class="['glow-' + (weapon.stars || 0)]">
+      <div class="glow-img-box">
+      <img v-if="showPlaceholder" class="placeholder" :src="getWeaponArt(weapon)" />
+      </div>
+      <div>
+      <div class="trait">
+        <span :class="weapon.element.toLowerCase() + '-icon'"></span>
+        {{Array(this.weapon.stars + 1).fill('★').join('')}}
+      </div>
+
+      <div class="name">
+        {{ getCleanWeaponName(weapon.id, weapon.stars) }}
+      </div>
+
+      <div class="small-durability-bar"
+        :style="`--durabilityReady: ${(getWeaponDurability(weapon.id)/maxDurability)*100}%;`"
+        v-tooltip.bottom="`Durability: ${getWeaponDurability(weapon.id)}/${maxDurability}<br>
+        Repairs 1 point every 50 minutes, durability will be full at: ${timeUntilWeaponHasMaxDurability(weapon.id)}`">
+        {{`${getWeaponDurability(weapon.id)}/${maxDurability}`}}
+      </div>
+
+      <div class="bonus-power">
+        <div v-if="weapon.lowStarBurnPoints > 0"><span>{{ weapon.lowStarBurnPoints }} LB</span></div>
+        <div v-if="weapon.fourStarBurnPoints > 0"><span>{{ weapon.fourStarBurnPoints }} 4B</span></div>
+        <div v-if="weapon.fiveStarBurnPoints > 0"><span>{{ weapon.fiveStarBurnPoints }} 5B</span></div>
+      </div>
+      <div class="small-durability-bar">
+        <div
+        :style="`--durabilityReady: ${(getWeaponDurability(weapon.id)/maxDurability)*100}%;`"
+        v-tooltip.bottom="`Durability: ${getWeaponDurability(weapon.id)}/${maxDurability}<br>
+          Repairs 1 point every 50 minutes, durability will be full at: ${timeUntilWeaponHasMaxDurability(weapon.id)}`">
+        </div>
+      </div>
+
+      <div class="weapon-bt-box" v-if="isSell">
+        <b-button @click="sellClick()">
+          SELL
+        </b-button>
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
       </div>
     </div>
 
@@ -109,7 +150,7 @@ export default {
       if(!this.weapon) return '';
 
       const wrapInSpan = (spanClass, text) => {
-        return `<span class="${spanClass.toLowerCase()}">${text}</span><span class="${spanClass.toLowerCase()+'-icon'}"></span>`;
+        return `<span class="${spanClass.toLowerCase()}">${text}</span><span class="${spanClass.toLowerCase()+'-icon'} tooltil-icon-element"></span>`;
       };
 
       const wrapInSpanTextOnly = (spanClass, text) => {
@@ -126,36 +167,37 @@ export default {
       }
 
       if(this.weapon.element) {
-        ttHtml += `<br>Element: ${wrapInSpan(this.weapon.element, this.weapon.element)}`;
+        ttHtml += `<br>Element: <span>${wrapInSpan(this.weapon.element, this.weapon.element)}</span>`;
       }
 
       if(this.weapon.stat1Value) {
-        ttHtml += `<br>${wrapInSpan(this.weapon.stat1, this.weapon.stat1)}: +${this.weapon.stat1Value}`;
+        ttHtml += `<br>${wrapInSpan(this.weapon.stat1, this.weapon.stat1)}<span>
+        : +${this.weapon.stat1Value}</span>`;
         if(this.currentCharacter) {
-          ttHtml += ` (${wrapInSpanTextOnly(
+          ttHtml += ` <span>(${wrapInSpanTextOnly(
             this.currentCharacter.traitName,
             '+'+Stat1PercentForChar(this.weapon, +this.currentCharacter.trait)+'%')
-          })`;
+          })</span>`;
         }
       }
 
       if(this.weapon.stat2Value) {
-        ttHtml += `<br>${wrapInSpan(this.weapon.stat2, this.weapon.stat2)}: +${this.weapon.stat2Value}`;
+        ttHtml += `<br>${wrapInSpan(this.weapon.stat2, this.weapon.stat2)}<span>: +${this.weapon.stat2Value}</span>`;
         if(this.currentCharacter) {
-          ttHtml += ` (${wrapInSpanTextOnly(
+          ttHtml += ` <span>(${wrapInSpanTextOnly(
             this.currentCharacter.traitName,
             '+'+Stat2PercentForChar(this.weapon, +this.currentCharacter.trait)+'%')
-          })`;
+          })</span>`;
         }
       }
 
       if(this.weapon.stat3Value) {
-        ttHtml += `<br>${wrapInSpan(this.weapon.stat3, this.weapon.stat3)}: +${this.weapon.stat3Value}`;
+        ttHtml += `<br>${wrapInSpan(this.weapon.stat3, this.weapon.stat3)}<span>: +${this.weapon.stat3Value}</span>`;
         if(this.currentCharacter) {
-          ttHtml += ` (${wrapInSpanTextOnly(
+          ttHtml += ` <span>(${wrapInSpanTextOnly(
             this.currentCharacter.traitName,
             '+'+Stat3PercentForChar(this.weapon, +this.currentCharacter.trait)+'%')
-          })`;
+          })</span>`;
         }
       }
 
@@ -225,6 +267,7 @@ export default {
 </script>
 
 <style scoped>
+<<<<<<< HEAD
 .loading-container {
   height: 100%;
   display: flex;
@@ -262,6 +305,51 @@ export default {
 .weapon-header .stats {
   margin-top: 8px;
   font-size: 18px;
+=======
+
+.small-durability-bar {
+  background: url("../assets/v2/xp_bg.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 16px;
+  width: 210px;
+  margin: auto;
+  margin-top: 70px;
+}
+
+.small-durability-bar > div {
+  width: var(--durabilityReady);
+  height: 15px;
+  border-radius: 4px;
+  background: url("../assets/v2/xp_progress.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* background : linear-gradient(to right, rgb(142, 30, 165) var(--durabilityReady), rgba(255, 255, 255, 0.1) 0); */
+}
+
+.weapon-icon {
+  position: relative;
+}
+
+.glow-container {
+  width: 17em;
+  height: 23em;
+  border-radius: 5px;
+  z-index: 540;
+  background-image: url(../assets/v2/bg-weapon.svg);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  margin: 0 auto;
+}
+
+.weapon.selected .glow-container,
+.weapon.selected .stats{
+  filter: contrast(200%);
+}
+
+.weapon.selected .weapon-bt-box{
+  filter: contrast(0.5);
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
 }
 
 .weapon-header .trait span:first-child {
@@ -300,6 +388,7 @@ export default {
   transform: scale(0.8);
 }
 
+<<<<<<< HEAD
 .weapon-icon.isBlacksmith .placeholder {
   max-width: 287px;
   max-height: 287px;
@@ -324,12 +413,43 @@ export default {
 
 .weapon-icon.isBlacksmith .name {
   font-size: 32px;
+=======
+.stats > div {
+  display: flex;
+  align-items: center;
+}
+
+.trait {
+  top: -75px;
+  left: 15px;
+  display: flex;
+  align-items: center;
+  color: yellow;
+  font-size: 25px;
+}
+
+.favorite-star {
+  position: absolute;
+  font-size: 0.8rem;
+}
+
+.id {
+  top: -70px;
+  right: 15px;
+  font-size: 18px;
+}
+
+.stats {
+  top: -30px;
+  left: 15px;
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
 }
 
 .character-item.weapon.no-corner .bonus-power {
   font-size: 14px;
 }
 
+<<<<<<< HEAD
 .small-durability-bar-wrap {
   margin-top: 15px;
 }
@@ -411,29 +531,73 @@ export default {
   .small-durability-bar {
     height: 8.52px;
   }
+=======
+.placeholder {
+  max-width: 220px;
+  max-height: 220px;
+  transform: scale(0.8);
+}
+
+.name {
+  position: absolute;
+  bottom: 2rem;
+  left: 12%;
+  right: 12%;
+  font-size: 1em;
+  text-align: center;
+  bottom: 30px;
+  font-weight: bold;
+  margin-bottom: 30px;
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
 }
 
 .weapon-bt-box{
   position: absolute;
-  bottom: 15px;
+  bottom: -77px;
   display: flex;
   width: 100%;
   justify-content: center;
 }
 
-.sell-grid .glow-img-box, .weapon-grid .glow-img-box{
-  padding-top: 1rem;
+.weapon-bt-box button{
+  background: url("../assets/v2/shop_nft_btn.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 170px;
+  height: 40px;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  font-weight: bold;
+  font-size: 18px;
 }
 
+.sell-grid .glow-img-box, .weapon-grid .glow-img-box{
+  margin-top: 90px;
+}
+
+<<<<<<< HEAD
+=======
+.glow-img-box{
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 270px;
+}
+
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
 .confirmReforge .glow-img-box img, .modal-body .glow-img-box img {
   max-width: 7rem;
   margin-top: 1.5rem;
   padding-bottom: 0.5rem;
+<<<<<<< HEAD
 }
 
 
 .confirmReforge .small-durability-bar, .modal-body .small-durability-bar{
   top: -10px
+=======
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
 }
 
 .confirmReforge .name, .modal-body .name{
@@ -472,7 +636,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.411);;
 }
 
 .glow-1 {
@@ -495,6 +658,17 @@ export default {
   opacity: 0.6;
 }
 
+<<<<<<< HEAD
+=======
+.bonus-power {
+  position: absolute;
+  top: -40px;
+  right: 15px;
+  font-size: 18px;
+  text-align: right;
+}
+
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
 /* @keyframes glow-1 {
   0% {
     box-shadow: inset 0 0 10px rgba(9, 163, 252, 1);
@@ -528,5 +702,10 @@ export default {
   }
   100% {
     box-shadow: inset 0 0 30px rgba(197, 77, 233, 1);
+<<<<<<< HEAD
   } */
+=======
+  }
+} */
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
 </style>

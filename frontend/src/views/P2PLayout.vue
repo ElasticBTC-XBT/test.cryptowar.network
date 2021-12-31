@@ -149,11 +149,19 @@
                   </div>
                 </div>
                 <div v-if="currentTab === 'career_mode'">
+<<<<<<< HEAD
                   <ul class="listCareerMode row row-cols-xl-5">
                     <li
                       v-for="r in careerModeRooms"
                       :key="r.characterId"
                       class="col-6 col-lg-4 a"
+=======
+                  <ul class="listCareerMode">
+                    <div
+                      v-for="r in careerModeRooms"
+                      :key="r.characterId"
+                      class="row"
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
                     >
                       <CharacterRoom
                         :characterId="r.characterId"
@@ -162,7 +170,11 @@
                         :selectedWeaponId="weaponId"
                         :isRequest="true"
                       />
+<<<<<<< HEAD
                     </li>
+=======
+                    </div>
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
                   </ul>
                 </div>
 

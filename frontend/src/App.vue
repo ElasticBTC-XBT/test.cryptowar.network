@@ -2,9 +2,6 @@
   <div class="app app-v2">
     <div class="container-box">
       <nav-bar />
-      <character-bar
-        v-if="!featureFlagStakeOnly && currentCharacterId !== null"
-      />
       <div class="content dark-bg-text">
         <router-view v-if="canShowApp" />
       </div>
@@ -141,7 +138,7 @@ export default {
   ],
   components: {
     NavBar,
-    CharacterBar,
+    // CharacterBar,
     BigButton,
     SmallButton,
   },
@@ -503,6 +500,16 @@ export default {
 </script>
 
 <style lang="scss">
+#fightResultsModal .modal-header .close,
+#selectHeroOrWeaponModal .modal-header .close,
+#requestSelect .modal-header .close,
+#fightModal .modal-header .close,
+#listHeroToCareerModal  .modal-header .close,
+#listHeroToChallengeModal .modal-header .close,
+#cancelRequestModal .modal-header .close{
+  font-size: 0;
+}
+
 button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.btn-primary
   > h1 {
   font-weight: 600;
@@ -576,7 +583,7 @@ button,
 
 .earth,
 .dex {
-  color: green;
+  color: white;
 }
 
 .water,
@@ -587,6 +594,26 @@ button,
 .lightning,
 .cha {
   color: yellow;
+}
+
+
+// .tooltil-icon-element{
+//   width: 1.5rem;
+//   height: 1.5rem;
+//   margin-left: 5px;
+// }
+
+.fire-icon.tooltil-icon-element,
+.earth-icon.tooltil-icon-element,
+.water-icon.tooltil-icon-element,
+.lightning-icon.tooltil-icon-element,
+.dex-icon.tooltil-icon-element,
+.int-icon.tooltil-icon-element,
+.cha-icon.tooltil-icon-element,
+.str-icon.tooltil-icon-element{
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: 5px;
 }
 
 .fire-icon,
@@ -710,9 +737,46 @@ button.close {
 .btn-outline-primary {
   color: #a50eb3 !important;
 }
-.modal-content {
-  border-radius: 20px;
+
+#fightResultsModal .modal-dialog,
+#listHeroToCareerModal .modal-dialog,
+#listHeroToChallengeModal .modal-dialog{
+  max-width: 500px;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
+
+#requestSelect .modal-dialog,
+#fightModal .modal-dialog,
+#cancelRequestModal .modal-dialog{
+  max-width: 700px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+#selectHeroOrWeaponModal .modal-dialog{
+  max-width: 1150px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#requestSelect .modal-content,
+#fightModal .modal-content{
+  padding: 20px 0;
+}
+
+#fightResultsModal .modal-body{
+  color: #fff;
+}
+
+#selectHeroOrWeaponModal .modal-content{
+  background-image: url(./assets/v2/bg-modal.png);
+}
+
 .modal-header {
 }
 
@@ -764,6 +828,13 @@ button.close {
   display: flex;
   justify-content: center;
 }
+
+.nav.nav-tabs.nav-justified{
+  background-color: rgba(0, 0, 0, .5);
+  border-radius: 20px;
+  padding: 0 30px;
+}
+
 .nav-tabs {
   border-bottom: none !important;
 }
@@ -982,6 +1053,13 @@ div.bg-success {
   .blank-slate .button h1{
     font-size: 1.5rem;
   }
+}
+
+@media (max-width: 767px){
+
+}
+
+@media (max-width: 575.98px) {
 
 }
 </style>

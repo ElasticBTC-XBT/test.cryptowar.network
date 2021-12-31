@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="126.738" height="18.278" viewBox="0 0 126.738 18.278">
+  <defs>
+    <radialGradient id="radial-gradient" cx="0.5" cy="0.5" r="0.5" gradientTransform="matrix(-0.707, 0.707, 0.707, 0.707, 0.5, -0.207)" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ffff90"/>
+      <stop offset="0.028" stop-color="#f4ed7e"/>
+      <stop offset="0.102" stop-color="#dbc353"/>
+      <stop offset="0.159" stop-color="#cba938"/>
+      <stop offset="0.194" stop-color="#c6a02f"/>
+      <stop offset="0.336" stop-color="#896000"/>
+      <stop offset="0.366" stop-color="#7e5800"/>
+      <stop offset="0.513" stop-color="#513900"/>
+      <stop offset="0.654" stop-color="#2e2000"/>
+      <stop offset="0.785" stop-color="#140e00"/>
+      <stop offset="0.905" stop-color="#050300"/>
+      <stop offset="1"/>
+    </radialGradient>
+  </defs>
+  <ellipse id="Ellipse_468" data-name="Ellipse 468" cx="9.139" cy="63.369" rx="9.139" ry="63.369" transform="translate(126.738) rotate(90)" fill="url(#radial-gradient)" style="mix-blend-mode: screen;isolation: isolate"/>
+</svg>

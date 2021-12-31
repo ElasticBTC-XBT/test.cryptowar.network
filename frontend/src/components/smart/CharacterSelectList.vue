@@ -241,8 +241,12 @@ export default {
 }
 
 .character-item.selected {
+<<<<<<< HEAD
 
     background-image: url('../../assets/images/bg-item-top-select.png');
+=======
+  background-image: url('../../assets/images/bg-item-top-select.png');
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
 }
 
 .above-wrapper {

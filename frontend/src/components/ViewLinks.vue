@@ -8,8 +8,12 @@
     </router-link>
 
     <li class="nav-line"></li>
+<<<<<<< HEAD
 
     <router-link :to="{ name: 'combat' }" exact class="nav-link mr-4 ml-4"
+=======
+    <router-link :to="{ name: 'arena' }" exact class="nav-link mr-4 ml-4"
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
     v-if="!featureFlagStakeOnly">
       <li class="nav-item nav-top-links nav-icon-box">
         <img src="../assets/v2/arena_icon.svg" alt="" class="nav-icon">
@@ -21,9 +25,15 @@
 
     <div class="nav-link  mr-4 ml-4">
       <li class="nav-item nav-top-links ">
+<<<<<<< HEAD
         <a href="https://bond.cryptowar.network/" target="_blank" class="gtag-link-others nav-icon-box" tagname="shop_screen">
           <img src="../assets/v2/ido_icon.svg" alt="" class="nav-icon">
           <span class="gtag-link-others" tagname="plaza_screen">xBlade BOND</span>
+=======
+        <a href="https://bond.cryptowar.network/#/" target="_blank" class="gtag-link-others nav-icon-box" tagname="shop_screen">
+          <img src="../assets/v2/ido_icon.svg" alt="" class="nav-icon">
+          <span class="gtag-link-others" tagname="plaza_screen">Buy xBlade Bond</span>
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
         </a>
       </li>
     </div>
@@ -38,9 +48,15 @@
         <span class="nav-item-hover">Referral</span>
       </li>
     </router-link>
+<<<<<<< HEAD
 
     <li class="nav-line"></li>
 
+=======
+
+    <li class="nav-line"></li>
+
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
     <!-- <router-link :to="{ name: 'plaza' }" exact class="nav-link"
     v-if="!featureFlagStakeOnly">
       <li class="nav-item nav-top-links">
@@ -48,7 +64,11 @@
       </li>
     </router-link> -->
 
+<<<<<<< HEAD
     <router-link :to="{ name: 'inventory' }" exact class="nav-link mr-3 ml-3"   v-if="!featureFlagStakeOnly">
+=======
+    <router-link :to="{ name: 'blacksmith' }" exact class="nav-link mr-3 ml-3"   v-if="!featureFlagStakeOnly">
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
       <li class="nav-item nav-top-links nav-img-item-box" >
         <span class="nav-img-item">
           <img src="../assets/v2/inventory.svg" alt="Inventory" class="nav-img">
@@ -221,7 +241,11 @@ a.router-link-active .lobby .gtag-link-others{
   justify-content: center;
   align-items: center;
   font-size: 0.8em;
+<<<<<<< HEAD
    z-index: 2;
+=======
+  z-index: 100;
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
 }
 .nav-img-item-box:hover .nav-item-hover{
   display: flex;

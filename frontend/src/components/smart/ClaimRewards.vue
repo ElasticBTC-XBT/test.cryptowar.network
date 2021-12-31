@@ -179,7 +179,6 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-
 .rewards-claimable-icon {
   margin-right: 5px;
   align-self: center;

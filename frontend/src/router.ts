@@ -13,8 +13,15 @@ import Shop from './views/Shop.vue';
 import Referral from './views/Referral.vue';
 import P2PLayout from './views/P2PLayout.vue';
 import Lobby from './views/Lobby.vue';
+<<<<<<< HEAD
 import Inventory from './views/Inventory.vue';
 
+=======
+import CombatPVP from './views/CombatPVP.vue';
+import Arena from './views/Arena.vue';
+import CombatPVPFight from './views/CombatPVPFight.vue';
+import RPS from './views/RPS.vue';
+>>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
 import {
   raid as featureFlagRaid,
   stakeOnly as featureFlagStakeOnly,
@@ -46,6 +53,10 @@ function createRouter() {
       { path: '/blacksmith', name: 'blacksmith', component: Blacksmith },
       { path: '/inventory', name: 'inventory', component: Inventory },
       { path: '/combat', name: 'combat', component: Combat },
+      { path: '/combat-pvp', name: 'pvp', component: CombatPVP },
+      { path: '/combat-pvp-fight', name: 'pvp-fight', component: CombatPVPFight },
+      { path: '/arena', name: 'arena', component: Arena },
+      { path: '/rps', name: 'rps', component: RPS },
       { path: '/leaderboard', name: 'leaderboard', component: Leaderboard },
       ...marketRoutes,
       // { path: '/stake', name: 'select-stake-type', component: SelectStakeType },
