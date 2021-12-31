@@ -163,6 +163,7 @@ export default {
 }
 
 .dust-quantity {
+  min-width: 100px;
   margin: auto;
   background-color: #000;
   width: 100%;

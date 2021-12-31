@@ -13,15 +13,12 @@ import Shop from './views/Shop.vue';
 import Referral from './views/Referral.vue';
 import P2PLayout from './views/P2PLayout.vue';
 import Lobby from './views/Lobby.vue';
-<<<<<<< HEAD
 import Inventory from './views/Inventory.vue';
 
-=======
 import CombatPVP from './views/CombatPVP.vue';
 import Arena from './views/Arena.vue';
 import CombatPVPFight from './views/CombatPVPFight.vue';
 import RPS from './views/RPS.vue';
->>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
 import {
   raid as featureFlagRaid,
   stakeOnly as featureFlagStakeOnly,

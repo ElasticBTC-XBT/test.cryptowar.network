@@ -27,10 +27,6 @@
       </div>
     </b-navbar>
     <div class="nav-bottom-line"></div>
-<<<<<<< HEAD
-=======
-    <claim-rewards-bar v-if="canShowRewardsBar" />
->>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
     <div class="container_row">
       <!-- <img src="../assets/divider4.png" class="expander-divider" /> -->
       <!-- <b-button
@@ -209,11 +205,6 @@ a {
 }
 
 .nav-bottom-line{
-<<<<<<< HEAD
-=======
-  position: relative;
-  z-index: 2;
->>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
   height: 36px;
   border-top: 3px solid;
   border-image-slice: 1;

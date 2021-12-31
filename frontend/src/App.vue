@@ -122,7 +122,7 @@ import MetaMaskOnboarding from "@metamask/onboarding";
 import BigButton from "./components/BigButton.vue";
 import SmallButton from "./components/SmallButton.vue";
 import NavBar from "./components/NavBar.vue";
-import CharacterBar from "./components/CharacterBar.vue";
+// import CharacterBar from "./components/CharacterBar.vue";
 // import { apiUrl, defaultOptions } from "./utils/common";
 
 Vue.directive("visible", (el, bind) => {

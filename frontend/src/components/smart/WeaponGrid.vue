@@ -1,6 +1,5 @@
 <template>
   <div class="row">
-<<<<<<< HEAD
     <div
       class="filters pl-2 col-12 col-xl-3"
       :class="isBlacksmith && 'filters-blacksmith'"
@@ -109,111 +108,6 @@
         <div
           class="character-item weapon"
           :class="[{ selected: highlight !== null && weapon.id === highlight },isSell?'weapon-market':'']"
-=======
-    <div class="filters col-12 col-xl-3 col-lg-6" v-if="!newWeapon && checkBar">
-      <div>
-        <div>
-          <input class="form-control" type="text" placeholder="Seller Address, NFT ID" />
-        </div>
-
-        <div class="start">
-          <strong>STARS</strong>
-          <div>
-            <div v-for="x in ['1', '2', '3', '4', '5']"
-            :style="starFilter>=x?'background: url('+require('../../assets/v2/market-star-click.svg')+'); background-repeat: no-repeat; background-size: contain; color: black':''"
-            :key="x"
-            @click="starFilter===x?starFilter='':starFilter=x"
-            >{{x}}</div>
-          </div>
-        </div>
-
-        <!-- <div class="start">
-          <strong>Stars</strong>
-          <select class="form-control" v-model="starFilter" >
-            <option v-for="x in ['', 1, 2, 3, 4, 5]" :value="x" :key="x">{{ x || 'Any' }}</option>
-          </select>
-        </div> -->
-
-        <div class="element">
-          <strong>ELEMENT</strong>
-          <div @click="elementFilter==='Earth'?elementFilter='':elementFilter='Earth'" :class="elementFilter + ' earth'">
-            <img src="../../assets/elements/earth.png" alt=""> Earth
-          </div>
-          <div @click="elementFilter==='Fire'?elementFilter='':elementFilter='Fire'" :class="elementFilter + ' fire'">
-            <img src="../../assets/elements/fire.png" alt=""> Fire
-          </div>
-          <div @click="elementFilter==='Lightning'?elementFilter='':elementFilter='Lightning'" :class="elementFilter + ' lightning'">
-            <img src="../../assets/elements/lightning.png" alt=""> Lightning
-          </div>
-          <div @click="elementFilter==='Water'?elementFilter='':elementFilter='Water'" :class="elementFilter + ' water'">
-            <img src="../../assets/elements/water.png" alt=""> Water
-          </div>
-          <!-- <select class="form-control" v-model="elementFilter">
-            <option v-for="x in ['', 'Earth', 'Fire', 'Lightning', 'Water']" :value="x" :key="x">{{ x || 'Any' }}</option>
-          </select> -->
-        </div>
-
-        <!-- <div>
-          <strong>Element</strong>
-          <select class="form-control" v-model="elementFilter" >
-            <option v-for="x in ['', 'Earth', 'Fire', 'Lightning', 'Water']" :value="x" :key="x">{{ x || 'Any' }}</option>
-          </select>
-        </div> -->
-
-        <template v-if="isMarket">
-          <div>
-            <strong>MIN PRICE</strong>
-            <input class="form-control" type="number" v-model.trim="minPriceFilter" :min="0" placeholder="Min" />
-          </div>
-          <div>
-            <strong>MAX PRICE</strong>
-            <input class="form-control" type="number" v-model.trim="maxPriceFilter" :min="0" placeholder="Max" />
-          </div>
-
-          <div>
-            <strong>SORT</strong>
-            <select class="form-control" v-model="priceSort" >
-              <option v-for="x in sorts" :value="x.dir" :key="x.dir">{{ x.name || 'Any' }}</option>
-            </select>
-          </div>
-        </template>
-
-        <!-- <div v-if="showReforgedToggle" class="show-reforged">
-          <b-check class="show-reforged-checkbox" v-model="showReforgedWeapons" />
-          <strong>Show reforged</strong>
-        </div>
-
-        <div v-if="showFavoriteToggle" class="show-reforged show-favorite">
-          <b-check class="show-reforged-checkbox" v-model="showFavoriteWeapons" />
-          <strong>Show Favorite</strong>
-        </div> -->
-
-        <!-- <b-button
-          v-if="!newWeapon"
-          class="clear-filters-button mb-3 mt-3"
-          @click="clearFilters"
-        >
-          <span>
-            Clear Filters
-          </span>
-        </b-button> -->
-        <b-button class="search-button" @click="saveFilters()" >
-          SEARCH
-        </b-button>
-      </div>
-    </div>
-
-    <div class="col-12 col-xl-9 col-lg-6" v-if="checklist">
-      <ul class="weapon-grid row">
-        <li
-          class="weapon"
-          :class="[{ selected: highlight !== null && weapon.id === highlight },isSell?'weapon-market':'']"
-          v-for="weapon in nonIgnoredWeapons"
-          :key="weapon.id"
-          @click=
-          "(!checkForDurability || getWeaponDurability(weapon.id) > 0) && onWeaponClick(weapon.id)"
-          @contextmenu="canFavorite && toggleFavorite($event, weapon.id)"
->>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
         >
           <div class="weapon-icon-wrapper">
             <weapon-icon class="weapon-icon" :weapon="weapon" :favorite="isFavorite(weapon.id)" :isSell="isSell" :sellClick="sellClick"/>
@@ -222,7 +116,6 @@
             <slot name="above" :weapon="weapon"></slot>
           </div>
           <slot name="sold" :weapon="weapon"></slot>
-<<<<<<< HEAD
           </div>
       </li>
     </ul>
@@ -241,30 +134,11 @@
         >
           <div class="weapon-icon-wrapper">
             <weapon-icon class="weapon-icon" :weapon="weapon" :favorite="isFavorite(weapon.id)" :isSell="isSell" :sellClick="sellClick" :isBlacksmith="true"/>
-=======
-        </li>
-      </ul>
-    </div>
-    <div v-if="!checklist">
-      <ul class="weapon-grid row">
-        <li
-          class="weapon"
-          :class="[{ selected: highlight !== null && weapon.id === highlight },isSell?'weapon-market':'']"
-          v-for="weapon in nonIgnoredWeapons"
-          :key="weapon.id"
-          @click=
-          "(!checkForDurability || getWeaponDurability(weapon.id) > 0) && onWeaponClick(weapon.id)"
-          @contextmenu="canFavorite && toggleFavorite($event, weapon.id)"
-        >
-          <div class="weapon-icon-wrapper">
-            <weapon-icon class="weapon-icon" :weapon="weapon" :favorite="isFavorite(weapon.id)" :isSell="isSell" :sellClick="sellClick"/>
->>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
           </div>
           <div class="above-wrapper" v-if="$slots.above || $scopedSlots.above">
             <slot name="above" :weapon="weapon"></slot>
           </div>
           <slot name="sold" :weapon="weapon"></slot>
-<<<<<<< HEAD
           </div>
       </li>
     </ul>
@@ -313,10 +187,6 @@
         <h2>Dust list</h2>
         <dust-balance-display class="dust-list-wrap" :isBlacksmith="isBlacksmith"/>
       </div>
-=======
-        </li>
-      </ul>
->>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
     </div>
   </div>
 </template>
@@ -452,19 +322,9 @@ export default Vue.extend({
       type: ()=>{},
       default: null
     },
-<<<<<<< HEAD
     showFilters: {
       type: Boolean,
       default: false
-=======
-    checkBar:{
-      type:Boolean,
-      default: true
-    },
-    checklist: {
-      type: Boolean,
-      default: true
->>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
     }
   },
 
@@ -709,7 +569,10 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-<<<<<<< HEAD
+.weapon-icon-wrapper {
+  height: 100%;
+}
+
 .character-item.weapon {
   cursor: pointer;
   position: relative;
@@ -718,198 +581,6 @@ export default Vue.extend({
   padding: 25px 15px;
 }
 
-.weapon-icon-wrapper {
-  height: 100%;
-=======
-
-/* .filters {
-  justify-content: center;
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  align-content: center;
-  border-bottom: 0.2px solid rgba(102, 80, 80, 0.1);
-  margin-bottom: 20px;
-} */
-
-.filters{
-  padding: 0 60px;
-}
-
-.filters > div {
-  background-color: rgba(0, 0, 0, .5);
-  padding: 20px;
-}
-
-.filters > div > div{
-  margin-top: 30px;
-}
-
-.filters > div > div strong{
-  font-weight: normal;
-}
-
-.filters strong{
-  font-size: 20px;
-  margin-top: 10px;
-}
-
-.element{
-  border-top: 2px solid #707070;
-  border-bottom: 2px solid #707070;
-  padding: 30px 0;
-}
-
-.element img{
-  width: 40px;
-  height: 40px;
-  display: inline;
-  margin-right: 20px;
-}
-
-.element div{
-  margin-top: 15px;
-  width: fit-content;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 18px;
-  opacity: .6;
-}
-
-.Earth.earth{
-  opacity: 1;
-  filter: contrast(200%);
-}
-
-.Fire.fire{
-  opacity: 1;
-  filter: contrast(200%);
-}
-
-.Lightning.lightning{
-  opacity: 1;
-  filter: contrast(200%);
-}
-
-.Water.water{
-  opacity: 1;
-  filter: contrast(200%);
-}
-
-.start > div{
-  display: flex;
-  margin-top: 10px;
-  justify-content: space-between;
-}
-
-.start > div > div{
-  background: url("../../assets/v2/market-star.svg");
-  background-repeat: no-repeat;
-  background-size: contain;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  cursor: pointer;
-  font-size: 18px;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button{
-  -webkit-appearance: none;
-}
-
-.form-control{
-  background-color: transparent;
-  color: white;
-  border: 1px solid rgb(17,65,105);
-  border-radius: 10px;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  padding: 0.5rem 1rem;
-  font-size: 18px;
-  font-weight: 100;
-  padding: 15px;
-  margin-top: 10px;
-}
-
-.form-control:focus{
-  background-color: transparent;
-  color: white;
-}
-
-.form-control::placeholder{
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.weapon-grid {
-  /* display: flex; */
-  padding: 0 39px;
-}
-
-.search-button{
-  background: url("../../assets/v2/market-search.svg");
-  background-repeat: no-repeat;
-  background-size: contain;
-  width: 100%;
-  height: 53px;
-  border: none;
-  margin: 40px 0;
-  font-weight: bold;
-  font-size: 20px;
-  border-radius: 0;
-}
-
-.weapon {
-  /* background: rgba(255, 255, 255, 0.05); */
-  /* border-radius: 6px; */
-  cursor: pointer;
-  position: relative;
-  /* overflow: hidden; */
-  display: flex;
-  flex-direction: column;
-  padding: 50px 0 80px 0;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.weapon-icon-wrapper {
-  /* width: 306px;
-  height: 436px;
-  margin: auto;
-  background: url("../../assets/v2/market_background_weapon.svg");
-  background-repeat: no-repeat;
-  background-size: contain; */
-
-  height: 415px;
-  width: 300px;
-  /* background-position: 50% 50%; */
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  position: relative;
-  border: 1px solid #3CDE9B;
-  border-radius: 15px 40px 15px 15px;
-  background: #0D2F9Cbb;
-  background-image: radial-gradient(#F5EFC2 -30%, transparent 70%);
-  margin: auto;
->>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
-}
-
-.weapon-icon-wrapper::before{
-  content: '';
-  width: 76px;
-  height: 72px;
-  background: url("../../assets/v2/corner_green.svg") no-repeat 0 0;
-  background-size: cover;
-  position: absolute;
-  right: -6px;
-  top: -8px;
-}
-
-<<<<<<< HEAD
 .sold {
     height: 40px;
     width: 230px;
@@ -919,14 +590,6 @@ input::-webkit-inner-spin-button{
     position: absolute;
     top: 110px;
     z-index: 100;
-=======
-/* .weapon-market .weapon-icon-wrapper{
-  height: 20em;
-} */
-
-.above-wrapper {
-  margin-top: 25px;
->>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
 }
 
 .sold span {
@@ -972,7 +635,6 @@ input::-webkit-inner-spin-button{
   padding: 0 28px;
 }
 
-<<<<<<< HEAD
 .character-item.weapon.no-corner {
   padding: 10px;
 }
@@ -1005,13 +667,6 @@ input::-webkit-inner-spin-button{
 @media (width: 1024px) {
   .character-item.weapon {
     padding: 18px;
-=======
-
-@media (max-width: 576px) {
-  .weapon-grid {
-    justify-content: center;
-    margin-top: 10px;
->>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
   }
 
   .weapon-grid.blacksmith .weapon-list {
@@ -1103,12 +758,7 @@ input::-webkit-inner-spin-button{
 /* Needed to adjust weapon list */
 @media all and (max-width: 767.98px) {
   .weapon-grid {
-<<<<<<< HEAD
     padding-left: 2em;
-=======
-    justify-content: center;
-    padding: 0;
->>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
   }
   .stars-elem {
     margin-bottom: 20px;
@@ -1124,49 +774,10 @@ input::-webkit-inner-spin-button{
   }
 }
 
-<<<<<<< HEAD
 @media (max-width: 1024px) {
   .weapon-grid.blacksmith .dust-wrap {
     padding-bottom: 10px;
   }
-=======
-.sold {
-  height: 40px;
-  width: 230px;
-  background-color: rgb(187, 33, 0);
-  transform: rotate(15deg);
-  left: -20px;
-  position: absolute;
-  top: 110px;
-  z-index: 100;
 }
 
-.sold span {
-  text-align: center;
-  width: auto;
-  color: white;
-  display: block;
-  font-size: 30px;
-  font-weight: bold;
-  line-height: 40px;
-  text-shadow: 0 0 5px #333, 0 0 10px #333, 0 0 15px #333, 0 0 10px #333;
-  text-transform: uppercase;
-}
-
-.fix-h24 {
-  height: 24px;
->>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
-}
-.selected .weapon-icon-wrapper{
-  box-shadow: inset 0 0 30px yellow;
-  border: 1px solid orange;
-}
-
-<<<<<<< HEAD
-=======
-.selected .weapon-icon-wrapper::before{
-  background-image: url('../../assets/v2/corner_yellow.svg');
-}
-
->>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
 </style>

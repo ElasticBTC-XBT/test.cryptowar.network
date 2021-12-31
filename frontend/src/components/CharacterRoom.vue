@@ -63,18 +63,9 @@ export default Vue.extend({
 .character-item {
   width: 299px;
   max-width: 100%;
-<<<<<<< HEAD
   background-repeat: no-repeat;
   background-size: 100% 100%;;
   margin: 50px auto;
-=======
-  background-image: url("../assets/images/bg-item-top.png");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;;
-  margin-top: 1rem;
-  margin-bottom: 2.7rem;
-  /* margin-left: 2.5rem; */
->>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
   align-items: center;
   justify-items: center;
   max-height: 432px;
@@ -84,20 +75,12 @@ export default Vue.extend({
   width: 100%;
   min-height: 0;
   height: 100%;
-<<<<<<< HEAD
-=======
-  /* background-position: center; */
->>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
   background-repeat: no-repeat;
   background-size: contain;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: transparent;
-<<<<<<< HEAD
-=======
-  /* background-color: red; */
->>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
 }
 .character-list {
   list-style: none;
@@ -110,11 +93,7 @@ export default Vue.extend({
     display: flex;
     align-items: center;
     justify-content: center;
-<<<<<<< HEAD
     margin-top: 15px;
-=======
-    margin-bottom: 2rem;
->>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
   }
   .buttonFight {
     border: none;
@@ -154,12 +133,9 @@ export default Vue.extend({
     text-align: center;
     justify-content: center;
   }
-<<<<<<< HEAD
   .titleButtonFight {
     font-size: 13px;
   }
-=======
->>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
 
 }
 </style>

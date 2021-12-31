@@ -1586,7 +1586,7 @@ export default Vue.extend({
 
 .market-hero-weapon{
   position: relative;
-  top: -55px;
+  top: -42.515px;
   display: flex;
   flex-wrap: wrap;
   border-bottom: 3px solid rgb(245,139,91);

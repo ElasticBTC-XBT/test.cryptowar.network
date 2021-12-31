@@ -1,9 +1,5 @@
 <template>
   <div class="character-bar">
-<<<<<<< HEAD
-=======
-    <character-display2 />
->>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
     <!-- <character-display /> -->
     <!-- <div class="character-bar-divider"/> -->
     <!-- <img src="../assets/infoDivider.png" class="info-divider"> -->
@@ -12,19 +8,11 @@
 </template>
 
 <script lang="ts">
-<<<<<<< HEAD
 // import CharacterDisplay from './smart/CharacterDisplay.vue';
 
 export default {
   components: {
     // CharacterDisplay,
-=======
-import CharacterDisplay2 from './smart/CharacterDisplay2.vue';
-
-export default {
-  components: {
-    CharacterDisplay2,
->>>>>>> dd3f251080d52c1e093af2a1597cf187167d05ca
   },
 };
 </script>
