@@ -1051,15 +1051,15 @@ contract CryptoWars is
             _payPlayerConverted(msg.sender, _tokenRewardsToPayOut);
     }
 
-    function stakeUnclaimedRewards() external {
-        uint256 _tokenRewards = tokenRewards[msg.sender];
-        tokenRewards[msg.sender] = 0;
+    // function stakeUnclaimedRewards() external {
+    //     uint256 _tokenRewards = tokenRewards[msg.sender];
+    //     tokenRewards[msg.sender] = 0;
 
-        if (promos.getBit(msg.sender, 4) == false) {
-            xBlade.approve(address(stakeFromGameImpl), _tokenRewards);
-            stakeFromGameImpl.stakeFromGame(msg.sender, _tokenRewards);
-        }
-    }
+    //     if (promos.getBit(msg.sender, 4) == false) {
+    //         xBlade.approve(address(stakeFromGameImpl), _tokenRewards);
+    //         stakeFromGameImpl.stakeFromGame(msg.sender, _tokenRewards);
+    //     }
+    // }
 
     function claimXpRewards() public whenNotPaused {
         // our characters go to the tavern to rest
