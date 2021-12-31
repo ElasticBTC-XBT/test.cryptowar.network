@@ -95,7 +95,7 @@
       </div> -->
 
     <ul
-      class="weapon-grid row col-12 col-xl-9"
+      class="weapon-grid row" :class="showFilters && 'col-12 col-xl-9'"
       v-if="!isBlacksmith && !isBurnWeapon"
     >
       <li

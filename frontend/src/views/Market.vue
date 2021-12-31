@@ -23,7 +23,9 @@
                 :showFavoriteToggle="false"
                 :canFavorite="false"
                 :isMarket="true"
-                v-model="selectedNftId">
+                v-model="selectedNftId"
+                showFilters
+              >
                 <template #above="{ weapon: { id } }">
                   <div class="d-flex flex-column align-items-center justify-content-center m-top-negative-5">
                     <span class="d-block text-center fix-h24" v-if="nftPricesById[id]">
@@ -179,7 +181,6 @@
           </div>
           <div class="col-9 sell-grid" v-if="activeType === 'character'">
             <character-list
-              :showFilters="true"
               v-model="selectedNftId"
               :sellClick="showListingSetupModal"
               :isSell="isSell"
