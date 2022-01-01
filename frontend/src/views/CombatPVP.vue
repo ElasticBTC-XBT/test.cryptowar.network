@@ -5,8 +5,8 @@
       <div class="row">
         <div class="col-12">
           <div class="quantity-heroes">
-            <div><span>123</span> Heroes In Chanllenge Mode{{this.select}}</div>
-            <div><span>456</span> Heroes In Career Mode</div>
+            <div><span>{{ownCharacters.length}}</span> Heroes In Chanllenge Mode{{this.select}}</div>
+            <div><span>{{ownCharacters.length}}</span> Heroes In Career Mode</div>
           </div>
         </div>
       </div>
@@ -72,7 +72,7 @@
             <div class="info-user-title">Your Information</div>
             <div class="info-user-body">
               <span>HEROES available</span>
-              <div>4</div>
+              <div>{{ownCharacters.length}}</div>
             </div>
             <div class="info-user-btn">
               <button @click="$bvModal.show('selectHeroOrWeaponModal'), selectHero = true, selectWeapon = false">SELECT HERO</button>
@@ -183,7 +183,7 @@
                     (requestChallenge = false)
                 "
                 :active="careerMode"
-                ><div>CAREER MODE <div>456</div></div></b-nav-item
+                ><div>CAREER MODE <div>{{careerModeRooms.length}}</div></div></b-nav-item
               >
               <b-nav-item
                 class="nav-item"
@@ -194,7 +194,7 @@
                     (requestChallenge = true)
                 "
                 :active="requestChallenge"
-                ><div>REQUEST TO CHALLENGE <div>1</div></div></b-nav-item
+                ><div>REQUEST TO CHALLENGE <div>{{careerModeRequest.length}}</div></div></b-nav-item
               >
             </b-nav>
           </div>
@@ -250,8 +250,8 @@
       </b-modal>
       <div v-if="careerMode">
         <div class="row list-heroes" style="margin-left: 0;">
-          <div class="item" v-for="i in 10" :key="i">
-              <div class="info">
+          <div class="item" v-for="i in careerModeRooms" :key="i.characterId">
+              <!-- <div class="info">
                 <div class="info-head">
                     <span class="property"></span>
                 </div>
@@ -268,7 +268,14 @@
                   <div class="remain-hero">Remain: <span>345.9098</span></div>
                   <div class="cost"><div></div> 100</div>
                 </div>
-              </div>
+              </div> -->
+              <CharacterRoom
+                :characterId="i.characterId"
+                :room="i"
+                :selectedCharacterId="characterId"
+                :selectedWeaponId="weaponId"
+                :isRequest="true"
+              />
               <div class="button-container"><button @click="$bvModal.show('fightModal')" class="btn-request-fight">FIGHT</button></div>
               <!-- <router-link :to="{ name: 'pvp-fight' }">
               </router-link> -->
@@ -319,6 +326,7 @@ import {
 // import Hint from '../components/Hint.vue';
 // import CombatResults from '../components/CombatResults.vue';
 import { toBN, fromWeiEther } from "../utils/common";
+import CharacterRoom from "../components/CharacterRoom.vue";
 // import WeaponIcon from '../components/WeaponIcon.vue';
 import { mapActions, mapGetters, mapState, mapMutations } from "vuex";
 // import CharacterBar from "../components/CharacterBar.vue";
@@ -361,7 +369,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["currentCharacterId"]),
+    ...mapState(["currentCharacterId", "careerModeRooms", "careerModeRequest"]),
     ...mapGetters([
       "getTargetsByCharacterIdAndWeaponId",
       "ownCharacters",
@@ -637,6 +645,7 @@ export default {
     // WeaponIcon,
     // CharacterBar,
     CombatPVPFight,
+    CharacterRoom,
   },
 };
 </script>

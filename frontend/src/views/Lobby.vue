@@ -32,7 +32,7 @@
       <li
         class="character-item addnew addmore lobby-box-item-wrap"
       >
-        <router-link :to="{ name: '#' }" exact class="lobby-item-box">
+        <router-link :to="{ name: '' }" exact class="lobby-item-box">
           <b-button
             class="lobby-item"
             @click="onMintCharacter"
