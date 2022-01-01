@@ -64,7 +64,7 @@
         <span class="nav-img-item">
           <img src="../assets/v2/marketplace_icon.svg" alt="Market Place" class="nav-img">
         </span>
-        <span class="nav-item-hover">Market Place</span>
+        <span class="nav-item-hover">Marketplace</span>
       </li>
     </router-link>
 
