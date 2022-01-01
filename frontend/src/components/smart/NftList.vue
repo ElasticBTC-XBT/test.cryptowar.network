@@ -5,19 +5,17 @@
         <span>Nothing to buy at this time</span>
       </div>
       <ul class="nft-grid nft-list row">
-        <li class="col-lg-3"
-        v-for="nft in nftIdTypes" :key="`${nft.type}.${nft.id}`">
+        <li class="col-lg-3" :disabled="nft.isSoldOut" v-b-modal.modal-buyitem @click="checkBuy = nft" v-for="nft in nftIdTypes" :key="`${nft.type}.${nft.id}`">
           <div class="character-item addnew nft-container">
             <nft-icon :nft="nft" :isShop="isShop" :isLoading="isLoading" :favorite="isFavorite(nft.typeId, nft.id)"
-              v-tooltip.top="{ content: itemDescriptionHtml(nft) , trigger: (isMobile() ? 'click' : 'hover') }"
-                        @mouseover="hover = !isMobile() || true"
-                        @mouseleave="hover = !isMobile()" />
+            v-tooltip.top="{ content: itemDescriptionHtml(nft) , trigger: (isMobile() ? 'click' : 'hover') }"
+            @mouseover="hover = !isMobile() || true"
+            @mouseleave="hover = !isMobile()" />
           </div>
           <div class="btn-open-wrap">
             <b-button
               :disabled="nft.isSoldOut"
               class="shop-button btn-blue-bg btn-open-box"
-              @click="buyItem(nft)"
             >
               <span v-if="!nft.isSoldOut">
                 Buy ({{ Math.round(nft.nftPrice) }} xBlade)
@@ -520,51 +518,24 @@ export default Vue.extend({
   justify-content: center;
   margin: 0;
   display: grid;
-  padding: 0.5em;
+  margin-top: 100px;
   grid-template-columns: repeat(auto-fit, 16em);
   gap: 2em;
 }
 
 .nft-list {
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .character-item.addnew.nft-container {
-  margin: 0 35px;
-  /* cursor: pointer;
-  align-items :center;
-  flex-direction: column;
-  justify-content: space-around; */
+  margin: 0 70px;
   padding: 30px 0;
 }
-
-/* .nft {
-  width: 12em;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 5px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-} */
 
 .centered-text-div {
   text-align: center;
 }
 
-/* .shop-button {
-  position: relative;
-  width: 12rem;
-} */
-
-/* .row.filters {
-   justify-content: center;
-   width: 100%;
-   max-width: 900px;
-   margin: 0 auto;
-   align-content: center;
-   border-bottom: 0.2px solid rgba(102, 80, 80, 0.1);
-   margin-bottom: 20px;
-} */
 .dropdown-elem {
   margin-bottom: 20px;
   max-width: 300px;
@@ -615,6 +586,136 @@ export default Vue.extend({
   margin-right: 0 !important;
   display: flex;
   align-items: center;
+}
+
+#modal-buyitem{
+  margin: auto;
+}
+#modal-buyitem .modal-content{
+  background: url("../../assets/v2/shop_background_box_confirm.svg");
+  background-repeat: no-repeat, no-repeat;
+  background-size: contain, contain;
+  height: 484px;
+}
+#modal-buyitem .modal-dialog.modal-md{
+  margin-top: 200px;
+}
+#modal-buyitem .modal-header .close{
+  background: url("../../assets/v2/shop-icon-close-box-confirm.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  font-size: 0 !important;
+  margin-right: 20px;
+  margin-top: 30px;
+  padding: 40px;
+}
+
+#modal-buyitem .modal-body{
+  margin-top: -100px;
+}
+
+#modal-buyitem .modal-body .rare-box{
+  background: url("../../assets/rare-box.png");
+}
+
+#modal-buyitem .modal-body .common-box{
+  background: url("../../assets/common-box.png");
+}
+
+#modal-buyitem .modal-body .epic-box{
+  background: url("../../assets/epic-box.png");
+}
+
+#modal-buyitem .modal-body .rare-box,
+#modal-buyitem .modal-body .common-box,
+#modal-buyitem .modal-body .epic-box{
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: block;
+  width: 320px;
+  height: 320px;
+  margin: auto;
+}
+
+#modal-buyitem .modal-body > div{
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+#modal-buyitem .modal-body div button{
+  height: 50px;
+  width: 170px;
+  border: none;
+  margin: 0 !important;
+  font-weight: bold;
+  border-radius: 0;
+}
+
+#modal-buyitem .modal-body > div div:first-child button{
+  background: url("../../assets/v2/shop_button_later.svg");
+  background-repeat: no-repeat, no-repeat;
+  background-size: contain, contain;
+}
+
+#modal-buyitem .modal-body > div div:last-child button{
+  background: url("../../assets/v2/shop_button_open.svg");
+  background-repeat: no-repeat, no-repeat;
+  background-size: contain, contain;
+}
+
+#modal-selectitem .modal-content{
+  background: url("../../assets/v2/shop-select-item.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-radius: 0;
+  width: 100%;
+  height: 660px;
+}
+
+#modal-buyitem .modal-footer{
+  display: none;
+}
+
+#modal-selectitem .modal-header .close{
+  background: url("../../assets/v2/shop-icon-close-box-confirm.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  font-size: 0;
+  margin-right: 10px;
+  margin-top: 10px;
+  padding: 30px;
+  z-index: 1;
+}
+
+#modal-selectitem .modal-body{
+  height: 100%;
+  overflow: auto;
+  margin: 20px 0;
+  margin-top: -40px;
+  overflow-y: scroll;
+  margin-right: 55px;;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #fff;
+  border-radius: 10px;
+  height: 40%;
+}
+
+#modal-selectitem ::-webkit-scrollbar-button {
+  height: 12px;
+}
+
+#modal-selectitem ::-webkit-scrollbar{
+  display: block;
+  width: 10px;
+}
+
+#modal-selectitem ::-webkit-scrollbar-track {
+  margin-top: 40px;
+  background: #707070;
+  border-radius: 10px;
 }
 
 @media (max-width: 576px) {

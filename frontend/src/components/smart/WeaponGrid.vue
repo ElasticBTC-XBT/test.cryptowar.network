@@ -51,6 +51,24 @@
         </ul>
       </div>
 
+      <template v-if="isMarket">
+        <div>
+          <strong>MIN PRICE</strong>
+          <input class="form-control" type="number" v-model.trim="minPriceFilter" :min="0" placeholder="Min" />
+        </div>
+        <div>
+          <strong>MAX PRICE</strong>
+          <input class="form-control" type="number" v-model.trim="maxPriceFilter" :min="0" placeholder="Max" />
+        </div>
+
+        <div>
+          <strong>SORT</strong>
+          <select class="form-control" v-model="priceSort" >
+            <option v-for="x in sorts" :value="x.dir" :key="x.dir">{{ x.name || 'Any' }}</option>
+          </select>
+        </div>
+      </template>
+
       <div class="search-btn">
         <b-button
           class="gtag-link-others btn-blue-bg"
@@ -63,36 +81,6 @@
         <i class="fas fa-times"></i>
       </div>
     </div>
-
-    <!-- <div>
-        <template v-if="isMarket">
-          <div class="col-sm-6 col-md-6 col-lg-2 mb-3">
-            <strong>Min Price</strong>
-            <input class="form-control" type="number" v-model.trim="minPriceFilter" :min="0" placeholder="Min" />
-          </div>
-          <div class="col-sm-6 col-md-6 col-lg-2 mb-3">
-            <strong>Max Price</strong>
-            <input class="form-control" type="number" v-model.trim="maxPriceFilter" :min="0" placeholder="Max" />
-          </div>
-
-          <div class="col-sm-6 col-md-6 col-lg-2 mb-3">
-            <strong>Sort</strong>
-            <select class="form-control" v-model="priceSort" >
-              <option v-for="x in sorts" :value="x.dir" :key="x.dir">{{ x.name || 'Any' }}</option>
-            </select>
-          </div>
-        </template>
-
-        <div v-if="showReforgedToggle" class="show-reforged">
-          <b-check class="show-reforged-checkbox" v-model="showReforgedWeapons" />
-          <strong>Show reforged</strong>
-        </div>
-
-        <div v-if="showFavoriteToggle" class="show-reforged show-favorite">
-          <b-check class="show-reforged-checkbox" v-model="showFavoriteWeapons" />
-          <strong>Show Favorite</strong>
-        </div>
-      </div> -->
 
     <ul
       class="weapon-grid row" :class="showFilters && 'col-12 col-xl-9'"
@@ -167,7 +155,8 @@
               v-if="index > weaponPaginationPrev && index < weaponPaginationNext"
             >
               <div class="weapon-icon-wrapper">
-                <weapon-icon class="weapon-icon" :weapon="weapon" :favorite="isFavorite(weapon.id)" :isSell="isSell" :sellClick="sellClick" :isBlacksmith="isBlacksmith"/>
+                <weapon-icon class="weapon-icon" :weapon="weapon" :favorite="isFavorite(weapon.id)" :isSell="isSell" :sellClick="sellClick" :isBlacksmith="isBlacksmith"
+                :isMarket="isMarket"/>
               </div>
               <div class="above-wrapper" v-if="$slots.above || $scopedSlots.above">
                 <slot name="above" :weapon="weapon"></slot>
@@ -569,6 +558,36 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button{
+  -webkit-appearance: none;
+}
+
+.form-control{
+  background-color: transparent;
+  color: white;
+  border: 1px solid rgb(17,65,105);
+  border-radius: 10px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 0.5rem 1rem;
+  font-size: 18px;
+  font-weight: 100;
+  padding: 15px;
+  margin-top: 10px;
+}
+
+.form-control:focus{
+  background-color: transparent;
+  color: white;
+}
+
+.form-control::placeholder{
+  color: rgba(255, 255, 255, 0.6);
+}
+
 .weapon-icon-wrapper {
   height: 100%;
 }
@@ -578,7 +597,7 @@ export default Vue.extend({
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 25px 15px;
+  padding: 15px 15px;
 }
 
 .sold {

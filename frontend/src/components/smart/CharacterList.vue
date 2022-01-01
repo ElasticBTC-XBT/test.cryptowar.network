@@ -1,7 +1,7 @@
 <template>
   <div :class="showFilters && 'row'">
     <div
-      class="filters mt-1 pl-2"
+      class="filters pl-2"
       :class="showFilters && 'col-12 col-xl-3'"
       v-if="showFilters"
       @change="saveFilters()"
@@ -149,6 +149,7 @@
 
       <li
         class="col-6 col-lg-4 col-xl-3"
+        v-if="!isMarket"
       >
         <div class="character-item addnew ">
           <b-button
@@ -344,6 +345,63 @@ export default {
 </script>
 
 <style scoped>
+
+.title{
+  font-size: 20px;
+  margin-top: 50px;
+}
+
+.clear-filters-button{
+  align-self: center;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.form-control{
+  background-color: transparent;
+  color: white;
+  border: 1px solid rgb(17,65,105);
+  border-radius: 10px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 0.5rem 1rem;
+  font-size: 18px;
+  font-weight: 100;
+  padding: 15px;
+  margin-top: 10px;
+}
+
+.form-control:focus{
+  background-color: transparent;
+  color: white;
+}
+
+.form-control::placeholder{
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.sell-box{
+  margin-top: 20px;
+}
+
+.sell-box button{
+  background: url("../../assets/v2/shop_nft_btn.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 170px;
+  height: 40px;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  border-radius: 0;
+}
+
+
 @media (min-width: 1248px) {
   .home .character-list {
     padding: 0 295px;

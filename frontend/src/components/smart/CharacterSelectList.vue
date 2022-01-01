@@ -247,7 +247,7 @@ export default {
 
 .above-wrapper {
   position: absolute;
-  top: 270px;
+  top: 335px;
   left: 0;
   right: 0;
   z-index: 100;

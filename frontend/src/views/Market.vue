@@ -106,7 +106,7 @@
           <hint class="hint" text="When you list an NFT for sale, it is transferred to the<br>market until someone buys it or you cancel the sale" />
         </template>
         <div class="row mt-3">
-          <div class="col-12 bar-contain col-xl-3">
+          <div class="col-12 col-xl-3">
             <div class="row button-row">
               <input class="form-control" type="text" placeholder="Seller Address, NFT ID">
               <div class="mb-2">
@@ -1403,7 +1403,8 @@ export default Vue.extend({
 
 <style scoped>
 .body {
-  margin-top: 10px;
+  margin-top: 3px;
+  padding: 0 126px;
 }
 
 .button + .button {
@@ -1461,10 +1462,6 @@ export default Vue.extend({
   margin-top: -5px;
 }
 
-.m-top-negative-50{
-  margin-top: -25px;
-}
-
 .centered-text {
   text-align: center;
   padding: 10px;
@@ -1516,7 +1513,7 @@ export default Vue.extend({
   width: 170px;
   height: 40px;
   margin: auto;
-  margin-top: 70px;
+  margin-top: 60px;
   border: none;
   color: white;
   font-weight: 800;
@@ -1533,11 +1530,6 @@ export default Vue.extend({
   font-size: 20px;
   color: rgb(216,88,247);
   font-weight: 800;
-}
-
-.bar-contain{
-  padding: 75px;
-  padding-top: 0;
 }
 
 .button-row{
@@ -1587,16 +1579,24 @@ export default Vue.extend({
 
 .market-hero-weapon{
   position: relative;
-  top: -42.515px;
+  /* top: -42.515px; */
   display: flex;
   flex-wrap: wrap;
-  border-bottom: 3px solid rgb(245,139,91);
-  width: fit-content;
-  margin-left: 5%;
+  width: 100%;
+  margin-left: 8px;
+  margin-bottom: 50px;
+}
+.market-hero-weapon::before{
+  content: "";
+  position: absolute;
+  bottom: 0;
+  background-color: rgb(245,139,91);
+  height: 5px;
+  width: 100%;
 }
 
 .market-hero-weapon button{
-  padding: 6px 100px;
+  padding: 10px 124px;
   font-size: 20px;
   cursor: pointer;
   background-color: transparent;
@@ -1608,5 +1608,9 @@ export default Vue.extend({
 .market-hero-weapon button.selected{
   background-color: rgb(245,139,91);
 }
+
+/* .progress .has-tooltip{
+  margin-top: 10px;
+} */
 
 </style>

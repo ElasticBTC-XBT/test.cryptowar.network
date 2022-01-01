@@ -265,7 +265,7 @@ export default Vue.extend({
 
 @media (min-width: 1025px) {
   .tab-content {
-    margin-top: 119px;
+    margin-top: 60px;
   }
   .inventory {
     margin-left: 95px;

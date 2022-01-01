@@ -205,7 +205,6 @@ a {
 }
 
 .nav-bottom-line{
-  height: 36px;
   border-top: 3px solid;
   border-image-slice: 1;
   border-top-width: 3px;

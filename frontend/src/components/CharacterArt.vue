@@ -5,7 +5,12 @@
         :class="characterTrait.toLowerCase() + '-icon circle-element'"
       ></span>
       <div class="black-outline" v-if="!portrait">
-          ID <span class="white">{{ character.id }}</span>
+          <div>
+            ID <span class="white">{{ character.id }}</span>
+          </div>
+          <div v-if="isMarket">
+            Lv.<span class="">{{ character.level + 1 }}</span>
+          </div>
       </div>
     </div>
     <div class="placeholder d-flex align-items-start justify-content-center " :class="characterTrait.toLowerCase() + '-bg'">
@@ -29,7 +34,7 @@
         <div class="name black-outline" :title="getCleanCharacterName(character.id)" v-if="!portrait">
           {{ getCleanCharacterName(character.id) }}
         </div>
-        <div class="lv" v-if="!portrait">
+        <div class="lv" v-if="!portrait && !isMarket">
           Lv.<span class="">{{ character.level + 1 }}</span>
         </div>
       </div>
@@ -49,7 +54,7 @@
         </div>
       </div> -->
 
-      <div class="xp-wrap">
+      <div class="xp-wrap" :style="isMarket&&'margin-top: 25px'">
         <div class="xp" v-if="!portrait">
           <b-progress
             :max="RequiredXp(character.level)"
@@ -227,8 +232,9 @@ export default {
 .black-outline {
   color: #fff;
   font-weight: bold;
-  font-size: 1.3em;
+  font-size: 1.2em;
   text-shadow: none;
+  text-align: end;
 }
 .black-outline .white{
   color: #fff;
@@ -320,6 +326,9 @@ export default {
   color: #FEA829;
   font-weight: bold;
   line-height: 1;
+}
+
+.market-bot .lv-market{
 }
 
 .market-bot .score {

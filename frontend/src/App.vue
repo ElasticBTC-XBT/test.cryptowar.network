@@ -849,7 +849,7 @@ button.close {
 }
 
 .main-font .nav-tabs a.nav-link{
-  font-size: 1.1rem;
+  font-size: 20px;
   color: #fff;
 }
 

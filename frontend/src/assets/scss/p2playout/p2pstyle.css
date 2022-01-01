@@ -6451,7 +6451,7 @@ pre code {
 .form-control {
     display: block;
     width: 100%;
-    height: calc(1.5em + 0.75rem + 2px);
+    /* height: calc(1.5em + 0.75rem + 2px); */
     padding: 0.375rem 0.75rem;
     font-size: 1rem;
     font-weight: 400;
@@ -8971,7 +8971,8 @@ input[type="submit"].btn-block {
 .heading.tabs {
   --tab-color: #F58B5B;
   position: relative;
-  top: -32.5px;
+  /* top: -32.5px; */
+  margin-top: 3px;
   padding-left: 39px;
 }
 
@@ -21132,7 +21133,7 @@ margin-bottom: 1.5rem;
 
   .above-wrapper {
     position: absolute;
-    top: 270px;
+    top: 335px;
     left: 0;
     right: 0;
     z-index: 100;
@@ -21250,7 +21251,6 @@ margin-bottom: 1.5rem;
   .filters {
     padding: 0 38px !important;
     max-width: 374px;
-    max-height: 739.188px;
     background-color: rgba(0, 0, 0, 0.5);
     position: relative;
   }

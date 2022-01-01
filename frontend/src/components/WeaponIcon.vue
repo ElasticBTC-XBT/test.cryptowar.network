@@ -73,12 +73,11 @@
         ></div>
       </div>
     </div>
-      <!--
-      <div class="weapon-bt-box default-contrast" v-if="isSell">
-        <b-button @click="sellClick()">
-          Sell
-        </b-button>
-      </div> -->
+    <div class="weapon-bt-box default-contrast" v-if="isSell && isMarket">
+      <b-button @click="sellClick()">
+        Sell
+      </b-button>
+    </div>
   </div>
 </template>
 
@@ -95,7 +94,7 @@ import { getCleanName } from '../rename-censor';
 
 
 export default {
-  props: ['weapon', 'favorite', 'isSell', 'sellClick', 'isBlacksmith'],
+  props: ['weapon', 'favorite', 'isSell', 'sellClick', 'isBlacksmith', 'isMarket'],
 
   computed: {
     ...mapState(['maxDurability']),
@@ -297,7 +296,7 @@ export default {
 .weapon-icon .placeholder {
   max-width: 208px;
   max-height: 208px;
-  margin-top: -20px;
+  margin-top: -80px;
   transform: scale(0.8);
 }
 
@@ -332,7 +331,7 @@ export default {
 }
 
 .small-durability-bar-wrap {
-  margin-top: 15px;
+  margin-top: 35px;
 }
 
 .weapon-icon.isBlacksmith .small-durability-bar-wrap {
@@ -416,9 +415,9 @@ export default {
 
 .weapon-bt-box{
   position: absolute;
-  bottom: -77px;
+  bottom: -48px;
   display: flex;
-  width: 100%;
+  width: 90%;
   justify-content: center;
 }
 
@@ -433,6 +432,7 @@ export default {
   margin: 0;
   font-weight: bold;
   font-size: 18px;
+  cursor: pointer;
 }
 
 .sell-grid .glow-img-box{
@@ -452,6 +452,9 @@ export default {
 
 .confirmReforge .name, .modal-body .name{
   bottom: 5px;
+}
+.weapon-footer{
+  margin-top: 10px;
 }
 
 /* .glow-container {
