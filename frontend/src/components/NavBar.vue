@@ -4,7 +4,7 @@
     <div v-if="referralAddress" style="color:#7F327C; text-align:center; background: white; padding:10px">
      ✨ Congratulations! You get 7% discount when mint new heroes ⚔️ only valid in 24 hours ⏰  </div>
     <b-navbar class="main-nav" toggleable="sm">
-      <b-navbar-brand href="#" class="nav-logo">
+      <b-navbar-brand href="/" class="nav-logo">
         <img
           src="../assets/logo250.png"
           class="logo d-inline-block align-top"
@@ -27,7 +27,6 @@
       </div>
     </b-navbar>
     <div class="nav-bottom-line"></div>
-    <claim-rewards-bar v-if="canShowRewardsBar" />
     <div class="container_row">
       <!-- <img src="../assets/divider4.png" class="expander-divider" /> -->
       <!-- <b-button
@@ -56,9 +55,8 @@ import ViewLinks from "./ViewLinks.vue";
 import Options from "./Options.vue";
 import SkillBalanceDisplay from "./smart/SkillBalanceDisplay.vue";
 import ClaimRewards from "./smart/ClaimRewards.vue";
-import ClaimRewardsBar from "./smart/ClaimRewardsBar.vue";
 
-import Events from "../events";
+// import Events from "../events";
 import { mapGetters, mapMutations } from "vuex";
 
 export default Vue.extend({
@@ -66,13 +64,12 @@ export default Vue.extend({
     ViewLinks,
     SkillBalanceDisplay,
     ClaimRewards,
-    ClaimRewardsBar,
     Options,
   },
 
   data() {
     return {
-      canShowRewardsBar: true,
+      // canShowRewardsBar: true,
     };
   },
 
@@ -90,9 +87,9 @@ export default Vue.extend({
 
   methods: {
     ...mapMutations(["setIsCharacterViewExpanded"]),
-    checkStorage(): void {
-      this.canShowRewardsBar = localStorage.getItem("hideRewards") === "false";
-    },
+    // checkStorage(): void {
+    //   this.canShowRewardsBar = localStorage.getItem("hideRewards") === "false";
+    // },
     toggleCharacterView(): void {
       this.setIsCharacterViewExpanded(!this.getIsCharacterViewExpanded);
       localStorage.setItem(
@@ -103,8 +100,8 @@ export default Vue.extend({
   },
 
   mounted() {
-    this.checkStorage();
-    Events.$on("setting:hideRewards", () => this.checkStorage());
+    // this.checkStorage();
+    // Events.$on("setting:hideRewards", () => this.checkStorage());
   },
 });
 </script>
@@ -208,8 +205,6 @@ a {
 }
 
 .nav-bottom-line{
-  position: relative;
-  z-index: 2;
   height: 36px;
   border-top: 3px solid;
   border-image-slice: 1;

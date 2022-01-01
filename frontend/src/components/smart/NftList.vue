@@ -4,28 +4,35 @@
       <div class="centered-text-div" v-if="(!nftIdTypes || nftIdTypes.length === 0)">
         <span>Nothing to buy at this time</span>
       </div>
-      <ul class="nft-grid">
-        <li class="nft" :disabled="nft.isSoldOut" v-b-modal.modal-buyitem @click="checkBuy = nft" v-for="nft in nftIdTypes" :key="`${nft.type}.${nft.id}`">
-          <nft-icon :nft="nft" :isShop="isShop" :isLoading="isLoading" :favorite="isFavorite(nft.typeId, nft.id)"
-            v-tooltip.top="{ content: itemDescriptionHtml(nft) , trigger: (isMobile() ? 'click' : 'hover') }"
-              @mouseover="hover = !isMobile() || true"
-              @mouseleave="hover = !isMobile()" />
-          <b-button
-            class="shop-button">
-            <span class="gtag-link-others" v-if="!nft.isSoldOut">
-              BUY
-              <div>({{ Math.round(nft.nftPrice) }} xBlade)</div>
-            </span>
-            <span  v-if="nft.isSoldOut && !isLoading && nft.id !== 2">
-              SOLD OUT
-            </span>
-            <span  v-if="isLoading && nft.id !== 2">
-              LOADING
-            </span>
-            <span  v-if="nft.id === 2">
-              COMING SOON
-            </span>
-          </b-button>
+      <ul class="nft-grid nft-list row">
+        <li class="col-lg-3"
+        v-for="nft in nftIdTypes" :key="`${nft.type}.${nft.id}`">
+          <div class="character-item addnew nft-container">
+            <nft-icon :nft="nft" :isShop="isShop" :isLoading="isLoading" :favorite="isFavorite(nft.typeId, nft.id)"
+              v-tooltip.top="{ content: itemDescriptionHtml(nft) , trigger: (isMobile() ? 'click' : 'hover') }"
+                        @mouseover="hover = !isMobile() || true"
+                        @mouseleave="hover = !isMobile()" />
+          </div>
+          <div class="btn-open-wrap">
+            <b-button
+              :disabled="nft.isSoldOut"
+              class="shop-button btn-blue-bg btn-open-box"
+              @click="buyItem(nft)"
+            >
+              <span v-if="!nft.isSoldOut">
+                Buy ({{ Math.round(nft.nftPrice) }} xBlade)
+              </span>
+              <span  v-if="nft.isSoldOut && !isLoading && nft.id !== 2">
+                SOLD OUT
+              </span>
+              <span  v-if="isLoading && nft.id !== 2">
+                LOADING
+              </span>
+              <span  v-if="nft.id === 2">
+                COMING SOON
+              </span>
+            </b-button>
+          </div>
         </li>
         <b-modal id="modal-buyitem">
           <div :class="checkBuy.image?checkBuy.image.split('.')[0]:''"></div>
@@ -517,189 +524,47 @@ export default Vue.extend({
   grid-template-columns: repeat(auto-fit, 16em);
   gap: 2em;
 }
-.nft {
-  width: 16em;
-  /* background: rgba(255, 255, 255, 0.1);
-  border-radius: 5px; */
-  /* cursor: pointer; */
-  position: relative;
-  /* overflow: hidden; */
+
+.nft-list {
+  justify-content: space-around;
 }
+
+.character-item.addnew.nft-container {
+  margin: 0 35px;
+  /* cursor: pointer;
+  align-items :center;
+  flex-direction: column;
+  justify-content: space-around; */
+  padding: 30px 0;
+}
+
+/* .nft {
+  width: 12em;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+} */
 
 .centered-text-div {
   text-align: center;
 }
 
-.shop-button.btn {
+/* .shop-button {
   position: relative;
-  background: url("../../assets/v2/shop_nft_btn.svg");
-  background-repeat: no-repeat, no-repeat;
-  background-size: contain, contain;
-  border-radius: 0;
-  border: none;
-  height: 58px;
-  font-weight: 800;
-  font-size: 16px;
-}
-/* .shop-button.shop-button2::before{
-  content: "";
-  background: url(../../assets/v2/shop_btn_ellipse.svg);
-  background-repeat: no-repeat;
-  background-size: contain;
-  width: 40px;
-  height: 10px;
-  position: absolute;
+  width: 12rem;
 } */
 
-.shop-button.btn.disabled {
-  background-color: transparent;
-}
-
-#modal-buyitem{
-  margin: auto;
-}
-#modal-buyitem .modal-content{
-  background: url("../../assets/v2/shop_background_box_confirm.svg");
-  background-repeat: no-repeat, no-repeat;
-  background-size: contain, contain;
-  height: 422px;
-}
-#modal-buyitem .modal-dialog.modal-md{
-  margin-top: 200px;
-}
-#modal-buyitem .modal-header .close{
-  background: url("../../assets/v2/shop-icon-close-box-confirm.svg");
-  background-repeat: no-repeat, no-repeat;
-  background-size: contain, contain;
-  font-size: 0;
-  margin-right: 30px;
-  margin-top: 20px;
-  padding: 30px;
-}
-
-#modal-buyitem .modal-body .rare-box{
-  background: url("../../assets/rare-box.png");
-}
-
-#modal-buyitem .modal-body .common-box{
-  background: url("../../assets/common-box.png");
-}
-
-#modal-buyitem .modal-body .epic-box{
-  background: url("../../assets/epic-box.png");
-}
-
-#modal-buyitem .modal-body .rare-box,
-#modal-buyitem .modal-body .common-box,
-#modal-buyitem .modal-body .epic-box{
-  background-repeat: no-repeat;
-  background-size: contain;
-  display: block;
-  width: 40%;
-  height: 90%;
-  margin: auto;
-  margin-top: -65px;
-  margin-bottom: 20px;
-}
-
-#modal-buyitem .modal-body > div{
-  display: flex;
-  justify-content: space-evenly;
-}
-
-#modal-buyitem .modal-body div button{
-  height: 50px;
-  width: 170px;
-  border: none;
-  margin: 0 !important;
-  font-weight: bold;
-  border-radius: 0;
-}
-
-#modal-buyitem .modal-body > div div:first-child button{
-  background: url("../../assets/v2/shop_button_later.svg");
-  background-repeat: no-repeat, no-repeat;
-  background-size: contain, contain;
-}
-
-#modal-buyitem .modal-body > div div:last-child button{
-  background: url("../../assets/v2/shop_button_open.svg");
-  background-repeat: no-repeat, no-repeat;
-  background-size: contain, contain;
-}
-
-#modal-selectitem .modal-content{
-  background: url("../../assets/v2/shop-select-item.svg");
-  background-repeat: no-repeat;
-  background-size: contain;
-  border-radius: 0;
-  width: 100%;
-  height: 660px;
-}
-
-#modal-buyitem .modal-footer{
-  display: none;
-}
-
-#modal-selectitem .modal-header .close{
-  background: url("../../assets/v2/shop-icon-close-box-confirm.svg");
-  background-repeat: no-repeat;
-  background-size: contain;
-  font-size: 0;
-  margin-right: 10px;
-  margin-top: 10px;
-  padding: 30px;
-  z-index: 1;
-}
-
-#modal-selectitem .modal-body{
-  height: 100%;
-  overflow: auto;
-  margin: 20px 0;
-  margin-top: -40px;
-  overflow-y: scroll;
-  margin-right: 55px;;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #fff;
-  border-radius: 10px;
-  height: 40%;
-}
-
-#modal-selectitem ::-webkit-scrollbar-button {
-  height: 12px;
-}
-
-#modal-selectitem ::-webkit-scrollbar{
-  display: block;
-  width: 10px;
-}
-
-#modal-selectitem ::-webkit-scrollbar-track {
-  margin-top: 40px;
-  background: #707070;
-  border-radius: 10px;
-}
-
-#modal-selectitem .modal-footer{
-  display: none;
-}
-
-.gtag-link-others{
-  line-height: 20px;
-}
-
-.row.filters {
-  justify-content: center;
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  align-content: center;
-  border-bottom: 0.2px solid rgba(102, 80, 80, 0.1);
-  margin-bottom: 20px;
-}
-
+/* .row.filters {
+   justify-content: center;
+   width: 100%;
+   max-width: 900px;
+   margin: 0 auto;
+   align-content: center;
+   border-bottom: 0.2px solid rgba(102, 80, 80, 0.1);
+   margin-bottom: 20px;
+} */
 .dropdown-elem {
   margin-bottom: 20px;
   max-width: 300px;
@@ -736,113 +601,21 @@ export default Vue.extend({
   outline: solid currentcolor 2px;
 }
 
-.items{
+.btn-open-wrap {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  color: white;
-  font-size: 14px;
-  margin: 0 20px;
-}
-
-.items .item{
-  height: 300px;
-  width: 200px;
-  /* background-position: 50% 50%; */
-  background-repeat: no-repeat;
-  margin-bottom: 100px;
-  background-size: 100% 100%;
-  position: relative;
-  border: 1px solid #3CDE9B;
-  border-radius: 15px 40px 15px 15px;
-  background: #0D2F9Cbb;
-  background-image: radial-gradient(#cc7d3c -30%, transparent 70%);
-  margin-left: 20px;
-  margin-right: 20px;
-  cursor: pointer;
-}
-
-.items .item::before {
-  content: ' ';
-  width: 65px;
-  height: 60px;
-  background: url("../../assets/v2/corner_green.svg") no-repeat 0 0;
-  background-size: cover;
-  position: absolute;
-  right: -6px;
-  top: -8px
-}
-
-.items .item .info{
-  padding: 10px 15px 10px 10px;
-}
-
-.items .item  .info-head{
-  display: flex;
-  justify-content: space-between;
-}
-
-.items .item  .info-head .property{
-  background: url("../../assets/elements/fire.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  width: 30px;
-  height: 30px;
-}
-
-.info-head-right{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.info-head-right .leve{
-  color: yellow;
-
-}
-
-.img-hero-around{
-  background: url("../../assets/images/water.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  width: 125px;
-  height: 170px;
-  margin: 0 auto;
-}
-
-.img-hero{
-  background: url("../../assets/hero/hero-water-04.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  width: 110px;
-  height: 170px;
-  margin: auto;
-}
-
-.info-footer{
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  margin-top: 15px;
-}
-
-.btn-request-fight{
-  display: flex;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
-.btn-request-fight button{
-  border: none;
-  color: white;
-  font-weight: bold;
-  background: url("../../assets/v2/shop_nft_btn.svg");
-  background-repeat: no-repeat;
-  background-size: contain;
-  width: 150px;
-  height: 36px;
+.btn-open-box {
+  height: 48px !important;
+  background-image: url("../../assets/v2/btn-pink-bg.svg") !important;
+  background-size: cover;
+  margin-right: 0 !important;
+  display: flex;
+  align-items: center;
 }
-
 
 @media (max-width: 576px) {
   .weapon-grid {
@@ -923,5 +696,13 @@ export default Vue.extend({
 
 .fix-h24 {
   height: 24px;
+}
+
+@media (max-width: 1024px) {
+  .character-item.addnew.nft-container {
+    margin: 50px auto 0;
+    height: 324px;
+    width: 225px;
+  }
 }
 </style>

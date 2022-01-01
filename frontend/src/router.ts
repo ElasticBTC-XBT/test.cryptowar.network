@@ -13,6 +13,8 @@ import Shop from './views/Shop.vue';
 import Referral from './views/Referral.vue';
 import P2PLayout from './views/P2PLayout.vue';
 import Lobby from './views/Lobby.vue';
+import Inventory from './views/Inventory.vue';
+
 import CombatPVP from './views/CombatPVP.vue';
 import Arena from './views/Arena.vue';
 import CombatPVPFight from './views/CombatPVPFight.vue';
@@ -46,6 +48,7 @@ function createRouter() {
     routes: [
       { path: '/', name: 'plaza', component: Plaza },
       { path: '/blacksmith', name: 'blacksmith', component: Blacksmith },
+      { path: '/inventory', name: 'inventory', component: Inventory },
       { path: '/combat', name: 'combat', component: Combat },
       { path: '/combat-pvp', name: 'pvp', component: CombatPVP },
       { path: '/combat-pvp-fight', name: 'pvp-fight', component: CombatPVPFight },

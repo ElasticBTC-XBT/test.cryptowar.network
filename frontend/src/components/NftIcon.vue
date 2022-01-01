@@ -40,8 +40,13 @@
 
       <div v-if="nft.type === 'SecretBox'" class="nft-details glow-container" ref="el" :class="['glow-' + (nft.stars || 0)]">
         <img class="placeholder-box" :src="imgPath(nft.image)" v-if="isShop" />
-        <span v-if="isShop" class="nft-name">{{ nft.name }}</span>
-        <span v-if="isShop" class="nft-supply">Quantity: <span>{{ isLoading ? "Loading" : nft.supply }}</span></span>
+        <h2 v-if="isShop" class="nft-name">{{ nft.name }}</h2>
+        <div class="box-quantity-wrap">
+          <div class="box-quantity">
+            Supply left:
+            <span v-if="isShop" class="nft-supply">{{ isLoading ? "Loading" : nft.supply }}</span>
+          </div>
+        </div>
       </div>
 
       <div v-if="nft.type !== 'shield' && nft.type !== 'SecretBox'" class="nft-details">
@@ -168,17 +173,12 @@ export default {
 .nft-icon {
   height: 80%;
   width: 100%;
-  position: relative;
   /* background: rgba(255, 255, 255, 0.1); */
 }
-.nft-icon-wrapper {
-  width: 16em;
-  height: 22em;
-  background: url("../assets/v2/shop_background_box.svg"), url("../assets/v2/Path_10647.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  cursor: pointer;
-}
+/* .nft-icon-wrapper {
+  width: 12em;
+  height: 12em;
+} */
 .default-icon-wrapper {
   width: 8em;
   height: 8em;
@@ -206,9 +206,8 @@ export default {
 }
 
 .placeholder-box {
-  max-width: 200px;
-  max-height: 200px;
-  margin-top: -40px;
+  width: 269px;
+  height: 269px;
 }
 
 .placeholder-consumable {
@@ -216,7 +215,14 @@ export default {
   transform: scale(0.7);
 }
 
-.nft-supply {
+@media (max-width: 1024px) {
+  .placeholder-box {
+    max-width: 200px;
+    max-height: 200px;
+  }
+}
+
+/* .nft-supply {
   position: absolute;
   bottom: -25px;
   left: 0;
@@ -235,12 +241,17 @@ export default {
   left: 0;
   right: 0;
   font-weight: 800;
-  font-size: 26px;
-}
+  margin: 4px 0;
+} */
 
 .nft-details {
   text-align: center;
   height: 100%;
+  position: relative;
+  align-items :center;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 30px 0;
 }
 
 .trait, .id, .stats {

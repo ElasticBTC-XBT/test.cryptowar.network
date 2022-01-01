@@ -8,12 +8,6 @@
           ID <span class="white">{{ character.id }}</span>
       </div>
     </div>
-
-    <!-- <div class="trait" v-if="!portrait">
-      <span
-        :class="characterTrait.toLowerCase() + '-icon circle-element'"
-      ></span>
-    </div> -->
     <div class="placeholder d-flex align-items-start justify-content-center " :class="characterTrait.toLowerCase() + '-bg'">
       <div
         :style="{
@@ -55,20 +49,22 @@
         </div>
       </div> -->
 
-      <div class="xp" v-if="!portrait">
-        <b-progress
-          :max="RequiredXp(character.level)"
-          variant="success"
-          v-tooltip.bottom="
-            `Claimable XP ${this.getCharacterUnclaimedXp(character.id)}`
-          "
-        >
-          <strong class="xp-text"
-            >{{ character.xp || 0 }} /
-            {{ RequiredXp(character.level) }} XP</strong
+      <div class="xp-wrap">
+        <div class="xp" v-if="!portrait">
+          <b-progress
+            :max="RequiredXp(character.level)"
+            variant="success"
+            v-tooltip.bottom="
+              `Claimable XP ${this.getCharacterUnclaimedXp(character.id)}`
+            "
           >
-          <b-progress-bar :value="character.xp || 0"></b-progress-bar>
-        </b-progress>
+            <strong class="xp-text"
+              >{{ character.xp || 0 }} /
+              {{ RequiredXp(character.level) }} XP</strong
+            >
+            <b-progress-bar :value="character.xp || 0"></b-progress-bar>
+          </b-progress>
+        </div>
       </div>
     </div>
   </div>
@@ -228,7 +224,7 @@ export default {
   font-style: italic;
 }
 
-.black-outline{
+.black-outline {
   color: #fff;
   font-weight: bold;
   font-size: 1.3em;
@@ -253,24 +249,30 @@ export default {
   text-align: center;
 }
 
+.xp-wrap {
+  padding: 0 10px;
+}
+
 .xp {
-  width: 261px;
+  width: 100%;
   background-image: url("../assets/v2/xp_bg.svg");
   background-repeat: no-repeat;
-  background-position: 50% 50%;
+  background-size: cover;
   height: 19px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0 0px;
-  margin: 7px auto;
+  margin: 7px 0;
+  border-radius: 16px;
 }
 
 .xp .bg-success {
   background-position: 0 0;
   background-image: url("../assets/v2/xp_progress.svg");
   background-repeat: no-repeat;
-  width: 261px;
+  background-size: cover;
+  width: 100%;
   height: 19px;
   background-color: transparent !important;
 }
@@ -282,7 +284,7 @@ export default {
   color: #000;
 }
 
-.xp .progress{
+.xp .progress {
   background-color: initial;
   width: 100%;
   height: 19px;
@@ -298,14 +300,7 @@ export default {
   position: relative;
   -o-object-fit: contain;
   object-fit: contain;
-  display: flex;
-  align-items: flex-end;
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 70%;
-  margin: auto;
-  height: 85%;
-  margin-top: -40px;
+  height: 300px;
 }
 
 .market-bot {
@@ -322,7 +317,7 @@ export default {
 
 .market-bot .lv {
   font-size: 1.2rem;
-  color: #dabf75;
+  color: #FEA829;
   font-weight: bold;
   line-height: 1;
 }
@@ -400,7 +395,7 @@ export default {
   color: #fff;
 }
 
-.water-bg, .fire-bg, .lightning-bg, .earth-bg{
+.water-bg, .fire-bg, .lightning-bg, .earth-bg {
   background-image: url('../assets/images/water.png');
   background-repeat: no-repeat;
   background-position: center bottom;
@@ -414,4 +409,61 @@ export default {
 .earth-bg{
   background-image: url('../assets/images/earth.png');
 }
+
+@media (min-width: 768px) {
+  .placeholder {
+    margin-top: -30px;
+  }
+}
+
+@media (max-width: 576px) {
+  .trait {
+    height: 45px;
+  }
+
+  .circle-element {
+    width: 27px;
+    height: 27px;
+  }
+
+  .black-outline {
+    font-size: 16px;
+    font-weight: normal;
+  }
+
+  .placeholder {
+    height: 164px;
+    background-size: 70% 60%;
+  }
+
+  .market-bot .name {
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .market-bot .lv {
+    font-size: 12px;
+  }
+
+  .name {
+    margin-top: 10px;
+  }
+
+  .xp {
+    height: 12px;
+  }
+
+  .xp .bg-success {
+    height: 12px;
+  }
+
+  .xp .progress {
+    height: 12px;
+  }
+
+  .xp-text {
+    font-weight: 500;
+  }
+}
+
 </style>

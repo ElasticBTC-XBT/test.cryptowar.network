@@ -23,7 +23,7 @@
 
       <b-nav-item :disabled="!canClaimXp" @click="onClaimXp">
         <b-button
-          class="gtag-link-others"
+          class="gtag-link-others btn-blue-bg btn-claim-xp"
           v-html="`Claim Heroes XP`"
           v-tooltip.bottom="formattedXpRewards"
         ></b-button>
@@ -300,8 +300,8 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.nav-item {
-  /* margin-top: -24px; */
+.navbar-expand {
+  flex-wrap: wrap;
 }
 
 .nav-item a {
@@ -321,7 +321,22 @@ export default Vue.extend({
   max-width: 800px;
   background: khaki;
 }
-.claim-reward-text:hover {
-  color: #F58B5B;
+.claim-reward-text {
+  color: #fff;
+}
+
+.btn-claim-xp {
+  font-size: 0.8rem;
+}
+
+@media (max-width: 576px) {
+    .navbar-expand {
+      justify-content: center;
+      text-align: center
+    }
+
+    .btn-claim-xp {
+      margin-top: 8px;
+    }
 }
 </style>

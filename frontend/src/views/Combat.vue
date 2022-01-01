@@ -121,6 +121,7 @@
                 v-if="!selectedWeaponId"
                 v-model="selectedWeaponId"
                 :checkForDurability="true"
+                showFilters
               />
             </div>
             <div v-if="targets.length > 0" class="nav-line boder"></div>

@@ -61,7 +61,7 @@
   height: calc(100vh);
   overflow-y: auto;
   background: url('../images/bg.png') no-repeat 0 0;
-  background-size: 100% 100%;
+  background-size: 100% 100%
 }
 
 .main-font .nav-item a{
@@ -189,15 +189,14 @@ select.form-control option, .custom-select option{
   color: #aaa;
 }
 
-.nft-grid .btn-secondary{
-  margin: 0.5rem auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 100%;
-  width: 95%;
-  min-width: 11rem;
-}
+// .nft-grid .btn-secondary{
+//   margin: 0.5rem auto;
+//   display: flex;
+//   justify-content: center;
+//   max-width: 100%;
+//   // width: 80%;
+//   min-width: 11rem;
+// }
 .shop-items .gtag-link-others{
   margin-right: 0;
 }

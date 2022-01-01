@@ -241,7 +241,8 @@ export default {
 }
 
 .character-item.selected {
-  background-image: url('../../assets/images/bg-item-top-select.png');
+
+    background-image: url('../../assets/images/bg-item-top-select.png');
 }
 
 .above-wrapper {
