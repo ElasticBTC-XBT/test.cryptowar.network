@@ -73,7 +73,7 @@
         ></div>
       </div>
     </div>
-    <div class="weapon-bt-box default-contrast" v-if="isSell && isMarket">
+    <div class="weapon-bt-box default-contrast" v-if="isSell">
       <b-button @click="sellClick()">
         Sell
       </b-button>
@@ -94,7 +94,7 @@ import { getCleanName } from '../rename-censor';
 
 
 export default {
-  props: ['weapon', 'favorite', 'isSell', 'sellClick', 'isBlacksmith', 'isMarket'],
+  props: ['weapon', 'favorite', 'isSell', 'sellClick', 'isBlacksmith'],
 
   computed: {
     ...mapState(['maxDurability']),
@@ -432,7 +432,6 @@ export default {
   margin: 0;
   font-weight: bold;
   font-size: 18px;
-  cursor: pointer;
 }
 
 .sell-grid .glow-img-box{

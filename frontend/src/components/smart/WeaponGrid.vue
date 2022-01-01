@@ -155,8 +155,7 @@
               v-if="index > weaponPaginationPrev && index < weaponPaginationNext"
             >
               <div class="weapon-icon-wrapper">
-                <weapon-icon class="weapon-icon" :weapon="weapon" :favorite="isFavorite(weapon.id)" :isSell="isSell" :sellClick="sellClick" :isBlacksmith="isBlacksmith"
-                :isMarket="isMarket"/>
+                <weapon-icon class="weapon-icon" :weapon="weapon" :favorite="isFavorite(weapon.id)" :isSell="isSell" :sellClick="sellClick" :isBlacksmith="isBlacksmith"/>
               </div>
               <div class="above-wrapper" v-if="$slots.above || $scopedSlots.above">
                 <slot name="above" :weapon="weapon"></slot>
