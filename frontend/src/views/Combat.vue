@@ -102,7 +102,7 @@
                   />
                 </div> -->
 
-                <div v-if="selectedWeaponId" class="weapon-icon-wrapper">
+                <div v-if="selectedWeaponId" class="weapon-icon-wrapper combat">
                   <weapon-icon class="weapon-icon" :weapon="selectedWeapon" />
                 </div>
 
@@ -876,7 +876,7 @@ div.encounter.text-center {
 
 .combat-enemy-container .weapon-icon-wrapper{
   height: 24rem;
-  width: 19.5rem;
+  width: 16.5rem;
 }
 
 .combat-enemy-container .small-durability-bar {
@@ -1001,6 +1001,7 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
   font-size: 1.2em;
   padding: 0;
   margin: 0 auto;
+  margin-top: 20px;
 }
 
 .out-stamina{
@@ -1010,6 +1011,51 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
 .out-stamina .message-box.flex-column{
   align-items: center;
   min-height: 70vh;
+}
+
+.weapon-icon-wrapper.combat{
+  height: 370px;
+  background-repeat: no-repeat;
+  margin-top: 50px;
+  background-size: 100% 100%;
+  position: relative;
+  border: 1px solid #F2BE3E;
+  border-radius: 15px 40px 15px 15px;
+  /* background: #0D2F9Cbb; */
+  background-image: linear-gradient(to bottom, #F56F56, #8e5662, #281c44, #050320);
+  will-change: border-color;
+  transition: all 0.3s;
+  padding: 10px 20px 20px 20px;
+}
+
+.weapon-icon-wrapper.combat::after{
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  background-image: url('../assets/v2/bg-recruit.svg');
+  opacity: 0.07;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  background-position: center;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+
+.weapon-icon-wrapper.combat::before{
+  content: ' ';
+  width: 76px;
+  height: 72px;
+  background: url(../assets/v2/corner_yellow.svg) no-repeat 0 0;
+  background-size: cover;
+  position: absolute;
+  right: -6px;
+  top: -8px;
+  will-change: background;
+  transition: all 0.3s;
+
 }
 
 @media (max-width: 1334px) {

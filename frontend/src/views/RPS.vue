@@ -617,7 +617,7 @@ export default {
 }
 
 .btn-request-fight:hover{
-  background-image: url(../assets/v2/btn-fight-big-opcity.svg);
+  background-image: url(../assets/v2/Btn-fight-opcity.png);
   transition: 0.9s;
 }
 
