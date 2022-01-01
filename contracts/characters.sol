@@ -283,8 +283,11 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
     function _calculateSecondsPerStamina(uint256 id) internal view returns (uint256) {
         uint256 base = 420;
         uint256 realLevel = getExpectedLevel(getLevel(id), getXp(id));
-        if (realLevel > 45) {
-            return 17 * 60; // 17 * 60 seconds
+        if (realLevel > 29) {
+            base = 4050;
+        }
+        if (realLevel > 54) {
+            return 100 * 60; // 100 * 60 seconds
         }
         return base.add(base.mul(realLevel).mul(staminaLevelRange).div(100));
     }

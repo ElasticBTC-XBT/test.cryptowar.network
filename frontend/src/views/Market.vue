@@ -178,14 +178,41 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col">
+        <div class="overlay" v-if="waitingMarketOutcome || marketOutcome">
+          <div class="marketoutcome-panel">
             <div class="outcome" v-if="waitingMarketOutcome">
               <i class="fas fa-spinner fa-spin"></i>
               Loading...
             </div>
-
-            <div class="outcome" v-if="marketOutcome !== null">{{ marketOutcome }}</div>
+            <div class="marketoutcome-panel-content" v-if="!waitingMarketOutcome">
+              <span class="marketoutcome-panel-heading" v-if="marketOutcomeHeading !== null">{{ marketOutcomeHeading }}</span>
+              <ul class="marketoutcome-list">
+                <li class="marketoutcome-item" v-if="marketOutcomeActiveType">
+                  <span class="marketoutcome-title">Type: </span>
+                  <span class="marketoutcome-info">{{ marketOutcomeActiveType }}</span>
+                </li>
+                <li class="marketoutcome-item" v-if="marketOutcomeID">
+                  <span class="marketoutcome-title">ID: </span>
+                  <span class="marketoutcome-info">{{ marketOutcomeID }}</span>
+                </li>
+                <li class="marketoutcome-item" v-if="marketOutcomePrice">
+                  <span class="marketoutcome-title">Price: </span>
+                  <span class="marketoutcome-info">{{ marketOutcomePrice }}</span>
+                </li>
+                <li class="marketoutcome-item" v-if="marketOutcomeSeller">
+                  <span class="marketoutcome-title">From: </span>
+                  <span class="marketoutcome-info">{{ marketOutcomeSeller }}</span>
+                </li>
+              </ul>
+              <div class="button-div">
+              <b-button
+                @click="marketOutcome = false;"
+                variant="primary"
+                class="gtag-link-others">
+                Accept
+              </b-button>
+            </div>
+            </div>
           </div>
         </div>
       </b-tab>
@@ -364,15 +391,43 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col">
+        <div class="overlay" v-if="waitingMarketOutcome || marketOutcome">
+          <div class="marketoutcome-panel">
             <div class="outcome" v-if="waitingMarketOutcome">
               <i class="fas fa-spinner fa-spin"></i>
               Loading...
             </div>
-
-            <div class="outcome" v-if="marketOutcome !== null">{{ marketOutcome }}</div>
+            <div class="marketoutcome-panel-content" v-if="!waitingMarketOutcome">
+              <span class="marketoutcome-panel-heading" v-if="marketOutcomeHeading !== null">{{ marketOutcomeHeading }}</span>
+              <ul class="marketoutcome-list">
+                <li class="marketoutcome-item" v-if="marketOutcomeActiveType">
+                  <span class="marketoutcome-title">Type: </span>
+                  <span class="marketoutcome-info">{{ marketOutcomeActiveType }}</span>
+                </li>
+                <li class="marketoutcome-item" v-if="marketOutcomeID">
+                  <span class="marketoutcome-title">ID: </span>
+                  <span class="marketoutcome-info">{{ marketOutcomeID }}</span>
+                </li>
+                <li class="marketoutcome-item" v-if="marketOutcomePrice">
+                  <span class="marketoutcome-title">Price: </span>
+                  <span class="marketoutcome-info">{{ marketOutcomePrice }}</span>
+                </li>
+                <li class="marketoutcome-item" v-if="marketOutcomeSeller">
+                  <span class="marketoutcome-title">From: </span>
+                  <span class="marketoutcome-info">{{ marketOutcomeSeller }}</span>
+                </li>
+              </ul>
+              <div class="button-div">
+                <b-button
+                  @click="marketOutcome = false;"
+                  variant="primary"
+                  class="gtag-link-others">
+                  Accept
+                </b-button>
+              </div>
+            </div>
           </div>
+
         </div>
       </b-tab>
 
@@ -527,14 +582,41 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col">
+        <div class="overlay" v-if="waitingMarketOutcome || marketOutcome">
+          <div class="marketoutcome-panel">
             <div class="outcome" v-if="waitingMarketOutcome">
               <i class="fas fa-spinner fa-spin"></i>
               Loading...
             </div>
-
-            <div class="outcome" v-if="marketOutcome !== null">{{ marketOutcome }}</div>
+            <div class="marketoutcome-panel-content" v-if="!waitingMarketOutcome">
+              <span class="marketoutcome-panel-heading" v-if="marketOutcomeHeading !== null">{{ marketOutcomeHeading }}</span>
+              <ul class="marketoutcome-list">
+                <li class="marketoutcome-item" v-if="marketOutcomeActiveType">
+                  <span class="marketoutcome-title">Type: </span>
+                  <span class="marketoutcome-info">{{ marketOutcomeActiveType }}</span>
+                </li>
+                <li class="marketoutcome-item" v-if="marketOutcomeID">
+                  <span class="marketoutcome-title">ID: </span>
+                  <span class="marketoutcome-info">{{ marketOutcomeID }}</span>
+                </li>
+                <li class="marketoutcome-item" v-if="marketOutcomePrice">
+                  <span class="marketoutcome-title">Price: </span>
+                  <span class="marketoutcome-info">{{ marketOutcomePrice }}</span>
+                </li>
+                <li class="marketoutcome-item" v-if="marketOutcomeSeller">
+                  <span class="marketoutcome-title">From: </span>
+                  <span class="marketoutcome-info">{{ marketOutcomeSeller }}</span>
+                </li>
+              </ul>
+              <div class="button-div">
+                <b-button
+                  @click="marketOutcome = false;"
+                  variant="primary"
+                  class="gtag-link-others">
+                  Accept
+                </b-button>
+              </div>
+            </div>
           </div>
         </div>
       </b-tab>
@@ -579,7 +661,12 @@ interface Data {
   allSearchResults: CharacterId[] | WeaponId[] | NftIdType[];
   searchResultsOwned: boolean;
   selectedNftId: NftId | null;
-  marketOutcome: string | null;
+  marketOutcome: boolean;
+  marketOutcomeHeading: string | null;
+  marketOutcomeActiveType: string | null;
+  marketOutcomeID: string | null;
+  marketOutcomePrice: string | null;
+  marketOutcomeSeller: string | null;
   waitingMarketOutcome: boolean;
   nftPricesById: Record<string, string>;
   characterMarketTax: string;
@@ -673,7 +760,12 @@ export default Vue.extend({
       allSearchResults: [],
       searchResultsOwned: false,
       selectedNftId: null,
-      marketOutcome: null,
+      marketOutcome: false,
+      marketOutcomeHeading: null,
+      marketOutcomeActiveType: null,
+      marketOutcomeID: null,
+      marketOutcomePrice: null,
+      marketOutcomeSeller: null,
       waitingMarketOutcome: false,
       nftPricesById: {},
       characterMarketTax: '',
@@ -801,7 +893,7 @@ export default Vue.extend({
       this.allSearchResults = [];
       this.searchResultsOwned = false;
       this.selectedNftId = null;
-      this.marketOutcome = null;
+      this.marketOutcome = false;
       this.waitingMarketOutcome = false;
       this.nftPricesById = {};
       this.allListingsAmount = 0;
@@ -860,7 +952,7 @@ export default Vue.extend({
     },
 
     async addListingForNft() {
-      this.marketOutcome = null;
+      this.marketOutcome = true;
       if(this.selectedNftId === null) return;
       if(!this.listingSellPrice) return;
 
@@ -868,48 +960,68 @@ export default Vue.extend({
       if(val <= 0 || !val || isNaN(val)) return;
 
       this.waitingMarketOutcome = true;
+      try {
+        const results = await this.addMarketListing({
+          nftContractAddr: this.contractAddress,
+          // nft-list keys have a typeid format, e.g. shield0
+          tokenId: this.activeType === 'weapon' || this.activeType === 'character'
+            ? this.selectedNftId
+            : this.selectedNftId.split('.')[1],
+          price: this.convertSkillToWei(val.toString()),
+        });
 
-      const results = await this.addMarketListing({
-        nftContractAddr: this.contractAddress,
-        // nft-list keys have a typeid format, e.g. shield0
-        tokenId: this.activeType === 'weapon' || this.activeType === 'character'
-          ? this.selectedNftId
-          : this.selectedNftId.split('.')[1],
-        price: this.convertSkillToWei(val.toString()),
-      });
-
-      this.selectedNftId = null;
-      this.waitingMarketOutcome = false;
-      this.marketOutcome = 'Successfully listed '
-        +this.activeType+' '+results.nftID+' for '+this.convertWeiToSkill(results.price)+' xBlade';
+        this.selectedNftId = null;
+        this.waitingMarketOutcome = false;
+        this.marketOutcome = true;
+        this.marketOutcomeHeading = 'Successfully listed ';
+        this.marketOutcomeActiveType = this.activeType;
+        this.marketOutcomeID = results.nftID;
+        this.marketOutcomePrice = this.convertWeiToSkill(results.price)+' xBlade';
+      } catch(error) {
+        this.marketOutcome = false;
+        this.waitingMarketOutcome = false;
+      }
     },
 
     async updateNftListingPrice() {
 
-      this.marketOutcome = null;
+      this.marketOutcome = true;
       if(this.selectedNftId === null) return;
 
       const val = Math.min(+this.listingSellPrice, 10000);
       if(val <= 0 || !val || isNaN(val)) return;
 
       this.waitingMarketOutcome = true;
+      try {
+        const results = await this.changeMarketListingPrice({
+          nftContractAddr: this.contractAddress,
+          tokenId: this.activeType === 'weapon' || this.activeType === 'character'
+            ? this.selectedNftId
+            : this.selectedNftId.split('.')[1],
+          newPrice: this.convertSkillToWei(val.toString())
+        });
 
-      const results = await this.changeMarketListingPrice({
-        nftContractAddr: this.contractAddress,
-        tokenId: this.activeType === 'weapon' || this.activeType === 'character'
-          ? this.selectedNftId
-          : this.selectedNftId.split('.')[1],
-        newPrice: this.convertSkillToWei(val.toString())
-      });
-
-      this.selectedNftId = null;
-      this.waitingMarketOutcome = false;
-      this.marketOutcome = 'Successfully changed price for '
-        +this.activeType+' '+results.nftID+' to '+this.convertWeiToSkill(results.newPrice)+' xBlade';
+        this.selectedNftId = null;
+        this.waitingMarketOutcome = false;
+        this.marketOutcome = true;
+        this.marketOutcomeHeading = 'Successfully changed price';
+        this.marketOutcomeActiveType = this.activeType;
+        this.marketOutcomeID = results.nftID;
+        this.marketOutcomePrice = this.convertWeiToSkill(results.newPrice)+' xBlade';
+      } catch {
+        this.marketOutcome = false;
+        this.waitingMarketOutcome = false;
+      }
     },
 
     async purchaseNft() {
-      this.marketOutcome = null;
+      this.marketOutcome = true;
+      this.marketOutcomeHeading = null;
+      this.marketOutcomeActiveType = null;
+      this.marketOutcomeID = null;
+      this.marketOutcomePrice = null;
+      this.marketOutcomeSeller = null;
+
       if(this.selectedNftId === null) return;
 
       const price = await this.lookupNftPrice(this.selectedNftId);
@@ -928,51 +1040,64 @@ export default Vue.extend({
       }
 
       this.waitingMarketOutcome = true;
+      try {
+        const results: any = await this.purchaseMarketListing({
+          nftContractAddr: this.contractAddress,
+          tokenId: this.selectedNftId,
+          maxPrice: price
+        });
 
-      const results: any = await this.purchaseMarketListing({
-        nftContractAddr: this.contractAddress,
-        tokenId: this.selectedNftId,
-        maxPrice: price
-      });
+        const results2: any  = await this.fetchAllMarketNftIds({
+          nftContractAddr: this.contractAddress
+        });
 
-      const results2: any  = await this.fetchAllMarketNftIds({
-        nftContractAddr: this.contractAddress
-      });
+        this.allSearchResults = results2;
 
-      this.allSearchResults = results2;
+        this.allSearchResults = Array.from(this.allSearchResults as string[]).filter((x: any) => x.id !== this.selectedNftId);
 
-      this.allSearchResults = Array.from(this.allSearchResults as string[]).filter((x: any) => x.id !== this.selectedNftId);
-
-      this.waitingMarketOutcome = false;
-      this.marketOutcome = 'Successfully purchased '
-        +this.activeType+' '+results.nftID+' for '+this.convertWeiToSkill(results.price)+' xBlade'
-          +' from '+results.seller;
+        this.waitingMarketOutcome = false;
+        this.marketOutcome = true;
+        this.marketOutcomeHeading = 'Successfully purchased ';
+        this.marketOutcomeActiveType = this.activeType;
+        this.marketOutcomeID = results.nftID;
+        this.marketOutcomePrice = this.convertWeiToSkill(results.price) + ' xBlade';
+        this.marketOutcomeSeller = results.seller;
+      } catch {
+        this.marketOutcome = false;
+        this.waitingMarketOutcome = false;
+      }
     },
 
     async cancelNftListing() {
-      this.marketOutcome = null;
+      this.marketOutcome = true;
 
       if(this.selectedNftId === null) return;
 
       this.waitingMarketOutcome = true;
+      try {
+        const results = await this.cancelMarketListing({
+          nftContractAddr: this.contractAddress,
+          tokenId: this.activeType === 'weapon' || this.activeType === 'character'
+            ? this.selectedNftId
+            : this.selectedNftId.split('.')[1],
+        });
 
-      const results = await this.cancelMarketListing({
-        nftContractAddr: this.contractAddress,
-        tokenId: this.activeType === 'weapon' || this.activeType === 'character'
-          ? this.selectedNftId
-          : this.selectedNftId.split('.')[1],
-      });
+        this.waitingMarketOutcome = false;
+        this.marketOutcome = true;
+        this.marketOutcomeHeading = 'Successfully taken off the market';
+        this.marketOutcomeActiveType = this.activeType;
+        this.marketOutcomeID = results.nftID;
 
-      this.waitingMarketOutcome = false;
-      this.marketOutcome = 'Successfully taken '
-        +this.activeType+' '+results.nftID+' off the market.';
-
-      await this.searchOwnListings(this.activeType);
+        await this.searchOwnListings(this.activeType);
+      } catch {
+        this.marketOutcome = false;
+        this.waitingMarketOutcome = false;
+      }
     },
 
     async searchAllCharacterListings(page: number) {
       this.activeType = 'character';
-      this.marketOutcome = null;
+      this.marketOutcome = true;
       this.waitingMarketOutcome = true;
       this.currentPage = page + 1;
 
@@ -985,7 +1110,7 @@ export default Vue.extend({
       this.searchResultsOwned = false; // temp
 
       this.waitingMarketOutcome = false;
-      this.marketOutcome = null;
+      this.marketOutcome = false;
     },
 
     async searchAllCharacterListingsThroughAPI(page: number) {
@@ -1095,22 +1220,25 @@ export default Vue.extend({
 
     async searchAllWeaponListings(page: number) {
       this.activeType = 'weapon';
-      this.marketOutcome = null;
+      this.marketOutcome = true;
       this.waitingMarketOutcome = true;
       this.currentPage = page + 1;
+      try {
+        if(useBlockchain === true)
+          await this.searchAllWeaponListingsThroughChain(page);
+        else
+          await this.searchAllWeaponListingsThroughAPI(page);
 
-      if(useBlockchain === true)
-        await this.searchAllWeaponListingsThroughChain(page);
-      else
-        await this.searchAllWeaponListingsThroughAPI(page);
-
-      // searchResultsOwned does not mesh with this function
-      // will need per-result checking of it, OR filtering out own NFTs
-      //this.searchResultsOwned = nftSeller === this.defaultAccount;
-      this.searchResultsOwned = false; // temp
-
-      this.waitingMarketOutcome = false;
-      this.marketOutcome = null;
+        // searchResultsOwned does not mesh with this function
+        // will need per-result checking of it, OR filtering out own NFTs
+        //this.searchResultsOwned = nftSeller === this.defaultAccount;
+        this.searchResultsOwned = false; // temp
+        this.waitingMarketOutcome = false;
+        this.marketOutcome = false;
+      } catch {
+        this.waitingMarketOutcome = false;
+        this.marketOutcome = false;
+      }
     },
 
     async searchAllWeaponListingsThroughChain(page: number) {
@@ -1153,7 +1281,7 @@ export default Vue.extend({
 
     async searchAllShieldListings(page: number) {
       this.activeType = 'shield';
-      this.marketOutcome = null;
+      this.marketOutcome = true;
       this.waitingMarketOutcome = true;
       this.currentPage = page + 1;
 
@@ -1168,7 +1296,7 @@ export default Vue.extend({
       this.searchResultsOwned = false; // temp
 
       this.waitingMarketOutcome = false;
-      this.marketOutcome = null;
+      this.marketOutcome = false;
     },
 
     async searchAllShieldListingsThroughChain(page: number) {
@@ -1211,7 +1339,7 @@ export default Vue.extend({
 
     async searchListingsByNftId(type: SellType) {
       this.activeType = type;
-      this.marketOutcome = null;
+      this.marketOutcome = true;
       this.waitingMarketOutcome = true;
 
       const nftSeller = await this.fetchSellerOfNft({
@@ -1234,12 +1362,12 @@ export default Vue.extend({
       }
 
       this.waitingMarketOutcome = false;
-      this.marketOutcome = null;
+      this.marketOutcome = false;
     },
 
     async searchListingsBySeller(type: SellType) {
       this.activeType = type;
-      this.marketOutcome = null;
+      this.marketOutcome = true;
       this.waitingMarketOutcome = true;
 
       try {
@@ -1252,10 +1380,12 @@ export default Vue.extend({
       } catch {
         this.searchResultsOwned = false;
         this.waitingMarketOutcome = false;
+        this.marketOutcome = false;
         this.searchResults = [];
       }
 
       this.waitingMarketOutcome = false;
+      this.marketOutcome = false;
     },
 
     async searchListingsBySellerThroughChain(){
@@ -1277,7 +1407,7 @@ export default Vue.extend({
       this.searchResultsOwned = false;
     },
     async searchOwnListings(type: SellType) {
-      this.marketOutcome = null;
+      this.marketOutcome = true;
       this.activeType = type;
       if(!this.defaultAccount) {
         this.searchResults = [];
@@ -1285,10 +1415,16 @@ export default Vue.extend({
       }
       this.waitingMarketOutcome = true;
 
-      await this.searchOwnListingsThroughChain();
+      try {
+        await this.searchOwnListingsThroughChain();
 
-      this.searchResultsOwned = true;
-      this.waitingMarketOutcome = false;
+        this.searchResultsOwned = true;
+        this.waitingMarketOutcome = false;
+        this.marketOutcome = false;
+      } catch {
+        this.waitingMarketOutcome = false;
+        this.marketOutcome = false;
+      }
     },
 
     async searchOwnListingsThroughChain() {
