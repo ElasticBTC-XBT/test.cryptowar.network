@@ -9007,7 +9007,7 @@ input[type="submit"].btn-block {
 
 .heading.tabs .nav-item .nav-link:not(.active):hover {
   color: var(--tab-color) !important;
-  border: none !important;
+  /* border: none !important; */
 }
 
 @media (max-width: 575.98px) {

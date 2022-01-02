@@ -738,30 +738,54 @@ button.close {
   color: #a50eb3 !important;
 }
 
-#fightResultsModal .modal-dialog,
-#listHeroToCareerModal .modal-dialog,
-#listHeroToChallengeModal .modal-dialog{
-  max-width: 500px;
+#fightResultsModal .modal-content,
+#listHeroToCareerModal .modal-content,
+#listHeroToChallengeModal .modal-content{
+  min-width: 500px;
   height: 100%;
   display: flex;
   align-items: center;
 }
 
-#requestSelect .modal-dialog,
-#fightModal .modal-dialog,
-#cancelRequestModal .modal-dialog{
-  max-width: 700px;
-  height: 100%;
-  display: flex;
-  align-items: center;
+#error-request-fight .modal-content{
+  height: 190px;
 }
 
-#selectHeroOrWeaponModal .modal-dialog{
-  max-width: 1150px;
-  height: 100%;
+#cancelRequestModal .close,
+#requestSelect .close,
+#selectHeroOrWeaponModal .close{
+  margin-right: 55px;
+}
+
+#selectHeroOrWeaponModal .close,
+#listHeroToChallengeModal .close,
+#listHeroToCareerModal .close{
+  margin-right: 30px;
+}
+
+#requestSelect .modal-content,
+#fightModal .modal-content,
+#cancelRequestModal .modal-content{
+  min-width: 700px;
+  height: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#selectHeroOrWeaponModal .modal-content{
+  min-width: 1150px;
+  height: 100%;
+}
+
+#selectHeroOrWeaponModal .modal-dialog{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#selectHeroOrWeaponModal .modal-body{
+  overflow: scroll;
 }
 
 #requestSelect .modal-content,
@@ -864,8 +888,13 @@ button.close {
 }
 
 .nav-tabs .nav-link:hover {
-  border-bottom: 5px solid #F58B5B !important;
+  // border-bottom: 5px solid #F58B5B !important;
   border-color: transparent transparent #F58B5B transparent !important ;
+}
+
+.containerRight .nav-tabs .nav-link:hover,
+.nav-justified.nav-tabs .nav-link:hover{
+  border-bottom: 5px solid #F58B5B !important;
 }
 
 .outline {

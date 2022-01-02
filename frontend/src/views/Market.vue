@@ -153,8 +153,6 @@
                   {{calculatedBuyerCost(listingSellPrice)}} xBlade</i></span>
                 </b-modal>
               </div>
-
-
               <div class="mb-2">
                 <b-button
                   class="gtag-link-others search-btn" tagname="show_weapons_sold"

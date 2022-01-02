@@ -5,20 +5,18 @@
       <div class="row">
         <div class="col-12">
           <div class="quantity-heroes">
-            <div><span>123</span> Heroes In Chanllenge Mode{{this.select}}</div>
-            <div><span>456</span> Heroes In Career Mode</div>
+            <div><span>{{ownCharacters.length}}</span> Heroes In Chanllenge Mode{{this.select}}</div>
+            <div><span>{{ownCharacters.length}}</span> Heroes In Career Mode</div>
           </div>
         </div>
       </div>
-      <b-modal id="listHeroToCareerModal" hide-footer>
-        <div class="icon-close-container"><div class="icon-close" @click="$bvModal.hide('listHeroToCareerModal')"></div></div>
+      <b-modal id="listHeroToCareerModal" hide-footer centered>
         <div class="listHeroToCareerModal-head">CryptoWar Message</div>
         <div class="listHeroToCareerModal-body">Listing HERO to Career: <span>Done</span></div>
         <button @click="$bvModal.hide('listHeroToCareerModal'), careerMode = true, changeMode = false, requestChallenge = false,
           checkSelect = false, addClass = ''" class="listHeroToCareerModal-btn confirm">GO TO CHECK</button>
       </b-modal>
-      <b-modal id="listHeroToChallengeModal" hide-footer>
-        <div class="icon-close-container"><div class="icon-close" @click="$bvModal.hide('listHeroToChallengeModal')"></div></div>
+      <b-modal id="listHeroToChallengeModal" hide-footer centered>
         <div class="listHeroToChallengeModal-head">CryptoWar Message</div>
         <div class="listHeroToChallengeModal-body">Listing HERO to Challenge: <span>Done</span></div>
         <button @click="$bvModal.hide('listHeroToChallengeModal'), careerMode = false, changeMode = true, requestChallenge = false,
@@ -72,7 +70,7 @@
             <div class="info-user-title">Your Information</div>
             <div class="info-user-body">
               <span>HEROES available</span>
-              <div>4</div>
+              <div>{{ownCharacters.length}}</div>
             </div>
             <div class="info-user-btn">
               <button @click="$bvModal.show('selectHeroOrWeaponModal'), selectHero = true, selectWeapon = false">SELECT HERO</button>
@@ -99,8 +97,7 @@
           </div>
         </div>
       </div>
-      <b-modal id="selectHeroOrWeaponModal" class="modal-box" hide-footer>
-        <div class="icon-close-container"><div class="icon-close" @click="$bvModal.hide('selectHeroOrWeaponModal')"></div></div>
+      <b-modal id="selectHeroOrWeaponModal" class="modal-box" hide-footer centered>
         <!-- <div class="title-results">{{titleResults}}</div>
         <CombatResults v-if="resultsAvailable" :results="fightResults" /> -->
         <div class="row list" v-if="selectHero">
@@ -183,7 +180,7 @@
                     (requestChallenge = false)
                 "
                 :active="careerMode"
-                ><div>CAREER MODE <div>456</div></div></b-nav-item
+                ><div>CAREER MODE <div>{{careerModeRooms.length}}</div></div></b-nav-item
               >
               <b-nav-item
                 class="nav-item"
@@ -194,14 +191,13 @@
                     (requestChallenge = true)
                 "
                 :active="requestChallenge"
-                ><div>REQUEST TO CHALLENGE <div>1</div></div></b-nav-item
+                ><div>REQUEST TO CHALLENGE <div>{{careerModeRequest.length}}</div></div></b-nav-item
               >
             </b-nav>
           </div>
         </div>
       </div>
-      <b-modal id="requestSelect" class="modal-box" hide-footer>
-        <div class="icon-close" @click="$bvModal.hide('requestSelect')"></div>
+      <b-modal id="requestSelect" class="modal-box" hide-footer centered>
         <div class="requestSelect-head">Request battle to HERO #123</div>
         <div class="requestSelect-body">
           <div>Amount request
@@ -235,8 +231,7 @@
           </div>
         </div>
       </div>
-      <b-modal id="fightModal" class="modal-box" hide-footer>
-        <div class="icon-close" @click="$bvModal.hide('fightModal')"></div>
+      <b-modal id="fightModal" class="modal-box" hide-footer centered>
         <div class="requestSelect-head">You got request battle from Hero #123</div>
         <div class="requestSelect-body">
           <div>Amount request
@@ -250,8 +245,8 @@
       </b-modal>
       <div v-if="careerMode">
         <div class="row list-heroes" style="margin-left: 0;">
-          <div class="item" v-for="i in 10" :key="i">
-              <div class="info">
+          <div class="item" v-for="i in careerModeRooms" :key="i.characterId">
+              <!-- <div class="info">
                 <div class="info-head">
                     <span class="property"></span>
                 </div>
@@ -268,7 +263,14 @@
                   <div class="remain-hero">Remain: <span>345.9098</span></div>
                   <div class="cost"><div></div> 100</div>
                 </div>
-              </div>
+              </div> -->
+              <CharacterRoom
+                :characterId="i.characterId"
+                :room="i"
+                :selectedCharacterId="characterId"
+                :selectedWeaponId="weaponId"
+                :isRequest="true"
+              />
               <div class="button-container"><button @click="$bvModal.show('fightModal')" class="btn-request-fight">FIGHT</button></div>
               <!-- <router-link :to="{ name: 'pvp-fight' }">
               </router-link> -->
@@ -319,6 +321,7 @@ import {
 // import Hint from '../components/Hint.vue';
 // import CombatResults from '../components/CombatResults.vue';
 import { toBN, fromWeiEther } from "../utils/common";
+import CharacterRoom from "../components/CharacterRoom.vue";
 // import WeaponIcon from '../components/WeaponIcon.vue';
 import { mapActions, mapGetters, mapState, mapMutations } from "vuex";
 // import CharacterBar from "../components/CharacterBar.vue";
@@ -361,7 +364,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["currentCharacterId"]),
+    ...mapState(["currentCharacterId", "careerModeRooms", "careerModeRequest"]),
     ...mapGetters([
       "getTargetsByCharacterIdAndWeaponId",
       "ownCharacters",
@@ -637,6 +640,7 @@ export default {
     // WeaponIcon,
     // CharacterBar,
     CombatPVPFight,
+    CharacterRoom,
   },
 };
 </script>
@@ -651,39 +655,6 @@ export default {
   display: flex;
   flex-direction: column;
   max-width: 1550px;
-}
-
-
-#selectHeroOrWeaponModal .icon-close{
-  background-image: url(../assets/v2/icon-close-2.svg);
-  width: 50px;
-  height: 47px;
-  margin-right: 40px;
-}
-
-#requestSelect .icon-close,
-#fightModal .icon-close{
-  background-image: url(../assets/v2/icon-close.svg);
-  width: 50px;
-  height: 47px;
-  position: relative;
-  right: -36em;
-  top: -15px;
-}
-
-#listHeroToCareerModal .icon-close,
-#listHeroToChallengeModal .icon-close{
-  background-image: url(../assets/v2/icon-close.svg);
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
-}
-
-#listHeroToChallengeModal .icon-close-container,
-#listHeroToCareerModal .icon-close-container,
-#selectHeroOrWeaponModal .icon-close-container{
-  display: flex;
-  justify-content: flex-end;
 }
 
 .quantity-heroes {
@@ -1411,15 +1382,11 @@ export default {
 }
 
 @media (max-width: 376px) {
-  #selectHeroOrWeaponModal .icon-close{
-    margin-right: 10px;
-  }
+
 }
 
 @media (max-width: 767px) {
-  #selectHeroOrWeaponModal .icon-close{
-    margin-right: 10px;
-  }
+
 }
 
 @media (min-width: 768px) {

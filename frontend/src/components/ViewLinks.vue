@@ -64,7 +64,7 @@
         <span class="nav-img-item">
           <img src="../assets/v2/marketplace_icon.svg" alt="Market Place" class="nav-img">
         </span>
-        <span class="nav-item-hover">Market Place</span>
+        <span class="nav-item-hover">Marketplace</span>
       </li>
     </router-link>
 
@@ -154,6 +154,8 @@ a:hover {
   color : #ffffff;
   font-size: 1.1em;
   padding: 0px 5px 0px 5px;
+  margin-right: 0px;
+  margin-top: -4px;
 }
 .lobby{
   background: url('../assets/v2/lobby.svg') no-repeat center;

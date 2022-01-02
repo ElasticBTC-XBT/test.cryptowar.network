@@ -11,7 +11,7 @@
     </div>
 
     <div class="weapon-header">
-      <div>
+      <div class="left">
         <div class="trait">
           <span :class="weapon.element.toLowerCase() + '-icon'"></span>
           <span class="weapon-star" v-for="n in this.weapon.stars + 1" :key="n">
@@ -38,8 +38,7 @@
           <!-- <br><b-icon v-if="favorite" class="favorite-star" icon="star-fill" variant="warning" /> -->
         </div>
       </div>
-
-      <div class="left">
+      <div class="right">
         <div class="id" v-if="!isBlacksmith">
           ID {{ weapon.id }}
           <!-- <br><b-icon v-if="favorite" class="favorite-star" icon="star-fill" variant="warning" /> -->
@@ -53,7 +52,6 @@
         </div>
       </div>
     </div>
-
     <div v-tooltip="{ content: tooltipHtml , trigger: (isMobile() ? 'click' : 'hover') }" class="glow-img-box">
       <img v-if="showPlaceholder" class="placeholder" :src="getWeaponArt(weapon)" />
     </div>

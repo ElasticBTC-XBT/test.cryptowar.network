@@ -1,8 +1,7 @@
 <template>
   <div class="body main-font">
     <div class="row combat">
-      <b-modal id="cancelRequestModal" hide-footer>
-          <div class="icon-close" @click="$bvModal.hide('cancelRequestModal'), cancelRequest= false"></div>
+      <b-modal id="cancelRequestModal" hide-footer centered>
           <div class="content-noti">Cancel Request Battle</div>
           <!-- <CombatResults v-if="resultsAvailable" :results="fightResults" /> -->
           <div class="cancelrequestmodal-btn">
@@ -10,10 +9,9 @@
               <button class="btn-confirm" block @click="$bvModal.hide('cancelRequestModal')">CONFIRM</button>
           </div>
       </b-modal>
-      <b-modal id="fightResultsModal" hide-footer>
+      <b-modal id="fightResultsModal" hide-footer centered>
          <link rel="prefetch" as="image" href="/img/Congrats.5ac13bd5.gif">
           <img src="/img/Congrats.5ac13bd5.gif" class="background-win">
-          <div class="icon-close" @click="$bvModal.hide('fightResultsModal')"></div>
           <div class="title-results">{{titleResults}}</div>
           <CombatResults :results="fightResults" :propResultsFromPVP="resultsFromPVP" />
           <button class="mt-3 btn-buy btn-close-fight-results" block @click="$bvModal.hide('fightResultsModal'), cancelRequest= false">Close</button>
@@ -481,6 +479,7 @@ font-size: 1.3em;
 }
 
 .btn-confirm{
+  margin: 0 20px;
   display: block;
   background-color: transparent;
   border: none;
@@ -494,6 +493,7 @@ font-size: 1.3em;
 }
 
 .btn-no{
+  margin: 0 20px;
   background-color: transparent;
   border: none;
   background-image: url(../assets/v2/Btn-blue.svg);
@@ -512,15 +512,6 @@ font-size: 1.3em;
   align-items: center;
   justify-content: space-evenly;
   margin: 50px 0 10px 0;
-}
-
-#cancelRequestModal .icon-close{
-  background-image: url(../assets/v2/icon-close.svg);
-  width: 50px;
-  height: 47px;
-  position: relative;
-  right: -36em;
-  z-index: 2;
 }
 
 .custom-select{
@@ -554,19 +545,9 @@ font-size: 1.3em;
   background-size: 100%;
   background-repeat: no-repeat;
   width: 473px;
-  height: 226px;
+  height: 180px;
   position: fixed;
 }
-
-#fightResultsModal .icon-close{
-  background-image: url(../assets/v2/icon-close.svg);
-  width: 50px;
-  height: 47px;
-  position: relative;
-  right: -24em;
-  z-index: 2;
-}
-
 .content-results{
   text-align: center;
   font-size: 1.3em;

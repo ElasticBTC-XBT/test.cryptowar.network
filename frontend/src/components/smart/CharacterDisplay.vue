@@ -1,14 +1,9 @@
 <template>
   <div class="character-display-container">
     <transition name="slide-fade">
-      <div class="row chara-head-box" :class="[getIsCharacterViewExpanded?'':'chara-head-close']">
+      <!-- <div class="row chara-head-box" :class="[getIsCharacterViewExpanded?'':'chara-head-close']">
         <div class="col-sm-12 root main-font">
           <div class="character-portrait">
-            <!--img
-            v-if="!isLoadingCharacter"
-            :src="getCharacterArt(currentCharacter)"
-            alt="Placeholder character"
-          /-->
             <CharacterArt
               v-if="!isLoadingCharacter"
               :character="currentCharacter"
@@ -57,10 +52,10 @@
                 />
               </p>
             </div>
-          <!-- <earnings-calculator /> -->
+          <earnings-calculator />
           </div>
         </div>
-      </div>
+      </div> -->
     </transition>
 
     <div class="character-full-list" :class="[getIsCharacterViewExpanded? '': 'hidden']" v-if="!isMobile()">
@@ -80,20 +75,29 @@
           :key="c.id"
           @click="!getIsInCombat && setCurrentCharacter(c.id) && alert(c.id)"
         >
-          <div class="name-list">
-            {{ getCleanCharacterName(c.id) }} Lv.{{ c.level + 1 }}
+          <div class="element-icon"><span
+                :class="
+                  traits[c.trait].toLowerCase() +
+                  '-icon trait-icon'
+                "
+              ></span>
           </div>
-          <div
-            class="small-stamina-char"
-            :style="`--staminaReady: ${
-              (getCharacterStamina(c.id) / maxStamina) * 100
-            }%;`"
-            v-tooltip.bottom="
-              toolTipHtml(timeUntilCharacterHasMaxStamina(c.id), getSecondPerStamina(c.id))
-            "
-          >
-            <div class="stamina-text">
-              STA {{ getCharacterStamina(c.id) }} / 200
+          <div>
+            <div class="name-list">
+            {{ getCleanCharacterName(c.id) }} Lv.{{ c.level + 1 }}
+            </div>
+            <div
+              class="small-stamina-char"
+              :style="`--staminaReady: ${
+                (getCharacterStamina(c.id) / maxStamina) * 100
+              }%;`"
+              v-tooltip.bottom="
+                toolTipHtml(timeUntilCharacterHasMaxStamina(c.id), getSecondPerStamina(c.id))
+              "
+            >
+              <div class="stamina-text">
+                STA {{ getCharacterStamina(c.id) }} / 200
+              </div>
             </div>
           </div>
         </li>
@@ -127,19 +131,19 @@
 import { mapGetters, mapState, mapMutations } from "vuex";
 import { getCharacterArt } from "../../character-arts-placeholder";
 import SmallBar from "../SmallBar.vue";
-import CharacterArt from "../CharacterArt.vue";
+// import CharacterArt from "../CharacterArt.vue";
 import { CharacterPower, CharacterTrait } from "../../interfaces";
 import { RequiredXp } from "../../interfaces";
-import Hint from "../Hint.vue";
+// import Hint from "../Hint.vue";
 import Vue from "vue";
 import { toBN, fromWeiEther } from "../../utils/common";
 import { getCleanName } from "../../rename-censor";
 
 export default Vue.extend({
   components: {
-    CharacterArt,
+    // CharacterArt,
     SmallBar,
-    Hint,
+    // Hint,
   },
 
   computed: {
@@ -219,7 +223,6 @@ export default Vue.extend({
   /* overflow: hidden; */
 }
 
-
 .character-data-column {
   display: flex;
   flex-direction: column;
@@ -255,33 +258,52 @@ ul.character-list {
 }
 
 li.character {
-  background: #200334;
-  padding: 0.5rem 0.8rem 0.8rem;
+  background: #F58B5B;
+  padding: 0.5rem 0.5rem 0.5rem;
   margin: 5px;
   vertical-align: middle;
   cursor: pointer;
-  border-radius: 5px;
-  border: 2px solid #5D5A62;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  /* border: 2px solid #5D5A62; */
+}
+
+li.character .element-icon{
+  width: 50px;
+  height: 45px;
 }
 
 li.character-highlight {
   border: solid #9e8a57 3px;
   font-weight: 800;
-  padding: 5px;
-  border-radius: 5px;
-  margin: 5px;
+  /* padding: 5px; */
+  padding: 0.5rem 0.5rem 0.5rem;
+  border-radius: 10px;
+  margin: 10x;
   vertical-align: middle;
   cursor: pointer;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
+
+li.character-highlight .element-icon{
+  width: 50px;
+  height: 45px;
+}
+
 
 .name-list {
   margin: auto;
   font-size: 1.1em;
   text-align: center;
-  color: #F58B5B;
+  color: #fff;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow-x: hidden;
+  width: 200px;
 }
 
 .character-list-mobile {
@@ -295,7 +317,7 @@ li.character-highlight {
 }
 
 .character-full-list {
-  padding-top: 15px;
+  /* padding-top: 15px; */
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -303,6 +325,8 @@ li.character-highlight {
   margin-bottom: 15px;
   flex: 1;
   transition: flex 0.3s ease;
+  width: 80%;
+  margin: 0 auto;
 }
 
 
@@ -321,18 +345,16 @@ li.character-highlight {
 .character-list {
   list-style: none;
   margin: 0;
-  padding: 0;
-  display: grid;
-  padding: 0.5em;
-  grid-template-columns: repeat(auto-fit, 14em);
-  column-gap: 2em;
-  row-gap: 1.5em;
+  padding: 0 0.5em 0.5em 0.5em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .character-full-list .character,
 .character-full-list .character-highlight {
-  width: 220px;
-  margin: 0 20px 0 0;
+  width: 280px;
+  margin: 10px 20px 10px 0;
 }
 
 .character-list-mobile > ul {
@@ -376,18 +398,22 @@ li.character-highlight {
 
 .small-stamina-char {
   position: relative;
-  height: 22px;
-  margin: 10px 5px 0px 5px;
+  height: 18px;
+  margin-top: 5px;
   border-radius: 4px;
   background: linear-gradient(
     to right,
-    #F9974E var(--staminaReady),
+    #FBE033 var(--staminaReady),
     #fff 0
   );
+  border-radius: 10px;
+  background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0.8rem;
+  font-weight: 700;
+  font-size: 1.1em;
 }
 
 .stamina-text {
