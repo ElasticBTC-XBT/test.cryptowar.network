@@ -1,6 +1,6 @@
 <template>
   <div class="character-bar">
-    <!-- <character-display /> -->
+    <character-display />
     <!-- <div class="character-bar-divider"/> -->
     <!-- <img src="../assets/infoDivider.png" class="info-divider"> -->
     <div class="nav-bottom-line"></div>
@@ -8,11 +8,11 @@
 </template>
 
 <script lang="ts">
-// import CharacterDisplay from './smart/CharacterDisplay.vue';
+import CharacterDisplay from './smart/CharacterDisplay.vue';
 
 export default {
   components: {
-    // CharacterDisplay,
+    CharacterDisplay,
   },
 };
 </script>

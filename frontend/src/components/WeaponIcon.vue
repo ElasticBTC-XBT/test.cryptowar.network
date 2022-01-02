@@ -12,7 +12,7 @@
     </div>
 
     <div class="weapon-header">
-      <div>
+      <div class="left">
         <div class="trait">
           <span :class="weapon.element.toLowerCase() + '-icon'"></span>
           <span class="weapon-star" v-for="n in this.weapon.stars + 1" :key="n">
@@ -40,7 +40,7 @@
         </div>
       </div>
 
-      <div class="left">
+      <div class="right">
         <div class="id" v-if="!isBlacksmith">
           ID {{ weapon.id }}
           <!-- <br><b-icon v-if="favorite" class="favorite-star" icon="star-fill" variant="warning" /> -->
@@ -247,7 +247,8 @@ export default {
   justify-content: space-between;
 }
 
-.weapon-header .left {
+
+.weapon-header .right {
   font-size: 21px;
   text-align: right;
 }
