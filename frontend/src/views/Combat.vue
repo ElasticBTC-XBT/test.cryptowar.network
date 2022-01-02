@@ -8,10 +8,9 @@
         <div class="col error">Error: {{ error }}</div>
       </div>
 <!-- v-if="fightResults[0]" -->
-      <b-modal id="fightResultsModal" hide-footer>
+      <b-modal id="fightResultsModal" hide-footer centered>
          <link rel="prefetch" as="image" href="/img/Congrats.5ac13bd5.gif">
           <img src="../assets/v2/Congrats.gif" class="background-win">
-          <div class="icon-close-container"><div class="icon-close" @click="$bvModal.hide('fightResultsModal')"></div></div>
           <div class="title-results">Fight Results</div>
           <CombatResults v-if="resultsAvailable" :results="fightResults" />
           <button class="mt-3 btn-buy btn-close-fight-results" block @click="$bvModal.hide('fightResultsModal'), pauseSound()">Close</button>
@@ -574,22 +573,8 @@ export default {
   background-size: 100%;
   background-repeat: no-repeat;
   width: 473px;
-  height: 300px;
+  height: 180px;
   position: fixed;
-}
-
-#fightResultsModal .icon-close{
-  background-image: url(../assets/v2/icon-close.svg);
-  width: 50px;
-  height: 47px;
-  margin-right: 20px;
-  position: relative;
-  z-index: 2;
-}
-
-#fightResultsModal .icon-close-container{
-  display: flex;
-  justify-content: flex-end;
 }
 
 

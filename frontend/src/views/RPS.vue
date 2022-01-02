@@ -26,7 +26,6 @@
         </div>
       </div>
       <b-modal id="selectHeroOrWeaponModal" class="modal-box" hide-footer>
-        <div class="icon-close-container"><div class="icon-close" @click="$bvModal.hide('selectHeroOrWeaponModal')"></div></div>
         <!-- <div class="title-results">{{titleResults}}</div>
         <CombatResults v-if="resultsAvailable" :results="fightResults" /> -->
         <div class="row list" v-if="selectHero">
@@ -274,18 +273,6 @@ export default {
   display: flex;
   flex-direction: column;
   max-width: 1650px;
-}
-
-#selectHeroOrWeaponModal .icon-close-container{
-  display: flex;
-  justify-content: flex-end;
-}
-
-#selectHeroOrWeaponModal .icon-close{
-  background-image: url(../assets/v2/icon-close-2.svg);
-  width: 50px;
-  height: 47px;
-  margin-right: 40px;
 }
 
 .quantity-heroes {

@@ -10,15 +10,13 @@
           </div>
         </div>
       </div>
-      <b-modal id="listHeroToCareerModal" hide-footer>
-        <div class="icon-close-container"><div class="icon-close" @click="$bvModal.hide('listHeroToCareerModal')"></div></div>
+      <b-modal id="listHeroToCareerModal" hide-footer centered>
         <div class="listHeroToCareerModal-head">CryptoWar Message</div>
         <div class="listHeroToCareerModal-body">Listing HERO to Career: <span>Done</span></div>
         <button @click="$bvModal.hide('listHeroToCareerModal'), careerMode = true, changeMode = false, requestChallenge = false,
           checkSelect = false, addClass = ''" class="listHeroToCareerModal-btn confirm">GO TO CHECK</button>
       </b-modal>
-      <b-modal id="listHeroToChallengeModal" hide-footer>
-        <div class="icon-close-container"><div class="icon-close" @click="$bvModal.hide('listHeroToChallengeModal')"></div></div>
+      <b-modal id="listHeroToChallengeModal" hide-footer centered>
         <div class="listHeroToChallengeModal-head">CryptoWar Message</div>
         <div class="listHeroToChallengeModal-body">Listing HERO to Challenge: <span>Done</span></div>
         <button @click="$bvModal.hide('listHeroToChallengeModal'), careerMode = false, changeMode = true, requestChallenge = false,
@@ -99,8 +97,7 @@
           </div>
         </div>
       </div>
-      <b-modal id="selectHeroOrWeaponModal" class="modal-box" hide-footer>
-        <div class="icon-close-container"><div class="icon-close" @click="$bvModal.hide('selectHeroOrWeaponModal')"></div></div>
+      <b-modal id="selectHeroOrWeaponModal" class="modal-box" hide-footer centered>
         <!-- <div class="title-results">{{titleResults}}</div>
         <CombatResults v-if="resultsAvailable" :results="fightResults" /> -->
         <div class="row list" v-if="selectHero">
@@ -200,8 +197,7 @@
           </div>
         </div>
       </div>
-      <b-modal id="requestSelect" class="modal-box" hide-footer>
-        <div class="icon-close" @click="$bvModal.hide('requestSelect')"></div>
+      <b-modal id="requestSelect" class="modal-box" hide-footer centered>
         <div class="requestSelect-head">Request battle to HERO #123</div>
         <div class="requestSelect-body">
           <div>Amount request
@@ -235,8 +231,7 @@
           </div>
         </div>
       </div>
-      <b-modal id="fightModal" class="modal-box" hide-footer>
-        <div class="icon-close" @click="$bvModal.hide('fightModal')"></div>
+      <b-modal id="fightModal" class="modal-box" hide-footer centered>
         <div class="requestSelect-head">You got request battle from Hero #123</div>
         <div class="requestSelect-body">
           <div>Amount request
@@ -660,39 +655,6 @@ export default {
   display: flex;
   flex-direction: column;
   max-width: 1550px;
-}
-
-
-#selectHeroOrWeaponModal .icon-close{
-  background-image: url(../assets/v2/icon-close-2.svg);
-  width: 50px;
-  height: 47px;
-  margin-right: 40px;
-}
-
-#requestSelect .icon-close,
-#fightModal .icon-close{
-  background-image: url(../assets/v2/icon-close.svg);
-  width: 50px;
-  height: 47px;
-  position: relative;
-  right: -36em;
-  top: -15px;
-}
-
-#listHeroToCareerModal .icon-close,
-#listHeroToChallengeModal .icon-close{
-  background-image: url(../assets/v2/icon-close.svg);
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
-}
-
-#listHeroToChallengeModal .icon-close-container,
-#listHeroToCareerModal .icon-close-container,
-#selectHeroOrWeaponModal .icon-close-container{
-  display: flex;
-  justify-content: flex-end;
 }
 
 .quantity-heroes {
@@ -1420,15 +1382,11 @@ export default {
 }
 
 @media (max-width: 376px) {
-  #selectHeroOrWeaponModal .icon-close{
-    margin-right: 10px;
-  }
+
 }
 
 @media (max-width: 767px) {
-  #selectHeroOrWeaponModal .icon-close{
-    margin-right: 10px;
-  }
+
 }
 
 @media (min-width: 768px) {
