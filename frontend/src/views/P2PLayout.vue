@@ -13,7 +13,7 @@
               <div class="containerContentModal">
                 <span class="titleModalBox">CryptoWar Message</span>
                 <span>{{errorMessage}}</span>
-              <b-button class="mt-3 btn-buy" block @click="$bvModal.hide('error-request-fight')">Close</b-button>
+              <button class="mt-3" block @click="$bvModal.hide('error-request-fight')">Close</button>
               </div>
             </b-modal>
         <div class="page-header" id="marketplace">
@@ -407,3 +407,16 @@ export default Vue.extend({
   }
 });
 </script>
+
+<style>
+  .containerContentModal button{
+    border: none;
+    background-color: transparent;
+    background-image: url(../assets/v2/btn-fight.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 30px;
+    width: 100px;
+    color: #fff;
+  }
+</style>
