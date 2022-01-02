@@ -117,6 +117,44 @@
                 <b-button
                   @click="activeType = 'character'"  class="gtag-link-others  search-btn" tagname="show_characters_market">Show Characters</b-button>
               </div>
+
+              <div class="mb-2">
+                <!-- <b-button
+                  v-if="activeType === 'weapon'"
+                   class="gtag-link-others  search-btn" tagname="add_listing_weapon"
+                  :disabled="selectedNftId === null || selectedNftOnCooldown"
+                  @click="showListingSetupModal()">Sell Weapon/Character <b-icon-question-circle :hidden=!weaponMarketTax
+                  v-tooltip.bottom="weaponMarketTax + '% tax (paid by the buyer) will be added to the final price.'"/></b-button> -->
+
+                <!-- <b-button
+                  v-if="activeType === 'character'"
+                  :disabled="selectedNftId === null || selectedNftOnCooldown"
+                   class="gtag-link-others search-btn" tagname="add_listing_character"
+                  @click="showListingSetupModal()">List Character <b-icon-question-circle :hidden=!characterMarketTax
+                  v-tooltip.bottom="characterMarketTax + '% tax (paid by the buyer) will be added to the final price.'"/></b-button> -->
+
+                <b-button
+                  v-if="activeType === 'shield'"
+                   class="gtag-link-others search-btn" tagname="add_listing_shield"
+                  :disabled="selectedNftId === null || selectedNftOnCooldown"
+                  @click="showListingSetupModal()">List Shield <b-icon-question-circle :hidden=!shieldMarketTax
+                  v-tooltip.bottom="shieldMarketTax + '% tax (paid by the buyer) will be added to the final price.'"/></b-button>
+
+                <b-modal class="centered-modal" ref="listing-setup-modal"
+                  @ok="!priceChangeModal ? addListingForNft() : updateNftListingPrice()">
+                  <template #modal-title>
+                    {{!priceChangeModal ? `Sell ${activeType}` : `Change ${activeType} price`}}
+                  </template>
+                  <b-form-input type="number" :max="10000"
+                    class="modal-input" v-model="listingSellPrice" placeholder="Sell Price (xBlade)" />
+
+                  <span v-if="listingSellPrice">Do you want to sell your {{activeType}} for {{listingSellPrice}} xBlade?<br>
+                  <i>The buyer will pay an extra {{activeListingMarketTax()}}% market fee for a total of
+                  {{calculatedBuyerCost(listingSellPrice)}} xBlade</i></span>
+                </b-modal>
+              </div>
+
+
               <div class="mb-2">
                 <b-button
                   class="gtag-link-others search-btn" tagname="show_weapons_sold"

@@ -18462,7 +18462,7 @@ a:hover {
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 0.3rem;
     outline: 0;
-    background-image: url("../../images/bg-modal.svg");
+    background-image: url("../../v2/shop-select-item.svg");
     background-position: 50% 0;
     background-repeat: no-repeat;
     background-size: contain;
@@ -18477,9 +18477,14 @@ a:hover {
     text-shadow: none;
 }
 
-/* .modal-body {
-    color: var(--brown);
-} */
+.modal-body span {
+    text-align: center;
+}
+
+.modal-body input::-webkit-outer-spin-button,
+.modal-body input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
 
 .modal-footer {
     border: none;
@@ -21014,6 +21019,7 @@ margin-bottom: 1.5rem;
     cursor: pointer;
     background-repeat: no-repeat;
     margin-top: 80px;
+    margin-bottom: 50px;
     background-size: 100% 100%;
     position: relative;
     border: 1px solid #3CDE9B;
