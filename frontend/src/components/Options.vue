@@ -1,6 +1,32 @@
 <template>
   <div class="body main-font">
-    <b-navbar-nav>
+    <div class="option-container">
+        <div class="option-container-head">
+          <div @click="hideOption()" class="icon-close"><i class="fas fa-times"></i></div>
+          <div class="title">MENU</div>
+        </div>
+        <div class="option-container-body">
+          <view-links class="view-links"></view-links>
+          <skill-balance-display class="skill-display-mobile" />
+        </div>
+        <div class="option-container-footer">
+          <div>Links</div>
+          <div class="link">
+            <div>
+              <a href="https://www.cryptowar.network/" target="_blank">HomePage</a>
+              <a href="https://wiki.cryptowar.network/" target="_blank">Wiki</a>
+              <div @click="$router.push('options'), hideOption()">Options</div>
+              <!-- <a href="https://wiki.cryptowar.network/backers-and-partners" target="_blank">Partners</a> -->
+            </div>
+            <div>
+              <a href="https://discord.gg/MQBWnE8t2G" target="_blank">Discord</a>
+              <a href="https://t.me/elasticbitcoinxbt" target="_blank">Telegram</a>
+              <a href="https://twitter.com/xbladecryptowar" target="_blank">Twitter</a>
+            </div>
+          </div>
+        </div>
+    </div>
+    <b-navbar-nav class="navbar-nav">
       <b-nav-item-dropdown right>
         <template #button-content>
           <i class="fa fa-bars"></i>
@@ -57,6 +83,8 @@ import BigNumber from 'bignumber.js';
 import { Accessors } from 'vue/types/options';
 import Vue from 'vue';
 import { toBN, fromWeiEther } from '../utils/common';
+import ViewLinks from "./ViewLinks.vue";
+import SkillBalanceDisplay from "./smart/SkillBalanceDisplay.vue";
 
 interface StoreMappedState {
   skillRewards: string;
@@ -84,6 +112,10 @@ enum ClaimStage {
 }
 
 export default Vue.extend({
+  components: {
+    ViewLinks,
+    SkillBalanceDisplay,
+  },
   created() {
     this.showGraphics = localStorage.getItem('useGraphics') === 'true';
     this.hideRewards = localStorage.getItem('hideRewards') === 'true';
@@ -171,8 +203,91 @@ export default Vue.extend({
 
       Events.$emit('setting:hideWalletWarning', { value: this.hideWalletWarning });
     },
+    hideOption(){
+      Events.$emit('hide-option', false);
+    },
   }
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.option-container{
+  display: none;
+}
+
+@media (max-width: 767.98px){
+    .navbar-nav{
+        display: none;
+    }
+
+    .option-container{
+      display: block;
+    }
+
+    .option-container-head{
+      display: flex;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid #707070;
+    }
+
+    .option-container-head .title{
+      margin-left: 40px;
+      font-size: 1.7em;
+      color: #CD894C;
+    }
+
+    .icon-close{
+      font-size: 1.8em;
+      margin: 0 20px;
+      color: #CD894C;
+    }
+
+    .view-links{
+      display: block;
+    }
+
+    .view-links .nav-line{
+      height: 0;
+    }
+
+    .skill-display-mobile{
+      margin: 0 1rem;
+    }
+
+    .option-container-body{
+      width: 255px;
+      margin: 0 auto;
+      border-bottom: 1px solid #707070;
+      padding: 10px 0;
+    }
+
+    .option-container-footer{
+      margin-top: 15px;
+    }
+
+    .option-container-footer > div:first-child{
+      font-size: 1em;
+      margin: 0 45px;
+      margin-bottom: 20px;
+    }
+
+    .link{
+      display: flex;
+      justify-content: center;
+    }
+
+    .link div{
+      display: flex;
+      flex-direction: column;
+    }
+
+    .link > div:last-child{
+      margin-left: 40px;
+    }
+
+    .link div{
+      font-size: 1.1em;
+    }
+}
+</style>

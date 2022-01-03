@@ -2,7 +2,7 @@
   <b-navbar-nav>
     <router-link :to="{ name: 'lobby' }" exact class="nav-link mr-4"
     v-if="!featureFlagStakeOnly">
-      <li class="nav-item nav-top-links lobby">
+      <li @click="hideOption()" class="nav-item nav-top-links lobby">
         <span class="gtag-link-others" tagname="plaza_screen">Lobby</span>
       </li>
     </router-link>
@@ -11,9 +11,9 @@
 
     <router-link :to="{ name: 'combat' }" exact class="nav-link mr-4 ml-4"
     v-if="!featureFlagStakeOnly">
-      <li class="nav-item nav-top-links nav-icon-box">
+      <li @click="hideOption()" class="nav-item nav-top-links nav-icon-box">
         <img src="../assets/v2/arena_icon.svg" alt="" class="nav-icon">
-        <span class="gtag-link-others" tagname="plaza_screen">Arena</span>
+        <span class="gtag-link-others arena" tagname="plaza_screen">Arena</span>
       </li>
     </router-link>
 
@@ -23,7 +23,7 @@
       <li class="nav-item nav-top-links ">
         <a href="https://bond.cryptowar.network/" target="_blank" class="gtag-link-others nav-icon-box" tagname="shop_screen">
           <img src="../assets/v2/ido_icon.svg" alt="" class="nav-icon">
-          <span class="gtag-link-others" tagname="plaza_screen">xBlade BOND</span>
+          <span class="gtag-link-others bond" tagname="plaza_screen">xBlade BOND</span>
         </a>
       </li>
     </div>
@@ -31,10 +31,11 @@
     <li class="nav-line mr-4"></li>
 
     <router-link :to="{ name: 'referral' }" exact class="nav-link  mr-3 ml-4">
-      <li class="nav-item nav-top-links nav-img-item-box">
+      <li @click="hideOption()" class="nav-item nav-top-links nav-img-item-box">
         <span class="nav-img-item">
           <img src="../assets/v2/refer_icon.svg" alt="Referral" class="nav-img">
         </span>
+        <div class="Referral">Referral</div>
         <span class="nav-item-hover">Referral</span>
       </li>
     </router-link>
@@ -49,10 +50,11 @@
     </router-link> -->
 
     <router-link :to="{ name: 'inventory' }" exact class="nav-link mr-3 ml-3"   v-if="!featureFlagStakeOnly">
-      <li class="nav-item nav-top-links nav-img-item-box" >
+      <li @click="hideOption()" class="nav-item nav-top-links nav-img-item-box" >
         <span class="nav-img-item">
           <img src="../assets/v2/inventory.svg" alt="Inventory" class="nav-img">
         </span>
+        <div>Inventory</div>
          <span class="nav-item-hover">Inventory</span>
       </li>
     </router-link>
@@ -60,10 +62,11 @@
     <li class="nav-line"></li>
 
     <router-link :to="{ name: 'market' }" exact class="nav-link mr-3 ml-3" v-if="!featureFlagStakeOnly && featureFlagMarket">
-      <li class="nav-item nav-top-links nav-img-item-box">
+      <li @click="hideOption()" class="nav-item nav-top-links nav-img-item-box">
         <span class="nav-img-item">
           <img src="../assets/v2/marketplace_icon.svg" alt="Market Place" class="nav-img">
         </span>
+        <div>Marketplace</div>
         <span class="nav-item-hover">Marketplace</span>
       </li>
     </router-link>
@@ -71,10 +74,11 @@
     <li class="nav-line"></li>
 
     <router-link :to="{ name: 'shop' }" exact class="nav-link mr-3 ml-3">
-      <li class="nav-item nav-top-links nav-img-item-box">
+      <li @click="hideOption()" class="nav-item nav-top-links nav-img-item-box">
         <span class="nav-img-item">
           <img src="../assets/v2/shop_icon.svg" alt="Shop" class="nav-img">
         </span>
+        <div>Shop</div>
         <span class="nav-item-hover">Shop</span>
       </li>
     </router-link>
@@ -82,10 +86,11 @@
     <li class="nav-line"></li>
 
     <router-link :to="{ name: 'blacksmith' }" exact class="nav-link mr-3 ml-3">
-      <li class="nav-item nav-top-links nav-img-item-box">
+      <li @click="hideOption()" class="nav-item nav-top-links nav-img-item-box">
         <span class="nav-img-item">
           <img src="../assets/v2/blacksmith_icon.svg" alt="Black Smith" class="nav-img">
         </span>
+        <div>Black Smith</div>
         <span class="nav-item-hover">Black Smith</span>
       </li>
     </router-link>
@@ -126,6 +131,7 @@
 
 <script>
 import { market as featureFlagMarket, portal as featureFlagPortal } from '../feature-flags';
+import Events from '../events';
 
 export default {
   inject: ['featureFlagStakeOnly', 'featureFlagRaid'],
@@ -138,10 +144,15 @@ export default {
       return featureFlagPortal;
     }
   },
+  methods:{
+    hideOption(){
+      Events.$emit('hide-option', false);
+    }
+  },
 };
 </script>
 
-<style scoped>
+<style>
 a {
   font-weight: bold;
   color: #ffffff;
@@ -232,6 +243,54 @@ a.router-link-active .lobby .gtag-link-others{
   width: 2px;
   height: 60px;
   background-image: linear-gradient(to bottom, #000000ff, #A9A9A9, #000000ff);
+}
+
+.nav-item.nav-top-links div{
+  display: none;
+}
+
+
+@media (max-width: 767.98px){
+  .view-links .nav-line{
+    height: 0;
+  }
+  .nav-item.nav-top-links.lobby{
+    margin-right: 0 !important;
+  }
+
+  .nav-item.nav-top-links div{
+    width: 120px;
+    font-size: 1.4em;
+    margin: 10px 20px;
+    display: block;
+  }
+  .nav-img-item-box:hover .nav-item-hover{
+    display: none;
+  }
+
+  .nav-item.nav-top-links .nav-icon{
+    width: 25px;
+    height: 25px;
+  }
+
+  .nav-item.nav-top-links .arena,
+  .nav-item.nav-top-links .bond{
+    width: 130px;
+    font-size: 1.4em;
+    margin: 10px 20px;
+  }
+
+  .nav-link.ml-4{
+    margin-left: 1rem !important;
+  }
+
+  .nav-img-item-box{
+    justify-content: flex-start;
+  }
+
+  .nav-icon-box{
+    justify-content: flex-start;
+  }
 }
 
 </style>

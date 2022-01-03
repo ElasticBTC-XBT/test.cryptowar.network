@@ -282,10 +282,6 @@ export default {
     },
   },
 
-  mounted(){
-    console.log(this.characterId);
-  },
-
   watch: {
     async selections([characterId, weaponId]) {
       if (

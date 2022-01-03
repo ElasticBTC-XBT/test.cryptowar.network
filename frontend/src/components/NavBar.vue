@@ -12,18 +12,44 @@
         />
       </b-navbar-brand>
 
-      <view-links class="view-links"></view-links>
+      <view-links class="view-links desktop"></view-links>
 
-      <skill-balance-display class="ml-auto d-none d-sm-flex" />
+      <skill-balance-display class="ml-auto d-none d-sm-flex skill-balance-display" />
 
-      <claim-rewards v-if="!canShowRewardsBar" />
+      <claim-rewards class="claim-rewards" v-if="!canShowRewardsBar" />
 
-      <options class="d-none d-sm-flex" />
+      <options class="d-none d-sm-flex option-desktop" />
 
       <!-- Render only on mobile view -->
-      <div class="d-flex d-sm-none">
-        <skill-balance-display class="skill-display-mobile" />
-        <options class="options-display-mobile" />
+      <div class="d-flex justify-content-between align-items-center option-mobile">
+        <!-- <skill-balance-display class="skill-display-mobile" /> -->
+        <b-navbar-brand href="/" class="nav-logo-mobile">
+          <img
+            src="../assets/logo250.png"
+            class="logo d-inline-block align-top"
+            alt="Logo"
+          />
+        </b-navbar-brand>
+        <div class="option-container-mobile">
+          <label for="input__modal__id">
+            <i class="fa fa-bars"></i>
+          </label>
+          <input
+            type="checkbox"
+            class="input__modal"
+            id="input__modal__id"
+            :checked="checkCloseOption"
+          />
+          <div class="modal">
+            <label
+              for="input__modal__id"
+              class="modal__overlay"
+            ></label>
+          </div>
+          <div class="modal__body">
+            <options class="options-display-mobile" />
+          </div>
+        </div>
       </div>
     </b-navbar>
     <div class="nav-bottom-line"></div>
@@ -55,8 +81,9 @@ import ViewLinks from "./ViewLinks.vue";
 import Options from "./Options.vue";
 import SkillBalanceDisplay from "./smart/SkillBalanceDisplay.vue";
 import ClaimRewards from "./smart/ClaimRewards.vue";
+// import OptionsMobile from "./OptionsMobile.vue";
 
-// import Events from "../events";
+import Events from "../events";
 import { mapGetters, mapMutations } from "vuex";
 
 export default Vue.extend({
@@ -65,10 +92,12 @@ export default Vue.extend({
     SkillBalanceDisplay,
     ClaimRewards,
     Options,
+    // OptionsMobile,
   },
 
   data() {
     return {
+      checkCloseOption: "",
       // canShowRewardsBar: true,
     };
   },
@@ -99,7 +128,14 @@ export default Vue.extend({
     },
   },
 
+  updated(){
+    this.checkCloseOption = "";
+  },
+
   mounted() {
+    Events.$on('hide-option', (i: any) =>{
+      this.checkCloseOption = i;
+    });
     // this.checkStorage();
     // Events.$on("setting:hideRewards", () => this.checkStorage());
   },
@@ -212,6 +248,93 @@ a {
   background-image: radial-gradient(ellipse at top, #CBA938 -10%, transparent 35%), radial-gradient(ellipse at bottom, transparent, transparent);
 }
 
+  .option-container-mobile input,
+  .option-container-mobile label i,
+  .nav-logo-mobile,
+  .options-display-mobile{
+    display: none;
+  }
+
+@media (max-width: 767.98px){
+  .main-nav{
+    display: flex;
+    padding: 20px 10px;
+    justify-content: space-between;
+  }
+
+  .nav-logo-mobile,
+  .options-display-mobile{
+    display: block;
+  }
+
+  .nav-logo,
+  .view-links.desktop,
+  .claim-rewards,
+  .option-container-mobile input{
+    display: none;
+  }
+
+  .skill-balance-display,
+  .option-desktop{
+    display: none !important;
+  }
+
+  .option-container-mobile{
+    width: 30px;
+  }
+
+  .option-container-mobile label i{
+    font-size: 2em;
+    color: #CD894C;
+    display: block;
+  }
+
+  .modal {
+    /* position: fixed; */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: none;
+    animation: fadein linear 0.3s;
+    z-index: 100;
+  }
+  .modal__overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .input__modal:checked ~ .modal {
+    display: flex;
+  }
+  .input__modal:checked ~ .modal__body {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  .modal__body {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background-color: #000;
+    transform: translateX(100%);
+    transition: all linear 0.4s;
+    opacity: 0;
+    z-index: 1000;
+    overflow: scroll;
+  }
+}
 </style>
 
 
