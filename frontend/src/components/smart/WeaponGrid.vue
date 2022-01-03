@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div
-      class="filters col-12 col-lg-4 col-xl-3"
+      class="filters market-active col-12 col-lg-4 col-xl-3"
       :class="isBlacksmith && 'filters-blacksmith'"
       @change="saveFilters()"
       v-if="showFilters"
@@ -680,6 +680,10 @@ input::-webkit-inner-spin-button{
 .weapon-pagination-btn.weapon-pagination-next {
   right: 28px;
   background-image: url("../../assets/v2/weapon-pagination-next.svg");
+}
+
+.filters.market-active.active{
+  height: 970px;
 }
 
 @media (width: 1024px) {

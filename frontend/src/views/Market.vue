@@ -1674,9 +1674,6 @@ export default Vue.extend({
     margin-top: 3px;
     padding: 0 10px;
   }
-  .main-font .nav-tabs a.nav-link{
-    font-size: 18px;
-  }
   .market-hero-weapon button{
     width: 50%;
   }
