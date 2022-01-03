@@ -1632,12 +1632,14 @@ export default Vue.extend({
 }
 
 .market-hero-weapon button{
-  padding: 10px 124px;
+  width: 18%;
+  height: 46px;
   font-size: 20px;
   cursor: pointer;
   background-color: transparent;
   color: white;
   border: none;
+  text-align: center;
 }
 
 
@@ -1645,8 +1647,39 @@ export default Vue.extend({
   background-color: rgb(245,139,91);
 }
 
-/* .progress .has-tooltip{
-  margin-top: 10px;
-} */
+@media (max-width: 1200px){
+  .market-hero-weapon button{
+    width: 30%;
+  }
+}
+
+@media (max-width: 993px){
+  .market-hero-weapon button{
+    width: 35%;
+  }
+}
+
+@media (max-width: 767px){
+  .market-hero-weapon button{
+    width: 40%;
+  }
+  .body {
+    margin-top: 3px;
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .body {
+    margin-top: 3px;
+    padding: 0 10px;
+  }
+  .main-font .nav-tabs a.nav-link{
+    font-size: 18px;
+  }
+  .market-hero-weapon button{
+    width: 50%;
+  }
+}
 
 </style>

@@ -399,6 +399,7 @@ export default {
   .weapon-icon .name {
     font-size: 14px;
     margin-top: 8px;
+    margin-bottom: 40px;
   }
 
   .small-durability-bar-wrap {

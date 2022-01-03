@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div
-      class="filters pl-2 col-12 col-xl-3"
+      class="filters col-12 col-lg-4 col-xl-3"
       :class="isBlacksmith && 'filters-blacksmith'"
       @change="saveFilters()"
       v-if="showFilters"
@@ -83,11 +83,11 @@
     </div>
 
     <ul
-      class="weapon-grid row" :class="showFilters && 'col-12 col-xl-9'"
+      class="weapon-grid row" :class="showFilters && 'col-12 col-lg-8 col-xl-9'"
       v-if="!isBlacksmith && !isBurnWeapon"
     >
       <li
-        class="col-12 col-md-6 col-lg-4 col-xl-3"
+        class="col-12 col-md-12 col-lg-6 col-xl-3"
         v-for="weapon in nonIgnoredWeapons"
         :key="weapon.id"
         @click="(!checkForDurability || getWeaponDurability(weapon.id) > 0) && onWeaponClick(weapon.id)"

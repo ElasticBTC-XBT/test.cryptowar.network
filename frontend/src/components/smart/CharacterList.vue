@@ -1,8 +1,8 @@
 <template>
   <div :class="showFilters && 'row'">
     <div
-      class="filters pl-2"
-      :class="showFilters && 'col-12 col-xl-3'"
+      class="filters"
+      :class="showFilters && 'col-12 col-lg-4 col-xl-3'"
       v-if="showFilters"
       @change="saveFilters()"
     >
@@ -121,9 +121,9 @@
       </template> -->
     </div>
 
-    <ul class="character-list row" :class="showFilters && 'col-12 col-xl-9'">
+    <ul class="character-list row" :class="showFilters && 'col-12 col-lg-8 col-xl-9'">
       <li
-        class="col-12 col-md-6 col-lg-4 col-xl-3"
+        class="col-12 col-md-12 col-lg-6 col-xl-3"
         v-for="c in filteredCharacters"
         :key="c.id"
       >

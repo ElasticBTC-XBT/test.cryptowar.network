@@ -21167,13 +21167,18 @@ margin-bottom: 1.5rem;
   }
 
   @media (max-width: 576px) {
+    .above-wrapper {
+        top: 226px;
+    }
     .character-list,
     .weapon-grid {
         justify-content: flex-start
     }
     .character-item:not(.lobby-box-item-wrap) {
-        height: 257px;
-        margin-top: 30px;
+        width: 230px;
+        height: 292px;
+        margin-top: 70px !important;
+        margin: auto;
     }
 
     .character-item:not(.lobby-box-item-wrap)::before,
