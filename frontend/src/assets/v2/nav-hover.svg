@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="180.932" height="96.153" viewBox="0 0 180.932 96.153">
+  <defs>
+    <radialGradient id="radial-gradient" cx="0.5" cy="0.5" r="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#f6eb49"/>
+      <stop offset="0.608" stop-color="#ffff8e" stop-opacity="0.161"/>
+      <stop offset="1" stop-color="#ffff8d" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="Path_5412" x="0" y="0" width="180.932" height="96.153" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feFlood flood-color="#ffea34" flood-opacity="0.486"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_3773" data-name="Group 3773" transform="translate(30.5 -30.684)">
+    <ellipse id="Ellipse_469" data-name="Ellipse 469" cx="5.184" cy="32.369" rx="5.184" ry="32.369" transform="translate(92.238 47.816) rotate(90)" fill="url(#radial-gradient)"/>
+    <g transform="matrix(1, 0, 0, 1, -30.5, 30.68)" filter="url(#Path_5412)">
+      <path id="Path_5412-2" data-name="Path 5412" d="M2312-30l9.074-9.984h101.111l9.747,9.079v15.827l-9.747,10.246H2321.074L2312-14.578Z" transform="translate(-2281.5 70.48)" fill="#121154" stroke="#ecd931" stroke-width="1"/>
+    </g>
+    <path id="Polygon_5" data-name="Polygon 5" d="M7.5,0,15,6H0Z" transform="translate(52.5 55)" fill="#ecd931"/>
+  </g>
+</svg>
