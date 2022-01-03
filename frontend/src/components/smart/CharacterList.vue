@@ -123,7 +123,7 @@
 
     <ul class="character-list row" :class="showFilters && 'col-12 col-xl-9'">
       <li
-        class="col-6 col-lg-4 col-xl-3"
+        class="col-12 col-md-6 col-lg-4 col-xl-3"
         v-for="c in filteredCharacters"
         :key="c.id"
       >
@@ -148,8 +148,8 @@
       </li>
 
       <li
-        class="col-6 col-lg-4 col-xl-3"
-        v-if="!isMarket"
+        class="col-12 col-md-6 col-lg-4 col-xl-3"
+        v-if="!isMarket && showFilters"
       >
         <div class="character-item addnew ">
           <b-button
