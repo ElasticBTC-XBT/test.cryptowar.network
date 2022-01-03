@@ -72,7 +72,7 @@
     </div>
     <div class="weapon-bt-box" v-if="isSell">
       <b-button class="weapon-bt-box" @click="sellClick()">
-        Sell
+        SELL
       </b-button>
     </div>
   </div>
@@ -412,9 +412,9 @@ export default {
 
 .weapon-bt-box{
   position: absolute;
-  bottom: -40px;
+  bottom: -30px;
   display: flex;
-  width: 90%;
+  width: 86%;
   justify-content: center;
   z-index: 100;
   cursor: pointer;

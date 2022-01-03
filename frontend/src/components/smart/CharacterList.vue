@@ -141,7 +141,7 @@
           </div>
           <div class="sell-box" v-if="isSell">
             <b-button @click="sellClick()">
-              Sell
+              SELL
             </b-button>
           </div>
         </div>

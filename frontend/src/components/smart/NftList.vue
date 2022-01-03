@@ -593,9 +593,10 @@ export default Vue.extend({
 }
 #modal-buyitem .modal-content{
   background: url("../../assets/v2/shop_background_box_confirm.svg");
-  background-repeat: no-repeat, no-repeat;
-  background-size: contain, contain;
+  background-repeat: no-repeat;
+  background-size: contain !important;
   height: 484px;
+  width: 100%;
 }
 #modal-buyitem .modal-dialog.modal-md{
   margin-top: 200px;
@@ -608,6 +609,7 @@ export default Vue.extend({
   margin-right: 20px;
   margin-top: 30px;
   padding: 40px;
+  z-index: 1;
 }
 
 #modal-buyitem .modal-body{
@@ -631,8 +633,9 @@ export default Vue.extend({
 #modal-buyitem .modal-body .epic-box{
   background-repeat: no-repeat;
   background-size: contain;
+  background-position: center;
   display: block;
-  width: 320px;
+  width: 40%;
   height: 320px;
   margin: auto;
 }
@@ -664,17 +667,14 @@ export default Vue.extend({
   background-size: contain, contain;
 }
 
-#modal-selectitem .modal-content{
-  background: url("../../assets/v2/shop-select-item.svg");
-  background-repeat: no-repeat;
-  background-size: contain;
-  border-radius: 0;
-  width: 100%;
-  height: 660px;
-}
-
 #modal-buyitem .modal-footer{
   display: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #fff;
+  border-radius: 10px;
+  height: 40%;
 }
 
 #modal-selectitem .modal-header .close{
@@ -697,10 +697,14 @@ export default Vue.extend({
   margin-right: 55px;;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #fff;
-  border-radius: 10px;
-  height: 40%;
+#modal-selectitem .modal-content{
+  background: url("../../assets/v2/shop-select-item.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-radius: 0;
+  width: 100%;
+  height: 660px;
+  position: relative;
 }
 
 #modal-selectitem ::-webkit-scrollbar-button {
@@ -719,6 +723,32 @@ export default Vue.extend({
 }
 
 @media (max-width: 576px) {
+  #modal-selectitem .modal-header{
+    padding: 0;
+  }
+  #modal-buyitem .modal-body .rare-box,
+  #modal-buyitem .modal-body .common-box,
+  #modal-buyitem .modal-body .epic-box{
+    width: 40%;
+    height: 130px;
+  }
+
+  #modal-buyitem .modal-header .close{
+    margin: 0;
+    padding: 30px;
+  }
+
+  #modal-buyitem .modal-body div button{
+    height: 40px;
+    width: 135px;
+    font-size: 80%;
+  }
+
+  #modal-buyitem .modal-body{
+    position: relative;
+    top: -40%;
+  }
+
   .weapon-grid {
     justify-content: center;
     margin-top: 10px;
@@ -745,17 +775,32 @@ export default Vue.extend({
   }
 }
 
+@media (min-width: 577px) and (max-width: 767.98px){
+  #modal-buyitem .modal-body .rare-box,
+  #modal-buyitem .modal-body .common-box,
+  #modal-buyitem .modal-body .epic-box{
+    width: 40%;
+    height: 260px;
+  }
+
+  #modal-buyitem .modal-body{
+    position: relative;
+    top: -15%;
+  }
+}
+
 /* Needed to adjust weapon list */
 @media all and (max-width: 767.98px) {
   .weapon-grid {
     padding-left: 2em;
     justify-content: center;
   }
+
   .stars-elem {
-  margin-bottom: 20px;
-  max-width: 500px;
-  width: 100%;
-}
+    margin-bottom: 20px;
+    max-width: 500px;
+    width: 100%;
+  }
   li.weapon {
     display: inline-block;
     margin: auto;
