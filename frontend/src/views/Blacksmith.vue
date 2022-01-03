@@ -83,7 +83,7 @@
                   </div>
                   <div class="character-item weapon no-corner" v-if="!spin">
                     <div class="weapon-icon-wrapper">
-                      <weapon-icon v-if="getWeaponToUpgrade()" :weapon="getWeaponToUpgrade()" :isBlacksmith="true"/>
+                      <weapon-icon v-if="getWeaponToUpgrade()" :weapon="getWeaponToUpgrade()" :isBlacksmith="true" :noCorner="true"/>
                     </div>
                     <div v-if="$slots.above || $scopedSlots.above">
                       <slot name="above" :weapon="getWeaponToUpgrade()"></slot>
@@ -474,7 +474,7 @@
              title="Dust Reforge Confirmation" @ok="onReforgeWeaponWithDust">
       <div class="character-item weapon no-corner" v-if="reforgeWeaponId">
         <div class="weapon-icon-wrapper">
-          <weapon-icon v-if="getWeaponToUpgrade()" :weapon="getWeaponToUpgrade()" :isBlacksmith="true"/>
+          <weapon-icon v-if="getWeaponToUpgrade()" :weapon="getWeaponToUpgrade()" :isBlacksmith="true" :noCorner="true"/>
         </div>
         <div v-if="$slots.above || $scopedSlots.above">
           <slot name="above" :weapon="getWeaponToUpgrade()"></slot>

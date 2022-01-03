@@ -21259,9 +21259,12 @@ margin-bottom: 1.5rem;
 
   .filters {
     padding: 0 38px !important;
-    max-width: 374px;
     background-color: rgba(0, 0, 0, 0.5);
     position: relative;
+  }
+
+  .inventory .filters {
+    max-height: 792px;
   }
 
   .filters div {
@@ -21359,7 +21362,7 @@ margin-bottom: 1.5rem;
   .filters .search-btn button {
     width: 100%;
     height: 60px;
-    background-size: contain !important;
+    background-size: 100% 60px !important;
     outline: none;
     -webkit-tap-highlight-color: transparent;
   }
@@ -21368,7 +21371,7 @@ margin-bottom: 1.5rem;
       display: none;
   }
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1200px) {
     .filters {
         background-color: transparent;
         height: 128px;
@@ -21378,11 +21381,16 @@ margin-bottom: 1.5rem;
         margin: auto;
     }
 
+    .filters:not(.filters-blacksmith) {
+        max-width: 374px;
+    }
+
     .filters.active {
         background-color: rgba(0, 0, 0, 0.5);
         will-change: height, background-color;
         transition: height 0.6s, background-color 0.5s;
-        height: 647.19px;
+        height: 660px;
+        margin-bottom: 20px;
     }
 
     .filters .search-btn {

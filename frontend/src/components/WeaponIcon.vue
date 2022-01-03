@@ -14,7 +14,7 @@
       <div class="left">
         <div class="trait">
           <span :class="weapon.element.toLowerCase() + '-icon'"></span>
-          <span class="weapon-star" v-for="n in this.weapon.stars + 1" :key="n">
+          <span class="weapon-star" v-for="n in this.weapon.stars + 1" :key="n" :style="noCorner && 'font-size: 16px;'">
             <i class="fas fa-star"></i>
           </span>
         </div>
@@ -91,7 +91,7 @@ import { getCleanName } from '../rename-censor';
 
 
 export default {
-  props: ['weapon', 'favorite', 'isSell', 'sellClick', 'isBlacksmith'],
+  props: ['weapon', 'favorite', 'isSell', 'sellClick', 'isBlacksmith', 'noCorner'],
 
   computed: {
     ...mapState(['maxDurability']),
@@ -306,6 +306,11 @@ export default {
 .character-item.weapon.no-corner .placeholder {
   max-width: 90px;
   max-height: 90px;
+}
+
+.no-corner .id {
+  font-size: 14px;
+  text-align: left;
 }
 
 .weapon-icon .name {

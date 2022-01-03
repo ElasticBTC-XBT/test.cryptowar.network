@@ -15,13 +15,13 @@
           >
           <div class="center row">
             <big-button
-              class="btn btn-pink-bg"
+              class="btn btn-pink-bg modal-btn"
               v-html="`Add MetaMask`"
               @click="startOnboarding"
               v-if="showMetamaskWarning"
             />
             <big-button
-              class="btn btn-pink-bg"
+              class="btn btn-pink-bg modal-btn"
               v-html="`Switch to BSC Network`"
               @click="configureMetaMask"
               v-if="showNetworkError"
@@ -36,7 +36,7 @@
       </div>
       <div
         class="fullscreen-warning"
-        v-if="
+         v-if="
           !hideWalletWarning &&
           !showMetamaskWarning &&
           (errorMessage ||
@@ -94,16 +94,14 @@
           ><img src='./assets/images/btn-close.svg'/></button>
           <div class="button-div">
             <big-button
-              class="btn btn-pink-bg"
+              class="btn btn-pink-bg modal-btn"
               v-html="`Configure MetaMask`"
               @click="configureMetaMask"
-              style="font-size: 14px;"
             />
             <big-button
               v-bind:class="[isConnecting ? 'disabled' : '']"
-              class="btn btn-pink-bg"
+              class="btn btn-pink-bg modal-btn"
               v-html="`Connect to MetaMask`"
-              style="font-size: 14px;"
               @click="connectMetamask"
             />
           </div>
@@ -198,6 +196,7 @@ export default {
       await this.updateCharacterStamina(this.currentCharacterId);
     },
     $route(to) {
+      document.querySelector(".app.app-v2").classList.toggle("bg2", this.$route.name === 'lobby' || this.$route.name === 'arena');
       // react to route changes
       window.gtag("event", "page_view", {
         page_title: to.name,
@@ -1042,6 +1041,12 @@ div.bg-success {
   border: 1px solid #a50eb3;
 }
 
+.modal-btn {
+  font-size: 14px;
+  min-height: 50px;
+  background-size: 230px 50px;
+}
+
 @media (max-width: 767.98px) {
   .hide-modal {
     right: 0;
@@ -1062,6 +1067,15 @@ div.bg-success {
 
   .button-div {
     margin-top: 0;
+  }
+
+  .modal-btn {
+    background-size: 160px 50px;
+    min-height: 40px;
+    padding-top: 0;
+    padding-bottom: 0;
+    min-width: auto;
+    font-size: 12px;
   }
 }
 

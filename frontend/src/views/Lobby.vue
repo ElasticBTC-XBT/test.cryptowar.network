@@ -67,9 +67,7 @@ export default {
   methods: {
   },
 
-  async mounted() {
-    document.querySelector(".app.app-v2").classList.add("bg2");
-  },
+  async mounted() {},
 
   components: {
     ClaimRewardsBar,

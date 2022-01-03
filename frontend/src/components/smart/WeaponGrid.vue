@@ -1,8 +1,8 @@
 <template>
   <div class="row">
     <div
-      class="filters pl-2 col-12 col-xl-3"
-      :class="isBlacksmith && 'filters-blacksmith'"
+      class="filters pl-2 col-12 "
+      :class="isBlacksmith ? 'filters-blacksmith col-xl-4' : 'col-xl-3'"
       @change="saveFilters()"
       v-if="showFilters"
     >
@@ -700,10 +700,10 @@ input::-webkit-inner-spin-button{
   }
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 1201px) {
   .filters.filters-blacksmith {
     max-height: 867px;
-    height: 867px;
+    height: 867px !important;
     border: 0.5px solid #3CDE9B;
   }
 }

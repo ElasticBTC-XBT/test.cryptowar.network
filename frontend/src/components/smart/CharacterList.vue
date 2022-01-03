@@ -162,7 +162,8 @@
             Recruit
             <br>
             <span
-                  :class="`${referralAddress == '0x0000000000000000000000000000000000000000' ? 'old-price' : ''}`"
+                  :class="`${referralAddress == '0x0000000000000000000000000000000000000000' ? 'price' : ''}`"
+                   v-if="referralAddress == '0x0000000000000000000000000000000000000000'"
                   >({{ recruitCost }} xBlade)</span
                 >
                 <span v-if="referralAddress != '0x0000000000000000000000000000000000000000'" class="price">
@@ -469,11 +470,6 @@ input::-webkit-inner-spin-button {
   border-radius: 0;
 }
 
-.old-price {
-  text-decoration: line-through;
-  font-size: 14px;
-}
-
 .price {
   font-size: 14px;
 }
@@ -495,8 +491,7 @@ input::-webkit-inner-spin-button {
 }
 
 @media (max-width: 576px) {
-  .price,
-  .old-price {
+  .price {
     font-size: 10px;
   }
 }
