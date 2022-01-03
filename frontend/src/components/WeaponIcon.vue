@@ -253,7 +253,7 @@ export default {
 .weapon-header .stats div {
   display: flex;
   align-items: center;
-  margin: 5px 0;
+  margin-bottom: 5px;
 }
 
 .weapon-header .stats {
@@ -293,14 +293,13 @@ export default {
 .weapon-icon .placeholder {
   max-width: 208px;
   max-height: 208px;
-  margin-top: -80px;
   transform: scale(0.8);
 }
 
 .weapon-icon.isBlacksmith .placeholder {
   max-width: 287px;
   max-height: 287px;
-  margin-top: 0;
+  margin-top: -80px;
 }
 
 .character-item.weapon.no-corner .placeholder {
@@ -342,6 +341,15 @@ export default {
   background : linear-gradient(to right, #DDB73C var(--durabilityReady), rgba(255, 255, 255, 0.1) 0);
 }
 
+.no-corner .id {
+  font-size: 18px;
+  text-align: left;
+}
+
+.no-corner .right {
+  justify-content: flex-end !important;
+}
+
 @media (max-width: 576px) {
   .weapon-header {
     position: relative;
@@ -374,7 +382,7 @@ export default {
     font-size: 14px;
   }
 
-  .weapon-header .left {
+  .weapon-header .right {
     font-size: 14px;
     display: flex;
     align-items: center;
@@ -389,6 +397,10 @@ export default {
     left: auto;
     right: 10px;
     top: 10px;
+  }
+
+  .no-corner .id {
+    font-size: 14px;
   }
 
   .placeholder {

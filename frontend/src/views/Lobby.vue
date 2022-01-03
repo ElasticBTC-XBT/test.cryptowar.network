@@ -2,46 +2,46 @@
   <div class="body main-font">
     <claim-rewards-bar v-if="canShowRewardsBar" />
     <ul class="lobby-box">
-      <li
-        class="character-item addnew addmore lobby-box-item-wrap"
-      >
-        <router-link :to="{ name: 'combat' }" exact class="lobby-item-box">
-          <b-button
-          class="lobby-item"
-          v-tooltip="'PvE'"
-          tagname="recruit_character"
-          >
-            <img src="../assets/v2/pve.svg" alt="" class="lobby-img">
-          </b-button>
+      <li>
+        <router-link :to="{ name: 'combat' }" exact class="character-item addnew addmore lobby-box-item-wrap">
+          <div class="lobby-item-box">
+            <b-button
+            class="lobby-item"
+            v-tooltip="'PvE'"
+            tagname="recruit_character"
+            >
+              <img src="../assets/v2/pve.svg" alt="" class="lobby-img">
+            </b-button>
+          </div>
         </router-link>
       </li>
-      <li
-        class="character-item addnew lobby-box-item-wrap"
-      >
-        <router-link :to="{ name: 'P2P' }" exact class="lobby-item-box">
-          <b-button
-            class="lobby-item"
-            @click="onMintCharacter"
-            v-tooltip="'PvP'"
-            tagname="recruit_character"
-          >
-            <img src="../assets/v2/pvp.svg" alt="" class="lobby-img">
-          </b-button>
+      <li>
+        <router-link :to="{ name: 'P2P' }" exact class="character-item addnew lobby-box-item-wrap">
+          <div class="lobby-item-box">
+            <b-button
+              class="lobby-item"
+              @click="onMintCharacter"
+              v-tooltip="'PvP'"
+              tagname="recruit_character"
+            >
+              <img src="../assets/v2/pvp.svg" alt="" class="lobby-img">
+            </b-button>
+          </div>
         </router-link>
       </li>
-      <li
-        class="character-item addnew addmore lobby-box-item-wrap"
-      >
-        <router-link :to="{ name: '' }" exact class="lobby-item-box">
-          <b-button
-            class="lobby-item"
-            @click="onMintCharacter"
-            v-tooltip="'Raid Boss'"
-            tagname="recruit_character"
-          >
-            <img src="../assets/v2/raid.svg" alt="" class="lobby-img">
-          </b-button>
-          <span class="lobby-item-annouce">Coming soon</span>
+      <li>
+        <router-link :to="{ name: '' }" exact class="character-item addnew addmore lobby-box-item-wrap">
+          <div class="lobby-item-box">
+            <b-button
+              class="lobby-item"
+              @click="onMintCharacter"
+              v-tooltip="'Raid Boss'"
+              tagname="recruit_character"
+            >
+              <img src="../assets/v2/raid.svg" alt="" class="lobby-img">
+            </b-button>
+            <span class="lobby-item-annouce">Coming soon</span>
+          </div>
         </router-link>
       </li>
     </ul>

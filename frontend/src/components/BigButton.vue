@@ -17,7 +17,7 @@ export default {
 </script>
 
 <style>
-.button {
+/* .button {
   border: 2px solid #6c5f38;
   border-radius: 0.1em;
   background: rgb(31, 31, 34);
@@ -27,7 +27,7 @@ export default {
     rgba(24, 27, 30, 1) 5%,
     rgba(24, 38, 45, 1) 100%
   );
-}
+} */
 
 .button:hover:not(:disabled) {
   background-color: rgba(255, 255, 255, 0.1);

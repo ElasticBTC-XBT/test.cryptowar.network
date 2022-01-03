@@ -151,17 +151,34 @@
         class="col-6 col-lg-4 col-xl-3"
         v-if="!isMarket"
       >
-        <div class="character-item addnew ">
+        <div class="character-item addnew" @click="onMintCharacter">
           <b-button
             class="recruit"
-            @click="onMintCharacter"
             v-tooltip="'Recruit new character'"
             tagname="recruit_character"
           >
             <i class="fas fa-plus"></i>
             <br>
             Recruit
+            <br>
+            <span
+                  :class="`${referralAddress == '0x0000000000000000000000000000000000000000' ? 'price' : ''}`"
+                   v-if="referralAddress == '0x0000000000000000000000000000000000000000'"
+                  >({{ recruitCost }} xBlade)</span
+                >
+                <span v-if="referralAddress != '0x0000000000000000000000000000000000000000'" class="price">
+                  {{ (recruitCost * 0.93).toFixed(2) }}xBlade)</span
+                >
           </b-button>
+          <div class="small-hero-left">
+            Only
+            <strong
+              class="upper-text promotion-number"
+              style="margin: 0 4px"
+              >{{ heroAmount }}</strong
+            >
+            heroes left!
+          </div>
         </div>
       </li>
     </ul>
@@ -169,6 +186,7 @@
 </template>
 
 <script>
+import BN from "bignumber.js";
 import { mapActions, mapGetters, mapState } from 'vuex';
 import { getCharacterArt } from '../../character-arts-placeholder';
 // import BackgroundItem from '../BackgroundItem.vue';
@@ -217,8 +235,27 @@ export default {
     }
   },
 
+  async created() {
+    const recruitCost = await this.contracts.CWController.methods
+      .getMintPriceByToken()
+      .call({ from: this.defaultAccount });
+    this.recruitCost = new BN(recruitCost).div(new BN(10).pow(18)).toFixed(2);
+    this.loadConsumablesCount();
+    setInterval(async () => {
+      this.loadConsumablesCount();
+    }, 3000);
+
+    const heroAmount = await this.contracts.Characters.methods
+      .availableAmount()
+      .call({ from: this.defaultAccount });
+
+    this.heroAmount = Number(heroAmount);
+  },
+
   data() {
     return {
+      recruitCost: "0",
+      heroAmount: 0,
       starFilterTemp: 0,
       elementFilterTemp: '',
       searchValue: '',
@@ -233,8 +270,9 @@ export default {
   },
 
   computed: {
-    ...mapState(['maxStamina', 'ownedCharacterIds']),
-    ...mapGetters(['getCharacterName', 'allStaminas', 'charactersWithIds']),
+    ...mapState(['maxStamina', 'ownedCharacterIds',  'defaultAccount']),
+    ...mapGetters(["contracts", 'getCharacterName', 'allStaminas', 'charactersWithIds']),
+
 
     characterIdsToDisplay() {
       if(this.showGivenCharacterIds) {
@@ -271,7 +309,16 @@ export default {
       }
 
       return items;
-    }
+    },
+
+    referralAddress() {
+      // @ts-ignore
+      const referralAddress = this.$route.query.r;
+      if (referralAddress && referralAddress !== this.defaultAccount) {
+        return referralAddress;
+      }
+      return '0x0000000000000000000000000000000000000000';
+    },
   },
 
   watch: {
@@ -281,9 +328,20 @@ export default {
   },
 
   methods: {
-    ...mapActions(['fetchCharacters']),
+    ...mapActions(['fetchCharacters', 'mintCharacter']),
 
     getCharacterArt,
+
+    async onMintCharacter() {
+      // await this.mintCharacter(this.referralAddress ? this.referralAddress : '0x0000000000000000000000000000000000000000');
+      try {
+        await this.mintCharacter(this.referralAddress ? this. referralAddress : '0x0000000000000000000000000000000000000000');
+      } catch (e) {
+        this.$dialog.notify.error(
+          "Could not mint character: insufficient funds or transaction denied."
+        );
+      }
+    },
 
     setFilterOnMobileState(filterState) {
       document.querySelector('.filters').classList.toggle('active', filterState);
@@ -325,6 +383,17 @@ export default {
       this.$emit('character-filters-changed');
     },
 
+    async loadConsumablesCount() {
+      this.haveRename = await this.fetchTotalRenameTags(); // the other type of call returned 0 on testnet but not on local
+      this.haveChangeTraitFire =
+        await this.fetchTotalCharacterFireTraitChanges();
+      this.haveChangeTraitEarth =
+        await this.fetchTotalCharacterEarthTraitChanges();
+      this.haveChangeTraitWater =
+        await this.fetchTotalCharacterWaterTraitChanges();
+      this.haveChangeTraitLightning =
+        await this.fetchTotalCharacterLightningTraitChanges();
+    },
   },
 
   components: {
@@ -401,10 +470,29 @@ input::-webkit-inner-spin-button {
   border-radius: 0;
 }
 
+.price {
+  font-size: 14px;
+}
+
+.small-hero-left {
+  position: absolute;
+  bottom: 10px;
+}
+
+.promotion-number {
+  color: #f58b5b;
+}
+
 
 @media (min-width: 1248px) {
   .home .character-list {
     padding: 0 295px;
+  }
+}
+
+@media (max-width: 576px) {
+  .price {
+    font-size: 10px;
   }
 }
 

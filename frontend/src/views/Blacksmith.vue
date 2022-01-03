@@ -896,8 +896,9 @@ export default Vue.extend({
 
 .btn-confirm-reforge {
   background-size: contain !important;
-  padding-left: 0;
+  padding: 0;
   position: relative;
+  text-align: center;
 }
 
 .reforge-info {
@@ -1050,13 +1051,14 @@ export default Vue.extend({
 }
 
 .btn-cancel-reforge {
-  background-image: url("../assets/v2/btn-blue-bg-small.svg");
+  background-image: url("../assets/v2/btn-blue-bg-small.svg") !important;
   background-position: center;
   max-width: 145px;
 }
 
 .character-item.weapon.no-corner {
   padding: 10px;
+  margin: 0;
 }
 
 .spinner-grow {
@@ -1090,8 +1092,8 @@ export default Vue.extend({
 }
 
 .burn-weapons.modal-weapons {
-  height: 320px;
-  max-height: 320px;
+  height: 290px;
+  max-height: 290px;
   width: 90%;
 }
 
@@ -1148,14 +1150,13 @@ export default Vue.extend({
   .btn-cancel-reforge {
     background-size: 120px 40px !important;
     font-size: 14px;
+    min-width: 120px;
   }
 
   .btn-confirm-reforge {
-    width: 160px;
-    background-size: 160px 45px !important;
-    background-position: center;
+    min-width: 178px;
+    background-position: right center;
     font-size: 14px;
-    padding: 0;
   }
 
   .burn-weapons.modal-weapons {

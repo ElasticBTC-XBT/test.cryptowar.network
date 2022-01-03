@@ -1,8 +1,8 @@
 <template>
   <div class="row">
     <div
-      class="filters pl-2 col-12 col-xl-3"
-      :class="isBlacksmith && 'filters-blacksmith'"
+      class="filters pl-2 col-12 "
+      :class="isBlacksmith ? 'filters-blacksmith col-xl-4' : 'col-xl-3'"
       @change="saveFilters()"
       v-if="showFilters"
     >
@@ -110,7 +110,7 @@
 
     <ul class="row col-12" v-if="isBurnWeapon">
       <li
-        class="col-6 col-lg-4 d-flex justify-content-center"
+        class="col-6 col-lg-6 d-flex justify-content-center"
         v-for="(weapon, index) in nonIgnoredWeapons"
         :key="index"
         @click="(!checkForDurability || getWeaponDurability(weapon.id) > 0) && onWeaponClick(weapon.id)"
@@ -593,10 +593,13 @@ input::-webkit-inner-spin-button{
 
 .character-item.weapon {
   cursor: pointer;
+  font-size: 18px;
   position: relative;
   display: flex;
+  text-align: right;
   flex-direction: column;
   padding: 15px 15px;
+  padding-right: 20px;
 }
 
 .sold {
@@ -655,6 +658,7 @@ input::-webkit-inner-spin-button{
 
 .character-item.weapon.no-corner {
   padding: 10px;
+  margin: 0;
 }
 
 .weapon-pagination-btn {
@@ -692,10 +696,10 @@ input::-webkit-inner-spin-button{
   }
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 1201px) {
   .filters.filters-blacksmith {
     max-height: 867px;
-    height: 867px;
+    height: 867px !important;
     border: 0.5px solid #3CDE9B;
   }
 }

@@ -1,8 +1,5 @@
 <template>
   <div class="body main-font">
-    <character-bar
-        v-if="!featureFlagStakeOnly && currentCharacterId !== null"
-    />
     <div v-if="ownWeapons.length > 0 && ownCharacters.length > 0">
       <div class="row" v-if="error !== null">
         <div class="col error">Error: {{ error }}</div>
@@ -208,7 +205,6 @@ import CombatResults from '../components/CombatResults.vue';
 import { toBN, fromWeiEther } from '../utils/common';
 import WeaponIcon from '../components/WeaponIcon.vue';
 import { mapActions, mapGetters, mapState, mapMutations } from 'vuex';
-import CharacterBar from "../components/CharacterBar.vue";
 
 export default {
   data() {
@@ -546,7 +542,6 @@ export default {
     // Hint,
     CombatResults,
     WeaponIcon,
-    CharacterBar,
   },
 };
 </script>
