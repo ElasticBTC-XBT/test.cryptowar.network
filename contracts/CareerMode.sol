@@ -50,6 +50,7 @@ contract CareerMode is
         uint256 char;
         uint256 wep;
         bool done;
+        bool win;
     }
 
     Room[] careerModeRooms;
@@ -231,7 +232,7 @@ contract CareerMode is
 
         uint256 requestId = requestFightList[_roomId].length;
         requestFightList[_roomId].push(
-            RequestFight(requestId, msg.sender, _char, _wep, false)
+            RequestFight(requestId, msg.sender, _char, _wep, false, false)
         );
         participatedRoomsByAddress[msg.sender].push(_roomId);
         requestFightByAddress[msg.sender][_roomId].push(requestId);
@@ -265,12 +266,14 @@ contract CareerMode is
         _requestFight.done = true;
         uint256 seed = randoms.getRandomSeed(_requestFight.requester);
 
-        uint24 playerRoll = getPlayerPowerRoll(_playerPower, seed);
-        uint24 opponentRoll = getPlayerPowerRoll(_opponentPower, seed);
+        uint24 playerRoll = getPlayerPowerRoll(_playerPower, seed); // owner roll
+        uint24 opponentRoll = getPlayerPowerRoll(_opponentPower, seed); // requester roll
         Room storage r = careerModeRooms[_roomId];
 
         uint256 tokensWin = r.matchReward;
         r.totalDeposit = r.totalDeposit.sub(r.matchReward);
+
+        _requestFight.win = opponentRoll >= playerRoll;
 
         if (opponentRoll <= playerRoll) {
             tokensWin = 0;

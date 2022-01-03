@@ -159,6 +159,11 @@
       "address": "0x7c1413dBb716957f30BE02efebb8825F344bf0Be",
       "txHash": "0xb4e1664fde4a51844c3dc55afa2043b2dcc4e463b76e47eff654cbab24b04331",
       "kind": "transparent"
+    },
+    {
+      "address": "0x4CC5739daEfA1ecfe0F827166C628196057377c6",
+      "txHash": "0xe7f0ccf36f579b1628e365f39f46ce4ee27990ae6507250e9f5ab6d97c52b06a",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -19055,9 +19060,9 @@
         }
       }
     },
-    "e25de1bc6b4413428c1da41dd1357f725899e1665191ab3bb5eac5fcdf6d8718": {
-      "address": "0xDe9Bb6cA4Ca6bB48DB42310A6e7c2b68A65B313A",
-      "txHash": "0xc674ac50ecd64f0f0c04b89eec23b265689ee0fe23ca6494c22854c45e057cb5",
+    "cbad0e18073e3d5305a0bc22fd2ee95a060f1f8c60ab3d20d293e8f1077d7b73": {
+      "address": "0x5E1ccFacD15028E1f44de7EC877FD08896F00E59",
+      "txHash": "0xeaaafae8c3823332b4e0d2bf150181e5876ee69e8d4bc3bd748a7eaf599a5f1f",
       "layout": {
         "storage": [
           {
@@ -19081,7 +19086,7 @@
           {
             "contract": "AccessControlUpgradeable",
             "label": "_roles",
-            "type": "t_mapping(t_bytes32,t_struct(RoleData)24723_storage)",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)24708_storage)",
             "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
           },
           {
@@ -19093,105 +19098,99 @@
           {
             "contract": "CareerMode",
             "label": "characters",
-            "type": "t_contract(Characters)13800",
+            "type": "t_contract(Characters)13785",
             "src": "CareerMode.sol:32"
           },
           {
             "contract": "CareerMode",
             "label": "weapons",
-            "type": "t_contract(Weapons)23276",
+            "type": "t_contract(Weapons)23261",
             "src": "CareerMode.sol:33"
           },
           {
             "contract": "CareerMode",
             "label": "xBlade",
-            "type": "t_contract(IERC20)30597",
+            "type": "t_contract(IERC20)30582",
             "src": "CareerMode.sol:34"
           },
           {
             "contract": "CareerMode",
             "label": "randoms",
-            "type": "t_contract(IRandoms)14537",
+            "type": "t_contract(IRandoms)14522",
             "src": "CareerMode.sol:35"
           },
           {
             "contract": "CareerMode",
             "label": "careerModeRooms",
             "type": "t_array(t_struct(Room)2133_storage)dyn_storage",
-            "src": "CareerMode.sol:55"
+            "src": "CareerMode.sol:56"
           },
           {
             "contract": "CareerMode",
             "label": "tokenRewards",
             "type": "t_mapping(t_address,t_uint256)",
-            "src": "CareerMode.sol:57"
+            "src": "CareerMode.sol:58"
           },
           {
             "contract": "CareerMode",
             "label": "rewardClaimTax",
             "type": "t_uint256",
-            "src": "CareerMode.sol:58"
+            "src": "CareerMode.sol:59"
           },
           {
             "contract": "CareerMode",
             "label": "durabilityCostFight",
             "type": "t_uint8",
-            "src": "CareerMode.sol:59"
+            "src": "CareerMode.sol:60"
           },
           {
             "contract": "CareerMode",
             "label": "staminaCostFight",
             "type": "t_uint8",
-            "src": "CareerMode.sol:60"
+            "src": "CareerMode.sol:61"
           },
           {
             "contract": "CareerMode",
             "label": "roomTimerStart",
             "type": "t_mapping(t_uint256,t_uint256)",
-            "src": "CareerMode.sol:62"
+            "src": "CareerMode.sol:63"
           },
           {
             "contract": "CareerMode",
             "label": "requestFightList",
-            "type": "t_mapping(t_uint256,t_array(t_struct(RequestFight)2144_storage)dyn_storage)",
-            "src": "CareerMode.sol:63"
+            "type": "t_mapping(t_uint256,t_array(t_struct(RequestFight)2146_storage)dyn_storage)",
+            "src": "CareerMode.sol:64"
           },
           {
             "contract": "CareerMode",
             "label": "requestFightByAddress",
             "type": "t_mapping(t_address,t_mapping(t_uint256,t_array(t_uint256)dyn_storage))",
-            "src": "CareerMode.sol:64"
+            "src": "CareerMode.sol:65"
           },
           {
             "contract": "CareerMode",
             "label": "minimumRoundDuration",
             "type": "t_uint256",
-            "src": "CareerMode.sol:65"
+            "src": "CareerMode.sol:66"
           },
           {
             "contract": "CareerMode",
             "label": "roomsByAddress",
             "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
-            "src": "CareerMode.sol:66"
-          },
-          {
-            "contract": "CareerMode",
-            "label": "participatedRoomsByAddress",
-            "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
             "src": "CareerMode.sol:67"
           }
         ],
         "types": {
-          "t_contract(Characters)13800": {
+          "t_contract(Characters)13785": {
             "label": "contract Characters"
           },
-          "t_contract(Weapons)23276": {
+          "t_contract(Weapons)23261": {
             "label": "contract Weapons"
           },
-          "t_contract(IERC20)30597": {
+          "t_contract(IERC20)30582": {
             "label": "contract IERC20"
           },
-          "t_contract(IRandoms)14537": {
+          "t_contract(IRandoms)14522": {
             "label": "contract IRandoms"
           },
           "t_array(t_struct(Room)2133_storage)dyn_storage": {
@@ -19248,13 +19247,13 @@
           "t_mapping(t_uint256,t_uint256)": {
             "label": "mapping(uint256 => uint256)"
           },
-          "t_mapping(t_uint256,t_array(t_struct(RequestFight)2144_storage)dyn_storage)": {
+          "t_mapping(t_uint256,t_array(t_struct(RequestFight)2146_storage)dyn_storage)": {
             "label": "mapping(uint256 => struct CareerMode.RequestFight[])"
           },
-          "t_array(t_struct(RequestFight)2144_storage)dyn_storage": {
+          "t_array(t_struct(RequestFight)2146_storage)dyn_storage": {
             "label": "struct CareerMode.RequestFight[]"
           },
-          "t_struct(RequestFight)2144_storage": {
+          "t_struct(RequestFight)2146_storage": {
             "label": "struct CareerMode.RequestFight",
             "members": [
               {
@@ -19276,6 +19275,10 @@
               {
                 "label": "done",
                 "type": "t_bool"
+              },
+              {
+                "label": "win",
+                "type": "t_bool"
               }
             ]
           },
@@ -19291,18 +19294,18 @@
           "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
             "label": "mapping(address => uint256[])"
           },
-          "t_mapping(t_bytes32,t_struct(RoleData)24723_storage)": {
+          "t_mapping(t_bytes32,t_struct(RoleData)24708_storage)": {
             "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
           },
           "t_bytes32": {
             "label": "bytes32"
           },
-          "t_struct(RoleData)24723_storage": {
+          "t_struct(RoleData)24708_storage": {
             "label": "struct AccessControlUpgradeable.RoleData",
             "members": [
               {
                 "label": "members",
-                "type": "t_struct(AddressSet)28591_storage"
+                "type": "t_struct(AddressSet)28576_storage"
               },
               {
                 "label": "adminRole",
@@ -19310,16 +19313,16 @@
               }
             ]
           },
-          "t_struct(AddressSet)28591_storage": {
+          "t_struct(AddressSet)28576_storage": {
             "label": "struct EnumerableSetUpgradeable.AddressSet",
             "members": [
               {
                 "label": "_inner",
-                "type": "t_struct(Set)28326_storage"
+                "type": "t_struct(Set)28311_storage"
               }
             ]
           },
-          "t_struct(Set)28326_storage": {
+          "t_struct(Set)28311_storage": {
             "label": "struct EnumerableSetUpgradeable.Set",
             "members": [
               {
