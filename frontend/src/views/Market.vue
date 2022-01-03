@@ -106,7 +106,7 @@
           <hint class="hint" text="When you list an NFT for sale, it is transferred to the<br>market until someone buys it or you cancel the sale" />
         </template>
         <div class="row mt-3">
-          <div class="col-12 col-xl-3">
+          <div class="col-12 col-xl-3 col-md-12 col-sm-12">
             <div class="row button-row">
               <input class="form-control" type="text" placeholder="Seller Address, NFT ID">
               <div class="mb-2">
@@ -203,7 +203,7 @@
               </div>
             </div>
           </div>
-          <div class="col-9 sell-grid" v-if="activeType === 'weapon'">
+          <div class="col-12 col-xl-9 col-md-12 col-sm-12 sell-grid" v-if="activeType === 'weapon'">
             <weapon-grid
               v-model="selectedNftId"
               :showReforgedWeaponsDefVal="true"
@@ -215,7 +215,7 @@
               :checklist="false"
             />
           </div>
-          <div class="col-9 sell-grid" v-if="activeType === 'character'">
+          <div class="col-12 col-xl-9 col-md-12 col-sm-12 sell-grid" v-if="activeType === 'character'">
             <character-list
               v-model="selectedNftId"
               :sellClick="showListingSetupModal"
@@ -223,7 +223,7 @@
               :checklist="false"
             />
           </div>
-          <div class="col-9 sell-grid" v-if="activeType === 'shield'">
+          <div class="col-12col-xl-3 col-md-12 col-sm-12 sell-grid" v-if="activeType === 'shield'">
             <nft-list
               :isShop="false"
               v-model="selectedNftId"
