@@ -54,7 +54,7 @@ export default {
 }
 
 @media (max-width: 767.98px){
-.character-bar::before{
+/* .character-bar::before{
   content: "";
   width: 100%;
   height: 61px;
@@ -64,7 +64,7 @@ export default {
   top: -58px;
   z-index: 1;
   padding: 0;
-}
+} */
 .character-bar[data-v-203b7b5a] {
   width: 110%;
 }
