@@ -240,36 +240,19 @@ export default Vue.extend({
     clearInterval(this.fetchRareBoxSupplyInterval);
   },
 });
-
-// export default Vue.extend({
-//   data() {
-//     return {
-
-//     };
-//   },
-//   components: {
-//     CharaterList,
-//     WeaponGrid,
-//     DustBalanceDisplay,
-//     // BoxBalanceDisplay,
-//     NftList,
-//   },
-
-//   mounted() {
-//     document.querySelector(".app.app-v2")?.classList.remove("bg2");
-//   }
-// });
 </script>
 
-<style>
-
-@media (min-width: 1025px) {
-  .tab-content {
-    margin-top: 60px;
-  }
+<style scoped>
+@media (min-width: 1700px) {
   .inventory {
     margin-left: 95px;
     margin-right: 78px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .tab-content {
+    margin-top: 60px;
   }
 }
 </style>

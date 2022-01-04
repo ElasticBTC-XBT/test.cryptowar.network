@@ -2,7 +2,7 @@
   <div :class="showFilters && 'row'">
     <div
       class="filters"
-      :class="showFilters && 'col-12 col-lg-4 col-xl-3'"
+      :class="showFilters && 'col-12 col-xl-3'"
       v-if="showFilters"
       @change="saveFilters()"
     >
@@ -121,63 +121,67 @@
       </template> -->
     </div>
 
-    <ul class="character-list row" :class="showFilters && 'col-12 col-lg-8 col-xl-9'">
+    <ul class="character-list row" :class="showFilters && 'col-12 col-xl-9'">
       <li
-        class="col-12 col-md-12 col-lg-6 col-xl-3"
+        class="col-12 col-sm-6 col-md-4 col-xl-3"
         v-for="c in filteredCharacters"
         :key="c.id"
       >
-        <div
-          class="character-item"
-          @click="$emit('input', c.id)"
-          :class="[{ selected: value === c.id }, {isMarket: isSell}]"
-        >
-          <div class="above-wrapper" v-if="$slots.above || $scopedSlots.above">
-            <slot name="above" :character="c"></slot>
-          </div>
-          <slot name="sold" :character="c"></slot>
-          <div class="art">
-            <CharacterArt :character="c" :isMarket="isMarket"/>
-          </div>
-          <div class="sell-box" v-if="isSell">
-            <b-button @click="sellClick()">
-              SELL
-            </b-button>
+        <div class="character-item-wrap">
+          <div
+            class="character-item"
+            @click="$emit('input', c.id)"
+            :class="[{ selected: value === c.id }, {isMarket: isSell}]"
+          >
+            <div class="above-wrapper" v-if="$slots.above || $scopedSlots.above">
+              <slot name="above" :character="c"></slot>
+            </div>
+            <slot name="sold" :character="c"></slot>
+            <div class="art">
+              <CharacterArt :character="c" :isMarket="isMarket"/>
+            </div>
+            <div class="sell-box" v-if="isSell">
+              <b-button @click="sellClick()">
+                SELL
+              </b-button>
+            </div>
           </div>
         </div>
       </li>
 
       <li
-        class="col-12 col-md-6 col-lg-4 col-xl-3"
+        class="col-12 col-sm-6 col-md-4 col-xl-3"
         v-if="!isMarket && showFilters"
       >
-        <div class="character-item addnew" @click="onMintCharacter">
-          <b-button
-            class="recruit"
-            v-tooltip="'Recruit new character'"
-            tagname="recruit_character"
-          >
-            <i class="fas fa-plus"></i>
-            <br>
-            Recruit
-            <br>
-            <span
-                  :class="`${referralAddress == '0x0000000000000000000000000000000000000000' ? 'price' : ''}`"
-                   v-if="referralAddress == '0x0000000000000000000000000000000000000000'"
-                  >({{ recruitCost }} xBlade)</span
-                >
-                <span v-if="referralAddress != '0x0000000000000000000000000000000000000000'" class="price">
-                  {{ (recruitCost * 0.93).toFixed(2) }}xBlade)</span
-                >
-          </b-button>
-          <div class="small-hero-left">
-            Only
-            <strong
-              class="upper-text promotion-number"
-              style="margin: 0 4px"
-              >{{ heroAmount }}</strong
+        <div class="character-item-wrap">
+          <div class="character-item addnew" @click="onMintCharacter">
+            <b-button
+              class="recruit"
+              v-tooltip="'Recruit new character'"
+              tagname="recruit_character"
             >
-            heroes left!
+              <i class="fas fa-plus"></i>
+              <br>
+              Recruit
+              <br>
+              <span
+                    :class="`${referralAddress == '0x0000000000000000000000000000000000000000' ? 'price' : ''}`"
+                    v-if="referralAddress == '0x0000000000000000000000000000000000000000'"
+                    >({{ recruitCost }} xBlade)</span
+                  >
+                  <span v-if="referralAddress != '0x0000000000000000000000000000000000000000'" class="price">
+                    {{ (recruitCost * 0.93).toFixed(2) }}xBlade)</span
+                  >
+            </b-button>
+            <div class="small-hero-left">
+              Only
+              <strong
+                class="upper-text promotion-number"
+                style="margin: 0 4px"
+                >{{ heroAmount }}</strong
+              >
+              heroes left!
+            </div>
           </div>
         </div>
       </li>
@@ -414,6 +418,26 @@ export default {
 </script>
 
 <style scoped>
+.home .character-list {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.character-item-wrap {
+  margin: 0 auto;
+  min-width: 270px;
+  max-width: 294px;
+}
+
+.character-item {
+  width: 100%;
+  margin: 0;
+  margin-top: 50px;
+}
+
+/* .character-item.addnew {
+  min-width: 294px;
+} */
 
 .title{
   font-size: 20px;
@@ -481,13 +505,6 @@ input::-webkit-inner-spin-button {
 
 .promotion-number {
   color: #f58b5b;
-}
-
-
-@media (min-width: 1248px) {
-  .home .character-list {
-    padding: 0 295px;
-  }
 }
 
 @media (max-width: 576px) {

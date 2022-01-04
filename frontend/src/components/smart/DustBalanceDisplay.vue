@@ -1,67 +1,65 @@
 <template>
-  <div>
-    <div class="dust-list row">
+  <div class="dust-list row">
+    <div
+      class="col-lg-4 d-flex flex-column align-items-center"
+      :class="isBlacksmith ? 'col-6' : 'col-12'"
+    >
       <div
-        class="col-lg-4 d-flex flex-column align-items-center"
-        :class="isBlacksmith ? 'col-6' : 'col-12'"
+        class="character-item addnew dust-container"
+        :class="isBlacksmith && 'no-corner'"
       >
-        <div
-          class="character-item addnew dust-container"
-          :class="isBlacksmith && 'no-corner'"
-        >
-          <div class="dust-info">
-            <div class="dust-burn-point">LB</div>
-            <span class="dust-power">15 power per point</span>
-          </div>
-          <div class="dust-image dust-image1"></div>
+        <div class="dust-info">
+          <div class="dust-burn-point">LB</div>
+          <span class="dust-power">15 power per point</span>
         </div>
-        <h2 class="dust-label text-center" v-if="!isBlacksmith">Lesser</h2>
-        <div class="dust-quantity-wrap">
-          <div class="dust-quantity text-center">
-            <span>{{getLesserDust()}}</span>
-          </div>
+        <div class="dust-image dust-image1"></div>
+      </div>
+      <h2 class="dust-label text-center" v-if="!isBlacksmith">Lesser</h2>
+      <div class="dust-quantity-wrap">
+        <div class="dust-quantity text-center">
+          <span>{{getLesserDust()}}</span>
         </div>
       </div>
+    </div>
+    <div
+      class="col-lg-4 d-flex flex-column align-items-center"
+      :class="isBlacksmith ? 'col-6' : 'col-12'"
+    >
       <div
-        class="col-lg-4 d-flex flex-column align-items-center"
-        :class="isBlacksmith ? 'col-6' : 'col-12'"
+        class="character-item addnew dust-container"
+        :class="isBlacksmith && 'no-corner'"
       >
-        <div
-          class="character-item addnew dust-container"
-          :class="isBlacksmith && 'no-corner'"
-        >
-          <div class="dust-info">
-            <div class="dust-burn-point">4B</div>
-            <span class="dust-power">30 power per point</span>
-          </div>
-          <div class="dust-image dust-image2"></div>
+        <div class="dust-info">
+          <div class="dust-burn-point">4B</div>
+          <span class="dust-power">30 power per point</span>
         </div>
-        <h2 class="dust-label text-center" v-if="!isBlacksmith">Greater</h2>
-        <div class="dust-quantity-wrap">
-          <div class="dust-quantity text-center">
-            <span>{{getGreaterDust()}}</span>
-          </div>
+        <div class="dust-image dust-image2"></div>
+      </div>
+      <h2 class="dust-label text-center" v-if="!isBlacksmith">Greater</h2>
+      <div class="dust-quantity-wrap">
+        <div class="dust-quantity text-center">
+          <span>{{getGreaterDust()}}</span>
         </div>
       </div>
+    </div>
+    <div
+      class="col-lg-4 d-flex flex-column align-items-center"
+        :class="isBlacksmith ? 'col-6' : 'col-12'"
+    >
       <div
-        class="col-lg-4 d-flex flex-column align-items-center"
-          :class="isBlacksmith ? 'col-6' : 'col-12'"
+        class="character-item addnew dust-container"
+        :class="isBlacksmith && 'no-corner'"
       >
-        <div
-          class="character-item addnew dust-container"
-          :class="isBlacksmith && 'no-corner'"
-        >
-          <div class="dust-info">
-            <div class="dust-burn-point">5B</div>
-            <span class="dust-power">75 power per point</span>
-          </div>
-          <div class="dust-image dust-image3"></div>
+        <div class="dust-info">
+          <div class="dust-burn-point">5B</div>
+          <span class="dust-power">75 power per point</span>
         </div>
-        <h2 class="dust-label text-center" v-if="!isBlacksmith">Powerful</h2>
-        <div class="dust-quantity-wrap">
-          <div class="dust-quantity text-center">
-            <span>{{getPowerfulDust()}}</span>
-          </div>
+        <div class="dust-image dust-image3"></div>
+      </div>
+      <h2 class="dust-label text-center" v-if="!isBlacksmith">Powerful</h2>
+      <div class="dust-quantity-wrap">
+        <div class="dust-quantity text-center">
+          <span>{{getPowerfulDust()}}</span>
         </div>
       </div>
     </div>
@@ -98,20 +96,26 @@ export default {
 
 <style>
 .dust-list {
-  justify-content: space-around;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  margin: 0 auto !important;
+  justify-content: center;
 }
 
 .character-item.addnew.dust-container {
-  margin: 0 90px;
+  max-width: 298px;
   cursor: pointer;
   align-items :center;
   flex-direction: column;
   justify-content: space-around;
+  margin: 0 auto;
 }
 
 .character-item.addnew.dust-container.no-corner {
+  max-width: 174px;
   height: 213px !important;
-  margin: 0;
+  margin: 0 auto;
 }
 
 .dust-burn-point {
@@ -159,7 +163,8 @@ export default {
 .dust-quantity-wrap {
   display: flex;
   align-items: center;
-  padding: 0 160px;
+  width: 100px;
+  margin: 0 auto;
 }
 
 .dust-quantity {

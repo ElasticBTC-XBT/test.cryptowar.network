@@ -419,7 +419,7 @@
         </div>
       </b-tab> -->
       <b-tab title="Create Dust">
-        <div class="row" v-if="showBlacksmith">
+        <div class="row mt-3" v-if="showBlacksmith">
           <weapon-grid
             class="col-xl-8 justify-content-lg-between" v-model="burnWeaponId" :ignore="burnWeaponIds"
             :showGivenWeaponIds="true" :weaponIds="hideWeapons" @chooseweapon="addBurnWeapon" showFilters isBlacksmith

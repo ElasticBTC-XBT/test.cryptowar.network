@@ -83,11 +83,11 @@
     </div>
 
     <ul
-      class="weapon-grid row" :class="showFilters && 'col-12 col-lg-8 col-xl-9'"
+      class="weapon-grid row" :class="showFilters && 'col-12 col-xl-9'"
       v-if="!isBlacksmith && !isBurnWeapon"
     >
       <li
-        class="col-12 col-md-12 col-lg-6 col-xl-3"
+        class="col-12 col-sm-6 col-md-4 col-xl-3"
         v-for="weapon in nonIgnoredWeapons"
         :key="weapon.id"
         @click="(!checkForDurability || getWeaponDurability(weapon.id) > 0) && onWeaponClick(weapon.id)"
@@ -557,7 +557,6 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button{
   -webkit-appearance: none;
@@ -600,6 +599,12 @@ input::-webkit-inner-spin-button{
   flex-direction: column;
   padding: 15px 15px;
   padding-right: 20px;
+  margin: 0 auto 50px;
+}
+
+.character-item.weapon:not(.no-corner) {
+  max-width: 288px;
+  min-width: 230px;
 }
 
 .sold {

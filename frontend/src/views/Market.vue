@@ -1,10 +1,10 @@
 <template>
   <div class="body main-font">
-    <div class="market-hero-weapon">
+    <div class="market-hero-weapon" style="max-width: 1769px; margin-left: auto; margin-right: auto;">
       <button @click="activeType = 'character'; searchAllCharacterListings(currentPage - 1)" :class="activeType === 'character' && 'selected'">HERO</button>
       <button @click="activeType = 'weapon'; searchAllWeaponListings(currentPage - 1)" :class="activeType === 'weapon' && 'selected'">WEAPON</button>
     </div>
-    <b-tabs justified>
+    <b-tabs justified style="max-width: 1769px; margin-left: auto; margin-right: auto;">
       <b-tab @click="clearData();browseTabActive = true;skillShopTabActive = false;searchAllCharacterListings(currentPage - 1)">
         <template #title>
           ON SALES NFTS
