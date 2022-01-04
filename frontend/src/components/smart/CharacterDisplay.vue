@@ -307,7 +307,7 @@ li.character-highlight .element-icon{
 }
 
 .character-list-mobile {
-  border-top: 3px solid #9e8a57;
+  /* border-top: 3px solid #9e8a57; */
   margin-top: 15px;
   padding-top: 15px;
   display: flex;
