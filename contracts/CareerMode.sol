@@ -50,6 +50,7 @@ contract CareerMode is
         uint256 char;
         uint256 wep;
         bool done;
+        bool win;
     }
 
     Room[] careerModeRooms;
@@ -64,6 +65,8 @@ contract CareerMode is
     mapping(address => mapping(uint256 => uint256[])) requestFightByAddress; // requester => (roomId => requestId)
     uint256 minimumRoundDuration;
     mapping(address => uint256[]) roomsByAddress;
+    mapping(address => uint256[]) participatedRoomsByAddress;
+    uint256 public feeRate;
 
     /** EVENTS */
 
@@ -114,6 +117,7 @@ contract CareerMode is
         staminaCostFight = 40;
         durabilityCostFight = 3;
         minimumRoundDuration = 2 days;
+        feeRate = 5; //5%
     }
 
     /** MODIFIERS */
@@ -230,8 +234,9 @@ contract CareerMode is
 
         uint256 requestId = requestFightList[_roomId].length;
         requestFightList[_roomId].push(
-            RequestFight(requestId, msg.sender, _char, _wep, false)
+            RequestFight(requestId, msg.sender, _char, _wep, false, false)
         );
+        participatedRoomsByAddress[msg.sender].push(_roomId);
         requestFightByAddress[msg.sender][_roomId].push(requestId);
         emit RequestFightOutcome(msg.sender, _roomId, _char, _wep);
     }
@@ -263,21 +268,26 @@ contract CareerMode is
         _requestFight.done = true;
         uint256 seed = randoms.getRandomSeed(_requestFight.requester);
 
-        uint24 playerRoll = getPlayerPowerRoll(_playerPower, seed);
-        uint24 opponentRoll = getPlayerPowerRoll(_opponentPower, seed);
+        uint24 playerRoll = getPlayerPowerRoll(_playerPower, seed); // owner roll
+        uint24 opponentRoll = getPlayerPowerRoll(_opponentPower, seed); // requester roll
         Room storage r = careerModeRooms[_roomId];
 
-        uint256 tokensWin = r.matchReward;
-        r.totalDeposit = r.totalDeposit.sub(r.matchReward);
+        uint256 tokensWin = r.matchReward.sub(
+            r.matchReward.mul(feeRate).div(100)
+        );
+
+        _requestFight.win = opponentRoll >= playerRoll;
 
         if (opponentRoll <= playerRoll) {
-            tokensWin = 0;
-            r.totalDeposit = r.totalDeposit.add(r.matchReward.mul(2));
-        }
+            // Owner win
+            tokenRewards[r.owner] = tokenRewards[r.owner].add(tokensWin);
+        } else {
+            r.totalDeposit = r.totalDeposit.sub(r.matchReward);
 
-        tokenRewards[_requestFight.requester] = tokenRewards[
-            _requestFight.requester
-        ].add(tokensWin);
+            tokenRewards[_requestFight.requester] = tokenRewards[
+                _requestFight.requester
+            ].add(tokensWin);
+        }
 
         emit FightOutCome(
             _requestFight.requester,
@@ -310,12 +320,8 @@ contract CareerMode is
         uint256 _tokenRewards = tokenRewards[msg.sender];
         tokenRewards[msg.sender] = 0;
 
-        uint256 _tokenRewardsToPayOut = _tokenRewards.sub(
-            _tokenRewards.mul(rewardClaimTax).div(100)
-        );
-
-        xBlade.transfer(msg.sender, _tokenRewardsToPayOut);
-        emit ClaimReward(_tokenRewardsToPayOut);
+        xBlade.transfer(msg.sender, _tokenRewards);
+        emit ClaimReward(_tokenRewards);
     }
 
     function endCareer(uint256 id) public {
@@ -347,6 +353,10 @@ contract CareerMode is
             r.weaponId
         );
         emit EndCareerRoom(id, r.owner, reward);
+    }
+
+    function setFeeRate(uint256 _rate) public restricted {
+        feeRate = _rate;
     }
 
     /** GETTERS */
@@ -497,6 +507,14 @@ contract CareerMode is
             values[i] = requestFightList[roomId][i + cursor];
         }
         return values;
+    }
+
+    function getPartipatedRequests(address account)
+        public
+        view
+        returns (uint256[] memory)
+    {
+        return participatedRoomsByAddress[account];
     }
 
     function getRoomsByAddress(address account)
