@@ -1,6 +1,6 @@
 <template>
   <div class="character-bar">
-    <!-- <character-display /> -->
+    <character-display />
     <!-- <div class="character-bar-divider"/> -->
     <!-- <img src="../assets/infoDivider.png" class="info-divider"> -->
     <div class="nav-bottom-line"></div>
@@ -8,24 +8,24 @@
 </template>
 
 <script lang="ts">
-// import CharacterDisplay from './smart/CharacterDisplay.vue';
+import CharacterDisplay from './smart/CharacterDisplay.vue';
 
 export default {
   components: {
-    // CharacterDisplay,
+    CharacterDisplay,
   },
 };
 </script>
 
 <style scoped>
 .character-bar {
-  padding: 0 1.2em 0.5em 1.2em;
+  padding: 0.5em 1.2em 0.5em 1.2em;
   background-color: #000;
   position: relative;
   left: -16px;
   width: 103%;
 }
-.character-bar::before{
+/* .character-bar::before{
   content: "";
   width: 100%;
   height: 40px;
@@ -35,7 +35,7 @@ export default {
   top: -33px;
   z-index: 1;
   padding: 0;
-}
+} */
 .character-bar-divider {
   height: 1px;
   background: rgb(124, 70, 117);

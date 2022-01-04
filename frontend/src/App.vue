@@ -802,6 +802,7 @@ button.close {
 
 #fightResultsModal .modal-body{
   color: #fff;
+  margin-top: 25px;
 }
 
 #selectHeroOrWeaponModal .modal-content{
