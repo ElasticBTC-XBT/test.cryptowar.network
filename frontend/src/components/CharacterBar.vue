@@ -41,9 +41,9 @@ export default {
   background: rgb(124, 70, 117);
 }
 .nav-bottom-line{
-  width: 125%;
+  width: 130%;
   position: relative;
-  left: -19px;
+  left: -70px;
   top: 12px;
   height: 4px;
   border-top: 3px solid;
@@ -65,8 +65,19 @@ export default {
   z-index: 1;
   padding: 0;
 } */
+
 .character-bar[data-v-203b7b5a] {
   width: 110%;
 }
+}
+
+@media (max-width: 575.98px) {
+  .character-bar {
+    padding: 0.5em 1.2em 0.5em 2.4em;
+    width: 107%;
+  }
+  /* .character-list-mobile{
+    border-top: none;
+  } */
 }
 </style>

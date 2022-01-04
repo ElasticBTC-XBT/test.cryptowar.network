@@ -307,7 +307,7 @@ li.character-highlight .element-icon{
 }
 
 .character-list-mobile {
-  border-top: 3px solid #9e8a57;
+  /* border-top: 3px solid #9e8a57; */
   margin-top: 15px;
   padding-top: 15px;
   display: flex;
@@ -435,5 +435,11 @@ li.character-highlight .element-icon{
 }
 .hidden {
   display: none;
+}
+
+@media (max-width: 575.98px) {
+  .character-list-mobile{
+    border-top: none;
+  }
 }
 </style>
