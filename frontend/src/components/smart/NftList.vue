@@ -5,8 +5,8 @@
         <span>Nothing to buy at this time</span>
       </div>
       <ul class="nft-grid nft-list row">
-        <li class="col-lg-3" :disabled="nft.isSoldOut" v-b-modal.modal-buyitem @click="checkBuy = nft" v-for="nft in nftIdTypes" :key="`${nft.type}.${nft.id}`">
-          <div class="character-item addnew nft-container">
+        <li class="col-xl-3 col-lg-4" v-for="nft in nftIdTypes" :key="`${nft.type}.${nft.id}`">
+          <div :disabled="nft.isSoldOut" v-b-modal.modal-buyitem @click="checkBuy = nft" class="character-item addnew nft-container">
             <nft-icon :nft="nft" :isShop="isShop" :isLoading="isLoading" :favorite="isFavorite(nft.typeId, nft.id)"
             v-tooltip.top="{ content: itemDescriptionHtml(nft) , trigger: (isMobile() ? 'click' : 'hover') }"
             @mouseover="hover = !isMobile() || true"
@@ -18,7 +18,7 @@
               class="shop-button btn-blue-bg btn-open-box"
             >
               <span v-if="!nft.isSoldOut">
-                Buy ({{ Math.round(nft.nftPrice) }} xBlade)
+                BUY ({{ Math.round(nft.nftPrice) }} xBLADE)
               </span>
               <span  v-if="nft.isSoldOut && !isLoading && nft.id !== 2">
                 SOLD OUT
@@ -528,7 +528,7 @@ export default Vue.extend({
 }
 
 .character-item.addnew.nft-container {
-  margin: 0 70px;
+  margin: 0 auto;
   padding: 30px 0;
 }
 
