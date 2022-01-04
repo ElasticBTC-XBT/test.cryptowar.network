@@ -1,6 +1,7 @@
 <template>
   <div class="app app-v2">
-    <div class="container-box">
+    <router-view v-if="isMaintenance"/>
+    <div v-if="!isMaintenance" class="container-box">
       <nav-bar />
       <div class="content dark-bg-text">
         <router-view v-if="canShowApp" />
@@ -148,6 +149,7 @@ export default {
     hideWalletWarning: false,
     isConnecting: false,
     recruitCost: "",
+    isMaintenance: false,
   }),
 
   computed: {
@@ -433,6 +435,10 @@ export default {
   },
 
   async created() {
+    if(this.isMaintenance && window.location.pathname !== '/maintenance'){
+      window.location.href = 'maintenance';
+    }
+    this.isMaintenance = process.env.VUE_APP_MAINTAINANCE && process.env.VUE_APP_MAINTAINANCE === 'true' ? true : false;
     try {
       await this.initializeStore();
     } catch (e) {

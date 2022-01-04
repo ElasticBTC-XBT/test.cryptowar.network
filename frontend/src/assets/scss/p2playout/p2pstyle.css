@@ -20952,7 +20952,7 @@ margin-bottom: 1.5rem;
     border-radius: 0;
     min-width: 210px;
     min-height: 42px;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     font-weight: bold;
     position: relative;
     text-align: center;
@@ -21019,7 +21019,7 @@ margin-bottom: 1.5rem;
 
 .character-item {
     height: 398px;
-    /* width: 294px; */
+    width: 294px;
     /* background-position: 50% 50%; */
     cursor: pointer;
     background-repeat: no-repeat;
