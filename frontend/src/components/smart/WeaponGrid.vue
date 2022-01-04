@@ -599,7 +599,7 @@ input::-webkit-inner-spin-button{
   flex-direction: column;
   padding: 15px 15px;
   padding-right: 20px;
-  margin: 0 auto 50px;
+  margin: 50px auto 0;
 }
 
 .weapon-market {
@@ -607,7 +607,7 @@ input::-webkit-inner-spin-button{
 }
 
 .character-item.weapon:not(.no-corner) {
-  max-width: 288px;
+  max-width: 270px;
   min-width: 230px;
 }
 

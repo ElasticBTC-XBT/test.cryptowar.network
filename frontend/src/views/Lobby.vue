@@ -1,6 +1,6 @@
 <template>
   <div class="body main-font">
-    <claim-rewards-bar v-if="canShowRewardsBar" />
+    <claim-rewards-bar />
     <ul class="lobby-box">
       <li>
         <router-link :to="{ name: 'combat' }" exact class="character-item addnew addmore lobby-box-item-wrap">
@@ -55,7 +55,6 @@ import ClaimRewardsBar from "../components/smart/ClaimRewardsBar.vue";
 export default {
   data() {
     return {
-      canShowRewardsBar: true,
     };
   },
 
@@ -69,9 +68,7 @@ export default {
   methods: {
   },
 
-  async mounted() {
-    document.querySelector(".app.app-v2").classList.add("bg2");
-  },
+  async mounted() {},
 
   components: {
     ClaimRewardsBar,

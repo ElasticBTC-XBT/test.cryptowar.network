@@ -1,10 +1,10 @@
 <template>
   <div class="body main-font">
-    <b-navbar>
+    <div class="claim-reward-bar">
       <!-- <b-icon-exclamation-circle-fill class="rewards-claimable-icon" scale="1.2"
       variant="success" :hidden="!canClaimTokens && !canClaimXp" v-tooltip.bottom="'Rewards ready to claim!'"/> -->
 
-      <b-nav-item
+      <div
         :disabled="!canClaimTokens"
         @click="claimSkill(ClaimStage.Claim)"
         ><!-- moved gtag-link below b-nav-item -->
@@ -19,16 +19,16 @@
           {{ formattedRewardsClaimTax }}
           <!-- <b-icon-question-circle class="centered-icon" scale="0.8"/> -->
         </span>
-      </b-nav-item>
+      </div>
 
-      <b-nav-item :disabled="!canClaimXp" @click="onClaimXp">
+      <div :disabled="!canClaimXp" @click="onClaimXp">
         <b-button
           class="gtag-link-others btn-blue-bg btn-claim-xp"
           v-html="`Claim Heroes XP`"
           v-tooltip.bottom="formattedXpRewards"
         ></b-button>
-      </b-nav-item>
-    </b-navbar>
+      </div>
+    </div>
 
     <b-modal
       class="centered-modal"
@@ -300,6 +300,12 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+.claim-reward-bar {
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+}
+
 .navbar-expand {
   flex-wrap: wrap;
 }
@@ -330,6 +336,11 @@ export default Vue.extend({
 }
 
 @media (max-width: 576px) {
+  .claim-reward-bar {
+    flex-direction: column;
+    text-align: center;
+    padding: 0 8px;
+  }
     .navbar-expand {
       justify-content: center;
       text-align: center
