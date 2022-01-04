@@ -602,6 +602,10 @@ input::-webkit-inner-spin-button{
   margin: 0 auto 50px;
 }
 
+.weapon-market {
+  margin-top: 50px !important;
+}
+
 .character-item.weapon:not(.no-corner) {
   max-width: 288px;
   min-width: 230px;
@@ -783,6 +787,10 @@ input::-webkit-inner-spin-button{
 
   .weapon-grid.blacksmith .dust-wrap {
     max-height: none;
+  }
+
+  .character-item.weapon.no-corner {
+    margin-top: 20px !important;
   }
 }
 

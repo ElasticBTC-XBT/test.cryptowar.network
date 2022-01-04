@@ -446,9 +446,9 @@ export default {
   font-size: 18px;
 }
 
-.sell-grid .glow-img-box{
+/* .sell-grid .glow-img-box{
   margin-top: 90px;
-}
+} */
 
 .confirmReforge .glow-img-box img, .modal-body .glow-img-box img {
   max-width: 7rem;
@@ -466,6 +466,12 @@ export default {
 }
 .weapon-footer{
   margin-top: 10px;
+}
+
+@media (max-width: 576px) {
+  .no-corner .weapon-footer{
+    margin-top: 70px;
+  }
 }
 
 /* .glow-container {
