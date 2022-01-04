@@ -827,7 +827,6 @@ export default Vue.extend({
       if(!typeSort){
         return;
       }
-      console.log(this.allSearchResults);
       const sortable: any[] = [];
       this.allSearchResults.forEach((item: any)=>{
         sortable.push([item, this.convertWeiToSkill(this.nftPricesById[item])]);
