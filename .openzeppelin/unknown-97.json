@@ -20633,6 +20633,308 @@
           }
         }
       }
+    },
+    "fee9b7523d9354d32d51abb8dc682e816b855297dbf0419ad6fa82e63ae19b8f": {
+      "address": "0x1A0f766cE73c1665BE1BC5fc5fe3a51e2771c8bF",
+      "txHash": "0xa98cd58e46fcd27b32be655abb1d598d4501a7d62ab629579c28506668070f2c",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:25"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:30"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "_roles",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)24745_storage)",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:225"
+          },
+          {
+            "contract": "CareerMode",
+            "label": "characters",
+            "type": "t_contract(Characters)13822",
+            "src": "CareerMode.sol:32"
+          },
+          {
+            "contract": "CareerMode",
+            "label": "weapons",
+            "type": "t_contract(Weapons)23298",
+            "src": "CareerMode.sol:33"
+          },
+          {
+            "contract": "CareerMode",
+            "label": "xBlade",
+            "type": "t_contract(IERC20)30619",
+            "src": "CareerMode.sol:34"
+          },
+          {
+            "contract": "CareerMode",
+            "label": "randoms",
+            "type": "t_contract(IRandoms)14559",
+            "src": "CareerMode.sol:35"
+          },
+          {
+            "contract": "CareerMode",
+            "label": "careerModeRooms",
+            "type": "t_array(t_struct(Room)2133_storage)dyn_storage",
+            "src": "CareerMode.sol:56"
+          },
+          {
+            "contract": "CareerMode",
+            "label": "tokenRewards",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "CareerMode.sol:58"
+          },
+          {
+            "contract": "CareerMode",
+            "label": "rewardClaimTax",
+            "type": "t_uint256",
+            "src": "CareerMode.sol:59"
+          },
+          {
+            "contract": "CareerMode",
+            "label": "durabilityCostFight",
+            "type": "t_uint8",
+            "src": "CareerMode.sol:60"
+          },
+          {
+            "contract": "CareerMode",
+            "label": "staminaCostFight",
+            "type": "t_uint8",
+            "src": "CareerMode.sol:61"
+          },
+          {
+            "contract": "CareerMode",
+            "label": "roomTimerStart",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "CareerMode.sol:63"
+          },
+          {
+            "contract": "CareerMode",
+            "label": "requestFightList",
+            "type": "t_mapping(t_uint256,t_array(t_struct(RequestFight)2146_storage)dyn_storage)",
+            "src": "CareerMode.sol:64"
+          },
+          {
+            "contract": "CareerMode",
+            "label": "requestFightByAddress",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_array(t_uint256)dyn_storage))",
+            "src": "CareerMode.sol:65"
+          },
+          {
+            "contract": "CareerMode",
+            "label": "minimumRoundDuration",
+            "type": "t_uint256",
+            "src": "CareerMode.sol:66"
+          },
+          {
+            "contract": "CareerMode",
+            "label": "roomsByAddress",
+            "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
+            "src": "CareerMode.sol:67"
+          },
+          {
+            "contract": "CareerMode",
+            "label": "participatedRoomsByAddress",
+            "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
+            "src": "CareerMode.sol:68"
+          },
+          {
+            "contract": "CareerMode",
+            "label": "feeRate",
+            "type": "t_uint256",
+            "src": "CareerMode.sol:69"
+          }
+        ],
+        "types": {
+          "t_contract(Characters)13822": {
+            "label": "contract Characters"
+          },
+          "t_contract(Weapons)23298": {
+            "label": "contract Weapons"
+          },
+          "t_contract(IERC20)30619": {
+            "label": "contract IERC20"
+          },
+          "t_contract(IRandoms)14559": {
+            "label": "contract IRandoms"
+          },
+          "t_array(t_struct(Room)2133_storage)dyn_storage": {
+            "label": "struct CareerMode.Room[]"
+          },
+          "t_struct(Room)2133_storage": {
+            "label": "struct CareerMode.Room",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint256"
+              },
+              {
+                "label": "owner",
+                "type": "t_address"
+              },
+              {
+                "label": "matchReward",
+                "type": "t_uint256"
+              },
+              {
+                "label": "totalDeposit",
+                "type": "t_uint256"
+              },
+              {
+                "label": "weaponId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "characterId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "claimed",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_uint8": {
+            "label": "uint8"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)"
+          },
+          "t_mapping(t_uint256,t_array(t_struct(RequestFight)2146_storage)dyn_storage)": {
+            "label": "mapping(uint256 => struct CareerMode.RequestFight[])"
+          },
+          "t_array(t_struct(RequestFight)2146_storage)dyn_storage": {
+            "label": "struct CareerMode.RequestFight[]"
+          },
+          "t_struct(RequestFight)2146_storage": {
+            "label": "struct CareerMode.RequestFight",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint256"
+              },
+              {
+                "label": "requester",
+                "type": "t_address"
+              },
+              {
+                "label": "char",
+                "type": "t_uint256"
+              },
+              {
+                "label": "wep",
+                "type": "t_uint256"
+              },
+              {
+                "label": "done",
+                "type": "t_bool"
+              },
+              {
+                "label": "win",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_array(t_uint256)dyn_storage))": {
+            "label": "mapping(address => mapping(uint256 => uint256[]))"
+          },
+          "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(uint256 => uint256[])"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]"
+          },
+          "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(address => uint256[])"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)24745_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_struct(RoleData)24745_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "members",
+                "type": "t_struct(AddressSet)28613_storage"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_struct(AddressSet)28613_storage": {
+            "label": "struct EnumerableSetUpgradeable.AddressSet",
+            "members": [
+              {
+                "label": "_inner",
+                "type": "t_struct(Set)28348_storage"
+              }
+            ]
+          },
+          "t_struct(Set)28348_storage": {
+            "label": "struct EnumerableSetUpgradeable.Set",
+            "members": [
+              {
+                "label": "_values",
+                "type": "t_array(t_bytes32)dyn_storage"
+              },
+              {
+                "label": "_indexes",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              }
+            ]
+          },
+          "t_array(t_bytes32)dyn_storage": {
+            "label": "bytes32[]"
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
     }
   }
 }

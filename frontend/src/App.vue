@@ -435,10 +435,10 @@ export default {
   },
 
   async created() {
+    this.isMaintenance = process.env.VUE_APP_MAINTAINANCE;
     if(this.isMaintenance && window.location.pathname !== '/maintenance'){
       window.location.href = 'maintenance';
     }
-    this.isMaintenance = process.env.VUE_APP_MAINTAINANCE && process.env.VUE_APP_MAINTAINANCE === 'true' ? true : false;
     try {
       await this.initializeStore();
     } catch (e) {
