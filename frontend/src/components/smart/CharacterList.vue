@@ -17,7 +17,7 @@
         />
       </div>
 
-      <div class="star-filter">
+      <!-- <div class="star-filter">
         <span class="filter-title">Stars</span>
         <ul class="stars-list">
           <li
@@ -30,7 +30,7 @@
               <span>{{ star }}</span>
           </li>
         </ul>
-      </div>
+      </div> -->
 
       <div class="element-filter">
         <span class="filter-title">Elements</span>
@@ -50,22 +50,29 @@
         </ul>
       </div>
 
-      <template v-if="isMarket">
-          <div>
-            <strong>MIN PRICE</strong>
-            <input class="form-control" type="number" v-model.trim="minPriceFilter" :min="0" placeholder="Min" />
-          </div>
-          <div>
-            <strong>MAX PRICE</strong>
-            <input class="form-control" type="number" v-model.trim="maxPriceFilter" :min="0" placeholder="Max" />
-          </div>
-          <div>
-            <strong>SORT</strong>
-            <select class="form-control" v-model="priceSort">
-              <option v-for="x in sorts" :value="x.dir" :key="x.dir">{{ x.name || 'Any' }}</option>
-            </select>
-          </div>
-        </template>
+      <div class="filter-market" v-if="isMarket">
+
+        <div>LEVEL</div>
+        <select class="form-control" v-model="levelFilter">
+          <option v-for="x in ['', 1, 11, 21, 31, 41, 51, 61, 71, 81, 91]" :value="x" :key="x">
+            {{ x ? `${x} - ${x + 9}` : 'Any' }}
+          </option>
+        </select>
+
+        <div>MIN PRICE</div>
+        <input class="form-control" type="number" v-model.trim="minPriceFilter" :min="0" placeholder="Min" />
+
+
+        <div>MAX PRICE</div>
+        <input class="form-control" type="number" v-model.trim="maxPriceFilter" :min="0" placeholder="Max" />
+
+
+        <div>SORT</div>
+        <select class="form-control" v-model="priceSort">
+          <option v-for="x in sorts" :value="x.dir" :key="x.dir">{{ x.name || 'Any' }}</option>
+        </select>
+
+      </div>
 
       <div class="search-btn">
         <b-button
@@ -418,6 +425,16 @@ export default {
 </script>
 
 <style scoped>
+
+.filter-market{
+  margin-top: 20px;
+}
+
+.filter-market div{
+  margin-top: 20px;
+  font-weight: bold;
+}
+
 .home .character-list {
   max-width: 1200px;
   margin: 0 auto;
@@ -427,6 +444,7 @@ export default {
   margin: 0 auto;
   min-width: 270px;
   max-width: 294px;
+  margin-bottom: 100px;
 }
 
 .character-item {

@@ -827,11 +827,11 @@ export default Vue.extend({
       if(!typeSort){
         return;
       }
+      console.log(this.allSearchResults);
       const sortable: any[] = [];
       this.allSearchResults.forEach((item: any)=>{
         sortable.push([item, this.convertWeiToSkill(this.nftPricesById[item])]);
       });
-
       if(typeSort === '1'){
         sortable.sort(function(a, b) {
           return parseFloat(a[1]) - parseFloat(b[1]);
