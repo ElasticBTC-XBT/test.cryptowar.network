@@ -435,7 +435,7 @@ export default {
   },
 
   async created() {
-    if(window.location.pathname !== '/maintenance'){
+    if(isMaintenance && window.location.pathname !== '/maintenance'){
       window.location.href = 'maintenance';
     }
     this.isMaintenance = process.env.VUE_APP_MAINTAINANCE && process.env.VUE_APP_MAINTAINANCE === 'true' ? true : false;
