@@ -19,6 +19,8 @@ import CombatPVP from './views/CombatPVP.vue';
 import Arena from './views/Arena.vue';
 import CombatPVPFight from './views/CombatPVPFight.vue';
 import RPS from './views/RPS.vue';
+import Maintenance from './views/Maintenance.vue';
+
 import {
   raid as featureFlagRaid,
   stakeOnly as featureFlagStakeOnly,
@@ -62,7 +64,8 @@ function createRouter() {
       { path: '/shop', name: 'shop', component: Shop },
       { path: '/referral', name: 'referral', component: Referral},
       { path: '/p2playout', name: 'P2P', component: P2PLayout },
-      { path: '/lobby', name: 'lobby', component: Lobby }
+      { path: '/lobby', name: 'lobby', component: Lobby },
+      { path: '/maintenance', name: 'maintenance', component: Maintenance },
     ]
   });
 
