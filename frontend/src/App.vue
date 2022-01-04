@@ -857,7 +857,7 @@ button.close {
 .nav.nav-tabs.nav-justified{
   background-color: rgba(0, 0, 0, .5);
   border-radius: 20px;
-  padding: 0 30px;
+  padding: 0 2%;
 }
 
 .nav-tabs {
@@ -876,6 +876,12 @@ button.close {
 .main-font .nav-tabs a.nav-link{
   font-size: 20px;
   color: #fff;
+}
+
+@media (max-width: 577px){
+  .main-font .nav-tabs a.nav-link{
+    font-size: 15px;
+  }
 }
 
 .nav-tabs .nav-link.active {
@@ -1098,13 +1104,5 @@ div.bg-success {
   .blank-slate .button h1{
     font-size: 1.5rem;
   }
-}
-
-@media (max-width: 767px){
-
-}
-
-@media (max-width: 575.98px) {
-
 }
 </style>

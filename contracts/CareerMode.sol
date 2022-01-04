@@ -64,6 +64,7 @@ contract CareerMode is
     mapping(address => mapping(uint256 => uint256[])) requestFightByAddress; // requester => (roomId => requestId)
     uint256 minimumRoundDuration;
     mapping(address => uint256[]) roomsByAddress;
+    mapping(address => uint256[]) participatedRoomsByAddress;
 
     /** EVENTS */
 
@@ -232,6 +233,7 @@ contract CareerMode is
         requestFightList[_roomId].push(
             RequestFight(requestId, msg.sender, _char, _wep, false)
         );
+        participatedRoomsByAddress[msg.sender].push(_roomId);
         requestFightByAddress[msg.sender][_roomId].push(requestId);
         emit RequestFightOutcome(msg.sender, _roomId, _char, _wep);
     }
@@ -497,6 +499,14 @@ contract CareerMode is
             values[i] = requestFightList[roomId][i + cursor];
         }
         return values;
+    }
+
+    function getPartipatedRequests(address account)
+        public
+        view
+        returns (uint256[] memory)
+    {
+        return participatedRoomsByAddress[account];
     }
 
     function getRoomsByAddress(address account)
