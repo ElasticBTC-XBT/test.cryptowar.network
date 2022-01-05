@@ -3,6 +3,7 @@
     <character-bar
         v-if="!featureFlagStakeOnly && currentCharacterId !== null"
     />
+    <div class="nav-bottom-line"></div>
     <div v-if="ownWeapons.length > 0 && ownCharacters.length > 0">
       <div class="row" v-if="error !== null">
         <div class="col error">Error: {{ error }}</div>
@@ -1038,6 +1039,19 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
 
 }
 
+.nav-bottom-line{
+  width: 102%;
+  position: relative;
+  left: -16px;
+  /* top: 12px; */
+  height: 4px;
+  border-top: 3px solid;
+  border-image-slice: 1;
+  border-top-width: 3px;
+  border-image-source: linear-gradient(to left, #3ADD9A, #121154, #A54476);
+  /* background-image: radial-gradient(ellipse at top, #CBA938 -10%, transparent 35%), radial-gradient(ellipse at bottom, transparent, transparent); */
+}
+
 @media (max-width: 1334px) {
   .enemy-list {
     flex-flow: row wrap;
@@ -1051,6 +1065,9 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
   }
   .nav-line.boder{
     height: 0;
+  }
+  .nav-bottom-line{
+    width: 115.5%;
   }
 }
 
@@ -1076,6 +1093,9 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
   .nav-line.boder{
     height: 0;
   }
+  /* .nav-bottom-line{
+    width: 102%;
+  } */
 }
 .hint.has-tooltip {
   font-size: 1.8rem;
@@ -1134,6 +1154,9 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
   .out-stamina .message-box.flex-column h4{
   font-size: 1em;
 }
+  .nav-bottom-line{
+    width: 102.3%;
+  }
 }
 
 @media (max-width: 575.98px) {
@@ -1147,6 +1170,15 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
   }
   .nav-line.boder{
     height: 0;
+  }
+
+  .character-bar {
+    /* padding: 0.5em 1.2em 0.5em 3.4em; */
+    width: 103.5%;
+  }
+
+  .nav-bottom-line{
+    width: 103.5%;
   }
 }
 .element-icon {
@@ -1166,6 +1198,27 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
   .offset-md-5 {
     margin-left: 0;
     /* max-width: 0; */
+  }
+}
+
+@media (max-width: 414px) {
+  /* .character-bar {
+    padding: 0.5em 1.2em 0.5em 3.4em;
+    width: 103.9%;
+  } */
+
+  .nav-bottom-line{
+    width: 104%;
+  }
+}
+
+@media (max-width: 375px) {
+  .character-bar {
+    width: 105%;
+  }
+
+  .nav-bottom-line{
+    width: 105.3%;
   }
 }
 

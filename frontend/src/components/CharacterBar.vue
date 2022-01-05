@@ -3,7 +3,7 @@
     <character-display />
     <!-- <div class="character-bar-divider"/> -->
     <!-- <img src="../assets/infoDivider.png" class="info-divider"> -->
-    <div class="nav-bottom-line"></div>
+    <!-- <div class="nav-bottom-line"></div> -->
   </div>
 </template>
 
