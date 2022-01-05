@@ -95,7 +95,7 @@ module.exports = {
       network_id: 0x38,
       confirmations: 20,
       timeoutBlocks: 200,
-      gas: 10600000,
+      gas: 5600000,
       skipDryRun: true,
     },
     avax: {
