@@ -750,6 +750,7 @@ export default {
   height: 60px;
   border-radius: 10px;
   margin-top: 15px;
+  color: #fff;
 }
 
 .custom-select::before{
@@ -942,6 +943,7 @@ button.encounter-button {
   width: 152px !important;
   overflow: hidden;
   margin: 0 auto;
+  border-radius: 0;
 }
 
 button.encounter-button:hover{
@@ -1050,6 +1052,10 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
   border-top-width: 3px;
   border-image-source: linear-gradient(to left, #3ADD9A, #121154, #A54476);
   /* background-image: radial-gradient(ellipse at top, #CBA938 -10%, transparent 35%), radial-gradient(ellipse at bottom, transparent, transparent); */
+}
+
+#fightResultsModal .results-panel{
+  width: 26em;
 }
 
 @media (max-width: 1334px) {
@@ -1179,6 +1185,25 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
 
   .nav-bottom-line{
     width: 103.5%;
+  }
+
+  .btn-close-fight-results{
+    width: 110px;
+    height: 37px;
+  }
+
+  #fightResultsModal .results-panel{
+    width: 21em;
+  }
+
+  .btn-close-fight-results{
+    margin: 0 auto !important;
+    margin-top: 10px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .title-results{
+    top: 0;
   }
 }
 .element-icon {

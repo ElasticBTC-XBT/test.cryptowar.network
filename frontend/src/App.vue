@@ -745,14 +745,18 @@ button.close {
   color: #a50eb3 !important;
 }
 
-#loadingModal .modal-content
+#loadingModal .modal-content,
 #fightResultsModal .modal-content,
 #listHeroToCareerModal .modal-content,
 #listHeroToChallengeModal .modal-content{
-  min-width: 500px;
+  min-width: 36rem;
   height: 100%;
   display: flex;
   align-items: center;
+}
+
+#fightResultsModal .close{
+  margin-right: 12px;
 }
 
 #error-request-fight .modal-content{
@@ -909,6 +913,16 @@ button.close {
 @media (max-width: 577px){
   .main-font .nav-tabs a.nav-link{
     font-size: 15px;
+  }
+  #loadingModal .modal-content,
+  #fightResultsModal .modal-content,
+  #listHeroToCareerModal .modal-content,
+  #listHeroToChallengeModal .modal-content{
+    min-width: 20rem;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    background-size: contain !important;
   }
 }
 

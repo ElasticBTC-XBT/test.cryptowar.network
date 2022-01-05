@@ -1,8 +1,8 @@
 <template>
   <div class="results-panel">
     <div class="background-win"></div>
-    <span v-if="checkResults && !propResultsFromPVP" class="outcome">{{ getSuccessText() }}</span>
-    <span v-if="!checkResults && !propResultsFromPVP" class="outcome">{{ getSuccessText() }}</span>
+    <span v-if="checkResults && !propResultsFromPVP" class="outcome results">{{ getSuccessText() }}</span>
+    <span v-if="!checkResults && !propResultsFromPVP" class="outcome results">{{ getSuccessText() }}</span>
 
     <span v-if="results === 1 && propResultsFromPVP" class="outcome"><div class="win-results"></div>{{ getSuccessText() }}</span>
     <span v-if="results === 2 && propResultsFromPVP" class="outcome"><div class="lose-results"></div>{{ getSuccessText() }}</span>
@@ -89,8 +89,11 @@ export default {
   padding: 0.5em;
   display: flex;
   align-items: center;
-  color: #F58B5B;
   padding-top: 0;
+}
+
+.outcome.results{
+  color: #F58B5B;
 }
 
 .outcome .win-results{
@@ -156,5 +159,14 @@ export default {
   width: 100%;
   font-size: 1.25em;
   margin: 10px 0;
+}
+@media (max-width: 575.98px) {
+  .outcome.results{
+    font-size: 1.3em;
+  }
+  .results-panel .roll,
+  .results-panel .reward{
+    font-size: 1em;
+  }
 }
 </style>
