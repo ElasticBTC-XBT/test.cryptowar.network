@@ -9,12 +9,13 @@
 
     <li class="nav-line"></li>
 
-    <router-link :to="{ name: 'combat' }" exact class="nav-link mr-4 ml-4"
+    <router-link :to="{ name: 'combat' }" exact class="nav-link mr-4 ml-4 disabled"
     v-if="!featureFlagStakeOnly">
       <li @click="hideOption()" class="nav-item nav-top-links nav-icon-box">
         <img src="../assets/v2/arena_icon.svg" alt="" class="nav-icon">
         <span class="gtag-link-others arena" tagname="plaza_screen">Arena</span>
       </li>
+      <span class="coming-soon">Coming soon</span>
     </router-link>
 
     <li class="nav-line"></li>
@@ -249,6 +250,14 @@ a.router-link-active .lobby .gtag-link-others{
   display: none;
 }
 
+.nav-link.disabled {
+  cursor: not-allowed;
+}
+
+.nav-link.disabled span {
+  color: rgb(118, 116, 116) !important;
+}
+
 
 @media (max-width: 767.98px){
   .view-links .nav-line{
@@ -290,6 +299,10 @@ a.router-link-active .lobby .gtag-link-others{
 
   .nav-icon-box{
     justify-content: flex-start;
+  }
+
+  .coming-soon {
+    padding-left: 50px;
   }
 }
 

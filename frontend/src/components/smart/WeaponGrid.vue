@@ -619,7 +619,7 @@ input::-webkit-inner-spin-button{
   display: flex;
   text-align: right;
   flex-direction: column;
-  padding: 20px 10px 15px 5px;
+  padding: 20px 15px 15px;
   margin: 50px auto 0;
 }
 
