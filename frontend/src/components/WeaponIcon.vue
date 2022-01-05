@@ -14,9 +14,16 @@
       <div class="left">
         <div class="trait">
           <span :class="weapon.element.toLowerCase() + '-icon'"></span>
-          <span class="weapon-star" v-for="n in this.weapon.stars + 1" :key="n">
-            <i class="fas fa-star"></i>
-          </span>
+          <template v-if="!isBlacksmith">
+            <span class="weapon-star" v-for="n in this.weapon.stars + 1" :key="n">
+              <i class="fas fa-star"></i>
+            </span>
+          </template>
+          <template v-if="isBlacksmith">
+            <span class="weapon-star" style="font-weight: bold">
+              <i class="fas fa-star"></i>x{{this.weapon.stars + 1}}
+            </span>
+          </template>
         </div>
 
         <div class="stats" v-if="!isBlacksmith">
@@ -268,7 +275,7 @@ export default {
 }
 
 .weapon-star {
-  font-size: 20px;
+  font-size: 18px;
   line-height: 20px;
   color: #FBD231;
   margin: 0 2.2px;
@@ -465,6 +472,9 @@ export default {
   bottom: 5px;
 }
 .weapon-footer{
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 10px;
 }
 

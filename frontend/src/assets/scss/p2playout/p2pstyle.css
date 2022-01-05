@@ -5190,7 +5190,21 @@ pre code {
 .col-xl-10,
 .col-xl-11,
 .col-xl-12,
-.col-xl-auto {
+.col-xl-auto,
+.col-2xl,
+.col-2xl-1,
+.col-2xl-2,
+.col-2xl-3,
+.col-2xl-4,
+.col-2xl-5,
+.col-2xl-6,
+.col-2xl-7,
+.col-2xl-8,
+.col-2xl-9,
+.col-2xl-10,
+.col-2xl-11,
+.col-2xl-12,
+.col-2xl-auto {
     position: relative;
     width: 100%;
     padding-right: 8px;
@@ -5462,7 +5476,21 @@ pre code {
     .col-xl-10,
     .col-xl-11,
     .col-xl-12,
-    .col-xl-auto {
+    .col-xl-auto,
+    .col-2xl,
+    .col-2xl-1,
+    .col-2xl-2,
+    .col-2xl-3,
+    .col-2xl-4,
+    .col-2xl-5,
+    .col-2xl-6,
+    .col-2xl-7,
+    .col-2xl-8,
+    .col-2xl-9,
+    .col-2xl-10,
+    .col-2xl-11,
+    .col-2xl-12,
+    .col-2xl-auto {
         padding-right: 15px;
         padding-left: 15px;
     }
@@ -6132,6 +6160,62 @@ pre code {
     }
     .offset-xl-11 {
         margin-left: 91.666667%;
+    }
+}
+
+@media (min-width: 1700px) {
+    .col-2xl-auto {
+        flex: 0 0 auto;
+        width: auto;
+        max-width: 100%;
+    }
+    .col-2xl-1 {
+        flex: 0 0 8.333333%;
+        max-width: 8.333333%;
+    }
+    .col-2xl-2 {
+        flex: 0 0 16.666667%;
+        max-width: 16.666667%;
+    }
+    .col-2xl-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+    .col-2xl-4 {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+    .col-2xl-5 {
+        flex: 0 0 41.666667%;
+        max-width: 41.666667%;
+    }
+    .col-2xl-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    .col-2xl-7 {
+        flex: 0 0 58.333333%;
+        max-width: 58.333333%;
+    }
+    .col-2xl-8 {
+        flex: 0 0 66.666667%;
+        max-width: 66.666667%;
+    }
+    .col-2xl-9 {
+        flex: 0 0 75%;
+        max-width: 75%;
+    }
+    .col-2xl-10 {
+        flex: 0 0 83.333333%;
+        max-width: 83.333333%;
+    }
+    .col-2xl-11 {
+        flex: 0 0 91.666667%;
+        max-width: 91.666667%;
+    }
+    .col-2xl-12 {
+        flex: 0 0 100%;
+        max-width: 100%;
     }
 }
 
@@ -21019,7 +21103,7 @@ margin-bottom: 1.5rem;
 
 .character-item {
     height: 398px;
-    width: 294px;
+    width: 294px !important;
     /* background-position: 50% 50%; */
     cursor: pointer;
     background-repeat: no-repeat;
@@ -21047,6 +21131,10 @@ margin-bottom: 1.5rem;
     top: -8px;
     will-change: background;
     transition: all 0.3s;
+  }
+
+  .market .character-item {
+    margin-top: 100px !important;
   }
 
   .character-item.no-corner {
@@ -21266,6 +21354,10 @@ margin-bottom: 1.5rem;
     max-height: 792px;
   }
 
+  .market .filters {
+      max-height: 1000px;
+  }
+
   .filters div {
     width: 100%;
   }
@@ -21378,6 +21470,7 @@ margin-bottom: 1.5rem;
         will-change: height, background-color;
         transition: height 0.5s, background-color 0.6s;
         margin: auto;
+        margin-top: 20px;
     }
 
     .filters:not(.filters-blacksmith) {
@@ -21388,8 +21481,12 @@ margin-bottom: 1.5rem;
         background-color: rgba(0, 0, 0, 0.5);
         will-change: height, background-color;
         transition: height 0.6s, background-color 0.5s;
-        height: 660px;
+        height: 670px;
         margin-bottom: 20px;
+    }
+
+    .market .filters.active {
+        height: 970px;
     }
 
     .filters .search-btn {
@@ -21422,9 +21519,8 @@ margin-bottom: 1.5rem;
     }
   }
 
-  @media (width: 768px) {
-    .character-list.col-12,
-    .weapon-grid.col-12 {
-        padding: 0 50px !important;
+  @media (max-width: 1250px) {
+    .character-item {
+        width: 240px !important;
     }
   }

@@ -17,22 +17,16 @@
         />
       </div>
 
-      <!-- <div class="star-filter">
-        <span class="filter-title">Stars</span>
-        <ul class="stars-list">
-          <li
-            class="star-item"
-            v-for="star in 5"
-            v-bind:key="star"
-            @click="starFilterTemp = star === starFilterTemp ? 0 : star"
-            :class="star === starFilterTemp && 'selected'"
-          >
-              <span>{{ star }}</span>
-          </li>
-        </ul>
-      </div> -->
+      <div class="level-filter">
+        <span class="filter-title">Level</span>
+        <select class="form-control" v-model="levelFilterTemp">
+          <option v-for="x in ['', 1, 11, 21, 31, 41, 51, 61, 71, 81, 91]" :value="x" :key="x">
+            {{ x ? `${x} - ${x + 9}` : 'Any' }}
+          </option>
+        </select>
+      </div>
 
-      <div class="element-filter">
+      <div class="element-filter mb-2">
         <span class="filter-title">Elements</span>
         <ul class="element-list">
           <li
@@ -50,29 +44,22 @@
         </ul>
       </div>
 
-      <div class="filter-market" v-if="isMarket">
-
-        <div>LEVEL</div>
-        <select class="form-control" v-model="levelFilter">
-          <option v-for="x in ['', 1, 11, 21, 31, 41, 51, 61, 71, 81, 91]" :value="x" :key="x">
-            {{ x ? `${x} - ${x + 9}` : 'Any' }}
-          </option>
-        </select>
-
-        <div>MIN PRICE</div>
-        <input class="form-control" type="number" v-model.trim="minPriceFilter" :min="0" placeholder="Min" />
-
-
-        <div>MAX PRICE</div>
-        <input class="form-control" type="number" v-model.trim="maxPriceFilter" :min="0" placeholder="Max" />
-
-
-        <div>SORT</div>
-        <select class="form-control" v-model="priceSort">
-          <option v-for="x in sorts" :value="x.dir" :key="x.dir">{{ x.name || 'Any' }}</option>
-        </select>
-
-      </div>
+      <template v-if="isMarket">
+          <div>
+            <strong>Min price</strong>
+            <input class="form-control" type="number" v-model.trim="minPriceFilter" :min="0" placeholder="Min" />
+          </div>
+          <div>
+            <strong>Max price</strong>
+            <input class="form-control" type="number" v-model.trim="maxPriceFilter" :min="0" placeholder="Max" />
+          </div>
+          <div>
+            <strong>Sort</strong>
+            <select class="form-control" v-model="priceSort">
+              <option v-for="x in sorts" :value="x.dir" :key="x.dir">{{ x.name || 'Any' }}</option>
+            </select>
+          </div>
+        </template>
 
       <div class="search-btn">
         <b-button
@@ -130,7 +117,7 @@
 
     <ul class="character-list row" :class="showFilters && 'col-12 col-xl-9'">
       <li
-        class="col-12 col-sm-6 col-md-4 col-xl-3"
+        class="col-12 col-sm-6 col-md-4"
         v-for="c in filteredCharacters"
         :key="c.id"
       >
@@ -157,7 +144,7 @@
       </li>
 
       <li
-        class="col-12 col-sm-6 col-md-4 col-xl-3"
+        class="col-12 col-sm-6 col-md-4"
         v-if="!isMarket && showFilters"
       >
         <div class="character-item-wrap">
@@ -267,10 +254,9 @@ export default {
     return {
       recruitCost: "0",
       heroAmount: 0,
-      starFilterTemp: 0,
       elementFilterTemp: '',
+      levelFilterTemp: '',
       searchValue: '',
-      starFilter: 0,
       levelFilter: '',
       elementFilter: '',
       minPriceFilter:'',
@@ -355,13 +341,14 @@ export default {
     },
 
     setFilterOnMobileState(filterState) {
-      document.querySelector('.filters').classList.toggle('active', filterState);
+      this.$el.getElementsByClassName('filters')[0].classList.toggle('active', filterState);
     },
 
     filterAll() {
       this.searchValue = this.$el.querySelector(".search").value;
       this.elementFilter = this.elementFilterTemp;
       this.starFilter = this.starFilterTemp;
+      this.levelFilter = this.levelFilterTemp;
     },
 
     saveFilters() {
@@ -449,7 +436,7 @@ export default {
 
 .character-item {
   width: 100%;
-  margin: 0;
+  margin: 0 auto;
   margin-top: 50px;
 }
 
@@ -523,6 +510,10 @@ input::-webkit-inner-spin-button {
 
 .promotion-number {
   color: #f58b5b;
+}
+
+.level-filter {
+  margin-bottom: 20px;
 }
 
 @media (max-width: 576px) {

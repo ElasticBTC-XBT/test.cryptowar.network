@@ -1,5 +1,5 @@
 <template>
-  <div class="body main-font">
+  <div class="body main-font market">
     <div class="market-hero-weapon" style="max-width: 1769px; margin-left: auto; margin-right: auto;">
       <button @click="activeType = 'character'; searchAllCharacterListings(currentPage - 1)" :class="activeType === 'character' && 'selected'">HERO</button>
       <button @click="activeType = 'weapon'; searchAllWeaponListings(currentPage - 1)" :class="activeType === 'weapon' && 'selected'">WEAPON</button>
@@ -1439,7 +1439,6 @@ export default Vue.extend({
 <style scoped>
 .body {
   margin-top: 3px;
-  padding: 0 126px;
 }
 
 .button + .button {

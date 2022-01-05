@@ -87,7 +87,7 @@
       v-if="!isBlacksmith && !isBurnWeapon"
     >
       <li
-        class="col-12 col-sm-6 col-md-4 col-xl-3"
+        class="col-12 col-sm-6 col-md-4"
         v-for="weapon in nonIgnoredWeapons"
         :key="weapon.id"
         @click="(!checkForDurability || getWeaponDurability(weapon.id) > 0) && onWeaponClick(weapon.id)"
@@ -143,7 +143,7 @@
         ></div>
         <ul class="row">
           <li
-            class="col-6 col-lg-4 d-flex justify-content-center"
+            class="col-6 col-2xl-4 d-flex justify-content-center"
             v-for="(weapon, index) in nonIgnoredWeapons"
             :key="index"
             @click="(!checkForDurability || getWeaponDurability(weapon.id) > 0) && onWeaponClick(weapon.id)"
@@ -334,6 +334,7 @@ export default Vue.extend({
       weaponPaginationPrev: -1,
       weaponPaginationNext: 6,
       numberWeaponsShow: 6,
+      windowWidth: window.innerWidth,
     } as Data;
   },
 
@@ -415,6 +416,15 @@ export default Vue.extend({
     async weaponIdsToDisplay(newWeaponIds: string[]) {
       await this.fetchWeapons(newWeaponIds);
     },
+    windowWidth(newWidth) {
+      if (newWidth < 1700) {
+        this.weaponPaginationNext = 4;
+        this.numberWeaponsShow = 4;
+      } else {
+        this.weaponPaginationNext = 6;
+        this.numberWeaponsShow = 6;
+      }
+    }
   },
 
   methods: {
@@ -525,6 +535,10 @@ export default Vue.extend({
         this.$el.querySelector(".weapon-pagination-prev")?.classList.remove("disabled");
       }
       this.$el.querySelector(".weapon-pagination-next")?.classList.toggle("disabled", this.weaponPaginationNext > this.nonIgnoredWeapons.length);
+    },
+
+    onResize() {
+      (this as any).windowWidth = window.innerWidth;
     }
   },
 
@@ -534,7 +548,7 @@ export default Vue.extend({
 
     Events.$on('weapon:newFavorite', () => this.checkStorageFavorite());
 
-    if (screen.width < 1024) {
+    if (screen.width < 1700) {
       this.weaponPaginationNext = 4;
       this.numberWeaponsShow = 4;
     } else {
@@ -552,6 +566,14 @@ export default Vue.extend({
       this.starFilter = sessionStorage.getItem('weapon-starfilter') || '';
       this.elementFilter = sessionStorage.getItem('weapon-elementfilter') || '';
     }
+
+    this.$nextTick(() => {
+      window.addEventListener('resize', this.onResize);
+    });
+  },
+
+  beforeDestroy() {
+    window.removeEventListener('resize', this.onResize);
   },
 });
 </script>
@@ -597,19 +619,13 @@ input::-webkit-inner-spin-button{
   display: flex;
   text-align: right;
   flex-direction: column;
-  padding: 15px 15px;
-  padding-right: 20px;
+  padding: 20px 10px 15px 5px;
   margin: 50px auto 0;
 }
 
-.weapon-market {
+/* .weapon-market {
   margin-top: 50px !important;
-}
-
-.character-item.weapon:not(.no-corner) {
-  max-width: 270px;
-  min-width: 230px;
-}
+} */
 
 .sold {
     height: 40px;
