@@ -369,6 +369,10 @@ contract CareerMode is
         staminaCostFight = _staminaCost;
     }
 
+    function setDurabilityCostFight(uint8 _cost) public restricted {
+        durabilityCostFight = _cost;
+    }
+
     /** GETTERS */
 
     function unpackFightData(uint96 playerData)
