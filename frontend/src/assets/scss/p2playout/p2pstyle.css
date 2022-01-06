@@ -21276,9 +21276,9 @@ margin-bottom: 1.5rem;
         justify-content: flex-start
     }
     .character-item:not(.lobby-box-item-wrap) {
-        width: 230px;
-        height: 292px;
-        margin-top: 70px !important;
+        width: 100%;
+        /* margin-top: 70px !important; */
+        margin-top: 20px !important;
         margin: auto;
     }
 

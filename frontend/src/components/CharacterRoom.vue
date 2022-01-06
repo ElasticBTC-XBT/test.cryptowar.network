@@ -33,6 +33,15 @@
       <div v-if="this.isCancel == true" class="containerButton">
         <button
           type="button"
+          class="buttonShowWeapon"
+          @click="() =>this.handleShowWeapon(this.room.weaponId)"
+        >
+          <span class="titleButtonShowWeapon">
+            Show Weapon
+          </span>
+        </button>
+        <button
+          type="button"
           class="btn-request-fight"
           @click="() => handleCancelFight(this.room.id,this.checkTimeAvailable())"
         >
@@ -106,7 +115,6 @@ export default {
     //@ts-ignore
     this.timeRoomStart = await this.getStartTimeRoom({roomId: this.room.id});
     //@ts-ignore
-    console.log('test', this.checkTimeAvailable());
   },
 };
 </script>

@@ -3,7 +3,7 @@
    <BackgroundItem
    v-if="this.request.heroId"
    :character="characters[this.request.heroId]" :selectedCharacterId="this.request.heroId" :selectedWeaponId="this.request.weaponId" :noMargin="false"
-   :playerPower="this.playerPower" />
+   :playerPower="this.playerPower" :roomId="this.request.roomId" />
    <div class="containerButton" v-if="!isMine">
          <button
           type="button"
