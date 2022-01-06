@@ -701,6 +701,16 @@ contract Weapons is Initializable, ERC721Upgradeable, AccessControlUpgradeable {
         fiveStarBurnPowerPerPoint = powerPerBurnPoint;
     }
 
+    function migrate_v3() public restricted {
+        powerMultPerPointBasic = ABDKMath64x64.divu(1, 400);
+        powerMultPerPointPWR = powerMultPerPointBasic.mul(
+            ABDKMath64x64.divu(102, 100)
+        );
+        powerMultPerPointMatching = powerMultPerPointBasic.mul(
+            ABDKMath64x64.divu(105, 100)
+        );
+    }
+
     function getDurabilityTimestamp(uint256 id) public view returns (uint64) {
         return durabilityTimestamp[id];
     }
