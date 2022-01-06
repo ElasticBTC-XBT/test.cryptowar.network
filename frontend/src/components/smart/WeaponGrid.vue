@@ -14,7 +14,7 @@
           class="form-control search"
           type="search"
           placeholder="  Seller Address, NFT ID"
-          v-model="searchValueTemp"
+          v-model="searchValue"
         />
       </div>
 
@@ -25,8 +25,8 @@
             class="star-item"
             v-for="star in 5"
             v-bind:key="star"
-            @click="starFilterTemp = star.toString() === starFilterTemp ? '' : star.toString()"
-            :class="star.toString() === starFilterTemp && 'selected'"
+            @click="starFilter = star.toString() === starFilter ? '' : star.toString()"
+            :class="star.toString() === starFilter && 'selected'"
           >
               <span>{{ star }}</span>
           </li>
@@ -40,8 +40,8 @@
             class="element-item"
             v-for="element in ['Earth', 'Fire', 'Lightning', 'Water']"
             v-bind:key="element"
-            @click="elementFilterTemp = (element === elementFilterTemp ? '' : element)"
-            :class="element === elementFilterTemp && 'selected'"
+            @click="elementFilter = (element === elementFilter ? '' : element)"
+            :class="element === elementFilter && 'selected'"
           >
               <span
                 :class="element.toLowerCase() + '-icon'"
@@ -54,11 +54,11 @@
       <template v-if="isMarket">
         <div>
           <strong>MIN PRICE</strong>
-          <input class="form-control" type="number" v-model.trim="minPriceFilter" :min="0" placeholder="Min" />
+          <input @click="priceSort=''" class="form-control" type="number" v-model.trim="minPriceFilter" :min="0" placeholder="Min" />
         </div>
         <div>
           <strong>MAX PRICE</strong>
-          <input class="form-control" type="number" v-model.trim="maxPriceFilter" :min="0" placeholder="Max" />
+          <input @click="priceSort=''" class="form-control" type="number" v-model.trim="maxPriceFilter" :min="0" placeholder="Max" />
         </div>
 
         <div>
@@ -72,8 +72,7 @@
       <div class="search-btn">
         <b-button
           class="gtag-link-others btn-blue-bg"
-          v-html="`Search`"
-          @click="filterAll"
+          v-html="`SEARCH`"
         ></b-button>
       </div>
 
@@ -199,9 +198,6 @@ interface StoreMappedActions {
 }
 
 interface Data {
-  searchValueTemp: string;
-  starFilterTemp: string;
-  elementFilterTemp: string;
   searchValue: string;
   starFilter: string;
   elementFilter: string;
@@ -318,9 +314,6 @@ export default Vue.extend({
 
   data() {
     return {
-      searchValueTemp: '',
-      starFilterTemp: '',
-      elementFilterTemp: '',
       searchValue: '',
       starFilter: '',
       elementFilter: '',
@@ -433,12 +426,6 @@ export default Vue.extend({
 
     setFilterOnMobileState(filterState: boolean) {
       this.$el.getElementsByClassName('filters')[0].classList.toggle('active', filterState);
-    },
-
-    filterAll() {
-      this.searchValue = this.searchValueTemp;
-      this.elementFilter = this.elementFilterTemp;
-      this.starFilter = this.starFilterTemp;
     },
 
     saveFilters() {
@@ -579,6 +566,11 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+.filters div strong{
+  font-size: 24px;
+  font-weight: normal;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button{
   -webkit-appearance: none;

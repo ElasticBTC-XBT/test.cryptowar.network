@@ -21363,11 +21363,12 @@ margin-bottom: 1.5rem;
   }
 
   .market .filters {
-      max-height: 1000px;
+      max-height: 1100px;
   }
 
   .filters div {
     width: 100%;
+    margin-top: 10px;
   }
 
   .filters ul {

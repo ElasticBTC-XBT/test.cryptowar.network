@@ -14,12 +14,13 @@
           class="form-control search"
           type="search"
           placeholder="  Seller Address, NFT ID"
+          v-model="searchValue"
         />
       </div>
 
       <div class="level-filter">
         <span class="filter-title">Level</span>
-        <select class="form-control" v-model="levelFilterTemp">
+        <select class="form-control" v-model="levelFilter">
           <option v-for="x in ['', 1, 11, 21, 31, 41, 51, 61, 71, 81, 91]" :value="x" :key="x">
             {{ x ? `${x} - ${x + 9}` : 'Any' }}
           </option>
@@ -33,8 +34,8 @@
             class="element-item"
             v-for="element in ['Earth', 'Fire', 'Lightning', 'Water']"
             v-bind:key="element"
-            @click="elementFilterTemp = (element === elementFilterTemp ? '' : element)"
-            :class="element === elementFilterTemp && 'selected'"
+            @click="elementFilter = (element === elementFilter ? '' : element)"
+            :class="element === elementFilter && 'selected'"
           >
               <span
                 :class="element.toLowerCase() + '-icon'"
@@ -46,15 +47,15 @@
 
       <template v-if="isMarket">
           <div>
-            <strong>Min price</strong>
-            <input class="form-control" type="number" v-model.trim="minPriceFilter" :min="0" placeholder="Min" />
+            <strong>MIN PRICE</strong>
+            <input @click="priceSort=''" class="form-control" type="number" v-model.trim="minPriceFilter" :min="0" placeholder="Min" />
           </div>
           <div>
-            <strong>Max price</strong>
-            <input class="form-control" type="number" v-model.trim="maxPriceFilter" :min="0" placeholder="Max" />
+            <strong>MAX PRICE</strong>
+            <input @click="priceSort=''" class="form-control" type="number" v-model.trim="maxPriceFilter" :min="0" placeholder="Max" />
           </div>
           <div>
-            <strong>Sort</strong>
+            <strong>SORT</strong>
             <select class="form-control" v-model="priceSort">
               <option v-for="x in sorts" :value="x.dir" :key="x.dir">{{ x.name || 'Any' }}</option>
             </select>
@@ -64,7 +65,7 @@
       <div class="search-btn">
         <b-button
           class="gtag-link-others btn-blue-bg"
-          v-html="`Search`"
+          v-html="`SEARCH`"
           @click="filterAll"
         ></b-button>
       </div>
@@ -254,8 +255,6 @@ export default {
     return {
       recruitCost: "0",
       heroAmount: 0,
-      elementFilterTemp: '',
-      levelFilterTemp: '',
       searchValue: '',
       levelFilter: '',
       elementFilter: '',
@@ -292,7 +291,6 @@ export default {
         }
 
         if(this.elementFilter) {
-          console.log(items);
           items = items.filter(x => x.traitName.includes(this.elementFilter));
         }
 
@@ -304,7 +302,6 @@ export default {
           items = items.slice(0, this.showLimit);
         }
       }
-
       return items;
     },
 
@@ -342,13 +339,6 @@ export default {
 
     setFilterOnMobileState(filterState) {
       this.$el.getElementsByClassName('filters')[0].classList.toggle('active', filterState);
-    },
-
-    filterAll() {
-      this.searchValue = this.$el.querySelector(".search").value;
-      this.elementFilter = this.elementFilterTemp;
-      this.starFilter = this.starFilterTemp;
-      this.levelFilter = this.levelFilterTemp;
     },
 
     saveFilters() {
@@ -412,6 +402,10 @@ export default {
 </script>
 
 <style scoped>
+.filters div strong{
+  font-size: 24px;
+  font-weight: normal;
+}
 
 .filter-market{
   margin-top: 20px;

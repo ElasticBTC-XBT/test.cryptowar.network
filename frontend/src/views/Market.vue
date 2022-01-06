@@ -774,26 +774,16 @@ export default Vue.extend({
 
 
       // filter price character
+      this.sortPrice(this.characterPriceOrder());
       this.minPriceFilter(parseFloat(this.characterMinPriceFilter()));
       this.maxPriceFilter(parseFloat(this.characterMaxPriceFilter()));
-      this.sortPrice(this.characterPriceOrder());
       // filter price weapon
+      this.sortPrice(this.weaponPriceOrder());
       this.minPriceFilter(parseFloat(this.weaponMinPriceFilter()));
       this.maxPriceFilter(parseFloat(this.weaponMaxPriceFilter()));
-      this.sortPrice(this.weaponPriceOrder());
-
     },
 
     async minPriceFilter(minPrice: number){
-      // if(minPrice && minPrice > 0){
-      //   const arrStr: string[] = [];
-      //   this.allSearchResults.forEach((val: any)=>{
-      //     if(parseFloat(this.convertWeiToSkill(this.nftPricesById[val])) >= minPrice){
-      //       arrStr.push(val);
-      //     }
-      //   });
-      //   this.allSearchResults = arrStr;
-      // }
       if(minPrice && minPrice > 0){
         const arrStr: string[] = [];
         const arr = this.allSearchResults;
@@ -806,47 +796,76 @@ export default Vue.extend({
           }
         });
       }
+      // if(minPrice && minPrice > 0){
+      //   const arrStr: string[] = [];
+      //   this.allSearchResults.forEach((val: any)=>{
+      //     if(parseFloat(this.convertWeiToSkill(this.nftPricesById[val])) >= minPrice){
+      //       arrStr.push(val);
+      //     }
+      //   });
+      //   this.allSearchResults = arrStr;
+      // }
     },
 
     async maxPriceFilter(maxPrice: number){
       if(maxPrice && maxPrice > 0){
-        const arrStr: string[] = [];
         const arr = this.allSearchResults;
         this.allSearchResults = [];
         arr.forEach(async (val: any) => {
           const price = (await this.lookupNftPrice(val))!;
           if(parseFloat(this.convertWeiToSkill(price)) <= maxPrice){
-            arrStr.push(val);
-            this.allSearchResults = arrStr;
+            this.allSearchResults.push(val);
           }
         });
       }
     },
 
-    sortPrice(typeSort: string){
-      if(!typeSort){
-        return;
-      }
-      const sortable: any[] = [];
-      this.allSearchResults.forEach((item: any)=>{
-        sortable.push([item, this.convertWeiToSkill(this.nftPricesById[item])]);
-      });
-      if(typeSort === '1'){
-        sortable.sort(function(a, b) {
-          return parseFloat(a[1]) - parseFloat(b[1]);
+    async sortPrice(typeSort: string){
+      if(typeSort){
+        const sortable: any[] = [];
+        this.allSearchResults.forEach((item: any)=>{
+          sortable.push([item, this.convertWeiToSkill(this.nftPricesById[item])]);
         });
-      } else if(typeSort === '-1'){
-        sortable.sort(function(a, b) {
-          return parseFloat(b[1]) - parseFloat(a[1]);
+        if(typeSort === '1'){
+          sortable.sort(function(a, b) {
+            return parseFloat(a[1]) - parseFloat(b[1]);
+          });
+        } else if(typeSort === '-1'){
+          sortable.sort(function(a, b) {
+            return parseFloat(b[1]) - parseFloat(a[1]);
+          });
+        }
+
+        const result: string[] = [];
+        sortable.forEach((item)=>{
+          result.push(item[0] as string);
         });
+
+        this.allSearchResults = result;
       }
-
-      const result: string[] = [];
-      sortable.forEach((item)=>{
-        result.push(item[0] as string);
-      });
-
-      this.allSearchResults = result;
+      // if(typeSort){
+      //   console.log(this.allSearchResults);
+      //   const sortable: any[] = [];
+      //   const sortarr = this.allSearchResults;
+      //   this.allSearchResults = [];
+      //   sortarr.forEach(async (val: any) => {
+      //     const price = (await this.lookupNftPrice(val))!;
+      //     sortable.push([val, parseFloat(this.convertWeiToSkill(price))]);
+      //     if(typeSort === '1'){
+      //       sortable.sort(function(a, b) {
+      //         return parseFloat(a[1]) - parseFloat(b[1]);
+      //       });
+      //     } else if(typeSort === '-1'){
+      //       sortable.sort(function(a, b) {
+      //         return parseFloat(b[1]) - parseFloat(a[1]);
+      //       });
+      //     }
+      //     this.allSearchResults = [];
+      //     sortable.forEach((item)=>{
+      //       this.allSearchResults.push(item[0]);
+      //     });
+      //   });
+      // }
     },
 
     async searchAllWeaponListings(page: number) {
