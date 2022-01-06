@@ -641,8 +641,8 @@ export default {
 .combat-hints {
   margin: auto;
   text-align: center;
-  padding-right: 1em;
-  padding-left: 1em;
+  /* padding-right: 1em;
+  padding-left: 1em; */
   font-size: 2em;
   display: flex;
   justify-content: center;
@@ -1014,6 +1014,7 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
 .weapon-icon-wrapper.combat::after{
   content: '';
   position: absolute;
+  /* z-index: -1; */
   top: 0;
   bottom: 30px;
   left: 0;
@@ -1056,6 +1057,10 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
 
 #fightResultsModal .results-panel{
   width: 26em;
+}
+
+.text-center{
+  padding: 0;
 }
 
 @media (max-width: 1334px) {
@@ -1180,7 +1185,7 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
 
   .character-bar {
     /* padding: 0.5em 1.2em 0.5em 3.4em; */
-    width: 103.5%;
+    width: 103.7%;
   }
 
   .nav-bottom-line{
@@ -1233,17 +1238,17 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
   } */
 
   .nav-bottom-line{
-    width: 104%;
+    width: 103.8%;
   }
 }
 
 @media (max-width: 375px) {
   .character-bar {
-    width: 105%;
+    width: 104.2%;
   }
 
   .nav-bottom-line{
-    width: 105.3%;
+    width: 104.2%;
   }
 }
 

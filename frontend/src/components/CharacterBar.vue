@@ -101,7 +101,7 @@ export default {
 }
 @media (max-width: 375px) {
   .character-bar {
-    padding: 0.5em 1.2em 0.5em 3.4em;
+    padding: 0.5em 1.2em 0.5em 3.8em;
     width: 104%;
   }
 

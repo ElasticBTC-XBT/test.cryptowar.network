@@ -72,8 +72,8 @@
         <div
           class="small-durability-bar"
           :style="`--durabilityReady: ${(getWeaponDurability(weapon.id)/maxDurability)*100}%;`"
-          v-tooltip.bottom="`Durability: ${getWeaponDurability(weapon.id)}/${maxDurability}<br>
-          Repairs 1 point every 50 minutes, durability will be full at: ${timeUntilWeaponHasMaxDurability(weapon.id)}`"
+          v-tooltip.bottom="{content: `Durability: ${getWeaponDurability(weapon.id)}/${maxDurability}<br>
+          Repairs 1 point every 50 minutes, durability will be full at: ${timeUntilWeaponHasMaxDurability(weapon.id)}`, trigger: (isMobile() ? 'click' : 'hover')}"
         ></div>
       </div>
     </div>
@@ -295,6 +295,7 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 1;
 }
 
 .weapon-icon .placeholder {
@@ -335,6 +336,8 @@ export default {
 
 .small-durability-bar-wrap {
   margin-top: 35px;
+  position: relative;
+  z-index: 1;
 }
 
 .weapon-icon.isBlacksmith .small-durability-bar-wrap {

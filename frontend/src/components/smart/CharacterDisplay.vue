@@ -58,7 +58,7 @@
       </div> -->
     </transition>
 
-    <div class="character-full-list" :class="[getIsCharacterViewExpanded? '': 'hidden']">
+    <div class="character-full-list">
       <ul
         class="character-list"
         v-bind:class="[
