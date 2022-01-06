@@ -70,6 +70,13 @@
 
       <div class="small-durability-bar-wrap" v-if="!isBlacksmith">
         <div
+          v-if="getWeaponDurability(weapon.id) === maxDurability"
+          class="small-durability-bar"
+          :style="`--durabilityReady: ${(getWeaponDurability(weapon.id)/maxDurability)*100}%;`"
+          v-tooltip.bottom="{content: `Durability: ${getWeaponDurability(weapon.id)}/${maxDurability}<br>`}"
+        ></div>
+        <div
+          v-if="getWeaponDurability(weapon.id) !== maxDurability"
           class="small-durability-bar"
           :style="`--durabilityReady: ${(getWeaponDurability(weapon.id)/maxDurability)*100}%;`"
           v-tooltip.bottom="{content: `Durability: ${getWeaponDurability(weapon.id)}/${maxDurability}<br>
