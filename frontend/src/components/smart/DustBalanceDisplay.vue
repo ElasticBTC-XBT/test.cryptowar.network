@@ -223,9 +223,18 @@ export default {
   }
 }
 
+@media (max-width: 1500px) {
+  .character-item.addnew.dust-container.no-corner {
+    max-width: 160px;
+  }
+  .dust-power {
+    font-size: 16px !important;
+  }
+}
+
 @media (max-width: 576px) {
   .character-item.addnew.dust-container.no-corner {
-    width: 100% !important;
+    max-width: 174px;
     padding: 5px;
   }
   .no-corner .dust-burn-point {
@@ -237,6 +246,9 @@ export default {
   /* .dust-quantity-wrap {
     padding: 0 100px;
   } */
+  .dust-power {
+    font-size: 18px !important;
+  }
 }
 /* .slidecontainer {
   width: 100%;

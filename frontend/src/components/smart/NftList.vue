@@ -756,7 +756,7 @@ export default Vue.extend({
   #modal-buyitem .modal-body div button{
     height: 40px;
     width: 135px;
-    font-size: 80%;
+    font-size: 75%;
   }
 
   #modal-buyitem .modal-body{

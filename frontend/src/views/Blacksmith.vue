@@ -185,7 +185,7 @@
                         <b-button
                           tagname="confirm_forge_weapon"
                           class="btn-pink-bg btn-confirm-reforge"
-                          :class="!getWeaponToUpgrade() && (lesserDust === '0' || greaterDust === '0' || powerfulDust === '0') && 'disabled'"
+                          :class="(getWeaponToUpgrade() === undefined || (lesserDust === '0' && greaterDust === '0' && powerfulDust === '0')) && 'disabled'"
                           @click="showDustReforgeConfirmation"
                           v-tooltip="'Reforge selected weapon with dust'"
                           v-html="'Confirm reforge'"
@@ -198,13 +198,15 @@
                           <br>
                           Use: <span>{{powerfulDust}}</span> Powerful
                           <br>
-                          (<span>{{ dustReforgeCost }}</span> xBlade)
+                          (<span>
+                            {{ (getWeaponToUpgrade() === undefined || (lesserDust === '0' && greaterDust === '0' && powerfulDust === '0')) ? 0 : dustReforgeCost }}
+                          </span> xBlade)
                         </div>
                       </div>
                       <b-button
                         tagname="confirm_forge_weapon"
                         class="btn-buy btn-blue-bg btn-cancel-reforge"
-                        :class="(!getWeaponToUpgrade() && (lesserDust === '0' || greaterDust === '0' || powerfulDust === '0')) && 'disabled'"
+                        :class="getWeaponToUpgrade() === undefined && 'disabled'"
                         @click="cancelReforge()"
                         v-tooltip="'Cancel Reforge'"
                         v-html="'Cancel'"
@@ -904,14 +906,14 @@ export default Vue.extend({
 .reforge-info {
   position: absolute;
   top: 130%;
-  left: 10px;
+  left: 25px;
   width: 160px;
   height: 110px;
   border-radius: 16px;
   background-color: #000;
   border: 1px solid #ECD931;
   text-align: left;
-  padding-left: 27px;
+  padding-left: 15px;
   padding-top: 8px;
 }
 

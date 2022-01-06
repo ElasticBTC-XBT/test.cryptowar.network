@@ -1,14 +1,14 @@
 <template>
-  <div class="body main-font">
+  <div class="body main-font container">
     <h1>Referral</h1>
     <p>🤝 Invite your friends to play Cryptowar when your friend mint new Heroes, both of you will share a reward as following:
 
-      <ul style="text-align:left">
+      <ul style="text-align:left; padding-left: 10px;">
         <li>You get 10% bonus</li>
         <li>Your friend get 7% discount</li>
       </ul>
     </p>
-    <b-input-group prepend="Your referral link:" class="mt-3">
+    <b-input-group prepend="Your referral link:" class="mt-3 referal-link">
       <b-form-input
         class="referral-input"
         disabled
@@ -33,10 +33,23 @@ export default {
     ...mapState(["defaultAccount"]),
   },
   methods: {
-    copyReferralLink: (defaultAccount: string) => {
-      navigator.clipboard.writeText(
-        `https://play.cryptowar.network/?r=${defaultAccount}`
-      );
+    copyReferralLink(defaultAccount: string) {
+      const dummy = document.createElement("textarea");
+      document.body.appendChild(dummy);
+      dummy.value = `https://play.cryptowar.network/?r=${defaultAccount}`;
+      if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
+        dummy.contentEditable = 'true';
+        dummy.readOnly = true;
+        const range = document.createRange();
+        range.selectNodeContents(dummy);
+        const selection = window.getSelection();
+        selection?.removeAllRanges();
+        selection?.addRange(range);
+      } else {
+        dummy.select();
+      }
+      document.execCommand("copy");
+      document.body.removeChild(dummy);
       alert("Referral link copied to clipboard");
     },
   },
@@ -55,6 +68,27 @@ export default {
 }
 .form-control:disabled {
   background-color: #ffffff44;
+}
+
+@media (max-width: 576px) {
+  .referal-link {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 150px;
+  }
+  .input-group-text {
+    color: #fff;
+    font-weight: bold;
+  }
+  .referral-input {
+    flex: unset !important;
+    width: 100% !important;
+    min-width: none !important;
+  }
+  .btn {
+    border-radius: 16px !important;
+  }
 }
 
 </style>

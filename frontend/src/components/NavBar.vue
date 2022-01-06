@@ -18,7 +18,7 @@
 
       <skill-balance-display class="ml-auto d-none d-sm-flex skill-balance-display" />
 
-      <claim-rewards class="claim-rewards" />
+      <!-- <claim-rewards class="claim-rewards" v-if="!canShowRewardsBar" /> -->
 
       <options class="d-none d-sm-flex option-desktop" />
 
@@ -82,7 +82,7 @@ import Vue from "vue";
 import ViewLinks from "./ViewLinks.vue";
 import Options from "./Options.vue";
 import SkillBalanceDisplay from "./smart/SkillBalanceDisplay.vue";
-import ClaimRewards from "./smart/ClaimRewards.vue";
+// import ClaimRewards from "./smart/ClaimRewards.vue";
 // import OptionsMobile from "./OptionsMobile.vue";
 
 import Events from "../events";
@@ -92,7 +92,7 @@ export default Vue.extend({
   components: {
     ViewLinks,
     SkillBalanceDisplay,
-    ClaimRewards,
+    // ClaimRewards,
     Options,
     // OptionsMobile,
   },
@@ -165,7 +165,7 @@ a {
   background: transparent !important;
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 1400px) {
   .main-nav {
     align-items: normal !important; /** force only for mobile to manually set alignments **/
     flex-direction: column;
@@ -257,7 +257,7 @@ a {
     display: none;
   }
 
-@media (max-width: 767.98px){
+@media (max-width: 1400px){
   .main-nav{
     display: flex;
     padding: 20px 10px;

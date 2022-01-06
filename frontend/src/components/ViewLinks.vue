@@ -1,6 +1,6 @@
 <template>
   <b-navbar-nav>
-    <router-link :to="{ name: 'lobby' }" exact class="nav-link mr-4"
+    <router-link :to="{ name: 'lobby' }" exact class="nav-link ml-2xl-4"
     v-if="!featureFlagStakeOnly">
       <li @click="hideOption()" class="nav-item nav-top-links lobby">
         <span class="gtag-link-others" tagname="plaza_screen">Lobby</span>
@@ -9,7 +9,7 @@
 
     <li class="nav-line"></li>
 
-    <router-link :to="{ name: '#' }" exact class="nav-link mr-4 ml-4 disabled"
+    <router-link :to="{ name: '#' }" exact class="nav-link mr-xl-1 ml-xl-1 mr-2xl-4 ml-2xl-4 disabled"
     v-if="!featureFlagStakeOnly">
       <li @click="hideOption()" class="nav-item nav-top-links nav-icon-box">
         <img src="../assets/v2/arena_icon.svg" alt="" class="nav-icon">
@@ -20,7 +20,7 @@
 
     <li class="nav-line"></li>
 
-    <div class="nav-link  mr-4 ml-4">
+    <div class="nav-link mr-2xl-4 ml-2xl-4 bond">
       <li class="nav-item nav-top-links ">
         <a href="https://bond.cryptowar.network/" target="_blank" class="gtag-link-others nav-icon-box" tagname="shop_screen">
           <img src="../assets/v2/ido_icon.svg" alt="" class="nav-icon">
@@ -29,9 +29,9 @@
       </li>
     </div>
 
-    <li class="nav-line mr-4"></li>
+    <li class="nav-line mr-2xl-4"></li>
 
-    <router-link :to="{ name: 'referral' }" exact class="nav-link  mr-3 ml-4">
+    <router-link :to="{ name: 'referral' }" exact class="nav-link mr-xl-2 ml-xl-2 mr-2xl-3 ml-2xl-3">
       <li @click="hideOption()" class="nav-item nav-top-links nav-img-item-box">
         <span class="nav-img-item">
           <img src="../assets/v2/refer_icon.svg" alt="Referral" class="nav-img">
@@ -50,7 +50,7 @@
       </li>
     </router-link> -->
 
-    <router-link :to="{ name: 'inventory' }" exact class="nav-link mr-3 ml-3"   v-if="!featureFlagStakeOnly">
+    <router-link :to="{ name: 'inventory' }" exact class="nav-link mr-xl-2 ml-xl-2 mr-2xl-3 ml-2xl-3"   v-if="!featureFlagStakeOnly">
       <li @click="hideOption()" class="nav-item nav-top-links nav-img-item-box" >
         <span class="nav-img-item">
           <img src="../assets/v2/inventory.svg" alt="Inventory" class="nav-img">
@@ -62,7 +62,7 @@
 
     <li class="nav-line"></li>
 
-    <router-link :to="{ name: 'market' }" exact class="nav-link mr-3 ml-3" v-if="!featureFlagStakeOnly && featureFlagMarket">
+    <router-link :to="{ name: 'market' }" exact class="nav-link mr-xl-2 ml-xl-2 mr-2xl-3 ml-2xl-3" v-if="!featureFlagStakeOnly && featureFlagMarket">
       <li @click="hideOption()" class="nav-item nav-top-links nav-img-item-box">
         <span class="nav-img-item">
           <img src="../assets/v2/marketplace_icon.svg" alt="Market Place" class="nav-img">
@@ -74,7 +74,7 @@
 
     <li class="nav-line"></li>
 
-    <router-link :to="{ name: 'shop' }" exact class="nav-link mr-3 ml-3">
+    <router-link :to="{ name: 'shop' }" exact class="nav-link mr-xl-2 ml-xl-2 mr-2xl-3 ml-2xl-3">
       <li @click="hideOption()" class="nav-item nav-top-links nav-img-item-box">
         <span class="nav-img-item">
           <img src="../assets/v2/shop_icon.svg" alt="Shop" class="nav-img">
@@ -86,7 +86,7 @@
 
     <li class="nav-line"></li>
 
-    <router-link :to="{ name: 'blacksmith' }" exact class="nav-link mr-3 ml-3">
+    <router-link :to="{ name: 'blacksmith' }" exact class="nav-link ml-xl-2 mr-2xl-3 ml-2xl-3">
       <li @click="hideOption()" class="nav-item nav-top-links nav-img-item-box">
         <span class="nav-img-item">
           <img src="../assets/v2/blacksmith_icon.svg" alt="Black Smith" class="nav-img">
@@ -172,12 +172,12 @@ a:hover {
 .lobby{
   background: url('../assets/v2/lobby.svg') no-repeat center;
   background-size: contain;
-  width: 210px;
-  height: 65px;
   display: flex;
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
+  width: 210px;
+  height: 65px;
 }
 
 .lobby:hover{
@@ -259,7 +259,40 @@ a.router-link-active .lobby .gtag-link-others{
   color: rgb(140, 136, 136) !important;
 }
 
-@media (max-width: 767.98px){
+@media (min-width: 1400px) {
+  .lobby {
+    width: 160px;
+    height: 65px;
+    font-size: 0.8rem;
+    padding-left: 0 !important;
+  }
+
+  .nav-link.bond {
+    padding-right: 0 !important;
+  }
+}
+
+@media (min-width: 1677px) {
+  .ml-2xl-3 {
+    margin-left: 1rem !important;
+  }
+  .mr-2xl-3 {
+    margin-right: 1rem !important;
+  }
+  .ml-2xl-4 {
+    margin-left: 1.5rem !important;
+  }
+  .mr-2xl-4 {
+    margin-right: 1.5rem !important;
+  }
+  .lobby {
+    width: 210px;
+    height: 65px;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 1400px){
   .view-links .nav-line{
     height: 0;
   }

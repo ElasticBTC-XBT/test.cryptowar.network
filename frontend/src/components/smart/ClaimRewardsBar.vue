@@ -55,25 +55,15 @@
       ref="claim-confirmation-modal"
       title="Claim xBlade Rewards"
       size="lg"
-      :ok-title="`OK, I'll claim and miss out ${this.formattedTaxAmount} xBlade tax`"
+      :ok-title="`OK, I'll claim`"
       @ok="onClaimTokens()"
     >
-      You are about to
-      {{
-        this.rewardsClaimTaxAsFactorBN > 0
-          ? "pay " +
-            formattedRewardsClaimTax +
-            " tax for early withdrawal, costing you " +
-            this.formattedTaxAmount
-          : ""
-      }}
-      . Are you sure you wish to continue? <b>This action cannot be undone.</b>
       <div>
-        <hr class="hr-divider" />
-        Hold Reminder:<br />
-        A percentage of your earning goes back to the community,<br />
+       <div class="claim-xblade-reward-info">
+        <div class="text-center" style="font-weight: bold">Hold Reminder</div>
+        A percentage of your earning goes back to the community,
         <u>if you withdraw early</u>
-        <div class="row col-12">
+        <div class="row">
           <div>
             Your early withdraw tax
             <span class="text-danger font-weight-bold"
@@ -83,8 +73,26 @@
           <div class="text-left" style="margin-left: 4px">
             . Reduces 1% per day. Reset to 15% after withdraw
           </div>
+          <div>
+            Number of xBlade miss out:
+            <span class="text-danger font-weight-bold">
+              {{formattedTaxAmount}}
+            </span>
+            xBlade tax
+          </div>
         </div>
+        <hr class="hr-divider" />
+       </div>
       </div>
+      {{
+        this.rewardsClaimTaxAsFactorBN > 0
+          ? "You are about to pay " +
+            formattedRewardsClaimTax +
+            " tax for early withdrawal, costing you " +
+            this.formattedTaxAmount + ". "
+          : ""
+      }}
+      Are you sure you wish to continue? <b>This action cannot be undone.</b>
     </b-modal>
   </div>
 </template>
@@ -335,19 +343,28 @@ export default Vue.extend({
   font-size: 0.8rem;
 }
 
+.claim-xblade-reward-info {
+  margin: 0 auto;
+  width: 80%;
+}
+
 @media (max-width: 576px) {
   .claim-reward-bar {
     flex-direction: column;
     text-align: center;
     padding: 0 8px;
   }
-    .navbar-expand {
-      justify-content: center;
-      text-align: center
-    }
+  .navbar-expand {
+    justify-content: center;
+    text-align: center
+  }
 
-    .btn-claim-xp {
-      margin-top: 8px;
-    }
+  .btn-claim-xp {
+    margin-top: 8px;
+  }
+
+  .claim-xblade-reward-info {
+    width: 100%;
+  }
 }
 </style>

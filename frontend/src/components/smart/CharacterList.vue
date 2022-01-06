@@ -151,7 +151,7 @@
 
       <li
         class="col-12 col-sm-6 col-md-4"
-        v-if="!isMarket && showFilters"
+        v-if="!isMarket && displayCharacters.length < 8"
       >
         <div class="character-item-wrap">
           <div class="character-item addnew" @click="onMintCharacter">

@@ -15,7 +15,7 @@
             <div>
               <a href="https://www.cryptowar.network/" target="_blank">HomePage</a>
               <a href="https://wiki.cryptowar.network/" target="_blank">Wiki</a>
-              <div @click="$router.push('options'), hideOption()">Options</div>
+              <div class="option" @click="$router.push('options'), hideOption()">Options</div>
               <!-- <a href="https://wiki.cryptowar.network/backers-and-partners" target="_blank">Partners</a> -->
             </div>
             <div>
@@ -215,7 +215,7 @@ export default Vue.extend({
   display: none;
 }
 
-@media (max-width: 767.98px){
+@media (max-width: 1400px){
     .navbar-nav{
         display: none;
     }
@@ -264,13 +264,23 @@ export default Vue.extend({
     }
 
     .option-container-footer{
-      margin-top: 15px;
+      margin: 15px 0;
+
     }
 
     .option-container-footer > div:first-child{
-      font-size: 1em;
+      font-size: 1.2em;
       margin: 0 45px;
       margin-bottom: 20px;
+      color: #f58b5b;
+      font-weight: bold;
+    }
+
+    .option-container-footer a,
+    .option-container .option {
+      font-size: 1rem;
+      text-transform: uppercase;
+      font-weight: bold;
     }
 
     .link{
