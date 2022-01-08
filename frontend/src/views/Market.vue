@@ -13,6 +13,42 @@
         <div class="row mt-3">
           <div class="col">
             <div class="search-results">
+              <character-list
+                v-on:character-filters-changed="searchAllCharacterListings(0)"
+                v-show="activeType === 'character'"
+                :showFilters="true"
+                :showGivenCharacterIds="true"
+                :characterIds="allSearchResults"
+                :showLimit="characterShowLimit"
+                :isMarket="true"
+                v-model="selectedNftId">
+                <template #above="{ character: { id } }">
+                  <div class="price token-price d-flex flex-column align-items-center justify-content-center m-top-negative-50">
+                    <span class="d-block text-center fix-h24" v-if="nftPricesById[id]">
+                      <span v-if="convertWeiToSkill(nftPricesById[id]) !== '0'"
+                      v-tooltip.top="{ content: maxPrecisionSkill(nftPricesById[id]) , trigger: (isMobile() ? 'click' : 'hover') }"
+                      @mouseover="hover = !isMobile() || true"
+                      @mouseleave="hover = !isMobile()"
+                      class="value-price">
+                      Price <span>{{ convertWeiToSkill(nftPricesById[id]) | dynamicDecimals(2, 4) }}</span> xBlade
+                      </span>
+                    </span>
+                    <span class="d-block text-center" v-else>Loading price...</span>
+                    <button
+                      :hidden="convertWeiToSkill(nftPricesById[id]) === '0'"
+                      @click="selectedNftId = id; canPurchase && purchaseNft();"
+                      variant="primary"
+                      v-bind:class="[!canPurchase ? 'disabled-button' : '']"
+                      class="gtag-link-others btn-purchase" tagname="confirm_purchase">
+                        {{ convertWeiToSkill(nftPricesById[id]) !== '0' ? 'PURCHASE' : 'SOLD' }} <b-icon-question-circle v-if="!canPurchase"
+                      v-tooltip.bottom="'You already have max amount of characters (8).'"/>
+                    </button>
+                  </div>
+                </template>
+                <template #sold="{ character: { id } }">
+                  <div class="sold" v-if="nftPricesById[id] && convertWeiToSkill(nftPricesById[id]) === '0'"><span>sold</span></div>
+                </template>
+              </character-list>
               <weapon-grid
                 v-on:weapon-filters-changed="searchAllWeaponListings(0)"
                 v-show="activeType === 'weapon'"
@@ -51,42 +87,45 @@
                   <div class="sold" v-if="nftPricesById[id] && convertWeiToSkill(nftPricesById[id]) === '0'"><span>sold</span></div>
                 </template>
               </weapon-grid>
-              <character-list
-                v-on:character-filters-changed="searchAllCharacterListings(0)"
-                v-show="activeType === 'character'"
-                :showFilters="true"
-                :showGivenCharacterIds="true"
-                :characterIds="allSearchResults"
-                :showLimit="characterShowLimit"
+              <nft-list
+                v-on:nft-filters-changed="searchAllShieldListings(0)"
+                v-if="activeType === 'shield'"
+                :showGivenNftIdTypes="true"
+                :nftIdTypes="allSearchResults.map(id => { return { id: id, type: 'shield' }; })"
+                :showLimit="shieldShowLimit"
+                :showReforgedToggle="false"
+                :showFavoriteToggle="false"
                 :isMarket="true"
-                v-model="selectedNftId">
-                <template #above="{ character: { id } }">
-                  <div class="price token-price d-flex flex-column align-items-center justify-content-center m-top-negative-50">
+                v-model="selectedNftId"
+                :canFavorite="false">
+
+                <template #above="{ nft: { id } }">
+                  <div class="d-flex flex-column align-items-center justify-content-center m-top-negative-5">
                     <span class="d-block text-center fix-h24" v-if="nftPricesById[id]">
                       <span v-if="convertWeiToSkill(nftPricesById[id]) !== '0'"
                       v-tooltip.top="{ content: maxPrecisionSkill(nftPricesById[id]) , trigger: (isMobile() ? 'click' : 'hover') }"
                       @mouseover="hover = !isMobile() || true"
                       @mouseleave="hover = !isMobile()"
-                      class="value-price">
-                      Price <span>{{ convertWeiToSkill(nftPricesById[id]) | dynamicDecimals(2, 4) }}</span> xBlade
+                      >
+                        <strong>Price</strong>: {{ convertWeiToSkill(nftPricesById[id]) | dynamicDecimals(2, 4) }} xBlade
                       </span>
                     </span>
                     <span class="d-block text-center" v-else>Loading price...</span>
-                    <button
+                    <b-button
                       :hidden="convertWeiToSkill(nftPricesById[id]) === '0'"
-                      @click="selectedNftId = id; canPurchase && purchaseNft();"
+                      @click="selectedNftId = id; purchaseNft();"
                       variant="primary"
-                      v-bind:class="[!canPurchase ? 'disabled-button' : '']"
-                      class="gtag-link-others btn-purchase" tagname="confirm_purchase">
-                        {{ convertWeiToSkill(nftPricesById[id]) !== '0' ? 'PURCHASE' : 'SOLD' }} <b-icon-question-circle v-if="!canPurchase"
-                      v-tooltip.bottom="'You already have max amount of characters (8).'"/>
-                    </button>
+                      class="gtag-link-others">
+                      {{ convertWeiToSkill(nftPricesById[id]) !== '0' ? 'Purchase' : 'Sold' }}
+                    </b-button>
                   </div>
                 </template>
-                <template #sold="{ character: { id } }">
+
+                <template #sold="{ nft: { id } }">
                   <div class="sold" v-if="nftPricesById[id] && convertWeiToSkill(nftPricesById[id]) === '0'"><span>sold</span></div>
                 </template>
-              </character-list>
+
+              </nft-list>
             </div>
           </div>
         </div>
@@ -397,16 +436,14 @@
                   @click="searchOwnListings('character'), isBtnSell=true"  class="gtag-link-others search-btn" tagname="search_own_characters">Selling Characters</b-button>
               </div>
 
-              <!-- <div class="mb-2">
+              <!-- <div v-if="activeType === 'character' && isBtnSell" class="mb-2 search-btn-selling">
                 <b-button
-                  :disabled="!search"
-                  @click="searchListingsByNftId('character')"  class="gtag-link-others search-btn" tagname="search_character_id">Search Character ID</b-button>
+                  @click="searchListingsByNftId('character')" tagname="search_character_id">SEARCH</b-button>
               </div>
 
-              <div class="mb-2">
+              <div v-if="activeType === 'weapon' && isBtnSell" class="mb-2 search-btn-selling">
                 <b-button
-                  :disabled="!search"
-                  @click="searchListingsByNftId('weapon')"  class="gtag-link-others search-btn" tagname="search_weapon_id">Search Weapon ID</b-button>
+                  @click="searchListingsByNftId('weapon')" tagname="search_weapon_id">SEARCH</b-button>
               </div> -->
             </div>
           </div>
@@ -450,17 +487,6 @@
                 <div class="sold" v-if="nftPricesById[id] && convertWeiToSkill(nftPricesById[id]) === '0'"><span>sold</span></div>
               </template>
             </weapon-grid>
-
-            <!-- <weapon-grid
-              v-model="selectedNftId"
-              :showReforgedWeaponsDefVal="true"
-              :showFavoriteWeaponsDefVal="true"
-              :canFavorite="false"
-              :checkBar="false"
-              :isSell="isSell"
-              :sellClick="showListingSetupModal"
-              :checklist="false"
-            /> -->
 
             <character-list
               v-show="activeType === 'character' && isBtnSell"
@@ -1086,7 +1112,6 @@ export default Vue.extend({
 
       const charactersData = await fetch(url.toString(),defaultOptions);
       const characters = await charactersData.json();
-      console.log("nam");
       this.allListingsAmount = characters.page.total;
       this.allSearchResults = characters.idResults;
     },
@@ -1109,15 +1134,15 @@ export default Vue.extend({
         maxLevel: this.characterMaxLevelFilter()
       });
 
-
       // filter price character
       this.sortPrice(this.characterPriceOrder());
       this.minPriceFilter(parseFloat(this.characterMinPriceFilter()));
       this.maxPriceFilter(parseFloat(this.characterMaxPriceFilter()));
       // filter price weapon
-      this.sortPrice(this.weaponPriceOrder());
-      this.minPriceFilter(parseFloat(this.weaponMinPriceFilter()));
-      this.maxPriceFilter(parseFloat(this.weaponMaxPriceFilter()));
+      // this.sortPrice(this.weaponPriceOrder());
+      // this.minPriceFilter(parseFloat(this.weaponMinPriceFilter()));
+      // this.maxPriceFilter(parseFloat(this.weaponMaxPriceFilter()));
+
     },
 
     async minPriceFilter(minPrice: number){
@@ -1210,22 +1235,28 @@ export default Vue.extend({
       this.marketOutcome = true;
       this.waitingMarketOutcome = true;
       this.currentPage = page + 1;
-      try {
-        if(useBlockchain === true)
-          await this.searchAllWeaponListingsThroughChain(page);
-        else
-          await this.searchAllWeaponListingsThroughAPI(page);
-
-        // searchResultsOwned does not mesh with this function
-        // will need per-result checking of it, OR filtering out own NFTs
-        //this.searchResultsOwned = nftSeller === this.defaultAccount;
-        this.searchResultsOwned = false; // temp
-        this.waitingMarketOutcome = false;
-        this.marketOutcome = false;
-      } catch {
-        this.waitingMarketOutcome = false;
-        this.marketOutcome = false;
-      }
+      // try {
+      //   if(useBlockchain === true)
+      //     await this.searchAllWeaponListingsThroughChain(page);
+      //   else
+      //     await this.searchAllWeaponListingsThroughAPI(page);
+      //   // searchResultsOwned does not mesh with this function
+      //   // will need per-result checking of it, OR filtering out own NFTs
+      //   //this.searchResultsOwned = nftSeller === this.defaultAccount;
+      //   this.searchResultsOwned = false; // temp
+      //   this.waitingMarketOutcome = false;
+      //   this.marketOutcome = false;
+      // } catch {
+      //   this.waitingMarketOutcome = false;
+      //   this.marketOutcome = false;
+      // }
+      await this.searchAllWeaponListingsThroughChain(page);
+      // searchResultsOwned does not mesh with this function
+      // will need per-result checking of it, OR filtering out own NFTs
+      //this.searchResultsOwned = nftSeller === this.defaultAccount;
+      this.searchResultsOwned = false; // temp
+      this.waitingMarketOutcome = false;
+      this.marketOutcome = false;
     },
 
     async searchAllWeaponListingsThroughChain(page: number) {
@@ -1243,7 +1274,13 @@ export default Vue.extend({
         trait: traitNameToNumber(this.weaponTraitFilter()),
         stars: filterStar
       });
+
+      this.sortPrice(this.weaponPriceOrder());
+      this.minPriceFilter(parseFloat(this.weaponMinPriceFilter()));
+      this.maxPriceFilter(parseFloat(this.weaponMaxPriceFilter()));
     },
+
+
     async searchAllWeaponListingsThroughAPI(page: number) {
       const url = new URL(apiUrl('static/market/weapon'));
       const params = {
@@ -1261,7 +1298,6 @@ export default Vue.extend({
       url.search = new URLSearchParams(params).toString();
       const weaponsData = await fetch(url.toString(),defaultOptions);
       const weapons = await weaponsData.json();
-      console.log("nam");
       this.allListingsAmount = weapons.page.total;
       this.allSearchResults = weapons.idResults;
     },
@@ -1319,7 +1355,6 @@ export default Vue.extend({
 
       const shieldsData = await fetch(url.toString(),defaultOptions);
       const shields = await shieldsData.json();
-      console.log("nam");
       this.allListingsAmount = shields.page.total;
       this.allSearchResults = shields.idResults;
     },
@@ -1459,7 +1494,6 @@ export default Vue.extend({
 
       const weaponsData = await fetch(url.toString(),defaultOptions);
       const weapons = await weaponsData.json();
-      console.log("nam");
       return weapons.idResults;
     },
 
@@ -1479,7 +1513,6 @@ export default Vue.extend({
 
       const shieldsData = await fetch(url.toString(),defaultOptions);
       const shields = await shieldsData.json();
-      console.log("nam");
       return shields.idResults;
     },
 
@@ -1488,7 +1521,6 @@ export default Vue.extend({
 
       const weaponsData = await fetch(url.toString(),defaultOptions);
       const weapons = await weaponsData.json();
-      console.log("nam");
       return weapons.results;
     },
 
@@ -1797,6 +1829,29 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+
+.search-btn-selling{
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.search-btn-selling button{
+  background: url("../assets/v2/btn-blue-bg.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  width: 100%;
+  height: 60px;
+  border: none;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
 
 .search-item{
   background-color: #000;

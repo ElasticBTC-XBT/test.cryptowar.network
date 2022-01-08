@@ -46,21 +46,21 @@
       </div>
 
       <template v-if="isMarket">
-          <div>
-            <strong>MIN PRICE</strong>
-            <input @click="priceSort=''" class="form-control" type="number" v-model.trim="minPriceFilter" :min="0" placeholder="Min" />
-          </div>
-          <div>
-            <strong>MAX PRICE</strong>
-            <input @click="priceSort=''" class="form-control" type="number" v-model.trim="maxPriceFilter" :min="0" placeholder="Max" />
-          </div>
-          <div>
-            <strong>SORT</strong>
-            <select class="form-control" v-model="priceSort">
-              <option v-for="x in sorts" :value="x.dir" :key="x.dir">{{ x.name || 'Any' }}</option>
-            </select>
-          </div>
-        </template>
+        <div>
+          <strong>MIN PRICE</strong>
+          <input @click="priceSort=''" class="form-control" type="number" v-model.trim="minPriceFilter" :min="0" placeholder="Min" />
+        </div>
+        <div>
+          <strong>MAX PRICE</strong>
+          <input @click="priceSort=''" class="form-control" type="number" v-model.trim="maxPriceFilter" :min="0" placeholder="Max" />
+        </div>
+        <div>
+          <strong>SORT</strong>
+          <select class="form-control" v-model="priceSort">
+            <option v-for="x in sorts" :value="x.dir" :key="x.dir">{{ x.name || 'Any' }}</option>
+          </select>
+        </div>
+      </template>
 
       <div class="search-btn">
         <b-button

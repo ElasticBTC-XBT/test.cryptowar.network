@@ -231,7 +231,6 @@ export default {
 
 .black-outline {
   color: #fff;
-  font-weight: bold;
   font-size: 1.2em;
   text-shadow: none;
   text-align: end;
