@@ -148,12 +148,12 @@
         <div class="row list" v-if="selectHero">
           <div class="item" v-for="i in ownCharacters" :key="i.id">
             <div class="info"
-              v-tooltip.bottom="{content: `Power: ${CharacterPower(i.level).toLocaleString()}<br>
+              v-tooltip.bottom="{content: `<div class='tooltip-container'>Power: ${CharacterPower(i.level).toLocaleString()}<br>
               <span>Level </span>
               <span
                 >${ i.level + 1 } (${ i.xp } /
                 ${ RequiredXp(i.level).toLocaleString() } XP)
-              </span>`, trigger: (isMobile() ? 'click' : 'hover')}">
+              </span></div>`, trigger: (isMobile() ? 'click' : 'hover')}">
               <div class="info-head">
                   <div
                     :class="i.traitName.toLowerCase() + '-icon'">
@@ -982,7 +982,10 @@ export default {
   max-width: 1550px;
 }
 
-
+.tooltip-container{
+  padding-top: 100px ;
+  margin-top: 100px;
+}
 
 #selectHeroOrWeaponModal .icon-close{
   background-image: url(../assets/v2/icon-close-2.svg);
@@ -1244,7 +1247,8 @@ export default {
 
 .info {
   margin: 0 11px 30px 11px;
-  height: 65%;
+  height: 50%;
+  margin-top: 55px;
 }
 
 .info .property{
@@ -1286,7 +1290,7 @@ export default {
 .info-head{
   /* display: flex; */
   position: relative;
-  top: 30px;
+  top: -20px;
   left: 15px;
   /* width: 245px; */
   /* justify-content: space-between; */
