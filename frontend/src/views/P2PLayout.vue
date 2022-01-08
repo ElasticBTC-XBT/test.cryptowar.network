@@ -982,11 +982,6 @@ export default {
   max-width: 1550px;
 }
 
-.tooltip-container{
-  padding-top: 100px ;
-  margin-top: 100px;
-}
-
 #selectHeroOrWeaponModal .icon-close{
   background-image: url(../assets/v2/icon-close-2.svg);
   width: 50px;
