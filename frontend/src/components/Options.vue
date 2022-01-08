@@ -222,6 +222,7 @@ export default Vue.extend({
 
     .option-container{
       display: block;
+      margin-bottom: 60px;
     }
 
     .option-container-head{

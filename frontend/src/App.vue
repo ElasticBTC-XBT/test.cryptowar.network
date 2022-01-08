@@ -763,6 +763,16 @@ button.close {
   height: 190px;
 }
 
+// #showWeaponModal .modal-dialog{
+//   width:870px;
+// }
+
+#showWeaponModal .modal-content{
+  height: 580px;
+  width: 870px;
+  max-width: 870px;
+}
+
 #cancelRequestModal .close,
 #requestSelect .close,
 #selectHeroOrWeaponModal .close{
@@ -916,12 +926,46 @@ button.close {
   #loadingModal .modal-content,
   #fightResultsModal .modal-content,
   #listHeroToCareerModal .modal-content,
-  #listHeroToChallengeModal .modal-content{
+  #listHeroToChallengeModal .modal-content,
+  #requestFightModal .modal-content{
     min-width: 20rem;
     height: 250px;
     display: flex;
     align-items: center;
     background-size: contain !important;
+  }
+  #showWeaponModal .modal-content,
+  #claimModal .modal-content,
+  #selectHeroOrWeaponModal .modal-content{
+    width: 350px;
+    background-image: none;
+    background-color: #0C012C;
+    border: 1px solid #F48757;
+    border-radius: 20px 30px 20px 20px;
+    position: relative;
+  }
+
+  #selectHeroOrWeaponModal .modal-content{
+    height: 646px;
+  }
+
+  #showWeaponModal .modal-content::after,
+  #claimModal .modal-content::after,
+  #selectHeroOrWeaponModal .modal-content::after{
+    content: "";
+    background-image: url(./assets/v2/corner_yellow.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 80px;
+    height: 90px;
+    position: absolute;
+    top: -9px;
+    right: -8px;
+  }
+
+  #claimModal .close,
+  #selectHeroOrWeaponModal .close{
+    z-index: 1;
   }
 }
 

@@ -73,8 +73,15 @@
           v-if="getWeaponDurability(weapon.id) === maxDurability"
           class="small-durability-bar"
           :style="`--durabilityReady: ${(getWeaponDurability(weapon.id)/maxDurability)*100}%;`"
-          v-tooltip.bottom="{content: `Durability: ${getWeaponDurability(weapon.id)}/${maxDurability}<br>`}"
+          v-tooltip.bottom="{content: `Durability: ${getWeaponDurability(weapon.id)}/${maxDurability}<br>`, trigger: (isMobile() ? 'click' : 'hover')}"
         ></div>
+        <!-- <div
+          v-if="getWeaponDurability(weapon.id) !== maxDurability"
+          class="small-durability-bar"
+          :style="`--durabilityReady: ${(getWeaponDurability(weapon.id)/maxDurability)*100}%;`"
+          v-tooltip.bottom="{content: `Durability: ${getWeaponDurability(weapon.id)}/${maxDurability}<br>
+          <span>${minutes}</span>:<span>${seconds}</span>`, trigger: (isMobile() ? 'click' : 'hover')}"
+        ></div> -->
         <div
           v-if="getWeaponDurability(weapon.id) !== maxDurability"
           class="small-durability-bar"

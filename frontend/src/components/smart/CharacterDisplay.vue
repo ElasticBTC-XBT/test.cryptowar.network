@@ -1,5 +1,7 @@
 <template>
-  <div class="character-display-container">
+  <div class="character-display-container"
+    @mouseover="hover = !isMobile() || true"
+    @mouseleave="hover = !isMobile()">
     <transition name="slide-fade">
       <!-- <div class="row chara-head-box" :class="[getIsCharacterViewExpanded?'':'chara-head-close']">
         <div class="col-sm-12 root main-font">
@@ -74,25 +76,30 @@
           v-for="c in filteredCharactersForList"
           :key="c.id"
           @click="!getIsInCombat && setCurrentCharacter(c.id) && alert(c.id)"
+          v-tooltip="{content: `Power: ${CharacterPower(c.level).toLocaleString()}<br>
+          <span>Level </span>
+          <span
+            >${ c.level + 1 } (${ c.xp } /
+            ${ RequiredXp(c.level).toLocaleString() } XP)
+          </span>`, trigger: (isMobile() ? 'click' : 'hover')}"
         >
           <div class="element-icon"><span
-                :class="
-                  traits[c.trait].toLowerCase() +
-                  '-icon trait-icon'
-                "
-              ></span>
+            :class="
+              traits[c.trait].toLowerCase() +
+              '-icon trait-icon'
+            "
+            ></span>
           </div>
           <div>
             <div class="name-list">
-            {{ getCleanCharacterName(c.id) }} Lv.{{ c.level + 1 }}
+            <div>{{ getCleanCharacterName(c.id) }} </div> Lv.{{ c.level + 1 }}
             </div>
             <div
               class="small-stamina-char"
               :style="`--staminaReady: ${
                 (getCharacterStamina(c.id) / maxStamina) * 100
               }%;`"
-              v-tooltip.bottom="
-                toolTipHtml(timeUntilCharacterHasMaxStamina(c.id), getSecondPerStamina(c.id))
+              v-tooltip.bottom="{content: toolTipHtml(timeUntilCharacterHasMaxStamina(c.id), getSecondPerStamina(c.id)), trigger: (isMobile() ? 'click' : 'hover')}
               "
             >
               <div class="stamina-text">
@@ -277,7 +284,7 @@ li.character .element-icon{
 
 li.character-highlight {
   border: solid #9e8a57 3px;
-  font-weight: 800;
+  /* font-weight: 800; */
   /* padding: 5px; */
   padding: 0.5rem 0.5rem 0.5rem;
   border-radius: 10px;
@@ -294,16 +301,26 @@ li.character-highlight .element-icon{
   height: 45px;
 }
 
-
 .name-list {
   margin: auto;
-  font-size: 1.1em;
+  font-size: 1.05em;
   text-align: center;
   color: #fff;
   white-space: nowrap;
-  text-overflow: ellipsis;
   overflow-x: hidden;
   width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.name-list div{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 140px;
+    margin-right: 10px;
+    /* display: inline-block; */
 }
 
 .character-list-mobile {

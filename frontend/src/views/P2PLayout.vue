@@ -147,7 +147,13 @@
         <CombatResults v-if="resultsAvailable" :results="fightResults" /> -->
         <div class="row list" v-if="selectHero">
           <div class="item" v-for="i in ownCharacters" :key="i.id">
-            <div class="info">
+            <div class="info"
+              v-tooltip.top="{content: `Power: ${CharacterPower(i.level).toLocaleString()}<br>
+              <span>Level </span>
+              <span
+                >${ i.level + 1 } (${ i.xp } /
+                ${ RequiredXp(i.level).toLocaleString() } XP)
+              </span>`, trigger: (isMobile() ? 'click' : 'hover')}">
               <div class="info-head">
                   <div
                     :class="i.traitName.toLowerCase() + '-icon'">
@@ -353,6 +359,7 @@ import RoomRequest from "@/components/RoomRequest.vue";
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
 import FightResult from "@/components/v2/FightResult.vue";
 import { CharacterTrait } from "../interfaces";
+import { RequiredXp } from "../interfaces";
 // import Events from "../events";
 
 export default {
@@ -492,6 +499,8 @@ export default {
       "fetchWeaponId"
     ]),
     ...mapMutations(["setIsInCombat"]),
+    RequiredXp,
+    CharacterPower,
     checkActive(){
       if(this.changeMode || this.careerMode || this.requestChallenge){
         this.addClass = "";
@@ -1235,6 +1244,7 @@ export default {
 
 .info {
   margin: 0 11px 30px 11px;
+  height: 65%;
 }
 
 .info .property{
@@ -1305,7 +1315,7 @@ export default {
   background-repeat: no-repeat;
   background-size: 100%;
   margin: 0 auto;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   position: relative;
   top: -25px;
 }
@@ -1683,6 +1693,22 @@ export default {
   .btn-request-fight{
     font-size: 1em;
   }
+.requestSelect-head,
+.listHeroToCareerModal-head,
+.listHeroToChallengeModal-head{
+  font-size: 1.4em;
+}
+
+.listHeroToCareerModal-body,
+.listHeroToChallengeModal-body{
+  font-size: 1.1em;
+}
+.listHeroToCareerModal-btn,
+.listHeroToChallengeModal-btn{
+  width: 160px;
+  height: 35px;
+  font-size: 1em;
+}
 }
 
 @media (max-width: 575.98px) {
