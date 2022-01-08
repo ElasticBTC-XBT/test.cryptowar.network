@@ -39,11 +39,20 @@
         {{ getCleanWeaponName(weapon.id, weapon.stars) }}
       </div>
     <div>
-        <div class="small-durability-bar"
+      <div
+        v-if="getWeaponDurability(weapon.id) === maxDurability"
+        class="small-durability-bar"
+        :style="`--durabilityReady: ${(getWeaponDurability(weapon.id)/maxDurability)*100}%;`"
+        v-tooltip.bottom="{content: `Durability: ${getWeaponDurability(weapon.id)}/${maxDurability}<br>`, trigger: (isMobile() ? 'click' : 'hover')}"
+      >
+      </div>
+      <div class="small-durability-bar"
+        v-if="getWeaponDurability(weapon.id) !== maxDurability"
         :style="`--durabilityReady: ${(getWeaponDurability(weapon.id)/maxDurability)*100}%;`"
         v-tooltip.bottom="`Durability: ${getWeaponDurability(weapon.id)}/${maxDurability}<br>
-          Repairs 1 point every 50 minutes, durability will be full at: ${timeUntilWeaponHasMaxDurability(weapon.id)}`"></div>
+          Repairs 1 point every 50 minutes, durability will be full at: ${timeUntilWeaponHasMaxDurability(weapon.id)}`">
       </div>
+    </div>
 
     <!-- <div class="glow-container" ref="el"> -->
       <!-- <div class="glow-img-box"> -->
