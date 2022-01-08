@@ -36,9 +36,9 @@
       :src="getWeaponArt(weapon)" />
   </div>
     <div class="name">
-        {{ getCleanWeaponName(weapon.id, weapon.stars) }}
-      </div>
-    <div>
+        <div>{{ getCleanWeaponName(weapon.id, weapon.stars) }}</div>
+    </div>
+    <div v-if="getWeaponDurability(weapon.id)">
       <div
         v-if="getWeaponDurability(weapon.id) === maxDurability"
         class="small-durability-bar"
@@ -47,13 +47,19 @@
       >
       </div>
       <div class="small-durability-bar"
-        v-if="getWeaponDurability(weapon.id) !== maxDurability"
+        v-if="getWeaponDurability(this.weapon.id) !== maxDurability"
         :style="`--durabilityReady: ${(getWeaponDurability(weapon.id)/maxDurability)*100}%;`"
         v-tooltip.bottom="`Durability: ${getWeaponDurability(weapon.id)}/${maxDurability}<br>
           Repairs 1 point every 50 minutes, durability will be full at: ${timeUntilWeaponHasMaxDurability(weapon.id)}`">
       </div>
     </div>
-
+    <div v-if="!getWeaponDurability(weapon.id)">
+      <div
+        class="small-durability-bar"
+        :style="`--durabilityReady: ${(getWeaponDurability(weapon.id)/maxDurability)*100}%;`"
+      >
+      </div>
+    </div>
     <!-- <div class="glow-container" ref="el"> -->
       <!-- <div class="glow-img-box"> -->
       <!-- <img
@@ -250,7 +256,6 @@ export default {
     }
   },
   mounted() {
-    console.log('1234', this.weapon);
     this.allLoaded = true;
     this.showPlaceholder = true;
     return;
@@ -348,10 +353,19 @@ export default {
   margin-left: 2rem;
 }
 
-.name {
+.name{
+  display: flex;
+  justify-content: center;
+}
+
+.name > div{
   font-size: 1.12em;
   font-weight: bold;
   text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 80%;
 }
 
 .weapon-market .name{
@@ -453,6 +467,10 @@ export default {
   right: 5%;
   font-size: 0.6em;
   text-align: right;
+}
+
+.container{
+  height: 82px;
 }
 
 .containerTop {
