@@ -148,7 +148,7 @@
         <div class="row list" v-if="selectHero">
           <div class="item" v-for="i in ownCharacters" :key="i.id">
             <div class="info"
-              v-tooltip.top="{content: `Power: ${CharacterPower(i.level).toLocaleString()}<br>
+              v-tooltip.bottom="{content: `Power: ${CharacterPower(i.level).toLocaleString()}<br>
               <span>Level </span>
               <span
                 >${ i.level + 1 } (${ i.xp } /
