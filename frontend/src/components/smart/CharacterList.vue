@@ -140,6 +140,11 @@
                 SELL
               </b-button>
             </div>
+            <div v-if="isBtnSell" class="weapon-bt-box">
+              <b-button @click="cancelNftListing()" class="weapon-bt-box">
+                STOP SELLING
+              </b-button>
+            </div>
           </div>
         </div>
       </li>
@@ -231,6 +236,14 @@ export default {
     checklist: {
       type: Boolean,
       default: true
+    },
+    cancelNftListing: {
+      type: ()=>{},
+      default: null
+    },
+    isBtnSell: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -402,6 +415,32 @@ export default {
 </script>
 
 <style scoped>
+
+.weapon-bt-box{
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.weapon-bt-box button{
+  background: url("../../assets/v2/shop_nft_btn.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 170px;
+  height: 40px;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .filters div strong{
   font-size: 24px;
   font-weight: normal;
