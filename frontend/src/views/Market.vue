@@ -367,15 +367,15 @@
               <input class="form-control search-item" v-model.trim="search" type="text" placeholder="  Seller Address, NFT ID">
               <div class="mb-2">
                 <b-button
-                  @click="activeType = 'character', isBtnSell=false"
-                  :class="isBtnSell===false&&activeType==='character'?'gtag-link-others search-btn selected':'gtag-link-others search-btn'"
-                  tagname="show_weapons_market">Show Weapons</b-button>
+                  @click="activeType = 'weapon', isBtnSell=false"  class="gtag-link-others  search-btn"
+                  :class="isBtnSell===false&&activeType==='weapon'?'gtag-link-others search-btn selected':'gtag-link-others search-btn'"
+                  tagname="show_characters_market">Show Weapons</b-button>
               </div>
               <div class="mb-2">
                 <b-button
-                  @click="activeType = 'weapon', isBtnSell=false"  class="gtag-link-others  search-btn"
-                  :class="isBtnSell===false&&activeType==='weapon'?'gtag-link-others search-btn selected':'gtag-link-others search-btn'"
-                  tagname="show_characters_market">Show Characters</b-button>
+                  @click="activeType = 'character', isBtnSell=false"
+                  :class="isBtnSell===false&&activeType==='character'?'gtag-link-others search-btn selected':'gtag-link-others search-btn'"
+                  tagname="show_weapons_market">Show Characters</b-button>
               </div>
 
               <div>
