@@ -7,7 +7,7 @@ function isBlacklist(address: string): boolean {
     "0x384223e5",
     "0x61c8b5b1",
     "0xd57d22c6",
-    "0xeC0B72fF",
+    // "0xeC0B72fF", // TODO: Find solution
     "0xE3567add",
     "0x9fdaa80b",
     "0xb9063c17"

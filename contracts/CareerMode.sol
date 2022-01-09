@@ -278,7 +278,7 @@ contract CareerMode is
 
         _requestFight.win = opponentRoll >= playerRoll;
 
-        if (opponentRoll <= playerRoll) {
+        if (opponentRoll < playerRoll) {
             // Owner win
             tokenRewards[r.owner] = tokenRewards[r.owner].add(tokensWin);
         } else {
