@@ -54,11 +54,11 @@
       <template v-if="isMarket">
         <div>
           <strong>MIN PRICE</strong>
-          <input @click="priceSort=''" class="form-control" type="number" v-model.trim="minPriceFilter" :min="0" placeholder="Min" />
+          <input class="form-control" type="number" v-model.trim="minPriceFilter" :min="0" placeholder="Min" />
         </div>
         <div>
           <strong>MAX PRICE</strong>
-          <input @click="priceSort=''" class="form-control" type="number" v-model.trim="maxPriceFilter" :min="0" placeholder="Max" />
+          <input class="form-control" type="number" v-model.trim="maxPriceFilter" :min="0" placeholder="Max" />
         </div>
 
         <div>
