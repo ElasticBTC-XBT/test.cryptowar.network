@@ -17,7 +17,7 @@
           @click="() =>this.handleShowWeapon(this.room.weaponId)"
         >
           <span class="titleButtonShowWeapon">
-            Show Weapon
+            SHOW WEAPON
           </span>
         </button>
         <button
@@ -37,7 +37,7 @@
           @click="() =>this.handleShowWeapon(this.room.weaponId)"
         >
           <span class="titleButtonShowWeapon">
-            Show Weapon
+            SHOW WEAPON
           </span>
         </button>
         <button
@@ -185,22 +185,17 @@ export default {
     background-repeat: no-repeat;
     background-color: transparent;
     margin-left: 0.8rem;;
+    min-width: 140px;
   }
   .btn-request-fight{
-  margin: 0 auto;
-  display: block;
-  background-color: transparent;
   border: none;
-  background-image:  url(../assets/v2/btn-fight-big.svg);
-  min-width: 140px;
-  height: 47px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  color: #fff;
-  font-weight: 600;
-  font-size: 1em;
-  margin-top: 20px;
-  margin-bottom: 10px;
+    height: 47px;
+    background-image: url('../assets/images/bg-fight-button.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    margin-left: 0.8rem;;
+    min-width: 175px;
 }
 .titleButtonFight {
   color: var(--white);

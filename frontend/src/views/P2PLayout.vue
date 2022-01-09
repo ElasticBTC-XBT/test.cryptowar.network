@@ -17,8 +17,8 @@
             </div>
         </div>
       </div>
-      <b-modal id="listHeroToCareerModal" hide-footer>
-        <div class="icon-close-container"><div class="icon-close" @click="$bvModal.hide('listHeroToCareerModal')"></div></div>
+      <b-modal id="listHeroToCareerModal" hide-footer hide-header-close>
+        <div class="headerModalCareer"></div>
         <div class="listHeroToCareerModal-head">CryptoWar Message</div>
         <div class="listHeroToCareerModal-body" v-if="errorMessage">{{errorMessage}}</div>
         <div class="listHeroToCareerModal-body" v-if="!errorMessage">Listing HERO to Career: <span>Done</span></div>
@@ -26,11 +26,12 @@
           checkSelect = false, addClass = ''" class="listHeroToCareerModal-btn confirm">GO TO CHECK</button>
       </b-modal>
       <b-modal id="showWeaponModal" hide-footer hide-header-close>
+        <div class="headerModalCareer"></div>
         <div class="listHeroToCareerModal-body" v-if="errorMessage">{{errorMessage}}</div>
         <div class="itemWeapon" >
             <WeaponSelect :weapon="this.weaponToShow"/>
           </div>
-        <button @click="$bvModal.hide('showWeaponModal'), addClass = ''" class="listHeroToCareerModal-btn confirm">CLOSE</button>
+        <button @click="$bvModal.hide('showWeaponModal'), addClass = ''" class="weaponShow-btn confirm">CLOSE</button>
       </b-modal>
       <b-modal id="fightErrorModal" hide-footer>
         <div class="icon-close-container"><div class="icon-close" @click="$bvModal.hide('fightErrorModal')"></div></div>
@@ -816,6 +817,7 @@ export default {
       }
     },
     async handleShowWeapon(weaponId) {
+      this.errorMessage = "";
       const weapon = await this.fetchWeaponId(weaponId);
       this.weaponToShow = weapon;
       this.$bvModal.show('showWeaponModal');
@@ -855,7 +857,7 @@ export default {
       for(const i in object) {
         newCareerModeRequest.push(object[i]);
       }
-      return newCareerModeRequest.filter(item => item.done !== '-2');
+      return newCareerModeRequest.filter(item => item.done !== '2');
     },
     async handleScrollToEnd(isVisible) {
       if(!isVisible) { return; }
@@ -989,6 +991,10 @@ export default {
     FightResult
   },
   async beforeMount() {
+    await this.getCareerRooms({cursor: 0});
+    await this.getRewardPvp();
+    await this.getListParticipatedRoom();
+    await this.getRequests();
   },
   async mounted(){
     if(this.checkSelectFromRPS){
@@ -1003,7 +1009,8 @@ export default {
       this.fetchRequestInterval = setInterval(async () => {
         await this.getRequests();
       }, 5000);
-    }, 500);
+      console.log('111', this.careerModeRooms);
+    }, 1000);
   },
 };
 </script>
@@ -1588,6 +1595,9 @@ export default {
 .info-user-footer{
   margin-top: 10px;
 }
+.headerModalCareer {
+  padding: 1.8rem;
+}
 
 .info-user-footer-item{
   margin: 10px 0;
@@ -1674,6 +1684,20 @@ export default {
   width: 200px;
   height: 44px;
   margin: 20px auto;
+  display: block;
+  color: #fff;
+  font-size: 1.3em;
+  font-weight: 600;
+}
+.weaponShow-btn {
+  background-color: transparent;
+  border: none;
+  background-image: url(../assets/v2/btn-fight-big.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 200px;
+  height: 44px;
+  margin-bottom: 2.5rem;
   display: block;
   color: #fff;
   font-size: 1.3em;
