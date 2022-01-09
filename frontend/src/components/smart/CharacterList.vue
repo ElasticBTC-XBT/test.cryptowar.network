@@ -248,6 +248,7 @@ export default {
   },
 
   async created() {
+    this.clearFilters();
     const recruitCost = await this.contracts.CWController.methods
       .getMintPriceByToken()
       .call({ from: this.defaultAccount });

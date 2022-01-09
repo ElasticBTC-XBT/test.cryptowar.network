@@ -543,6 +543,10 @@ export default Vue.extend({
     }
   },
 
+  created(){
+    this.clearFilters();
+  },
+
   mounted() {
 
     this.checkStorageFavorite();
@@ -748,7 +752,7 @@ input::-webkit-inner-spin-button{
 }
 
 .filters.market-active.active{
-  height: 970px;
+  height: 1100px;
 }
 
 @media (width: 1024px) {

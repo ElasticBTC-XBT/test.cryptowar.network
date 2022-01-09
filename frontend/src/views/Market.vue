@@ -1,8 +1,8 @@
 <template>
   <div class="body main-font market">
     <div class="market-hero-weapon" style="max-width: 1769px; margin-left: auto; margin-right: auto;">
-      <button @click="activeType = 'character'; isBtnSell=false; searchAllCharacterListings(currentPage - 1)" :class="activeType === 'character' && 'selected'">HERO</button>
-      <button @click="activeType = 'weapon'; isBtnSell=false; searchAllWeaponListings(currentPage - 1)" :class="activeType === 'weapon' && 'selected'">WEAPON</button>
+      <button @click="activeType = 'character'; isBtnSell=false;" :class="activeType === 'character' && 'selected'">HERO</button>
+      <button @click="activeType = 'weapon'; isBtnSell=false;" :class="activeType === 'weapon' && 'selected'">WEAPON</button>
     </div>
     <b-tabs justified style="max-width: 1769px; margin-left: auto; margin-right: auto;">
       <b-tab @click="clearData();browseTabActive = true;skillShopTabActive = false;searchAllCharacterListings(currentPage - 1)">
@@ -15,7 +15,7 @@
             <div class="search-results">
               <character-list
                 v-on:character-filters-changed="searchAllCharacterListings(0)"
-                v-show="activeType === 'character'"
+                v-if="activeType === 'character'"
                 :showFilters="true"
                 :showGivenCharacterIds="true"
                 :characterIds="resultSearch"
@@ -51,7 +51,7 @@
               </character-list>
               <weapon-grid
                 v-on:weapon-filters-changed="searchAllWeaponListings(0)"
-                v-show="activeType === 'weapon'"
+                v-if="activeType === 'weapon'"
                 :showGivenWeaponIds="true"
                 :weaponIds="resultSearch"
                 :showLimit="weaponShowLimit"
