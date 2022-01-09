@@ -194,9 +194,9 @@ export default {
     width: 225px;
   }
 
-  .dust-quantity-wrap {
+  /* .dust-quantity-wrap {
     padding: 0 50px;
-  }
+  } */
 
   .dust-image {
     max-width: 200px;
@@ -214,9 +214,9 @@ export default {
     max-height: 200px;
   }
 
-  .dust-quantity-wrap {
+  /* .dust-quantity-wrap {
     padding: 0 260px;
-  }
+  } */
 
   .dust-label {
     margin: 0 0 16px;
@@ -234,9 +234,9 @@ export default {
   .no-corner .dust-power{
     font-size: 16px;
   }
-  .dust-quantity-wrap {
+  /* .dust-quantity-wrap {
     padding: 0 100px;
-  }
+  } */
 }
 /* .slidecontainer {
   width: 100%;
