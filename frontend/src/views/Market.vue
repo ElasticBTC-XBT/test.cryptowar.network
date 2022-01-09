@@ -129,15 +129,23 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div v-if="waitingMarketOutcome" class="modal-loading">
+          <div class="modal-loading-content">
+            <div class="outcome" >
+              <i class="fas fa-spinner fa-spin"></i>
+              Loading...
+            </div>
+          </div>
+        </div>
+        <!-- <div class="row">
           <div class="col">
             <div class="outcome" v-if="waitingMarketOutcome">
               <i class="fas fa-spinner fa-spin"></i>
               Loading...
             </div>
-            <!-- <div class="outcome" v-if="marketOutcome !== null">{{ marketOutcome }}</div> -->
+            <div class="outcome" v-if="marketOutcome !== null">{{ marketOutcome }}</div>
           </div>
-        </div>
+        </div> -->
       </b-tab>
       <!-- <b-tab @click="clearData();loadMarketTaxes(),browseTabActive = false;skillShopTabActive = false">
         <template #title>
@@ -592,15 +600,23 @@
             />
           </div>
         </div>
-        <div class="row">
-          <div class="col">
-            <div class="outcome" v-if="waitingMarketOutcome">
+        <div v-if="waitingMarketOutcome" class="modal-loading">
+          <div class="modal-loading-content">
+            <div class="outcome" >
               <i class="fas fa-spinner fa-spin"></i>
               Loading...
             </div>
-            <!-- <div class="outcome" v-if="marketOutcome !== null">{{ marketOutcome }}</div> -->
           </div>
         </div>
+        <!-- <div class="row">
+          <div class="col">
+            <div class="outcome" >
+              <i class="fas fa-spinner fa-spin"></i>
+              Loading...
+            </div>
+            <div class="outcome" v-if="marketOutcome !== null">{{ marketOutcome }}</div>
+          </div>
+        </div> -->
       </b-tab>
     </b-tabs>
   </div>
@@ -2103,6 +2119,35 @@ export default Vue.extend({
   .market-hero-weapon button{
     width: 50%;
   }
+}
+
+.modal-loading {
+  /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-loading-content{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-loading-content .outcome{
+  font-size: 3em;
+}
+
+.modal-loading-content .outcome i{
+  margin-right: 20px;
 }
 
 </style>
