@@ -13,6 +13,17 @@
         <div class="row mt-3">
           <div class="col">
             <div class="search-results">
+              <b-pagination class="customPagination"
+                v-visible="allSearchResults && allSearchResults.length > 0"
+                align="center" v-model="currentPage"
+                :total-rows="allListingsAmount"
+                :per-page="activeType === 'weapon' ? weaponShowLimit : characterShowLimit"
+                first-number
+                last-number
+                v-on:click.native="(activeType == 'weapon' && searchAllWeaponListings(currentPage - 1)) ||
+                  (activeType == 'character' && searchAllCharacterListings(currentPage - 1)) ||
+                  (activeType == 'shield' && searchAllShieldListings(currentPage - 1))"
+              ></b-pagination>
               <character-list
                 v-on:character-filters-changed="searchAllCharacterListings(0)"
                 v-if="activeType === 'character'"
@@ -106,8 +117,9 @@
                       v-tooltip.top="{ content: maxPrecisionSkill(nftPricesById[id]) , trigger: (isMobile() ? 'click' : 'hover') }"
                       @mouseover="hover = !isMobile() || true"
                       @mouseleave="hover = !isMobile()"
+                      class="value-price"
                       >
-                        <strong>Price</strong>: {{ convertWeiToSkill(nftPricesById[id]) | dynamicDecimals(2, 4) }} xBlade
+                        Price <span>{{ convertWeiToSkill(nftPricesById[id]) | dynamicDecimals(2, 4) }}</span> xBlade
                       </span>
                     </span>
                     <span class="d-block text-center" v-else>Loading price...</span>
@@ -126,6 +138,18 @@
                 </template>
 
               </nft-list>
+              <b-pagination class="customPagination"
+                v-if="allSearchResults && allSearchResults.length > 0"
+                align="center" v-model="currentPage"
+                :total-rows="allListingsAmount"
+                :per-page="activeType === 'weapon' ? weaponShowLimit :
+                  (activeType === 'character' ? characterShowLimit : shieldShowLimit)"
+                first-number
+                last-number
+                v-on:click.native="(activeType == 'weapon' && searchAllWeaponListings(currentPage - 1)) ||
+                  (activeType == 'character' && searchAllCharacterListings(currentPage - 1)) ||
+                  (activeType == 'shield' && searchAllShieldListings(currentPage - 1))"
+              ></b-pagination>
             </div>
           </div>
         </div>
@@ -343,22 +367,26 @@
               <input class="form-control search-item" v-model.trim="search" type="text" placeholder="  Seller Address, NFT ID">
               <div class="mb-2">
                 <b-button
-                  @click="activeType = 'weapon', isBtnSell=false"  class="gtag-link-others  search-btn" tagname="show_weapons_market">Show Weapons</b-button>
+                  @click="activeType = 'character', isBtnSell=false"
+                  :class="isBtnSell===false&&activeType==='character'?'gtag-link-others search-btn selected':'gtag-link-others search-btn'"
+                  tagname="show_weapons_market">Show Weapons</b-button>
               </div>
               <div class="mb-2">
                 <b-button
-                  @click="activeType = 'character', isBtnSell=false"  class="gtag-link-others  search-btn" tagname="show_characters_market">Show Characters</b-button>
+                  @click="activeType = 'weapon', isBtnSell=false"  class="gtag-link-others  search-btn"
+                  :class="isBtnSell===false&&activeType==='weapon'?'gtag-link-others search-btn selected':'gtag-link-others search-btn'"
+                  tagname="show_characters_market">Show Characters</b-button>
               </div>
 
-              <div class="mb-2">
+              <div>
                 <!-- <b-button
                   v-if="activeType === 'weapon'"
                    class="gtag-link-others  search-btn" tagname="add_listing_weapon"
                   :disabled="selectedNftId === null || selectedNftOnCooldown"
                   @click="showListingSetupModal()">Sell Weapon/Character <b-icon-question-circle :hidden=!weaponMarketTax
-                  v-tooltip.bottom="weaponMarketTax + '% tax (paid by the buyer) will be added to the final price.'"/></b-button> -->
+                  v-tooltip.bottom="weaponMarketTax + '% tax (paid by the buyer) will be added to the final price.'"/></b-button>
 
-                <!-- <b-button
+                <b-button
                   v-if="activeType === 'character'"
                   :disabled="selectedNftId === null || selectedNftOnCooldown"
                    class="gtag-link-others search-btn" tagname="add_listing_character"
@@ -386,7 +414,7 @@
                   {{calculatedBuyerCost(listingSellPrice)}} xBlade</i></span>
                 </b-modal>
               </div>
-              <div class="mb-2">
+              <!-- <div class="mb-2">
                 <b-button
                   class="gtag-link-others search-btn" tagname="show_weapons_sold"
                   @click="showWeaponsSoldModal()"> Weapons Sold
@@ -433,15 +461,19 @@
                     <b-button class="mt-3 btn-buy" block @click="resetTransactionHistoryValues('characters-sold-modal')">Ok</b-button>
                   </template>
                 </b-modal>
-              </div>
+              </div> -->
               <div class="mb-2">
                 <b-button
-                  @click="searchOwnListings('weapon'), isBtnSell=true" class="gtag-link-others search-btn" tagname="search_own_weapons">Selling Weapons</b-button>
+                  @click="searchOwnListings('weapon'), isBtnSell=true"
+                  :class="isBtnSell===true&&activeType==='weapon'?'gtag-link-others search-btn selected':'gtag-link-others search-btn'"
+                  tagname="search_own_weapons">Selling Weapons</b-button>
               </div>
 
               <div class="mb-2">
                 <b-button
-                  @click="searchOwnListings('character'), isBtnSell=true" class="gtag-link-others search-btn" tagname="search_own_characters">Selling Characters</b-button>
+                  @click="searchOwnListings('character'), isBtnSell=true"
+                  :class="isBtnSell===true&&activeType==='character'?'gtag-link-others search-btn selected':'gtag-link-others search-btn'"
+                  tagname="search_own_characters">Selling Characters</b-button>
               </div>
 
               <!-- <div v-if="activeType === 'character' && isBtnSell" class="mb-2 search-btn-selling">
@@ -476,19 +508,20 @@
                     v-tooltip.top="{ content: maxPrecisionSkill(nftPricesById[id]) , trigger: (isMobile() ? 'click' : 'hover') }"
                     @mouseover="hover = !isMobile() || true"
                     @mouseleave="hover = !isMobile()"
+                    class="value-price"
                     >
-                      <strong>Price</strong>: {{ convertWeiToSkill(nftPricesById[id]) | dynamicDecimals(2, 4) }} xBlade
+                      Price <span>{{ convertWeiToSkill(nftPricesById[id]) | dynamicDecimals(2, 4) }}</span> xBlade
                     </span>
                   </span>
                   <span class="d-block text-center" v-else>Loading price...</span>
-                  <b-button
+                  <!-- <b-button
                       v-if="id !== null && !searchResultsOwned"
                       :hidden="convertWeiToSkill(nftPricesById[id]) === '0'"
                       @click="selectedNftId = id; purchaseNft();"
                       variant="primary"
                       class="gtag-link-others">
                       {{ convertWeiToSkill(nftPricesById[id]) !== '0' ? 'Purchase' : 'Sold' }}
-                  </b-button>
+                  </b-button> -->
                 </div>
               </template>
               <template #sold="{ weapon: { id } }">
@@ -513,12 +546,13 @@
                     v-tooltip.top="{ content: maxPrecisionSkill(nftPricesById[id]) , trigger: (isMobile() ? 'click' : 'hover') }"
                     @mouseover="hover = !isMobile() || true"
                     @mouseleave="hover = !isMobile()"
+                    class="value-price"
                     >
-                      {{ convertWeiToSkill(nftPricesById[id])  | dynamicDecimals(2, 4) }} xBlade
+                      Price <span>{{ convertWeiToSkill(nftPricesById[id])  | dynamicDecimals(2, 4) }}</span> xBlade
                     </span>
                   </span>
                   <span class="d-block text-center" v-else>Loading price...</span>
-                  <b-button
+                  <!-- <b-button
                     v-if="id !== null && !searchResultsOwned"
                     :hidden="convertWeiToSkill(nftPricesById[id]) === '0'"
                     @click="selectedNftId = id; canPurchase && purchaseNft();"
@@ -527,7 +561,7 @@
                     class="gtag-link-others" tagname="confirm_purchase">
                     {{ convertWeiToSkill(nftPricesById[id]) !== '0' ? 'Purchase' : 'Sold' }} <b-icon-question-circle v-if="!canPurchase"
                     v-tooltip.bottom="'You already have max amount of characters (8).'"/>
-                  </b-button>
+                  </b-button> -->
                 </div>
               </template>
               <template #sold="{ character: { id } }">
@@ -552,19 +586,20 @@
                     v-tooltip.top="{ content: maxPrecisionSkill(nftPricesById[id]) , trigger: (isMobile() ? 'click' : 'hover') }"
                     @mouseover="hover = !isMobile() || true"
                     @mouseleave="hover = !isMobile()"
+                    class="value-price"
                     >
-                      <strong>Price</strong>: {{ convertWeiToSkill(nftPricesById[id]) | dynamicDecimals(2, 4) }} xBlade
+                      Price <span>{{ convertWeiToSkill(nftPricesById[id]) | dynamicDecimals(2, 4) }}</span> xBlade
                     </span>
                   </span>
                   <span class="d-block text-center" v-else>Loading price...</span>
-                  <b-button
+                  <!-- <b-button
                     v-if="id !== null && !searchResultsOwned"
                     :hidden="convertWeiToSkill(nftPricesById[id]) === '0'"
                     @click="selectedNftId = id; purchaseNft();"
                     variant="primary"
                     class="gtag-link-others">
                     {{ convertWeiToSkill(nftPricesById[id]) !== '0' ? 'Purchase' : 'Sold' }}
-                  </b-button>
+                  </b-button> -->
                 </div>
               </template>
               <template #sold="{ nft: { id } }">
@@ -2096,7 +2131,7 @@ export default Vue.extend({
 }
 
 
-.market-hero-weapon button.selected{
+button.selected{
   background-color: rgb(245,139,91);
 }
 
