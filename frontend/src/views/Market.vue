@@ -393,13 +393,13 @@
                   @click="showListingSetupModal()">List Character <b-icon-question-circle :hidden=!characterMarketTax
                   v-tooltip.bottom="characterMarketTax + '% tax (paid by the buyer) will be added to the final price.'"/></b-button> -->
 
-                <b-button
+                <!-- <b-button
                   v-if="activeType === 'shield'"
                    class="gtag-link-others search-btn" tagname="add_listing_shield"
                   :disabled="selectedNftId === null || selectedNftOnCooldown"
                   @click="showListingSetupModal()">List Shield <b-icon-question-circle :hidden=!shieldMarketTax
                   v-tooltip.bottom="shieldMarketTax + '% tax (paid by the buyer) will be added to the final price.'"/>
-                </b-button>
+                </b-button> -->
 
                 <b-modal class="centered-modal" ref="listing-setup-modal"
                   @ok="!priceChangeModal ? addListingForNft() : updateNftListingPrice()">
@@ -1018,6 +1018,8 @@ export default Vue.extend({
           price: this.convertSkillToWei(val.toString()),
         });
 
+        await this.searchOwnListings(this.activeType);
+
         this.selectedNftId = null;
         this.waitingMarketOutcome = false;
         this.marketOutcome = true;
@@ -1048,6 +1050,8 @@ export default Vue.extend({
             : this.selectedNftId.split('.')[1],
           newPrice: this.convertSkillToWei(val.toString())
         });
+
+        await this.searchOwnListings(this.activeType);
 
         this.selectedNftId = null;
         this.waitingMarketOutcome = false;
@@ -2125,16 +2129,15 @@ button.selected{
 }
 
 .modal-loading {
-  /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  position: fixed;
+  z-index: 100;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
 }
 
 .modal-loading-content{
