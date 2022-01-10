@@ -92,27 +92,29 @@
         @click="(!checkForDurability || getWeaponDurability(weapon.id) > 0) && onWeaponClick(weapon.id)"
         @contextmenu="canFavorite && toggleFavorite($event, weapon.id)"
       >
-        <div
-          class="character-item weapon"
-          :class="[{ selected: highlight !== null && weapon.id === highlight },isSell?'weapon-market':'']"
-        >
-          <div class="weapon-icon-wrapper">
-            <weapon-icon class="weapon-icon" :weapon="weapon" :favorite="isFavorite(weapon.id)" :isSell="isSell" :sellClick="sellClick"/>
+        <div class="character-item-wrap">
+          <div
+            class="character-item weapon"
+            :class="[{ selected: highlight !== null && weapon.id === highlight },isSell?'weapon-market':'']"
+          >
+            <div class="weapon-icon-wrapper">
+              <weapon-icon class="weapon-icon" :weapon="weapon" :favorite="isFavorite(weapon.id)" :isSell="isSell" :sellClick="sellClick"/>
+            </div>
+            <div class="above-wrapper" v-if="$slots.above || $scopedSlots.above">
+              <slot name="above" :weapon="weapon"></slot>
+            </div>
+            <slot name="sold" :weapon="weapon"></slot>
           </div>
-          <div class="above-wrapper" v-if="$slots.above || $scopedSlots.above">
-            <slot name="above" :weapon="weapon"></slot>
+          <div v-if="isBtnSell" class="weapon-bt-box">
+            <b-button @click="showListingSetupModal(true)" class="weapon-bt-box">
+              CHANGE PRICE
+            </b-button>
           </div>
-          <slot name="sold" :weapon="weapon"></slot>
-        </div>
-        <div v-if="isBtnSell" class="weapon-bt-box">
-          <b-button @click="showListingSetupModal(true)" class="weapon-bt-box">
-            CHANGE PRICE
-          </b-button>
-        </div>
-        <div v-if="isBtnSell" class="weapon-bt-box">
-          <b-button @click="cancelNftListing()" class="weapon-bt-box">
-            STOP SELLING
-          </b-button>
+          <div v-if="isBtnSell" class="weapon-bt-box">
+            <b-button @click="cancelNftListing()" class="weapon-bt-box">
+              STOP SELLING
+            </b-button>
+          </div>
         </div>
       </li>
     </ul>
@@ -593,6 +595,9 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+.character-item-wrap {
+  margin-bottom: 50px;
+}
 
 .weapon-grid.row{
   flex: 1;
@@ -857,6 +862,10 @@ input::-webkit-inner-spin-button{
 
   .character-item.weapon.no-corner {
     margin-top: 20px !important;
+  }
+
+  .character-item-wrap{
+    margin-bottom: 0;
   }
 }
 

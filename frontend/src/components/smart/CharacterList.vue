@@ -1,7 +1,7 @@
 <template>
   <div :class="showFilters && 'row'">
     <div
-      class="filters"
+      class="filters market"
       :class="showFilters && 'col-12 col-xl-3'"
       v-if="showFilters"
       @change="saveFilters()"
@@ -121,11 +121,11 @@
         class="col-12 col-sm-6 col-md-4"
         v-for="c in filteredCharacters"
         :key="c.id"
+        @click="$emit('input', c.id)"
       >
         <div class="character-item-wrap">
           <div
             class="character-item"
-            @click="$emit('input', c.id)"
             :class="[{ selected: value === c.id }, {isMarket: isSell}]"
           >
             <div class="above-wrapper" v-if="$slots.above || $scopedSlots.above">
@@ -140,16 +140,16 @@
                 SELL
               </b-button>
             </div>
-            <div v-if="isBtnSell" class="weapon-bt-box">
-              <b-button @click="showListingSetupModal(true)" class="weapon-bt-box">
-                CHANGE PRICE
-              </b-button>
-            </div>
-            <div v-if="isBtnSell" class="weapon-bt-box">
-              <b-button @click="cancelNftListing()" class="weapon-bt-box">
-                STOP SELLING
-              </b-button>
-            </div>
+          </div>
+          <div v-if="isBtnSell" class="weapon-bt-box">
+            <b-button @click="showListingSetupModal(true)" class="weapon-bt-box">
+              CHANGE PRICE
+            </b-button>
+          </div>
+          <div v-if="isBtnSell" class="weapon-bt-box">
+            <b-button @click="cancelNftListing()" class="weapon-bt-box">
+              STOP SELLING
+            </b-button>
           </div>
         </div>
       </li>
@@ -474,6 +474,7 @@ export default {
   margin: 0 auto;
   min-width: 270px;
   max-width: 294px;
+  margin-bottom: 50px;
 }
 
 .character-item {
@@ -539,6 +540,7 @@ input::-webkit-inner-spin-button {
   font-weight: bold;
   font-size: 18px;
   border-radius: 0;
+  z-index: 1;
 }
 
 .price {
@@ -563,7 +565,7 @@ input::-webkit-inner-spin-button {
     font-size: 10px;
   }
   .character-item-wrap {
-    margin-bottom: 50px;
+    margin-bottom: 0;
   }
 }
 

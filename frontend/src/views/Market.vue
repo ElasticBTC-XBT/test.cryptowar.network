@@ -14,7 +14,7 @@
           <div class="col">
             <div class="search-results">
               <b-pagination class="customPagination"
-                v-visible="resultSearch && resultSearch.length > 0"
+                v-visible="allListingsAmount > 0"
                 align="center" v-model="currentPage"
                 :total-rows="allListingsAmount"
                 :per-page="activeType === 'weapon' ? weaponShowLimit : characterShowLimit"
@@ -139,7 +139,7 @@
 
               </nft-list>
               <b-pagination style="margin-top: 100px" class="customPagination"
-                v-if="resultSearch && resultSearch.length > 0"
+                v-if="allListingsAmount > 0"
                 align="center" v-model="currentPage"
                 :total-rows="allListingsAmount"
                 :per-page="activeType === 'weapon' ? weaponShowLimit :
@@ -622,8 +622,8 @@ export default Vue.extend({
       characterMarketTax: '',
       weaponMarketTax: '',
       shieldMarketTax: '',
-      characterShowLimit: 40,
-      weaponShowLimit: 60,
+      characterShowLimit: 3,
+      weaponShowLimit: 3,
       shieldShowLimit: 60,
       allListingsAmount: 0,
       currentPage: 1,
