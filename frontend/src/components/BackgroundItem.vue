@@ -53,7 +53,7 @@
       </div>
        <div class="score-id-container">
         <div class="black-outline" v-if="!portrait">
-          Owner: <span class="ownerText">{{ renderOwner(this.character.owner) }}</span>
+          Request to Hero: <span class="ownerText">{{ this.getHeroRequested() }}</span>
         </div>
       </div>
     </div>
@@ -75,7 +75,8 @@ export default {
     "room",
     "selectedWeaponId",
     "selectedCharacterId",
-    "playerPower"
+    "playerPower",
+    "roomId"
   ],
   components: {
     //SmallButton,
@@ -102,7 +103,7 @@ export default {
 
   computed: {
     console: () => console,
-    ...mapState(["maxStamina"]),
+    ...mapState(["maxStamina", "careerModeRooms"]),
     ...mapGetters([
       "getCharacterName",
       "transferCooldownOfCharacterId",
@@ -175,6 +176,14 @@ export default {
         const hiddenOwner = owner.split(hiddenString).join('...');
         return hiddenOwner;
       }
+    },
+    getHeroRequested() {
+      const room = this.careerModeRooms.find(item => item.id === this.roomId);
+      if(!room || room.claimed) {
+        return '';
+      }else {
+        return room.characterId;
+      }
     }
   },
   mounted() {
@@ -195,7 +204,6 @@ export default {
   background-repeat: no-repeat;
   background-size: 100% 100%;;
   max-height: 432px;
-  margin-left: 2.5rem;
 }
 
 .character-portrait .character-art {

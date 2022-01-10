@@ -18,7 +18,7 @@
 
       <skill-balance-display class="ml-auto d-none d-sm-flex skill-balance-display" />
 
-      <claim-rewards class="claim-rewards" v-if="!canShowRewardsBar" />
+      <claim-rewards class="claim-rewards" />
 
       <options class="d-none d-sm-flex option-desktop" />
 

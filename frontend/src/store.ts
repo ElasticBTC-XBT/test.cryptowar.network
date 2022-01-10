@@ -3281,16 +3281,21 @@ export function createStore(web3: Web3) {
         }
         catch(e){
           console.log(e);
+          return false;
         }
       },
       async fight({ state }, { roomId, requestId }) {
         const { CareerMode } = state.contracts();
-        const res = await CareerMode?.methods.fight(roomId, requestId).send({
-          from: state.defaultAccount,
-          gas: '800000'
-        });
-
-        return res?.events.FightOutCome.returnValues;
+        try{
+          const res = await CareerMode?.methods.fight(roomId, requestId).send({
+            from: state.defaultAccount,
+            gas: '800000'
+          });
+          return res?.events.FightOutCome.returnValues;
+        }catch(error) {
+          console.log('detail bug', error);
+          return false;
+        }
       },
       async getRequests({ state, commit }) {
         const { CareerMode } = state.contracts();
@@ -3350,7 +3355,11 @@ export function createStore(web3: Web3) {
       async cancelRequestFight({ state }, {roomId, requestId}) {
         const {CareerMode} = state.contracts();
         const res = await CareerMode?.methods.cancelRequestFight(roomId, requestId).send(defaultCallOptions(state));
-        return res;
+        if(res) {
+          return res;
+        }else {
+          return false;
+        }
       },
 
       async endCareerMode({state}, {roomId}) {
@@ -3362,14 +3371,23 @@ export function createStore(web3: Web3) {
         const {CareerMode} = state.contracts();
         // @ts-ignore
         const res = await CareerMode?.methods.getReward(state.defaultAccount).call(defaultCallOptions(state));
-        commit('updateRewardPvp', {reward: res});
-        return res;
+        if(res) {
+          commit('updateRewardPvp', {reward: res});
+          return res;
+        }else {
+          return false;
+        }
       },
 
       async claimTokenReward({state}) {
         const {CareerMode} = state.contracts();
         const res = await CareerMode?.methods.claimTokenRewards().send(defaultCallOptions(state));
-        return res;
+        if(res) {
+          return res;
+        }
+        else {
+          return false;
+        }
       },
       async getListParticipatedRoom({state, commit}) {
         const {CareerMode} = state.contracts();
