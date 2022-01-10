@@ -146,7 +146,7 @@ export default {
 
 .btn-open-box {
   height: 48px !important;
-  background-image: url("../../assets/v2/btn-pink-bg.svg") !important;
+  background-image: url("../../assets/v2/btn-bg-pink.png") !important;
   background-size: cover;
   margin-right: 0 !important;
 }

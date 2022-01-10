@@ -7,7 +7,7 @@
           <br>
           <br>
           <big-button
-            class="button"
+            class="btn btn-pink-bg"
             :mainText="`Buy Secret Box`"
             @click="$router.push({name: 'shop'})"
           />

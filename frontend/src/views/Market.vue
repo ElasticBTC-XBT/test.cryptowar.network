@@ -1899,7 +1899,7 @@ export default Vue.extend({
 }
 
 .search-btn-selling button{
-  background: url("../assets/v2/btn-blue-bg.svg");
+  background: url("../assets/v2/btn-bg-blue.png");
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;

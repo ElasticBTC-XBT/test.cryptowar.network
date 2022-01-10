@@ -301,4 +301,10 @@ export default Vue.extend({
       font-size: 1.1em;
     }
 }
+
+@media (max-width: 767px) {
+  .skill-display-mobile {
+    margin: 0;
+  }
+}
 </style>
