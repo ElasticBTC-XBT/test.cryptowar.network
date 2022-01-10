@@ -5,7 +5,7 @@ import type {
   NFTMarket, WaxBridge, Blacksmith, Shields, CharacterRenameTagConsumables,
   WeaponRenameTagConsumables, CharacterFireTraitChangeConsumables, CharacterEarthTraitChangeConsumables,
   CharacterWaterTraitChangeConsumables, CharacterLightningTraitChangeConsumables, SecretBox, CWController,
-  CareerMode
+  CareerMode, BlindBox
 } from '../../../build/abi-interfaces';
 import { StakeType } from './State';
 
@@ -42,4 +42,5 @@ export interface Contracts {
   SecretBox?: Contract<SecretBox>;
   CWController?: Contract<CWController>;
   CareerMode?: Contract<CareerMode>;
+  BlindBox?: Contract<BlindBox>;
 }

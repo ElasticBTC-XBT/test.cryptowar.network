@@ -378,8 +378,8 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
         //     }
         // }
 
-        promos.setBit(from, promos.BIT_FIRST_CHARACTER());
-        promos.setBit(to, promos.BIT_FIRST_CHARACTER());
+        // promos.setBit(from, promos.BIT_FIRST_CHARACTER());
+        // promos.setBit(to, promos.BIT_FIRST_CHARACTER());
     }
 
     function setCharacterLimit(uint256 max) public restricted {
