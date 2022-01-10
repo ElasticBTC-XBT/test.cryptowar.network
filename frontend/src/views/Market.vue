@@ -16,7 +16,7 @@
               <b-pagination class="customPagination"
                 v-visible="allListingsAmount > 0"
                 align="center" v-model="currentPage"
-                :total-rows="allListingsAmount"
+                :total-rows="totalPages"
                 :per-page="activeType === 'weapon' ? weaponShowLimit : characterShowLimit"
                 first-number
                 last-number
@@ -138,12 +138,11 @@
                 </template>
 
               </nft-list>
-              <b-pagination style="margin-top: 100px" class="customPagination"
-                v-if="allListingsAmount > 0"
+              <b-pagination class="customPagination"
+                v-visible="allListingsAmount > 0"
                 align="center" v-model="currentPage"
-                :total-rows="allListingsAmount"
-                :per-page="activeType === 'weapon' ? weaponShowLimit :
-                  (activeType === 'character' ? characterShowLimit : shieldShowLimit)"
+                :total-rows="totalPages"
+                :per-page="activeType === 'weapon' ? weaponShowLimit : characterShowLimit"
                 first-number
                 last-number
                 v-on:click.native="(activeType == 'weapon' && searchAllWeaponListings(currentPage - 1)) ||
@@ -540,6 +539,7 @@ interface Data {
   isSell: boolean;
   isBtnSell: boolean;
   resultSearch: CharacterId[] | WeaponId[] | NftIdType[];
+  totalPages: number;
 }
 
 type StoreMappedState = Pick<IState, 'defaultAccount' | 'weapons' | 'characters' | 'shields' | 'ownedCharacterIds' | 'ownedWeaponIds' | 'ownedShieldIds'>;
@@ -641,6 +641,7 @@ export default Vue.extend({
       isSell: false,
       isBtnSell: false,
       resultSearch: [],
+      totalPages: 0,
     } as Data;
   },
 
@@ -812,6 +813,8 @@ export default Vue.extend({
         this.minPriceFilter(parseFloat(this.weaponMinPriceFilter()));
         this.maxPriceFilter(parseFloat(this.weaponMaxPriceFilter()));
       }
+      this.totalPages = this.resultSearch.length;
+      this.resultSearch = this.resultSearch.slice((this.currentPage - 1) * this.characterShowLimit, (this.currentPage - 1) * this.characterShowLimit + this.characterShowLimit);
     },
 
     async addListingForNft() {
@@ -968,6 +971,7 @@ export default Vue.extend({
       this.waitingMarketOutcome = true;
       this.currentPage = page + 1;
 
+
       await this.searchAllCharacterListingsThroughChain(page);
 
 
@@ -1013,8 +1017,8 @@ export default Vue.extend({
 
       this.allSearchResults = await this.fetchAllMarketCharacterNftIdsPage({
         nftContractAddr: this.contractAddress,
-        limit: this.characterShowLimit || defaultLimit,
-        pageNumber: page,
+        limit: this.allListingsAmount || defaultLimit,
+        pageNumber: page - page,
         trait: traitNameToNumber(this.characterTraitFilter()),
         minLevel: this.characterMinLevelFilter(),
         maxLevel: this.characterMaxLevelFilter()
@@ -1108,8 +1112,8 @@ export default Vue.extend({
 
       this.allSearchResults = await this.fetchAllMarketWeaponNftIdsPage({
         nftContractAddr: this.contractAddress,
-        limit: this.weaponShowLimit || defaultLimit,
-        pageNumber: page,
+        limit: this.allListingsAmount || defaultLimit,
+        pageNumber: page - page,
         trait: traitNameToNumber(this.weaponTraitFilter()),
         stars: filterStar
       });
