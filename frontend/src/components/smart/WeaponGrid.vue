@@ -818,6 +818,7 @@ input::-webkit-inner-spin-button{
   .character-item.weapon {
     padding: 12px;
     height: 292px;
+    margin-bottom: 50px;
   }
 
   .weapon-grid.blacksmith {
@@ -881,6 +882,12 @@ input::-webkit-inner-spin-button{
 @media (max-width: 1024px) {
   .weapon-grid.blacksmith .dust-wrap {
     padding-bottom: 10px;
+  }
+}
+
+@media (max-width: 1200px){
+  .filters.market-active{
+    max-width: inherit;
   }
 }
 

@@ -474,7 +474,6 @@ export default {
   margin: 0 auto;
   min-width: 270px;
   max-width: 294px;
-  margin-bottom: 100px;
 }
 
 .character-item {
@@ -562,6 +561,9 @@ input::-webkit-inner-spin-button {
 @media (max-width: 576px) {
   .price {
     font-size: 10px;
+  }
+  .character-item-wrap {
+    margin-bottom: 50px;
   }
 }
 
