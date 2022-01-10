@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-12">
           <div class="quantity-heroes">
-            <div><span>{{this.filterCareerModeRooms(careerModeRooms).length}}</span> Heroes In Career Mode</div>
+            <div><span>{{quantityHeroes().length}}</span> Heroes In Career Mode</div>
           </div>
         </div>
       </div>
@@ -196,7 +196,7 @@
       <div class="row">
         <div class="col-xl-3 col-12">
           <div class="search-hero">
-            <input type="text" placeholder="Search Hero's ID" />
+            <input type="text" v-model="valueSearchId" placeholder="Search Hero's ID" />
           </div>
         </div>
         <div class="col-xl-9 col-12 nav-option-box">
@@ -212,7 +212,7 @@
                     (myRequestMode= false)
                 "
                 :active="careerMode"
-                ><div>CAREER MODE <div>{{this.filterCareerModeRooms(careerModeRooms).length}}</div></div></b-nav-item
+                ><div>CAREER MODE <div>{{quantityHeroes().length}}</div></div></b-nav-item
               >
               <b-nav-item
                 class="nav-item"
@@ -397,7 +397,9 @@ export default {
       cursor: 0,
       trait: this.characterTrait,
       listMyRequest: [],
-      weaponToShow: null
+      weaponToShow: null,
+      valueSearchId: "",
+      arrayValue: [],
     };
   },
 
@@ -809,10 +811,20 @@ export default {
       for(const i in object) {
         newCareerModeRequest.push(object[i]);
       }
+      if(this.valueSearchId !== ""){
+        return this.careerModeRequest.filter((item) => item.done ==='0' && item.characterId.includes(this.valueSearchId));
+      }
       return this.careerModeRequest.filter((item) => item.done ==='0');
     },
 
     filterCareerModeRooms() {
+      if(this.valueSearchId !== ""){
+        return this.careerModeRooms.filter((item)=> {
+          const _matchReward = fromWeiEther(item.matchReward);
+          const _totalDeposit = fromWeiEther(item.totalDeposit);
+          return item.owner!==this.defaultAccount && !item.claimed && Number(_matchReward) < Number(_totalDeposit) && item.characterId.includes(this.valueSearchId);
+        });
+      }
       return this.careerModeRooms.filter((item)=> {
         const _matchReward = fromWeiEther(item.matchReward);
         const _totalDeposit = fromWeiEther(item.totalDeposit);
@@ -820,6 +832,9 @@ export default {
       });
     },
     filterMyCareerModeRooms() {
+      if(this.valueSearchId !== ""){
+        return this.careerModeRooms.filter((item)=> item.owner===this.defaultAccount && !item.claimed && item.characterId.includes(this.valueSearchId));
+      }
       return this.careerModeRooms.filter((item)=> item.owner===this.defaultAccount && !item.claimed);
     },
     filterMyRequestRoom() {
@@ -830,6 +845,11 @@ export default {
       }
       for(const i in object) {
         newCareerModeRequest.push(object[i]);
+      }
+      if(this.valueSearchId !== ""){
+        return newCareerModeRequest.filter((item) =>{
+          return item.characterId.includes(this.valueSearchId);
+        });
       }
       return newCareerModeRequest;
     },
@@ -899,6 +919,14 @@ export default {
         this.$bvModal.show('claimModal');
         return ;
       }
+    },
+
+    quantityHeroes(){
+      return this.careerModeRooms.filter((item)=> {
+        const _matchReward = fromWeiEther(item.matchReward);
+        const _totalDeposit = fromWeiEther(item.totalDeposit);
+        return item.owner!==this.defaultAccount && !item.claimed && Number(_matchReward) < Number(_totalDeposit);
+      });
     }
 
     // setStaminaSelectorValues() {
