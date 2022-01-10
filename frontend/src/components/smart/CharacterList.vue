@@ -141,6 +141,11 @@
               </b-button>
             </div>
             <div v-if="isBtnSell" class="weapon-bt-box">
+              <b-button @click="showListingSetupModal(true)" class="weapon-bt-box">
+                CHANGE PRICE
+              </b-button>
+            </div>
+            <div v-if="isBtnSell" class="weapon-bt-box">
               <b-button @click="cancelNftListing()" class="weapon-bt-box">
                 STOP SELLING
               </b-button>
@@ -244,7 +249,11 @@ export default {
     isBtnSell: {
       type: Boolean,
       default: false
-    }
+    },
+    showListingSetupModal: {
+      type: ()=>{},
+      default: null
+    },
   },
 
   async created() {
@@ -418,7 +427,7 @@ export default {
 <style scoped>
 
 .weapon-bt-box{
-  margin-top: 30px;
+  margin-top: 15px;
   display: flex;
   justify-content: center;
   z-index: 100;

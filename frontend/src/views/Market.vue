@@ -138,7 +138,7 @@
                 </template>
 
               </nft-list>
-              <b-pagination class="customPagination"
+              <b-pagination style="margin-top: 100px" class="customPagination"
                 v-if="resultSearch && resultSearch.length > 0"
                 align="center" v-model="currentPage"
                 :total-rows="allListingsAmount"
@@ -475,7 +475,6 @@
                   :class="isBtnSell===true&&activeType==='character'?'gtag-link-others search-btn selected':'gtag-link-others search-btn'"
                   tagname="search_own_characters">Selling Characters</b-button>
               </div>
-
               <!-- <div v-if="activeType === 'character' && isBtnSell" class="mb-2 search-btn-selling">
                 <b-button
                   @click="searchListingsByNftId('character')" tagname="search_character_id">SEARCH</b-button>
@@ -499,6 +498,7 @@
 
               :cancelNftListing="cancelNftListing"
               :isBtnSell="isBtnSell"
+              :showListingSetupModal="showListingSetupModal"
 
               v-model="selectedNftId">
               <template #above="{ weapon: { id } }">
@@ -537,6 +537,7 @@
 
               :cancelNftListing="cancelNftListing"
               :isBtnSell="isBtnSell"
+              :showListingSetupModal="showListingSetupModal"
 
               v-model="selectedNftId">
               <template #above="{ character: { id } }">
@@ -806,8 +807,8 @@ export default Vue.extend({
       characterMarketTax: '',
       weaponMarketTax: '',
       shieldMarketTax: '',
-      characterShowLimit: 40,
-      weaponShowLimit: 60,
+      characterShowLimit: 3,
+      weaponShowLimit: 10,
       shieldShowLimit: 60,
       allListingsAmount: 0,
       currentPage: 1,
@@ -983,6 +984,19 @@ export default Vue.extend({
         void price;
         this.nftPricesById[id] = price;
       }));
+      this.resultSearch = this.allSearchResults;
+      // filter price character
+      if(this.activeType === 'character'){
+        this.minPriceFilter(parseFloat(this.characterMinPriceFilter()));
+        this.maxPriceFilter(parseFloat(this.characterMaxPriceFilter()));
+        this.sortPrice(this.characterPriceOrder());
+      }
+      // filter price weapon
+      else if(this.activeType === 'weapon'){
+        this.sortPrice(this.weaponPriceOrder());
+        this.minPriceFilter(parseFloat(this.weaponMinPriceFilter()));
+        this.maxPriceFilter(parseFloat(this.weaponMaxPriceFilter()));
+      }
     },
 
     async addListingForNft() {
@@ -1186,30 +1200,9 @@ export default Vue.extend({
         minLevel: this.characterMinLevelFilter(),
         maxLevel: this.characterMaxLevelFilter()
       });
-      // filter price character
-      this.sortPrice(this.characterPriceOrder());
-      this.minPriceFilter(parseFloat(this.characterMinPriceFilter()));
-      this.maxPriceFilter(parseFloat(this.characterMaxPriceFilter()));
-      // filter price weapon
-      // this.sortPrice(this.weaponPriceOrder());
-      // this.minPriceFilter(parseFloat(this.weaponMinPriceFilter()));
-      // this.maxPriceFilter(parseFloat(this.weaponMaxPriceFilter()));
-
     },
 
-    async minPriceFilter(minPrice: number){
-      // if(minPrice && minPrice > 0){
-      //   const arrStr: string[] = [];
-      //   const arr = this.allSearchResults;
-      //   this.allSearchResults = [];
-      //   arr.forEach(async (val: any) => {
-      //     const price = (await this.lookupNftPrice(val))!;
-      //     if(parseFloat(this.convertWeiToSkill(price)) >= minPrice){
-      //       arrStr.push(val);
-      //       this.allSearchResults = arrStr;
-      //     }
-      //   });
-      // }
+    minPriceFilter(minPrice: number){
       if(minPrice && minPrice > 0){
         const arrStr: string[] = [];
         this.resultSearch.forEach((val: any)=>{
@@ -1221,17 +1214,7 @@ export default Vue.extend({
       }
     },
 
-    async maxPriceFilter(maxPrice: number){
-      // if(maxPrice && maxPrice > 0){
-      //   const arr = this.allSearchResults;
-      //   this.allSearchResults = [];
-      //   arr.forEach(async (val: any) => {
-      //     const price = (await this.lookupNftPrice(val))!;
-      //     if(parseFloat(this.convertWeiToSkill(price)) <= maxPrice){
-      //       this.allSearchResults.push(val);
-      //     }
-      //   });
-      // }
+    maxPriceFilter(maxPrice: number){
       if(maxPrice && maxPrice > 0){
         const arrStr: string[] = [];
         this.resultSearch.forEach((val: any)=>{
@@ -1243,8 +1226,7 @@ export default Vue.extend({
       }
     },
 
-    async sortPrice(typeSort: string){
-      this.resultSearch = this.allSearchResults;
+    sortPrice(typeSort: string){
       if(typeSort){
         const sortable: any[] = [];
         this.resultSearch.forEach((item: any)=>{
@@ -1264,32 +1246,8 @@ export default Vue.extend({
         sortable.forEach((item)=>{
           result.push(item[0] as string);
         });
-
         this.resultSearch = result;
       }
-      // if(typeSort){
-      //   console.log(this.allSearchResults);
-      //   const sortable: any[] = [];
-      //   const sortarr = this.allSearchResults;
-      //   this.allSearchResults = [];
-      //   sortarr.forEach(async (val: any) => {
-      //     const price = (await this.lookupNftPrice(val))!;
-      //     sortable.push([val, parseFloat(this.convertWeiToSkill(price))]);
-      //     if(typeSort === '1'){
-      //       sortable.sort(function(a, b) {
-      //         return parseFloat(a[1]) - parseFloat(b[1]);
-      //       });
-      //     } else if(typeSort === '-1'){
-      //       sortable.sort(function(a, b) {
-      //         return parseFloat(b[1]) - parseFloat(a[1]);
-      //       });
-      //     }
-      //     this.allSearchResults = [];
-      //     sortable.forEach((item)=>{
-      //       this.allSearchResults.push(item[0]);
-      //     });
-      //   });
-      // }
     },
 
     async searchAllWeaponListings(page: number) {
@@ -1337,9 +1295,9 @@ export default Vue.extend({
         stars: filterStar
       });
 
-      this.sortPrice(this.weaponPriceOrder());
-      this.minPriceFilter(parseFloat(this.weaponMinPriceFilter()));
-      this.maxPriceFilter(parseFloat(this.weaponMaxPriceFilter()));
+      // this.minPriceFilter(parseFloat(this.weaponMinPriceFilter()));
+      // this.maxPriceFilter(parseFloat(this.weaponMaxPriceFilter()));
+      // this.sortPrice(this.weaponPriceOrder());
     },
 
 
@@ -1839,7 +1797,6 @@ export default Vue.extend({
   },
 
   watch: {
-
     async searchResults(nftIds: CharacterId[] | WeaponId[] | ShieldId[]) {
       this.selectedNftId = null;
       await this.fetchNftPrices(nftIds);
