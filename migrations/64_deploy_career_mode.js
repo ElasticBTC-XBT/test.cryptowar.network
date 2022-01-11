@@ -8,8 +8,8 @@ module.exports = async function (deployer, network, accounts) {
   let weaponAddress, characterAddress, randomAddress, xBladeAddress;
 
   if (network === "bsctestnet") {
-    weaponAddress = "0x2cb15b0a2bd10beaad6105e0b7219d6edc8288a1";
-    characterAddress = "0x169e12572b318984f0e6ba89230ad2060f7dbb24";
+    weaponAddress = "0xfcf01fa5b11bf8506f4e674e747403c3d7fdc70b";
+    characterAddress = "0x89f874f2e809974e49220b077b0e256bfddae4f7";
     randomAddress = "0xc4311c213ae05765e167118a7ee0ab1bff1da2e1";
     xBladeAddress = "0x28ad774c41c229d48a441b280cbf7b5c5f1fed2b";
   }

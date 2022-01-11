@@ -538,4 +538,12 @@ contract CareerMode is
     {
         return roomsByAddress[account];
     }
+
+    function setWepChar(Characters _characters, Weapons _weapons)
+        public
+        restricted
+    {
+        characters = _characters;
+        weapons = _weapons;
+    }
 }
