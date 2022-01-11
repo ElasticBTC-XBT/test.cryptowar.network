@@ -178,7 +178,7 @@
         <div class="row mt-3">
           <div class="col-12 col-xl-3 col-md-12 col-sm-12">
             <div class="row button-row">
-              <input class="form-control search-item" v-model.trim="search" type="text" placeholder="  Seller Address, NFT ID">
+              <!-- <input class="form-control search-item" v-model.trim="search" type="text" placeholder="  Seller Address, NFT ID"> -->
               <div class="mb-2">
                 <b-button
                   @click="activeType = 'weapon', isBtnSell=false"  class="gtag-link-others  search-btn"
@@ -622,8 +622,8 @@ export default Vue.extend({
       characterMarketTax: '',
       weaponMarketTax: '',
       shieldMarketTax: '',
-      characterShowLimit: 3,
-      weaponShowLimit: 3,
+      characterShowLimit: 40,
+      weaponShowLimit: 60,
       shieldShowLimit: 60,
       allListingsAmount: 0,
       currentPage: 1,
