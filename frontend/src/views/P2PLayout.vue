@@ -845,7 +845,7 @@ export default {
       const listRoomRequest = this.careerModeRequest.filter((item) => {
         const roomCareer = this.careerModeRooms.find(room => room.id === item.roomId);
         if(this.valueSearchId !== ""){
-          return item.done === '0' && !roomCareer.claimed && item.characterId.includes(this.valueSearchId);
+          return item.done === '0' && !roomCareer.claimed && item.characterId === this.valueSearchId;
         }
         return item.done === '0' && !roomCareer.claimed;
       });
@@ -857,7 +857,7 @@ export default {
         return this.careerModeRooms.filter((item)=> {
           const _matchReward = fromWeiEther(item.matchReward);
           const _totalDeposit = fromWeiEther(item.totalDeposit);
-          return item.owner!==this.defaultAccount && !item.claimed && Number(_matchReward) < Number(_totalDeposit) && item.characterId.includes(this.valueSearchId);
+          return item.owner!==this.defaultAccount && !item.claimed && Number(_matchReward) < Number(_totalDeposit) && item.characterId === this.valueSearchId;
         });
       }
       return this.careerModeRooms.filter((item)=> {
@@ -868,7 +868,7 @@ export default {
     },
     filterMyCareerModeRooms() {
       if(this.valueSearchId !== ""){
-        return this.careerModeRooms.filter((item)=> item.owner===this.defaultAccount && !item.claimed && item.characterId.includes(this.valueSearchId));
+        return this.careerModeRooms.filter((item)=> item.owner===this.defaultAccount && !item.claimed && item.characterId === this.valueSearchId);
       }
       return this.careerModeRooms.filter((item)=> item.owner===this.defaultAccount && !item.claimed);
     },
@@ -882,7 +882,7 @@ export default {
         newCareerModeRequest.push(object[i]);
       }
       if(this.valueSearchId !== ""){
-        return newCareerModeRequest.filter(item => item.done !== '2' && item.characterId.includes(this.valueSearchId));
+        return newCareerModeRequest.filter(item => item.done !== '2' && item.characterId === this.valueSearchId);
       }
       return newCareerModeRequest.filter(item => item.done !== '2');
     },
@@ -1033,6 +1033,7 @@ export default {
     await this.getRequests();
   },
   async mounted(){
+    console.log(this.filterCareerModeRooms());
     if(this.checkSelectFromRPS){
       this.addClass = "background";
     }
