@@ -966,6 +966,7 @@ export default {
       }
     },
 
+    // quantityHeroes
     quantityHeroes(){
       return this.careerModeRooms.filter((item)=> {
         const _matchReward = fromWeiEther(item.matchReward);
