@@ -1033,7 +1033,6 @@ export default {
     await this.getRequests();
   },
   async mounted(){
-    console.log(this.filterCareerModeRooms());
     if(this.checkSelectFromRPS){
       this.addClass = "background";
     }
