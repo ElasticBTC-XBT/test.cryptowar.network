@@ -16,6 +16,7 @@ import "./weapons.sol";
 import "./util.sol";
 import "./Blacksmith.sol";
 import "./CWController.sol";
+import "./BlindBox.sol";
 
 contract CryptoWars is
     Initializable,
@@ -150,6 +151,7 @@ contract CryptoWars is
 
     uint256 private topupTimerBase;
     CWController private cwController;
+    BlindBox private blindBox;
 
     event FightOutcome(
         address indexed owner,
@@ -164,6 +166,7 @@ contract CryptoWars is
     event InGameOnlyFundsGiven(address indexed to, uint256 xBladeAmount);
     event MintWeaponsSuccess(address indexed minter, uint32 count);
     event MintWeaponsFailure(address indexed minter, uint32 count);
+    event FragmentReceived(address indexed to, uint256 fragmentAmount);
 
     function recoverXBlade(uint256 amount) public {
         require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Not adm");
@@ -444,12 +447,14 @@ contract CryptoWars is
         uint256 tokens = cwController.usdToxBladeInFight(
             ABDKMath64x64.mulu(getTokenGainForFight(targetPower, fightMultiplier), 1e18)
         );
+        uint256 _fragmentAmmount = seed.mod(30);
         if (tokens > 300 * 1e18) {
             tokens = 300 * 1e18;
         }
         if (playerRoll < monsterRoll) {
             tokens = uint256(cwController.getAmountTokenFromBNB(1525645000000000)).mul(supportFeeRate).div(100);
             xp = 0;
+            _fragmentAmmount = seed.mod(10);
         }
 
         topupClaimTaxTimerStart(msg.sender, realLevel, tokens);
@@ -457,11 +462,9 @@ contract CryptoWars is
         // this may seem dumb but we want to avoid guessing the outcome based on gas estimates!
         tokenRewards[msg.sender] += tokens;
         xpRewards[char] += xp;
+        blindBox.addFragment(msg.sender, _fragmentAmmount);
 
-        // if (playerRoll > monsterRoll && isUnlikely(uint24(getPlayerTraitBonusAgainst(traitsCWE).mulu(playerFightPower)), targetPower)) {
-        //     blacksmith.giveTicket(msg.sender, 1);
-        // }
-
+        emit FragmentReceived(msg.sender, _fragmentAmmount);
         emit FightOutcome(
             msg.sender,
             char,
@@ -992,7 +995,9 @@ contract CryptoWars is
     function setSupportFeeRate(uint8 rate) public restricted {
         supportFeeRate = rate;
     }
-
+    function setBlindBox(address _blindBox) public restricted {
+        blindBox = BlindBox(_blindBox);
+    }
     // function setPancakeRouter(address _pancakeRouter) public restricted {
     //     pancakeRouter = IPancakeRouter02(_pancakeRouter);
     // }

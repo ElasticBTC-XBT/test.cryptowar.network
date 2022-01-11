@@ -337,4 +337,8 @@ contract BlindBox is
         }
         return stars;
     }
+
+    function getFragmentAmount(address _account) public view returns (uint256) {
+        return fragmentQty[_account];
+    }
 }
