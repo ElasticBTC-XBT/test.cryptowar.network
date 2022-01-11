@@ -460,6 +460,7 @@ export default Vue.extend({
         sessionStorage.setItem('market-weapon-price-order', this.priceSort);
         sessionStorage.setItem('market-weapon-price-minfilter', this.minPriceFilter?''+this.minPriceFilter:'');
         sessionStorage.setItem('market-weapon-price-maxfilter', this.maxPriceFilter?''+this.maxPriceFilter:'');
+        sessionStorage.setItem('market-weapon-searchvalue', this.searchValue);
       } else {
         sessionStorage.setItem('weapon-starfilter', this.starFilter);
         sessionStorage.setItem('weapon-elementfilter', this.elementFilter);
@@ -505,6 +506,7 @@ export default Vue.extend({
         sessionStorage.removeItem('market-weapon-price-order');
         sessionStorage.removeItem('market-weapon-price-minfilter');
         sessionStorage.removeItem('market-weapon-price-maxfilter');
+        sessionStorage.removeItem('market-weapon-searchvalue');
       } else {
         sessionStorage.removeItem('weapon-starfilter');
         sessionStorage.removeItem('weapon-elementfilter');

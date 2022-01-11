@@ -803,12 +803,14 @@ export default Vue.extend({
       this.resultSearch = this.allSearchResults;
       // filter price character
       if(this.activeType === 'character'){
+        this.idFilter(this.characterIdFilter());
         this.minPriceFilter(parseFloat(this.characterMinPriceFilter()));
         this.maxPriceFilter(parseFloat(this.characterMaxPriceFilter()));
         this.sortPrice(this.characterPriceOrder());
       }
       // filter price weapon
       else if(this.activeType === 'weapon'){
+        this.idFilter(this.weaponIdFilter());
         this.sortPrice(this.weaponPriceOrder());
         this.minPriceFilter(parseFloat(this.weaponMinPriceFilter()));
         this.maxPriceFilter(parseFloat(this.weaponMaxPriceFilter()));
@@ -1010,8 +1012,8 @@ export default Vue.extend({
       this.allListingsAmount = await this.fetchNumberOfCharacterListings({
         nftContractAddr: this.contractAddress,
         trait: traitNameToNumber(this.characterTraitFilter()),
-        minLevel: this.characterMinLevelFilter(),
-        maxLevel: this.characterMaxLevelFilter()
+        minLevel: 255,
+        maxLevel: 255
       });
 
 
@@ -1020,9 +1022,21 @@ export default Vue.extend({
         limit: this.allListingsAmount || defaultLimit,
         pageNumber: page - page,
         trait: traitNameToNumber(this.characterTraitFilter()),
-        minLevel: this.characterMinLevelFilter(),
-        maxLevel: this.characterMaxLevelFilter()
+        minLevel: 255,
+        maxLevel: 255
       });
+    },
+
+    idFilter(id: string){
+      if(id && id !== ''){
+        const arrStr: string[] = [];
+        this.resultSearch.forEach((val: any)=>{
+          if(id === val){
+            arrStr.push(val);
+          }
+        });
+        this.resultSearch = arrStr;
+      }
     },
 
     minPriceFilter(minPrice: number){
@@ -1546,6 +1560,10 @@ export default Vue.extend({
       return sessionStorage.getItem('character-elementfilter') ? (sessionStorage.getItem('character-elementfilter') as string).toLowerCase() : '';
     },
 
+    characterIdFilter(): string {
+      return sessionStorage.getItem('character-searchvalue') ? (sessionStorage.getItem('character-searchvalue') as string).toLowerCase() : '';
+    },
+
     characterPriceOrder(): string {
       return sessionStorage.getItem('character-price-order') ? (sessionStorage.getItem('character-price-order') as string) : '';
     },
@@ -1574,6 +1592,10 @@ export default Vue.extend({
     },
     weaponMaxPriceFilter(): string {
       return sessionStorage.getItem('market-weapon-price-maxfilter') ? (sessionStorage.getItem('market-weapon-price-maxfilter') as string) : '';
+    },
+
+    weaponIdFilter(): string {
+      return sessionStorage.getItem('market-weapon-searchvalue') ? (sessionStorage.getItem('market-weapon-searchvalue') as string) : '';
     },
 
     nftTypeFilter(): string {
