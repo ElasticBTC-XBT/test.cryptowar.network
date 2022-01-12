@@ -21,6 +21,11 @@
             <box-balance-display />
           </div>
         </b-tab>
+        <b-tab title="Fragment">
+          <div class="tab-content">
+            <FragmentBox />
+          </div>
+        </b-tab>
       </b-tabs>
     </div>
 </template>
@@ -38,6 +43,7 @@ import { Contracts, IState } from "../interfaces";
 import { SkillShopListing } from "../interfaces/SkillShopListing";
 import BigNumber from "bignumber.js";
 import { fromWeiEther, toBN } from "../utils/common";
+import FragmentBox from '../components/smart/FragmentBox.vue';
 
 type StoreMappedState = Pick<
 IState,
@@ -88,7 +94,8 @@ export default Vue.extend({
     CharaterList,
     WeaponGrid,
     DustBalanceDisplay,
-    BoxBalanceDisplay
+    BoxBalanceDisplay,
+    FragmentBox,
   },
   data() {
     return {

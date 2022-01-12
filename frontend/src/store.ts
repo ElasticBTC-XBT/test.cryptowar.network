@@ -1839,6 +1839,7 @@ export function createStore(web3: Web3) {
           fightMultiplier
         )
           .send({value: fightTax, from: state.defaultAccount, gas: '800000' });
+        const fragmentOutcome = res.events.FragmentReceived.returnValues.fragmentAmount;
 
         await dispatch('fetchTargets', { characterId, weaponId });
 
@@ -1865,7 +1866,8 @@ export function createStore(web3: Web3) {
           enemyRoll,
           xpGain,
           xBladeGain,
-          bnbGasUsed
+          bnbGasUsed,
+          fragmentOutcome
         ];
       },
 
@@ -2562,6 +2564,21 @@ export function createStore(web3: Web3) {
         await Promise.all([
           dispatch('fetchTotalCommonBoxSupply')
         ]);
+      },
+      async openCommonBox({state, dispatch}, {boxId}) {
+        try{
+          //error cho nay
+          const {BlindBox} = state.contracts();
+          await BlindBox?.methods.open(boxId).send({
+            from: state.defaultAccount,
+            gas:'500000'
+          });
+          await Promise.all([
+            dispatch('fetchTotalCommonBoxSupply')
+          ]);
+        }catch(error) {
+          console.log('???', error);
+        }
       },
 
       async purchaseRareSecretBox({ state, dispatch }) {
@@ -3572,6 +3589,26 @@ export function createStore(web3: Web3) {
         const {CareerMode} = state.contracts();
         const res = await CareerMode?.methods.getStartTime(roomId).call(defaultCallOptions(state));
         return res;
+      },
+      async getFragmentAmount({state}) {
+        const {BlindBox} = state.contracts();
+        //@ts-ignore
+        const fragmentAmount = await BlindBox?.methods.getFragmentAmount(state.defaultAccount).call(defaultCallOptions(state));
+        const fragmentPerBox = await BlindBox?.methods.fragmentPerBox().call(defaultCallOptions(state));
+        if(fragmentAmount) {
+          return {
+            fragmentAmount,
+            fragmentPerBox
+          };
+        }else {
+          return 0;
+        }
+      },
+      async convertFragmentToBox({state}) {
+        const {BlindBox} = state.contracts();
+        //@ts-ignore
+        const res = await BlindBox?.methods.convertFragmentToBox().send(defaultCallOptions(state));
+        return res?.events.NewBlindBox.returnValues;
       }
     },
   });

@@ -8,10 +8,11 @@
     <span v-if="results === 2 && propResultsFromPVP" class="outcome"><div class="lose-results"></div>{{ getSuccessText() }}</span>
     <span v-if="results === 3" class="outcome">DRAW</span>
     <span v-if="!propResultsFromPVP" class="roll">{{ "You rolled "+results[1]+", Enemy rolled "+results[2] }}</span>
-    <!-- results[0] -->
-    <div v-if="!propResultsFromPVP" class="reward">
+    <div v-if="results[0] && !resultsPVP" class="rewardPve">
       {{ "You earned "+results[3]+" xp"}}
-      <span v-if="!propResultsFromPVP" v-tooltip="convertWei(results[4])+' xBlade'">{{"and "+formattedXBlade}}</span>
+      <span v-if="!propResultsFromPVP" v-tooltip="convertWei(results[4])+' xBlade'">{{formattedXBlade}}
+        <span v-if="results[6]">{{"and " +results[6]+ " 💎"}}</span>
+      </span>
         <Hint text="xBlade earned is based on gas costs of the network plus a factor of your power" />
     </div>
     <span v-if="!propResultsFromPVP">
@@ -156,9 +157,9 @@ export default {
 .roll {
   font-size: 1.25em;
 }
-.reward {
+.rewardPve {
   width: 100%;
-  font-size: 1.25em;
+  font-size: 1.25rem;
   margin: 10px 0;
 }
 @media (max-width: 575.98px) {
