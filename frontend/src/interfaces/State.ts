@@ -79,6 +79,7 @@ export interface IState {
   directStakeBonusPercent: number;
   ownedCharacterIds: number[];
   ownedWeaponIds: number[];
+  ownedCommonBoxIds: number[];
   ownedShieldIds: number[];
   maxStamina: number;
   ownedDust: string[];
@@ -120,6 +121,7 @@ export interface IState {
 
   commonBoxPrice: string;
   rareBoxPrice: string;
+  epicBoxPrice: string;
   secondsPerStamina: number;
   careerModeRooms: CareerModeRoom[];
   careerModeRequest:  RoomRequest[];

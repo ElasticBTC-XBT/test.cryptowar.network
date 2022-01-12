@@ -6,7 +6,12 @@
       </div>
 
       <ul class="row nft-grid nft-list">
-        <li class="col-md-12 col-lg-4" :disabled="nft.isSoldOut" v-b-modal.modal-buyitem @click="checkBuy = nft" v-for="nft in nftIdTypes" :key="`${nft.type}.${nft.id}`">
+        <li
+          class="col-md-12 col-lg-3"
+          :disabled="nft.isSoldOut"
+          @click="checkBuy = nft; buyItem(checkBuy);"
+           v-for="nft in nftIdTypes" :key="`${nft.type}.${nft.id}`"
+        >
           <div class="nft-item-content">
             <div class="character-item addnew nft-container">
               <nft-icon :nft="nft" :isShop="isShop" :isLoading="isLoading" :favorite="isFavorite(nft.typeId, nft.id)"
@@ -19,17 +24,17 @@
                 :disabled="nft.isSoldOut"
                 class="shop-button btn-blue-bg btn-open-box"
               >
-                <span v-if="!nft.isSoldOut">
+                <span v-if="!nft.isSoldOut && nft.id !== 2">
                   Buy ({{ Math.round(nft.nftPrice) }} xBlade)
                 </span>
-                <span  v-if="nft.isSoldOut && !isLoading && nft.id !== 2">
+                <span v-if="!nft.isSoldOut && nft.id === 2">
+                  Buy ({{ Math.round(nft.nftPrice) }} 💎)
+                </span>
+                <span  v-if="nft.isSoldOut && !isLoading">
                   SOLD OUT
                 </span>
-                <span  v-if="isLoading && nft.id !== 2">
+                <span  v-if="isLoading">
                   LOADING
-                </span>
-                <span  v-if="nft.id === 2">
-                  COMING SOON
                 </span>
               </b-button>
             </div>
@@ -42,7 +47,7 @@
               <b-button class="mt-3" block @click="$bvModal.hide('modal-buyitem')">LATER</b-button>
             </div>
             <div>
-              <b-button class="mt-2" block @click="$bvModal.hide('modal-buyitem'); buyItem(checkBuy)">OPEN NOW</b-button>
+              <b-button class="mt-2" block @click="openBox(checkBuy); $bvModal.hide('modal-buyitem'); ">OPEN NOW</b-button>
             </div>
           </div>
         </b-modal>
@@ -187,6 +192,8 @@ interface StoreMappedActions {
   purchaseCharacterLightningTraitChange(): Promise<void>;
   purchaseCommonSecretBox(): Promise<void>;
   purchaseRareSecretBox(): Promise<void>;
+  purchaseEpicSecretBox(): Promise<void>;
+  openCommonSecretBox(): Promise<void>;
 }
 
 export default Vue.extend({
@@ -366,7 +373,7 @@ export default Vue.extend({
       'purchaseRenameTagDeal', 'purchaseWeaponRenameTagDeal',
       'purchaseCharacterFireTraitChange', 'purchaseCharacterEarthTraitChange',
       'purchaseCharacterWaterTraitChange', 'purchaseCharacterLightningTraitChange',
-      'purchaseCommonSecretBox', 'purchaseRareSecretBox'
+      'purchaseCommonSecretBox', 'purchaseRareSecretBox', 'purchaseEpicSecretBox', 'openCommonSecretBox'
     ]) as StoreMappedActions),
     ...mapMutations(['setCurrentNft']),
 
@@ -458,6 +465,10 @@ export default Vue.extend({
         if (item.id === 1) { // Rare Box
           await this.purchaseRareSecretBox();
         }
+        if (item.id === 3) { // Epic Box
+          await this.purchaseEpicSecretBox();
+        }
+        this.$bvModal.show('modal-buyitem');
       }
 
       if(item.type === 'CharacterRenameTag'){
@@ -487,6 +498,13 @@ export default Vue.extend({
         await this.purchaseCharacterLightningTraitChange();
       }
     },
+
+    async openBox(item: nftItem) {
+      if (item.id === 0) {
+        await this.openCommonSecretBox();
+      }
+    },
+
     itemDescriptionHtml(item: SkillShopListing): string {
       return item.name + '<br>' + item.description;
     }
@@ -531,7 +549,7 @@ export default Vue.extend({
 
 .nft-list {
   justify-content: center;
-  max-width: 1200px;
+  max-width: 1400px;
   padding-left: 0;
 }
 
@@ -639,12 +657,17 @@ export default Vue.extend({
   background: url("../../assets/common-box.png");
 }
 
+#modal-buyitem .modal-body .blind-box{
+  background: url("../../assets/blind-box.png");
+}
+
 #modal-buyitem .modal-body .epic-box{
   background: url("../../assets/epic-box.png");
 }
 
 #modal-buyitem .modal-body .rare-box,
 #modal-buyitem .modal-body .common-box,
+#modal-buyitem .modal-body .blind-box,
 #modal-buyitem .modal-body .epic-box{
   background-repeat: no-repeat;
   background-size: contain;
@@ -743,6 +766,7 @@ export default Vue.extend({
   }
   #modal-buyitem .modal-body .rare-box,
   #modal-buyitem .modal-body .common-box,
+  #modal-buyitem .modal-body .blind-box,
   #modal-buyitem .modal-body .epic-box{
     width: 40%;
     height: 130px;
@@ -793,6 +817,7 @@ export default Vue.extend({
 @media (min-width: 577px) and (max-width: 767.98px){
   #modal-buyitem .modal-body .rare-box,
   #modal-buyitem .modal-body .common-box,
+  #modal-buyitem .modal-body .blind-box,
   #modal-buyitem .modal-body .epic-box{
     width: 40%;
     height: 260px;

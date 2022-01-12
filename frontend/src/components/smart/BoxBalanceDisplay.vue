@@ -1,62 +1,57 @@
 <template>
-  <div>
-    <div class="col-xl-12">
-      <div class="box-list row">
-        <div class="col-lg-3">
-          <div class="character-item addnew box-container">
-            <div class="box-image box-image1"></div>
-            <h2 class="box-label text-center">Common Box</h2>
-            <div class="box-quantity-wrap">
-              <div class="box-quantity text-center">
-                Quantity: <span>0</span>
-                <!-- <span>{{getCommonBox()}}</span> -->
-              </div>
-            </div>
-          </div>
-          <div class="btn-open-wrap">
-            <b-button
-              class="gtag-link-others btn-blue-bg btn-open-box"
-              v-html="`OPEN`"
-            ></b-button>
+  <div class="box-list row">
+    <div class="col-lg-3 mb-sm-5 mb-lg-0">
+      <div class="character-item addnew box-container">
+        <div class="box-image box-image1"></div>
+        <h2 class="box-label text-center">Common Box</h2>
+        <div class="box-quantity-wrap">
+          <div class="box-quantity text-center">
+            Quantity: <span>0</span>
+            <!-- <span>{{getCommonBox()}}</span> -->
           </div>
         </div>
-         <div class="col-lg-3">
-          <div class="character-item addnew box-container">
-            <div class="box-image box-image2"></div>
-            <h2 class="box-label text-center">Rare Box</h2>
-            <div class="box-quantity-wrap">
-              <div class="box-quantity text-center">
-                Quantity: <span>0</span>
-                <!-- <span>{{getRareBox()}}</span> -->
-              </div>
-            </div>
-          </div>
-          <div class="btn-open-wrap">
-            <b-button
-              class="gtag-link-others btn-blue-bg btn-open-box"
-              v-html="`OPEN`"
-            ></b-button>
-          </div>
-        </div>
-         <div class="col-lg-3">
-          <div class="character-item addnew box-container">
-            <div class="box-image box-image3"></div>
-            <h2 class="box-label text-center">Epic Box</h2>
-            <div class="box-quantity-wrap">
-              <div class="box-quantity text-center">
-                Quantity: <span>0</span>
-                <!-- <span>{{getEpicBox()}}</span> -->
-              </div>
-            </div>
-          </div>
-          <div class="btn-open-wrap">
-            <b-button
-              class="gtag-link-others btn-blue-bg  btn-open-box"
-              v-html="`COMING SOON`"
-              disabled
-            ></b-button>
+      </div>
+      <div class="btn-open-wrap">
+        <b-button
+          class="gtag-link-others btn-blue-bg btn-open-box"
+          v-html="`OPEN`"
+        ></b-button>
+      </div>
+    </div>
+      <div class="col-lg-3 mb-sm-5 mb-lg-0">
+      <div class="character-item addnew box-container">
+        <div class="box-image box-image2"></div>
+        <h2 class="box-label text-center">Rare Box</h2>
+        <div class="box-quantity-wrap">
+          <div class="box-quantity text-center">
+            Quantity: <span>0</span>
+            <!-- <span>{{getRareBox()}}</span> -->
           </div>
         </div>
+      </div>
+      <div class="btn-open-wrap">
+        <b-button
+          class="gtag-link-others btn-blue-bg btn-open-box"
+          v-html="`OPEN`"
+        ></b-button>
+      </div>
+    </div>
+    <div class="col-lg-3 mb-sm-5 mb-lg-0">
+      <div class="character-item addnew box-container">
+        <div class="box-image box-image3"></div>
+        <h2 class="box-label text-center">Epic Box</h2>
+        <div class="box-quantity-wrap">
+          <div class="box-quantity text-center">
+            Quantity: <span>0</span>
+            <!-- <span>{{getEpicBox()}}</span> -->
+          </div>
+        </div>
+      </div>
+      <div class="btn-open-wrap">
+        <b-button
+          class="gtag-link-others btn-blue-bg  btn-open-box"
+          v-html="`OPEN`"
+        ></b-button>
       </div>
     </div>
   </div>
@@ -91,12 +86,18 @@ export default {
 </script>
 
 <style>
+.tab-content {
+  margin-top: 60px !important;
+}
+
 .box-list {
-  justify-content: space-around;
+  justify-content: center;
+  margin:0 auto;
 }
 
 .character-item.addnew.box-container {
-  margin: 0 35px;
+  width: 294px !important;
+  margin: 0 auto;
   cursor: pointer;
   align-items :center;
   flex-direction: column;
@@ -168,19 +169,6 @@ export default {
 
   .box-label {
     margin: 0 0 16px;
-  }
-}
-
-@media (max-width: 1024px) {
-  .character-item.addnew.box-container {
-    margin: 50px auto 0;
-    height: 324px;
-    width: 225px;
-  }
-
-  .box-image {
-    max-width: 200px;
-    max-height: 200px;
   }
 }
 
