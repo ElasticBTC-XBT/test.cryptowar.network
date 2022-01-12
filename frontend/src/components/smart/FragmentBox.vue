@@ -99,7 +99,6 @@ export default {
         }
         this.isConvertingFragmentToBox =true;
         const response = await this.convertFragmentToBox();
-        console.log('nhan dc respinse r', response);
         if(response) {
           this.boxId = response.boxId;
           const objectXGem = await this.getFragmentAmount();
