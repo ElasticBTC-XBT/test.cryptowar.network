@@ -119,11 +119,11 @@ export default {
   color: red;
 }
 .roll {
-  font-size: 1.5em;
+  font-size: 1.25em;
   color: #fff;
 }
 .reward {
-  font-size: 1.5em;
+  font-size: 1.25em;
   color: #fff;
   flex: 0.4;
 }
