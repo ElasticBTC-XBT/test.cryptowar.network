@@ -95,6 +95,18 @@
             <div>{{ getCleanCharacterName(c.id) }} </div> Lv.{{ c.level + 1 }}
             </div>
             <div
+              v-if="getCharacterStamina(c.id) === maxStamina"
+              class="small-stamina-char"
+              :style="`--staminaReady: ${
+                (getCharacterStamina(c.id) / maxStamina) * 100
+              }%;`"
+            >
+              <div class="stamina-text">
+                STA {{ getCharacterStamina(c.id) }} / 200
+              </div>
+            </div>
+            <div
+              v-if="getCharacterStamina(c.id) !== maxStamina"
               class="small-stamina-char"
               :style="`--staminaReady: ${
                 (getCharacterStamina(c.id) / maxStamina) * 100

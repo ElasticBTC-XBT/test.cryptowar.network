@@ -183,14 +183,14 @@
               </div>
             </div>
             <div class="button-container"><button @click="onSelectHero(i), checkCurrentMode(),
-              $bvModal.hide('selectHeroOrWeaponModal'), addClass = 'background'" class="btn-request-fight">SELECT</button></div>
+              $bvModal.hide('selectHeroOrWeaponModal')" class="btn-request-fight">SELECT</button></div>
           </div>
         </div>
         <div class="row list" v-if="selectWeapon">
           <div class="item" v-for="i in ownWeapons" :key="i.id">
             <WeaponSelect :weapon="i"/>
             <div class="button-container"><button @click="onSelectWeapon(i), checkCurrentMode(),
-              $bvModal.hide('selectHeroOrWeaponModal'),  addClass = 'background'" class="btn-request-fight">SELECT</button></div>
+              $bvModal.hide('selectHeroOrWeaponModal')" class="btn-request-fight">SELECT</button></div>
           </div>
         </div>
       </b-modal>
@@ -206,7 +206,6 @@
               <b-nav-item
                 class="nav-item"
                 @click="
-                  checkActive(),
                   (changeMode = false),
                     (careerMode = true),
                     (requestChallenge = false),
@@ -218,7 +217,6 @@
               <b-nav-item
                 class="nav-item"
                 @click="
-                  checkActive(),
                   (changeMode = false),
                     (careerMode = false),
                     (requestChallenge = true),
@@ -230,7 +228,6 @@
               <b-nav-item
                 class="nav-item"
                 @click="
-                  checkActive(),
                   (changeMode = true),
                     (careerMode = false),
                     (requestChallenge = false),
@@ -242,7 +239,6 @@
               <b-nav-item
                 class="nav-item"
                 @click="
-                  checkActive(),
                   (changeMode = false),
                     (careerMode = false),
                     (requestChallenge = false),
@@ -504,12 +500,6 @@ export default {
     ...mapMutations(["setIsInCombat"]),
     RequiredXp,
     CharacterPower,
-    checkActive(){
-      if(this.changeMode || this.careerMode || this.requestChallenge){
-        this.addClass = "";
-        this.checkSelect = false;
-      }
-    },
     checkCurrentMode(){
       if(this.changeMode){
         this.careerMode = false;
@@ -1032,6 +1022,13 @@ export default {
     await this.getListParticipatedRoom();
     await this.getRequests();
   },
+
+  updated(){
+    if(this.selectedWeapon || this.selectedCharacter){
+      this.addClass = "background";
+    }
+  },
+
   async mounted(){
     if(this.checkSelectFromRPS){
       this.addClass = "background";
