@@ -25,7 +25,7 @@
             class="star-item"
             v-for="star in 5"
             v-bind:key="star"
-            @click="starFilter = star.toString() === starFilter ? '' : star.toString()"
+            @click="starFilter = star.toString() === starFilter ? '' : star.toString(); saveFilters()"
             :class="star.toString() === starFilter && 'selected'"
           >
               <span>{{ star }}</span>
@@ -40,7 +40,7 @@
             class="element-item"
             v-for="element in ['Earth', 'Fire', 'Lightning', 'Water']"
             v-bind:key="element"
-            @click="elementFilter = (element === elementFilter ? '' : element)"
+            @click="elementFilter = (element === elementFilter ? '' : element); saveFilters()"
             :class="element === elementFilter && 'selected'"
           >
               <span
@@ -397,15 +397,15 @@ export default Vue.extend({
       items = items.filter((x) => allIgnore.findIndex((y) => y === x.id.toString()) < 0);
 
 
-      if (this.searchValue !== '') {
+      if (this.searchValue !== '' && !this.isMarket) {
         items = items.filter((x) => x.id === parseInt(this.searchValue, 10));
       }
 
-      if (this.starFilter) {
+      if (this.starFilter && !this.isMarket) {
         items = items.filter((x) => x.stars === +this.starFilter - 1);
       }
 
-      if (this.elementFilter) {
+      if (this.elementFilter && !this.isMarket) {
         items = items.filter((x) => x.element.includes(this.elementFilter));
       }
 

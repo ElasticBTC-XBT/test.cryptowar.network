@@ -14,7 +14,7 @@
           <div class="col">
             <div class="search-results">
               <b-pagination class="customPagination"
-                v-visible="allListingsAmount > 0"
+                v-visible="resultSearch.length > 0"
                 align="center" v-model="currentPage"
                 :total-rows="totalPages"
                 :per-page="activeType === 'weapon' ? weaponShowLimit : characterShowLimit"
@@ -139,7 +139,7 @@
 
               </nft-list>
               <b-pagination class="customPagination"
-                v-visible="allListingsAmount > 0"
+                v-visible="resultSearch.length > 0"
                 align="center" v-model="currentPage"
                 :total-rows="totalPages"
                 :per-page="activeType === 'weapon' ? weaponShowLimit : characterShowLimit"
@@ -652,7 +652,7 @@ export default Vue.extend({
     ...(mapGetters([
       'contracts', 'ownCharacters', 'totalShieldSupply','getCharacterName','getWeaponName', 'getBoxPrice'
     ]) as Accessors<StoreMappedGetters>),
-    ...mapGetters(['transferCooldownOfCharacterId']),
+    ...mapGetters(['transferCooldownOfCharacterId', 'charactersWithIds', 'weaponsWithIds']),
 
     Weapons(): Contract<Weapons> {
       // we use x! here because we assert that they're set already in created()
@@ -807,6 +807,15 @@ export default Vue.extend({
         this.minPriceFilter(parseFloat(this.characterMinPriceFilter()));
         this.maxPriceFilter(parseFloat(this.characterMaxPriceFilter()));
         this.sortPrice(this.characterPriceOrder());
+        if(this.characterMaxLevelFilter() !== 255 || this.characterTraitFilter()){
+          const dataSearch = this.charactersWithIds(this.resultSearch);
+          if(dataSearch.length !== 0){
+            if(this.characterMaxLevelFilter() !== 255)
+              this.levelFilter(this.characterMinLevelFilter(), this.characterMaxLevelFilter(), dataSearch);
+            if(this.characterTraitFilter())
+              this.elementFilter(this.characterTraitFilter(), dataSearch);
+          }
+        }
       }
       // filter price weapon
       else if(this.activeType === 'weapon'){
@@ -814,9 +823,133 @@ export default Vue.extend({
         this.sortPrice(this.weaponPriceOrder());
         this.minPriceFilter(parseFloat(this.weaponMinPriceFilter()));
         this.maxPriceFilter(parseFloat(this.weaponMaxPriceFilter()));
+        if(this.weaponStarFilter() || this.weaponTraitFilter()){
+          const dataSearch = this.weaponsWithIds(this.resultSearch);
+          if(dataSearch.length !== 0){
+            if(this.weaponStarFilter())
+              this.starFilter(this.weaponStarFilter(), dataSearch);
+            if(this.weaponTraitFilter())
+              this.elementFilter(this.weaponTraitFilter(), dataSearch);
+          }
+        }
       }
       this.totalPages = this.resultSearch.length;
       this.resultSearch = this.resultSearch.slice((this.currentPage - 1) * this.characterShowLimit, (this.currentPage - 1) * this.characterShowLimit + this.characterShowLimit);
+    },
+
+    async searchAllCharacterListingsThroughChain(page: number) {
+      this.allListingsAmount = await this.fetchNumberOfCharacterListings({
+        nftContractAddr: this.contractAddress,
+        trait: traitNameToNumber(this.characterTraitFilter()),
+        minLevel: 255,
+        maxLevel: 255
+      });
+
+
+      this.allSearchResults = await this.fetchAllMarketCharacterNftIdsPage({
+        nftContractAddr: this.contractAddress,
+        limit: this.allListingsAmount || defaultLimit,
+        pageNumber: page - page,
+        trait: traitNameToNumber(this.characterTraitFilter()),
+        minLevel: 255,
+        maxLevel: 255
+      });
+    },
+
+    idFilter(id: string){
+      if(id && id !== ''){
+        const arrStr: string[] = [];
+        this.resultSearch.forEach((val: any)=>{
+          if(id === val){
+            arrStr.push(val);
+          }
+        });
+        this.resultSearch = arrStr;
+      }
+    },
+
+    levelFilter(minLevel: number, maxLevel: number, arr: []){
+      if(arr.length !== 0){
+        const arrStr: string[] = [];
+        arr.forEach((arr_item: any) => {
+          if(this.resultSearch.includes(arr_item.id.toString()) && arr_item.level >= minLevel && arr_item.level <= maxLevel){
+            arrStr.push(arr_item.id.toString());
+          }
+        });
+        this.resultSearch = arrStr;
+      }
+    },
+
+    starFilter(star: number, arr: []){
+      if(arr.length !== 0){
+        const arrStr: string[] = [];
+        arr.forEach((arr_item: any) => {
+          if(this.resultSearch.includes(arr_item.id.toString()) && arr_item.stars === star){
+            arrStr.push(arr_item.id.toString());
+          }
+        });
+        this.resultSearch = arrStr;
+      }
+    },
+
+    elementFilter(element: string, arr: []){
+      if(arr.length !== 0){
+        const arrStr: string[] = [];
+        arr.forEach((arr_item: any) => {
+          if(this.resultSearch.includes(arr_item.id.toString()) && arr_item.traitName.toLowerCase() === element){
+            arrStr.push(arr_item.id.toString());
+          }
+        });
+        this.resultSearch = arrStr;
+      }
+    },
+
+    minPriceFilter(minPrice: number){
+      if(minPrice && minPrice > 0){
+        const arrStr: string[] = [];
+        this.resultSearch.forEach((val: any)=>{
+          if(parseFloat(this.convertWeiToSkill(this.nftPricesById[val])) >= minPrice){
+            arrStr.push(val);
+          }
+        });
+        this.resultSearch = arrStr;
+      }
+    },
+
+    maxPriceFilter(maxPrice: number){
+      if(maxPrice && maxPrice > 0){
+        const arrStr: string[] = [];
+        this.resultSearch.forEach((val: any)=>{
+          if(parseFloat(this.convertWeiToSkill(this.nftPricesById[val])) <= maxPrice){
+            arrStr.push(val);
+          }
+        });
+        this.resultSearch = arrStr;
+      }
+    },
+
+    sortPrice(typeSort: string){
+      if(typeSort){
+        const sortable: any[] = [];
+        this.resultSearch.forEach((item: any)=>{
+          sortable.push([item, this.convertWeiToSkill(this.nftPricesById[item])]);
+        });
+        if(typeSort === '1'){
+          sortable.sort(function(a, b) {
+            return parseFloat(a[1]) - parseFloat(b[1]);
+          });
+        } else if(typeSort === '-1'){
+          sortable.sort(function(a, b) {
+            return parseFloat(b[1]) - parseFloat(a[1]);
+          });
+        }
+
+        const result: string[] = [];
+        sortable.forEach((item)=>{
+          result.push(item[0] as string);
+        });
+        this.resultSearch = result;
+      }
     },
 
     async addListingForNft() {
@@ -1006,85 +1139,6 @@ export default Vue.extend({
       const characters = await charactersData.json();
       this.allListingsAmount = characters.page.total;
       this.allSearchResults = characters.idResults;
-    },
-
-    async searchAllCharacterListingsThroughChain(page: number) {
-      this.allListingsAmount = await this.fetchNumberOfCharacterListings({
-        nftContractAddr: this.contractAddress,
-        trait: traitNameToNumber(this.characterTraitFilter()),
-        minLevel: 255,
-        maxLevel: 255
-      });
-
-
-      this.allSearchResults = await this.fetchAllMarketCharacterNftIdsPage({
-        nftContractAddr: this.contractAddress,
-        limit: this.allListingsAmount || defaultLimit,
-        pageNumber: page - page,
-        trait: traitNameToNumber(this.characterTraitFilter()),
-        minLevel: 255,
-        maxLevel: 255
-      });
-    },
-
-    idFilter(id: string){
-      if(id && id !== ''){
-        const arrStr: string[] = [];
-        this.resultSearch.forEach((val: any)=>{
-          if(id === val){
-            arrStr.push(val);
-          }
-        });
-        this.resultSearch = arrStr;
-      }
-    },
-
-    minPriceFilter(minPrice: number){
-      if(minPrice && minPrice > 0){
-        const arrStr: string[] = [];
-        this.resultSearch.forEach((val: any)=>{
-          if(parseFloat(this.convertWeiToSkill(this.nftPricesById[val])) >= minPrice){
-            arrStr.push(val);
-          }
-        });
-        this.resultSearch = arrStr;
-      }
-    },
-
-    maxPriceFilter(maxPrice: number){
-      if(maxPrice && maxPrice > 0){
-        const arrStr: string[] = [];
-        this.resultSearch.forEach((val: any)=>{
-          if(parseFloat(this.convertWeiToSkill(this.nftPricesById[val])) <= maxPrice){
-            arrStr.push(val);
-          }
-        });
-        this.resultSearch = arrStr;
-      }
-    },
-
-    sortPrice(typeSort: string){
-      if(typeSort){
-        const sortable: any[] = [];
-        this.resultSearch.forEach((item: any)=>{
-          sortable.push([item, this.convertWeiToSkill(this.nftPricesById[item])]);
-        });
-        if(typeSort === '1'){
-          sortable.sort(function(a, b) {
-            return parseFloat(a[1]) - parseFloat(b[1]);
-          });
-        } else if(typeSort === '-1'){
-          sortable.sort(function(a, b) {
-            return parseFloat(b[1]) - parseFloat(a[1]);
-          });
-        }
-
-        const result: string[] = [];
-        sortable.forEach((item)=>{
-          result.push(item[0] as string);
-        });
-        this.resultSearch = result;
-      }
     },
 
     async searchAllWeaponListings(page: number) {

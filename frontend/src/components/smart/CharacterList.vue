@@ -34,7 +34,7 @@
             class="element-item"
             v-for="element in ['Earth', 'Fire', 'Lightning', 'Water']"
             v-bind:key="element"
-            @click="elementFilter = (element === elementFilter ? '' : element)"
+            @click="elementFilter = (element === elementFilter ? '' : element); saveFilters()"
             :class="element === elementFilter && 'selected'"
           >
               <span
@@ -313,11 +313,11 @@ export default {
           items = items.filter(x => x.id === parseInt(this.searchValue, 10));
         }
 
-        if(this.elementFilter) {
+        if(this.elementFilter && !this.isMarket) {
           items = items.filter(x => x.traitName.includes(this.elementFilter));
         }
 
-        if(this.levelFilter) {
+        if(this.levelFilter && !this.isMarket) {
           items = items.filter(x => x.level >= this.levelFilter - 1 && x.level <= this.levelFilter + 8);
         }
 
