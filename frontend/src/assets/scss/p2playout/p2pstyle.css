@@ -21146,9 +21146,9 @@ margin-bottom: 1.5rem;
     transition: all 0.3s;
   }
 
-  .market .character-item {
+  /* .market .character-item {
     margin-top: 100px !important;
-  }
+  } */
 
   .character-item.no-corner {
     border-radius: 15px !important;
@@ -21285,6 +21285,7 @@ margin-bottom: 1.5rem;
         /* margin-top: 70px !important; */
         margin-top: 20px !important;
         margin: auto;
+        margin-bottom: 50px;
     }
 
     .character-item:not(.lobby-box-item-wrap)::before,
@@ -21501,6 +21502,10 @@ margin-bottom: 1.5rem;
 
     .market .filters.active {
         height: 970px;
+    }
+
+    .market .filters.active.market {
+        height: 1100px;
     }
 
     .filters .search-btn {

@@ -1,7 +1,7 @@
 <template>
   <div :class="showFilters && 'row'">
     <div
-      class="filters"
+      class="filters market"
       :class="showFilters && 'col-12 col-xl-3'"
       v-if="showFilters"
       @change="saveFilters()"
@@ -34,7 +34,7 @@
             class="element-item"
             v-for="element in ['Earth', 'Fire', 'Lightning', 'Water']"
             v-bind:key="element"
-            @click="elementFilter = (element === elementFilter ? '' : element)"
+            @click="elementFilter = (element === elementFilter ? '' : element); saveFilters()"
             :class="element === elementFilter && 'selected'"
           >
               <span
@@ -121,11 +121,11 @@
         class="col-12 col-sm-6 col-md-4"
         v-for="c in filteredCharacters"
         :key="c.id"
+        @click="$emit('input', c.id)"
       >
         <div class="character-item-wrap">
           <div
             class="character-item"
-            @click="$emit('input', c.id)"
             :class="[{ selected: value === c.id }, {isMarket: isSell}]"
           >
             <div class="above-wrapper" v-if="$slots.above || $scopedSlots.above">
@@ -140,11 +140,16 @@
                 SELL
               </b-button>
             </div>
-            <div v-if="isBtnSell" class="weapon-bt-box">
-              <b-button @click="cancelNftListing()" class="weapon-bt-box">
-                STOP SELLING
-              </b-button>
-            </div>
+          </div>
+          <div v-if="isBtnSell" class="weapon-bt-box">
+            <b-button @click="showListingSetupModal(true)" class="weapon-bt-box">
+              CHANGE PRICE
+            </b-button>
+          </div>
+          <div v-if="isBtnSell" class="weapon-bt-box">
+            <b-button @click="cancelNftListing()" class="weapon-bt-box">
+              STOP SELLING
+            </b-button>
           </div>
         </div>
       </li>
@@ -244,7 +249,11 @@ export default {
     isBtnSell: {
       type: Boolean,
       default: false
-    }
+    },
+    showListingSetupModal: {
+      type: ()=>{},
+      default: null
+    },
   },
 
   async created() {
@@ -300,15 +309,15 @@ export default {
       let items = this.displayCharacters;
 
       if(this.showFilters) {
-        if(this.searchValue !== '') {
+        if(this.searchValue !== '' && !this.isMarket) {
           items = items.filter(x => x.id === parseInt(this.searchValue, 10));
         }
 
-        if(this.elementFilter) {
+        if(this.elementFilter && !this.isMarket) {
           items = items.filter(x => x.traitName.includes(this.elementFilter));
         }
 
-        if(this.levelFilter) {
+        if(this.levelFilter && !this.isMarket) {
           items = items.filter(x => x.level >= this.levelFilter - 1 && x.level <= this.levelFilter + 8);
         }
 
@@ -358,6 +367,7 @@ export default {
     saveFilters() {
       sessionStorage.setItem('character-levelfilter', this.levelFilter);
       sessionStorage.setItem('character-elementfilter', this.elementFilter);
+      sessionStorage.setItem('character-searchvalue', this.searchValue);
 
       if(this.isMarket) {
         sessionStorage.setItem('character-price-order', this.priceSort);
@@ -370,6 +380,7 @@ export default {
     clearFilters() {
       sessionStorage.removeItem('character-levelfilter');
       sessionStorage.removeItem('character-elementfilter');
+      sessionStorage.removeItem('character-searchvalue');
       if(this.isMarket) {
         sessionStorage.removeItem('character-price-order');
         sessionStorage.removeItem('character-price-minfilter');
@@ -404,13 +415,13 @@ export default {
   },
 
   mounted() {
-    this.levelFilter = localStorage.getItem('character-levelfilter') || '';
-    this.elementFilter = localStorage.getItem('character-elementfilter') || '';
-    if(this.isMarket) {
-      this.priceSort = sessionStorage.getItem('character-price-order') || '';
-      this.minPriceFilter = sessionStorage.getItem('character-price-minfilter') || '';
-      this.maxPriceFilter = sessionStorage.getItem('character-price-maxfilter') || '';
-    }
+    // this.levelFilter = localStorage.getItem('character-levelfilter') || '';
+    // this.elementFilter = localStorage.getItem('character-elementfilter') || '';
+    // if(this.isMarket) {
+    //   this.priceSort = sessionStorage.getItem('character-price-order') || '';
+    //   this.minPriceFilter = sessionStorage.getItem('character-price-minfilter') || '';
+    //   this.maxPriceFilter = sessionStorage.getItem('character-price-maxfilter') || '';
+    // }
   }
 };
 </script>
@@ -418,7 +429,7 @@ export default {
 <style scoped>
 
 .weapon-bt-box{
-  margin-top: 30px;
+  margin-top: 15px;
   display: flex;
   justify-content: center;
   z-index: 100;
@@ -465,7 +476,7 @@ export default {
   margin: 0 auto;
   min-width: 270px;
   max-width: 294px;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 }
 
 .character-item {
@@ -531,6 +542,7 @@ input::-webkit-inner-spin-button {
   font-weight: bold;
   font-size: 18px;
   border-radius: 0;
+  z-index: 1;
 }
 
 .price {
@@ -553,6 +565,9 @@ input::-webkit-inner-spin-button {
 @media (max-width: 576px) {
   .price {
     font-size: 10px;
+  }
+  .character-item-wrap {
+    margin-bottom: 0;
   }
 }
 

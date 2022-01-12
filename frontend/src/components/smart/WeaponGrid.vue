@@ -25,7 +25,7 @@
             class="star-item"
             v-for="star in 5"
             v-bind:key="star"
-            @click="starFilter = star.toString() === starFilter ? '' : star.toString()"
+            @click="starFilter = star.toString() === starFilter ? '' : star.toString(); saveFilters()"
             :class="star.toString() === starFilter && 'selected'"
           >
               <span>{{ star }}</span>
@@ -40,7 +40,7 @@
             class="element-item"
             v-for="element in ['Earth', 'Fire', 'Lightning', 'Water']"
             v-bind:key="element"
-            @click="elementFilter = (element === elementFilter ? '' : element)"
+            @click="elementFilter = (element === elementFilter ? '' : element); saveFilters()"
             :class="element === elementFilter && 'selected'"
           >
               <span
@@ -92,22 +92,29 @@
         @click="(!checkForDurability || getWeaponDurability(weapon.id) > 0) && onWeaponClick(weapon.id)"
         @contextmenu="canFavorite && toggleFavorite($event, weapon.id)"
       >
-        <div
-          class="character-item weapon"
-          :class="[{ selected: highlight !== null && weapon.id === highlight },isSell?'weapon-market':'']"
-        >
-          <div class="weapon-icon-wrapper">
-            <weapon-icon class="weapon-icon" :weapon="weapon" :favorite="isFavorite(weapon.id)" :isSell="isSell" :sellClick="sellClick"/>
+        <div class="character-item-wrap">
+          <div
+            class="character-item weapon"
+            :class="[{ selected: highlight !== null && weapon.id === highlight },isSell?'weapon-market':'']"
+          >
+            <div class="weapon-icon-wrapper">
+              <weapon-icon class="weapon-icon" :weapon="weapon" :favorite="isFavorite(weapon.id)" :isSell="isSell" :sellClick="sellClick"/>
+            </div>
+            <div class="above-wrapper" v-if="$slots.above || $scopedSlots.above">
+              <slot name="above" :weapon="weapon"></slot>
+            </div>
+            <slot name="sold" :weapon="weapon"></slot>
           </div>
-          <div class="above-wrapper" v-if="$slots.above || $scopedSlots.above">
-            <slot name="above" :weapon="weapon"></slot>
+          <div v-if="isBtnSell" class="weapon-bt-box">
+            <b-button @click="showListingSetupModal(true)" class="weapon-bt-box">
+              CHANGE PRICE
+            </b-button>
           </div>
-          <slot name="sold" :weapon="weapon"></slot>
-        </div>
-        <div v-if="isBtnSell" class="weapon-bt-box">
-          <b-button @click="cancelNftListing()" class="weapon-bt-box">
-            STOP SELLING
-          </b-button>
+          <div v-if="isBtnSell" class="weapon-bt-box">
+            <b-button @click="cancelNftListing()" class="weapon-bt-box">
+              STOP SELLING
+            </b-button>
+          </div>
         </div>
       </li>
     </ul>
@@ -323,7 +330,11 @@ export default Vue.extend({
     isBtnSell: {
       type: Boolean,
       default: false
-    }
+    },
+    showListingSetupModal: {
+      type: ()=>{},
+      default: null
+    },
   },
 
   data() {
@@ -386,15 +397,15 @@ export default Vue.extend({
       items = items.filter((x) => allIgnore.findIndex((y) => y === x.id.toString()) < 0);
 
 
-      if (this.searchValue !== '') {
+      if (this.searchValue !== '' && !this.isMarket) {
         items = items.filter((x) => x.id === parseInt(this.searchValue, 10));
       }
 
-      if (this.starFilter) {
+      if (this.starFilter && !this.isMarket) {
         items = items.filter((x) => x.stars === +this.starFilter - 1);
       }
 
-      if (this.elementFilter) {
+      if (this.elementFilter && !this.isMarket) {
         items = items.filter((x) => x.element.includes(this.elementFilter));
       }
 
@@ -449,6 +460,7 @@ export default Vue.extend({
         sessionStorage.setItem('market-weapon-price-order', this.priceSort);
         sessionStorage.setItem('market-weapon-price-minfilter', this.minPriceFilter?''+this.minPriceFilter:'');
         sessionStorage.setItem('market-weapon-price-maxfilter', this.maxPriceFilter?''+this.maxPriceFilter:'');
+        sessionStorage.setItem('market-weapon-searchvalue', this.searchValue);
       } else {
         sessionStorage.setItem('weapon-starfilter', this.starFilter);
         sessionStorage.setItem('weapon-elementfilter', this.elementFilter);
@@ -494,6 +506,7 @@ export default Vue.extend({
         sessionStorage.removeItem('market-weapon-price-order');
         sessionStorage.removeItem('market-weapon-price-minfilter');
         sessionStorage.removeItem('market-weapon-price-maxfilter');
+        sessionStorage.removeItem('market-weapon-searchvalue');
       } else {
         sessionStorage.removeItem('weapon-starfilter');
         sessionStorage.removeItem('weapon-elementfilter');
@@ -584,13 +597,16 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+.character-item-wrap {
+  margin-bottom: 50px;
+}
 
 /* .weapon-grid.row{
   flex: 1;
 } */
 
 .weapon-bt-box{
-  margin-top: 30px;
+  margin-top: 15px;
   display: flex;
   justify-content: center;
   z-index: 100;
@@ -809,6 +825,7 @@ input::-webkit-inner-spin-button{
   .character-item.weapon {
     padding: 12px;
     height: 292px;
+    margin-bottom: 50px;
   }
 
   .weapon-grid.blacksmith {
@@ -848,6 +865,10 @@ input::-webkit-inner-spin-button{
   .character-item.weapon.no-corner {
     margin-top: 20px !important;
   }
+
+  .character-item-wrap{
+    margin-bottom: 0;
+  }
 }
 
 /* Needed to adjust weapon list */
@@ -875,9 +896,16 @@ input::-webkit-inner-spin-button{
   }
 }
 
+
 @media (max-width: 1400px) {
   .weapon-grid.blacksmith .dust-wrap {
     padding: 20px 15px;
+  }
+}
+
+@media (max-width: 1200px){
+  .filters.market-active{
+    max-width: inherit;
   }
 }
 

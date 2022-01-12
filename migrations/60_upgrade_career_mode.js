@@ -5,7 +5,7 @@ const CareerMode = artifacts.require("CareerMode");
 module.exports = async function (deployer, network) {
   let careerModeProxy;
   if (network === "bsctestnet") {
-    careerModeProxy = "0x4CC5739daEfA1ecfe0F827166C628196057377c6";
+    careerModeProxy = "0x7F28dEb744F967b47d9330F986b865eDDd5fb4B1";
   }
 
   if (network === "bscmainnet") {

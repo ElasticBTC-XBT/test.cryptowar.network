@@ -284,7 +284,7 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
         uint256 base = 420;
         uint256 realLevel = getExpectedLevel(getLevel(id), getXp(id));
         if (realLevel > 29) {
-            base = 4050;
+            base = 1620;
         }
         if (realLevel > 54) {
             return 100 * 60; // 100 * 60 seconds
@@ -391,6 +391,10 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
 
     function setStaminaLevelRange(uint256 _range) public restricted {
         staminaLevelRange = _range;
+    }
+
+    function setLastedUpdateTimestamp(uint256 _id, uint256 _timestamp) public restricted {
+        latestUpdateTimestamp[_id] = _timestamp;
     }
 
 }
