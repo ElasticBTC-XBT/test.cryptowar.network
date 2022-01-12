@@ -146,6 +146,10 @@ contract BlindBox is
         characters = _characters;
     }
 
+    function setFragmentPerBox(uint256 _amount) public onlyGameAdmin{
+        fragmentPerBox = _amount;
+    }
+
     function buy(Type _type) public {
         uint256 tokenId = tokens.length;
         uint256 sellPrice;
