@@ -89,10 +89,12 @@
         class="col-12 col-sm-6 col-md-4"
         v-for="weapon in nonIgnoredWeapons"
         :key="weapon.id"
-        @click="(!checkForDurability || getWeaponDurability(weapon.id) > 0) && onWeaponClick(weapon.id)"
-        @contextmenu="canFavorite && toggleFavorite($event, weapon.id)"
       >
-        <div class="character-item-wrap">
+        <div
+          class="character-item-wrap"
+          @click="(!checkForDurability || getWeaponDurability(weapon.id) > 0) && onWeaponClick(weapon.id)"
+          @contextmenu="canFavorite && toggleFavorite($event, weapon.id)"
+        >
           <div
             class="character-item weapon"
             :class="[{ selected: highlight !== null && weapon.id === highlight },isSell?'weapon-market':'']"
@@ -598,7 +600,9 @@ export default Vue.extend({
 
 <style scoped>
 .character-item-wrap {
+  margin: 0 auto;
   margin-bottom: 50px;
+  width: fit-content;
 }
 
 /* .weapon-grid.row{

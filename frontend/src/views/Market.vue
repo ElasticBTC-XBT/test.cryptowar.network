@@ -840,17 +840,15 @@ export default Vue.extend({
     async searchAllCharacterListingsThroughChain(page: number) {
       this.allListingsAmount = await this.fetchNumberOfCharacterListings({
         nftContractAddr: this.contractAddress,
-        trait: traitNameToNumber(this.characterTraitFilter()),
+        trait: 255,
         minLevel: 255,
         maxLevel: 255
       });
-
-
       this.allSearchResults = await this.fetchAllMarketCharacterNftIdsPage({
         nftContractAddr: this.contractAddress,
         limit: this.allListingsAmount || defaultLimit,
         pageNumber: page - page,
-        trait: traitNameToNumber(this.characterTraitFilter()),
+        trait: 255,
         minLevel: 255,
         maxLevel: 255
       });
@@ -884,7 +882,7 @@ export default Vue.extend({
       if(arr.length !== 0){
         const arrStr: string[] = [];
         arr.forEach((arr_item: any) => {
-          if(this.resultSearch.includes(arr_item.id.toString()) && arr_item.stars === star){
+          if(this.resultSearch.includes(arr_item.id.toString()) && arr_item.stars+1 === star){
             arrStr.push(arr_item.id.toString());
           }
         });
@@ -896,7 +894,10 @@ export default Vue.extend({
       if(arr.length !== 0){
         const arrStr: string[] = [];
         arr.forEach((arr_item: any) => {
-          if(this.resultSearch.includes(arr_item.id.toString()) && arr_item.traitName.toLowerCase() === element){
+          if(this.activeType==='character' && this.resultSearch.includes(arr_item.id.toString()) && arr_item.traitName.toLowerCase() === element){
+            arrStr.push(arr_item.id.toString());
+          }
+          else if(this.activeType==='weapon' && this.resultSearch.includes(arr_item.id.toString()) && arr_item.element.toLowerCase() === element){
             arrStr.push(arr_item.id.toString());
           }
         });
@@ -1171,19 +1172,19 @@ export default Vue.extend({
     },
 
     async searchAllWeaponListingsThroughChain(page: number) {
-      const filterStar = this.weaponStarFilter() !== 0 ? this.weaponStarFilter() - 1 : 255;
+      // const filterStar = this.weaponStarFilter() !== 0 ? this.weaponStarFilter() - 1 : 255;
       this.allListingsAmount = await this.fetchNumberOfWeaponListings({
         nftContractAddr: this.contractAddress,
-        trait: traitNameToNumber(this.weaponTraitFilter()),
-        stars: filterStar
+        trait: 255,
+        stars: 255
       });
 
       this.allSearchResults = await this.fetchAllMarketWeaponNftIdsPage({
         nftContractAddr: this.contractAddress,
         limit: this.allListingsAmount || defaultLimit,
         pageNumber: page - page,
-        trait: traitNameToNumber(this.weaponTraitFilter()),
-        stars: filterStar
+        trait: 255,
+        stars: 255
       });
 
       // this.minPriceFilter(parseFloat(this.weaponMinPriceFilter()));

@@ -121,9 +121,8 @@
         class="col-12 col-sm-6 col-md-4"
         v-for="c in filteredCharacters"
         :key="c.id"
-        @click="$emit('input', c.id)"
       >
-        <div class="character-item-wrap">
+        <div @click="$emit('input', c.id)" class="character-item-wrap">
           <div
             class="character-item"
             :class="[{ selected: value === c.id }, {isMarket: isSell}]"
