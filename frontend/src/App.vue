@@ -757,6 +757,7 @@ button.close {
 
 #fightResultsModal .close{
   margin-right: 12px;
+  z-index: 2;
 }
 
 #error-request-fight .modal-content{
