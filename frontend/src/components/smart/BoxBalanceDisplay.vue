@@ -85,7 +85,7 @@ export default {
   async mounted() {
     const res = await this.getMyBoxes();
     console.log('res la gi', res);
-    const res2 = await this.getBoxDetail('11');
+    const res2 = await this.getBoxDetail({boxId: '11'});
     console.log('hhuhuu', res2);
   }
 };
