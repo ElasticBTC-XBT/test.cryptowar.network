@@ -44,6 +44,9 @@ contract BlindBox is
     mapping(address => uint256) fragmentQty;
     uint256 public fragmentPerBox;
 
+    uint256 private lastMintedBlock;
+    uint256 private firstMintedOfLastBlock;
+
     event NewBlindBox(uint256 indexed boxId, address indexed minter);
     event Burned(address indexed owner, uint256 indexed burned);
     event Open(address indexed minter, uint256 stars);
@@ -109,6 +112,15 @@ contract BlindBox is
         return size > 0;
     }
 
+    modifier noFreshLookup(uint256 id) {
+        _noFreshLookup(id);
+        _;
+    }
+
+    function _noFreshLookup(uint256 id) internal view {
+        require(id < firstMintedOfLastBlock || lastMintedBlock < block.number, "Too fresh for lookup");
+    }
+
     function setBoxesPrice(
         uint256 _commonPrice,
         uint256 _rarePrice,
@@ -152,6 +164,11 @@ contract BlindBox is
 
     function buy(Type _type) public {
         uint256 tokenId = tokens.length;
+
+        if(block.number != lastMintedBlock)
+            firstMintedOfLastBlock = tokenId;
+        lastMintedBlock = block.number;
+
         uint256 sellPrice;
         if (_type == Type.COMMON) {
             sellPrice = commonPrice;
@@ -212,10 +229,11 @@ contract BlindBox is
         emit NewBlindBox(tokenId, msg.sender);
     }
 
-    function open(uint256 id) public {
+    function open(uint256 id) noFreshLookup(id) public {
         address burnOwner = ownerOf(id);
         require(burnOwner == msg.sender, "Not box owner");
-        Box storage _box = tokens[id];
+        Box memory _box = tokens[id];
+
         uint256 seed = uint256(
             keccak256(abi.encodePacked(blockhash(block.number - 1), msg.sender))
         );
@@ -346,7 +364,7 @@ contract BlindBox is
         return fragmentQty[_account];
     }
 
-    function getBox(uint256 _id) public  view returns (uint256 boxType) {
+    function getBox(uint256 _id) public view returns (uint256 boxType) {
         Box memory _box = tokens[_id];
         boxType = uint(_box.boxType);
     }
