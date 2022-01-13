@@ -35,7 +35,7 @@ import {
   reforging as featureFlagReforging
 } from './feature-flags';
 import { IERC721, IStakingRewards, IERC20 } from '../../build/abi-interfaces';
-import { stakeTypeThatCanHaveUnclaimedRewardsStakedTo } from './stake-types';
+// import { stakeTypeThatCanHaveUnclaimedRewardsStakedTo } from './stake-types';
 import { Nft } from './interfaces/Nft';
 import { getWeaponNameFromSeed } from '@/weapon-name';
 import isBlacklist from './utils/blacklist';
@@ -1064,15 +1064,26 @@ export function createStore(web3: Web3) {
       async getMyBoxes({ state }) {
         const { BlindBox } = state.contracts();
         if (!BlindBox || !state.defaultAccount) return;
-        let tokens = await BlindBox.methods.balanceOf(state.defaultAccount).call(defaultCallOptions(state));
-        const temp = [...tokens];
+        const tokens = await BlindBox.methods.balanceOf(state.defaultAccount).call(defaultCallOptions(state));
+        const promises = [];
         for (let i = 0; i < tokens.length; i++) {
-          temp[i] = await BlindBox.methods.tokenOfOwnerByIndex(
-            state.defaultAccount, i
-          ).call(defaultCallOptions(state)).toString();
+          promises.push(
+            new Promise(resolve => {
+              // @ts-ignore
+              BlindBox.methods.tokenOfOwnerByIndex(state.defaultAccount, i).call(defaultCallOptions(state))
+                .then((res) => {
+                  if(!res) {
+                    resolve([]);
+                    return ;
+                  }
+                  resolve(res);
+                });
+            })
+          );
         }
-        tokens = temp.join();
-        return tokens;
+        const result: any[] = await Promise.all(promises);
+        console.log('mememe', result);
+        return result;
       },
 
       async fetchUserGameDetails({ state, dispatch, commit }) {
@@ -2020,25 +2031,25 @@ export function createStore(web3: Web3) {
         await dispatch('fetchStakeDetails', { stakeType });
       },
 
-      async stakeUnclaimedRewards(
-        { state, dispatch },
-        { stakeType }: { stakeType: StakeType }
-      ) {
-        if (stakeType !== stakeTypeThatCanHaveUnclaimedRewardsStakedTo) return;
+      // async stakeUnclaimedRewards(
+      //   { state, dispatch },
+      //   { stakeType }: { stakeType: StakeType }
+      // ) {
+      //   if (stakeType !== stakeTypeThatCanHaveUnclaimedRewardsStakedTo) return;
 
-        const { CryptoWars: CryptoBlades } = state.contracts();
-        if (!CryptoBlades) return;
+      //   const { CryptoWars: CryptoBlades } = state.contracts();
+      //   if (!CryptoBlades) return;
 
-        await CryptoBlades.methods
-          .stakeUnclaimedRewards()
-          .send(defaultCallOptions(state));
+      //   await CryptoBlades.methods
+      //     .stakeUnclaimedRewards()
+      //     .send(defaultCallOptions(state));
 
-        await Promise.all([
-          dispatch('fetchSkillBalance'),
-          dispatch('fetchStakeDetails', { stakeType }),
-          dispatch('fetchFightRewardSkill')
-        ]);
-      },
+      //   await Promise.all([
+      //     dispatch('fetchSkillBalance'),
+      //     dispatch('fetchStakeDetails', { stakeType }),
+      //     dispatch('fetchFightRewardSkill')
+      //   ]);
+      // },
 
       async claimReward(
         { state, dispatch },
@@ -2571,7 +2582,7 @@ export function createStore(web3: Web3) {
           const {BlindBox} = state.contracts();
           await BlindBox?.methods.open(boxId).send({
             from: state.defaultAccount,
-            gas:'500000'
+            gas:'800000'
           });
           await Promise.all([
             dispatch('fetchTotalCommonBoxSupply')
@@ -3609,6 +3620,12 @@ export function createStore(web3: Web3) {
         //@ts-ignore
         const res = await BlindBox?.methods.convertFragmentToBox().send(defaultCallOptions(state));
         return res?.events.NewBlindBox.returnValues;
+      },
+      async getBoxDetail({state}, {boxId}) {
+        const {BlindBox} = state.contracts();
+        //@ts-ignore
+        const res = await BlindBox?.methods.getBox(boxId).call(defaultCallOptions(state));
+        console.log(res);
       }
     },
   });
