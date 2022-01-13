@@ -34,7 +34,7 @@ interface StoreMappedGetters {
   totalShieldSupply: 0;
   getCharacterName(id: string): string;
   getWeaponName(id: string, stars: number): string;
-  getBoxPrice(): { common: string; rare: string };
+  getBoxPrice(): { common: string; rare: string, epic: string };
 }
 
 export interface Nft {
@@ -59,6 +59,7 @@ interface StoreMappedActions {
   fetchBoxPrice(): Promise<void>;
   fetchTotalCommonBoxSupply(): Promise<number>;
   fetchTotalRareBoxSupply(): Promise<number>;
+  fetchTotalEpicBoxSupply(): Promise<number>;
 }
 
 export default Vue.extend({
@@ -68,8 +69,10 @@ export default Vue.extend({
       fetchBoxPriceInterval: 0,
       fetchCommonBoxSupplyInterval: 0,
       fetchRareBoxSupplyInterval: 0,
+      fetchEpicBoxSupplyInterval: 0,
       commonBoxSupply: 0,
       rareBoxSupply: 0,
+      epicBoxSupply: 0,
       isLoading: false,
     };
   },
@@ -109,7 +112,7 @@ export default Vue.extend({
     },
 
     shopOffersNftList(): SkillShopListing[] {
-      const { common, rare } = this.getBoxPrice();
+      const { common, rare, epic } = this.getBoxPrice();
 
       const nftList = [
         {
@@ -136,11 +139,21 @@ export default Vue.extend({
           id: 2,
           type: "SecretBox",
           nftPrice: 0,
+          name: "Blind Box",
+          description: "",
+          image: "blind-box.png",
+          isSoldOut: false,
+          supply: 0
+        },
+        {
+          id: 3,
+          type: "SecretBox",
+          nftPrice: toBN(fromWeiEther(epic)).toNumber(),
           name: "Epic Box",
           description: "Get epic weapon, 6% chance to get 5-stars weapon",
           image: "epic-box.png",
-          isSoldOut: true,
-          supply: 0
+          isSoldOut: Number(this.epicBoxSupply) === 0,
+          supply: this.epicBoxSupply
         },
       ] as SkillShopListing[];
 
@@ -153,7 +166,7 @@ export default Vue.extend({
   },
 
   methods: {
-    ...(mapActions(["fetchBoxPrice", 'fetchTotalRareBoxSupply','fetchTotalCommonBoxSupply']) as StoreMappedActions),
+    ...(mapActions(["fetchBoxPrice", 'fetchTotalRareBoxSupply','fetchTotalCommonBoxSupply', 'fetchTotalEpicBoxSupply']) as StoreMappedActions),
     convertWeiToSkill(wei: string) {
       return fromWeiEther(wei);
     },
@@ -200,6 +213,10 @@ export default Vue.extend({
     this.fetchRareBoxSupplyInterval = setInterval(async () => {
       this.rareBoxSupply = await this.fetchTotalRareBoxSupply();
     }, 3000);
+    // @ts-ignore
+    this.fetchEpicBoxSupplyInterval = setInterval(async () => {
+      this.epicBoxSupply = await this.fetchTotalEpicBoxSupply();
+    }, 3000);
     setTimeout(() => {
       this.isLoading = false;
     }, 3000);
@@ -208,6 +225,7 @@ export default Vue.extend({
     clearInterval(this.fetchBoxPriceInterval);
     clearInterval(this.fetchCommonBoxSupplyInterval);
     clearInterval(this.fetchRareBoxSupplyInterval);
+    clearInterval(this.fetchEpicBoxSupplyInterval);
   },
 });
 </script>
