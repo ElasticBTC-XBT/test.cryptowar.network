@@ -345,4 +345,9 @@ contract BlindBox is
     function getFragmentAmount(address _account) public view returns (uint256) {
         return fragmentQty[_account];
     }
+
+    function getBox(uint256 _id) public  view returns (uint256 boxType) {
+        Box memory _box = tokens[_id];
+        boxType = uint(_box.boxType);
+    }
 }
