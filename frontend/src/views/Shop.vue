@@ -136,16 +136,6 @@ export default Vue.extend({
           supply: this.rareBoxSupply
         },
         {
-          id: 2,
-          type: "SecretBox",
-          nftPrice: 0,
-          name: "Blind Box",
-          description: "",
-          image: "blind-box.png",
-          isSoldOut: false,
-          supply: 0
-        },
-        {
           id: 3,
           type: "SecretBox",
           nftPrice: toBN(fromWeiEther(epic)).toNumber(),

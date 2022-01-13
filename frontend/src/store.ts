@@ -1066,23 +1066,24 @@ export function createStore(web3: Web3) {
         if (!BlindBox || !state.defaultAccount) return;
         const tokens = await BlindBox.methods.balanceOf(state.defaultAccount).call(defaultCallOptions(state));
         const promises = [];
-        for (let i = 0; i < tokens.length; i++) {
+        for (let i = 0; i < Number(tokens); i++) {
           promises.push(
             new Promise(resolve => {
               // @ts-ignore
               BlindBox.methods.tokenOfOwnerByIndex(state.defaultAccount, i).call(defaultCallOptions(state))
-                .then((res) => {
+                .then(async (res) => {
                   if(!res) {
                     resolve([]);
                     return ;
                   }
-                  resolve(res);
+                  const type = await BlindBox.methods.getBox(res).call(defaultCallOptions(state));
+                  resolve({id: res, type});
                 });
             })
           );
         }
         const result: any[] = await Promise.all(promises);
-        console.log('mememe', result);
+        // commit()
         return result;
       },
 
@@ -2553,7 +2554,6 @@ export function createStore(web3: Web3) {
       },
 
       async purchaseCommonSecretBox({ state, dispatch }) {
-        console.log(state.ownedCommonBoxIds);
         const { xBladeToken, BlindBox, CryptoWars } = state.contracts();
         if (!xBladeToken || !BlindBox || !state.defaultAccount || !CryptoWars) return;
 
@@ -2606,7 +2606,7 @@ export function createStore(web3: Web3) {
             .send(defaultCallOptions(state));
         }
 
-        await BlindBox.methods.buy(2).send({
+        await BlindBox.methods.buy(1).send({
           from: state.defaultAccount,
           gas: '500000'
         });
@@ -2630,7 +2630,7 @@ export function createStore(web3: Web3) {
             .send(defaultCallOptions(state));
         }
 
-        await BlindBox.methods.buy(3).send({
+        await BlindBox.methods.buy(2).send({
           from: state.defaultAccount,
           gas: '500000'
         });
@@ -3626,6 +3626,7 @@ export function createStore(web3: Web3) {
         //@ts-ignore
         const res = await BlindBox?.methods.getBox(boxId).call(defaultCallOptions(state));
         console.log(res);
+        return res;
       }
     },
   });

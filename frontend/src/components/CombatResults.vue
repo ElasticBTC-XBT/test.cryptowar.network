@@ -8,6 +8,9 @@
     <span v-if="results === 2 && propResultsFromPVP" class="outcome"><div class="lose-results"></div>{{ getSuccessText() }}</span>
     <span v-if="results === 3" class="outcome">DRAW</span>
     <span v-if="!propResultsFromPVP" class="roll">{{ "You rolled "+results[1]+", Enemy rolled "+results[2] }}</span>
+    <div v-if="!results[0] && !resultsPVP" class="rewardPve">
+        <span v-if="results[6]">{{"You get " +results[6]+ " 💎"}}</span>
+    </div>
     <div v-if="results[0] && !resultsPVP" class="rewardPve">
       {{ "You earned "+results[3]+" xp"}}
       <span v-if="!propResultsFromPVP" v-tooltip="convertWei(results[4])+' xBlade'">{{formattedXBlade}}

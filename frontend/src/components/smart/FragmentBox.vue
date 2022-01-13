@@ -8,9 +8,13 @@
       <b-modal id="convertFragmentModal" hide-footer hide-header hide-header-close>
         <div class="buttonFightFragment" @click="$bvModal.hide('fragmentOpenBoxModal')"><span>GO TO CHECK</span></div>
       </b-modal>
+       <b-modal id="successOpenBox" hide-footer hide-header hide-header-close>
+         <div class="congratsText">Check your new weapon at Weapon Store</div>
+        <div class="buttonFightFragment" @click="$bvModal.hide('successOpenBox')"><span>GO TO CHECK</span></div>
+      </b-modal>
       <b-modal id="modal-buyitem">
-          <span class="congratsText">You received a Common Box</span>
-          <div class="common-box"></div>
+          <span v-if="this.boxType.length>2" class="congratsText">You received a {{this.boxType[0].toUpperCase() + this.boxType.slice(1)}} Box</span>
+          <div :class="this.boxType +'-box'"></div>
           <div>
             <div>
               <b-button class="mt-3" block @click="$bvModal.hide('modal-buyitem')">LATER</b-button>
@@ -48,7 +52,7 @@
             </div>
             <div class="buttonFightFragment" @click="handleConvertBox">
                 <!-- <div class="dust-quantity text-center"> -->
-                <span>OPEN</span>
+                <span>{{'OPEN ('+fragmentPerBox+'💎)'}}</span>
                 <!-- </div> -->
             </div>
             </div>
@@ -68,7 +72,8 @@ export default {
       fragmentPerBox: 0,
       isConvertingFragmentToBox: false,
       errorMessage: '',
-      boxId: -1
+      boxId: -1,
+      boxType: ''
     };
   },
 
@@ -84,7 +89,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["getFragmentAmount", "convertFragmentToBox", "openCommonBox", "getMyBoxes"]),
+    ...mapActions(["getFragmentAmount", "convertFragmentToBox", "openCommonBox", "getMyBoxes", "getBoxDetail"]),
     async handleConvertBox() {
       try{
         if(this.xGemAmount < this.fragmentPerBox) {
@@ -100,11 +105,25 @@ export default {
           const objectXGem = await this.getFragmentAmount();
           this.xGemAmount = objectXGem.fragmentAmount;
           this.fragmentPerBox = objectXGem.fragmentPerBox;
+          const boxTypeReturn = await this.getBoxDetail({boxId:this.boxId});
+          switch(boxTypeReturn) {
+          case 1: {
+            this.boxType= 'rare';
+            break;
+          }
+          case 2: {
+            this.boxType = 'epic';
+            break;
+          }
+          default: {
+            this.boxType = 'common';
+          }
+          }
           await this.getMyBoxes();
           setTimeout(() => {
             this.isConvertingFragmentToBox =false;
             this.$bvModal.show('modal-buyitem');
-          }, 6000);
+          }, 4000);
         }else {
           this.isConvertingFragmentToBox =false;
         }
@@ -119,6 +138,9 @@ export default {
           this.isConvertingFragmentToBox=true;
           await this.openCommonBox({boxId: this.boxId});
           this.isConvertingFragmentToBox=false;
+          setTimeout(() => {
+            this.$bvModal.show('successOpenBox');
+          }, 1000);
         }catch(error) {
           this.isConvertingFragmentToBox=false;
         }
@@ -215,7 +237,7 @@ export default {
     background-repeat: no-repeat;
     background-color: transparent;
     margin-left: 0.8rem;;
-    min-width: 160px;
+    min-width: 190px;
     justify-content: center;
     align-items: center;
     display: flex;
