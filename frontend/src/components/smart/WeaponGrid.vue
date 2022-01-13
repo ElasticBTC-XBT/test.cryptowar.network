@@ -81,6 +81,10 @@
       </div>
     </div>
 
+    <div class="col-12 col-xl-9 no-data" v-if="isMarket && weaponIds.length === 0">
+      <div>No results found</div>
+    </div>
+
     <ul
       class="weapon-grid row" :class="showFilters && 'col-12 col-xl-9'"
       v-if="!isBlacksmith && !isBurnWeapon"
@@ -599,6 +603,14 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+
+.no-data{
+  display: flex;
+  justify-content: center;
+  margin-top: 200px;
+  font-size: 30px;
+}
+
 .character-item-wrap {
   margin: 0 auto;
   margin-bottom: 50px;

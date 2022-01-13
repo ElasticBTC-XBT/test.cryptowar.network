@@ -116,6 +116,10 @@
       </template> -->
     </div>
 
+    <div class="col-12 col-xl-9 no-data" v-if="isMarket && characterIds.length === 0">
+      <div>No results found</div>
+    </div>
+
     <ul class="character-list row" :class="showFilters && 'col-12 col-xl-9'">
       <li
         class="col-12 col-sm-6 col-md-4"
@@ -426,6 +430,12 @@ export default {
 </script>
 
 <style scoped>
+.no-data{
+  display: flex;
+  justify-content: center;
+  margin-top: 200px;
+  font-size: 30px;
+}
 
 .weapon-bt-box{
   margin-top: 15px;
