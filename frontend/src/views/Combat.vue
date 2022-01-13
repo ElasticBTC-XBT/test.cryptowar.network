@@ -1,8 +1,6 @@
 <template>
   <div class="body main-font">
-    <character-bar
-        v-if="!featureFlagStakeOnly && currentCharacterId !== null"
-    />
+    <character-bar/>
     <div class="nav-bottom-line"></div>
     <div v-if="ownWeapons.length > 0 && ownCharacters.length > 0">
       <div class="row" v-if="error !== null">
