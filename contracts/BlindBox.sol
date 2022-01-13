@@ -1,4 +1,5 @@
 pragma solidity ^0.6.0;
+pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
@@ -69,6 +70,7 @@ contract BlindBox is
         commonPrice = 1 ether;
         rarePrice = 2 ether;
         epicPrice = 2 ether;
+        fragmentPerBox = 1;
 
         require(_weapon != address(0));
         weapons = Weapons(_weapon);
@@ -285,8 +287,8 @@ contract BlindBox is
         uint256 seed = uint256(
             keccak256(abi.encodePacked(blockhash(block.number - 1), msg.sender))
         );
-        tokens.push(Box(getBoxTypeForFragment(seed)));
         uint256 tokenId = tokens.length;
+        tokens.push(Box(getBoxTypeForFragment(seed)));
         _mint(msg.sender, tokenId);
         emit NewBlindBox(tokenId, msg.sender);
     }
@@ -368,4 +370,17 @@ contract BlindBox is
         Box memory _box = tokens[_id];
         boxType = uint(_box.boxType);
     }
+
+    function commonPriceInXBlade() public view returns (uint256 _price) {
+        _price = cwController.usdToxBlade(commonPrice);
+    }
+
+    function rarePriceInXBlade() public view returns (uint256 _price) {
+        _price = cwController.usdToxBlade(rarePrice);
+    }
+
+    function epicPriceInXBlade() public view returns (uint256 _price) {
+        _price = cwController.usdToxBlade(epicPrice);
+    }
+
 }

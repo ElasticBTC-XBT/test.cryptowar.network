@@ -5,7 +5,7 @@ const BlindBox = artifacts.require("BlindBox");
 module.exports = async function (deployer, network, accounts) {
   let blindBoxAddress;
   if (network === "bsctestnet") {
-    blindBoxAddress = "0x3c7CABcD507b45B9c447357F1e161F80e5e89056";
+    blindBoxAddress = "0xEfC8E6EDfeD04fFE7B32a3962BB821f7073e03b3";
   }
   if (network === "bscmainnet") {
     blindBoxAddress = "";
