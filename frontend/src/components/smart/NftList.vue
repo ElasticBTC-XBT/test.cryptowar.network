@@ -468,6 +468,7 @@ export default Vue.extend({
         if (item.id === 3) { // Epic Box
           await this.purchaseEpicSecretBox();
         }
+        //@ts-ignore
         this.$bvModal.show('modal-buyitem');
       }
 

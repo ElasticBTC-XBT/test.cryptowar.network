@@ -84,7 +84,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["getFragmentAmount", "convertFragmentToBox", "openCommonBox"]),
+    ...mapActions(["getFragmentAmount", "convertFragmentToBox", "openCommonBox", "getMyBoxes"]),
     async handleConvertBox() {
       try{
         if(this.xGemAmount < this.fragmentPerBox) {
@@ -94,13 +94,19 @@ export default {
         }
         this.isConvertingFragmentToBox =true;
         const response = await this.convertFragmentToBox();
-        this.isConvertingFragmentToBox =false;
+        console.log('nhan dc respinse r', response);
         if(response) {
           this.boxId = response.boxId;
           const objectXGem = await this.getFragmentAmount();
           this.xGemAmount = objectXGem.fragmentAmount;
           this.fragmentPerBox = objectXGem.fragmentPerBox;
-          this.$bvModal.show('modal-buyitem');
+          await this.getMyBoxes();
+          setTimeout(() => {
+            this.isConvertingFragmentToBox =false;
+            this.$bvModal.show('modal-buyitem');
+          }, 6000);
+        }else {
+          this.isConvertingFragmentToBox =false;
         }
       }catch(error) {
         this.isConvertingFragmentToBox =false;

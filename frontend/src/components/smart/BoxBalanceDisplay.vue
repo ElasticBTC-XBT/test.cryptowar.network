@@ -80,7 +80,13 @@ export default {
   },
 
   methods: {
-    ...mapActions([]),
+    ...mapActions(["getMyBoxes", "getBoxDetail"]),
+  },
+  async mounted() {
+    const res = await this.getMyBoxes();
+    console.log('res la gi', res);
+    const res2 = await this.getBoxDetail('11');
+    console.log('hhuhuu', res2);
   }
 };
 </script>
