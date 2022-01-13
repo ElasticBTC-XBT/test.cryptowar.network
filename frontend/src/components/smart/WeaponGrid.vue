@@ -81,7 +81,7 @@
       </div>
     </div>
 
-    <div class="col-12 col-xl-9 no-data" v-if="isMarket && weaponIds.length === 0">
+    <div class="col-12 col-xl-9 no-data" v-if="isPage && weaponIds.length === 0">
       <div>No results found</div>
     </div>
 
@@ -341,6 +341,10 @@ export default Vue.extend({
       type: ()=>{},
       default: null
     },
+    isPage: {
+      type: Boolean,
+      default: false
+    }
   },
 
   data() {

@@ -32,6 +32,7 @@
                 :characterIds="resultSearch"
                 :showLimit="characterShowLimit"
                 :isMarket="true"
+                :isPage="true"
                 v-model="selectedNftId">
                 <template #above="{ character: { id } }">
                   <div>
@@ -70,6 +71,7 @@
                 :showFavoriteToggle="false"
                 :canFavorite="false"
                 :isMarket="true"
+                :isPage="true"
                 v-model="selectedNftId"
                 showFilters
               >
@@ -107,6 +109,7 @@
                 :showReforgedToggle="false"
                 :showFavoriteToggle="false"
                 :isMarket="true"
+                :isPage="true"
                 v-model="selectedNftId"
                 :canFavorite="false">
 
@@ -139,6 +142,7 @@
 
               </nft-list>
               <b-pagination class="customPagination"
+                style="margin-top: 20px"
                 v-visible="resultSearch.length > 0"
                 align="center" v-model="currentPage"
                 :total-rows="totalPages"
@@ -432,6 +436,7 @@
               :isSell="isSell"
               :sellClick="showListingSetupModal"
               :checklist="false"
+              :isMarket="true"
             />
           </div>
           <div class="col-12 col-xl-9 col-md-12 col-sm-12 sell-grid" v-show="activeType === 'character' && !isBtnSell">
@@ -440,6 +445,7 @@
               :sellClick="showListingSetupModal"
               :isSell="isSell"
               :checklist="false"
+              :isMarket="true"
             />
           </div>
           <div class="col-12col-xl-3 col-md-12 col-sm-12 sell-grid" v-if="activeType === 'shield'">

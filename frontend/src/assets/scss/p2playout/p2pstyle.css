@@ -21283,9 +21283,10 @@ margin-bottom: 1.5rem;
     .character-item:not(.lobby-box-item-wrap) {
         width: 100%;
         /* margin-top: 70px !important; */
-        margin-top: 20px !important;
+        margin-top: 50px !important;
         margin: auto;
         margin-bottom: 50px;
+        height: inherit;
     }
 
     .character-item:not(.lobby-box-item-wrap)::before,

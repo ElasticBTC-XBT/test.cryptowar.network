@@ -116,7 +116,7 @@
       </template> -->
     </div>
 
-    <div class="col-12 col-xl-9 no-data" v-if="isMarket && characterIds.length === 0">
+    <div class="col-12 col-xl-9 no-data" v-if="isPage && characterIds.length === 0">
       <div>No results found</div>
     </div>
 
@@ -257,6 +257,10 @@ export default {
       type: ()=>{},
       default: null
     },
+    isPage: {
+      type: Boolean,
+      default: false
+    }
   },
 
   async created() {
