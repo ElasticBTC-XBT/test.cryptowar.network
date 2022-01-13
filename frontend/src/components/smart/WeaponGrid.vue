@@ -621,9 +621,9 @@ export default Vue.extend({
   width: fit-content;
 }
 
-/* .weapon-grid.row{
+.weapon-grid.row{
   flex: 1;
-} */
+}
 
 .weapon-bt-box{
   margin-top: 15px;
