@@ -2796,9 +2796,9 @@ export function createStore(web3: Web3) {
         const { BlindBox } = state.contracts();
         if (!BlindBox || !state.defaultAccount) return;
 
-        const commonPrice = await BlindBox.methods.commonPrice().call(defaultCallOptions(state));
-        const rarePrice = await BlindBox.methods.rarePrice().call(defaultCallOptions(state));
-        const epicPrice = await BlindBox.methods.epicPrice().call(defaultCallOptions(state));
+        const commonPrice = await BlindBox.methods.commonPriceInXBlade().call(defaultCallOptions(state));
+        const rarePrice = await BlindBox.methods.rarePriceInXBlade().call(defaultCallOptions(state));
+        const epicPrice = await BlindBox.methods.epicPriceInXBlade().call(defaultCallOptions(state));
         commit('updateBoxPrice', {
           commonPrice,
           rarePrice,
