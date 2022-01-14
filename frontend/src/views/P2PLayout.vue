@@ -18,7 +18,7 @@
         </div>
       </div>
       <b-modal id="listHeroToCareerModal" hide-footer hide-header-close>
-        <div class="headerModalCareer"></div>
+        <!-- <div class="headerModalCareer"></div> -->
         <div class="listHeroToCareerModal-head">CryptoWar Message</div>
         <div class="listHeroToCareerModal-body" v-if="errorMessage">{{errorMessage}}</div>
         <div class="listHeroToCareerModal-body" v-if="!errorMessage">Listing HERO to Career: <span>Done</span></div>
@@ -26,7 +26,7 @@
           checkSelect = false, addClass = ''" class="listHeroToCareerModal-btn confirm">GO TO CHECK</button>
       </b-modal>
       <b-modal id="showWeaponModal" hide-footer hide-header-close>
-        <div class="headerModalCareer"></div>
+        <!-- <div class="headerModalCareer"></div> -->
         <div class="listHeroToCareerModal-body" v-if="errorMessage">{{errorMessage}}</div>
         <div class="itemWeapon" >
             <WeaponSelect :weapon="this.weaponToShow"/>
@@ -76,7 +76,7 @@
       <div class="row">
         <div :class="addClass" class="col-12 info-box">
           <div v-if="selectedCharacter" class="item-selected">
-            <div class="item">
+            <div class="item" style="margin-top: 0">
               <div class="info">
                 <div class="info-head">
                     <div
@@ -108,7 +108,7 @@
             </div>
           </div>
           <div class="item-selected" v-if="selectedWeapon">
-          <div class="item" >
+          <div class="item" style="margin-top: 0">
             <WeaponSelect :weapon="selectedWeapon"/>
           </div>
           </div>
@@ -1805,6 +1805,10 @@ export default {
 }
 
 @media (max-width: 575.98px) {
+
+  .itemCareer{
+    height: 29.5em;
+  }
   .quantity-heroes {
   display: flex;
   flex-direction: column;

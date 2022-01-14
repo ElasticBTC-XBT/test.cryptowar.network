@@ -579,7 +579,7 @@ export default {
   color: #fff;
   margin-left: 5px;
   position: relative;
-  top: -30px;
+  top: -20px;
   text-align: center;
 }
 
@@ -1193,11 +1193,13 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
   }
 
   .btn-close-fight-results{
+    display: none;
     width: 110px;
     height: 37px;
   }
 
   #fightResultsModal .results-panel{
+    margin-bottom: 25px;
     width: 21em;
   }
 
@@ -1208,7 +1210,8 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
   }
 
   .title-results{
-    top: 0;
+    display: none;
+    /* top: 0; */
   }
 }
 .element-icon {

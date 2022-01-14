@@ -935,6 +935,13 @@ button.close {
     align-items: center;
     background-size: contain !important;
   }
+
+#fightResultsModal .modal-content{
+  padding: 0;
+  min-width: 22rem;
+  height: 230px;
+}
+
   #showWeaponModal .modal-content,
   #claimModal .modal-content,
   #selectHeroOrWeaponModal .modal-content{
@@ -944,6 +951,10 @@ button.close {
     border: 1px solid #F48757;
     border-radius: 20px 30px 20px 20px;
     position: relative;
+  }
+
+  #selectHeroOrWeaponModal .modal-content{
+    padding: 0;
   }
 
   #selectHeroOrWeaponModal .modal-content{
