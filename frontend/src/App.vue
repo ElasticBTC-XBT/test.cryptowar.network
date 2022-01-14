@@ -1213,6 +1213,17 @@ div.bg-success {
     bottom: -4px;
     right: 0;
   }
+
+  #fightResultsModal .modal-header .close{
+    font-size: 38px !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  #fightResultsModal .modal-header .close{
+    font-size: 38px !important;
+    margin-top: -10px;
+  }
 }
 
 @media all and (max-width: 767.98px) {

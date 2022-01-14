@@ -17171,6 +17171,10 @@ a:hover {
     .z-header .navbar .navbar-brand img {
         height: 30px;
     }
+    #fightResultsModal .modal-header .close{
+        font-size: 38px !important;
+        margin-top: -14px;
+    }
 }
 
 .z-header .navbar .navbar-collapse .navbar-nav {

@@ -1197,7 +1197,7 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
   }
 
   #fightResultsModal .results-panel{
-    margin-bottom: 25px;
+    margin-bottom: 40px;
     width: 21em;
   }
 
@@ -1208,8 +1208,8 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
   }
 
   .title-results{
-    display: none;
-    /* top: 0; */
+    /* display: none; */
+    top: 2px;
   }
 }
 .element-icon {
