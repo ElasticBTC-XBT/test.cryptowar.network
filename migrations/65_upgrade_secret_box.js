@@ -17,10 +17,10 @@ module.exports = async function (deployer, network, accounts) {
     await upgradeProxy(proxyAddress, SecretBox, {
       deployer,
     });
-    const secretBox = await SecretBox.at(proxyAddress);
-    const cwControllerAddress = "0xAadfa537ecA54d3d7655C4117bBFB83B9bF6035a";
-    await secretBox.setCwController(cwControllerAddress);
-    await secretBox.setCommonBoxPrice(50 * 10 ** 18);
-    await secretBox.setRareBoxPrice(150 * 10 ** 18);
+    // const secretBox = await SecretBox.at(proxyAddress);
+    // const cwControllerAddress = "0xAadfa537ecA54d3d7655C4117bBFB83B9bF6035a";
+    // await secretBox.setCwController(cwControllerAddress);
+    // await secretBox.setCommonBoxPrice(50 * 10 ** 18);
+    // await secretBox.setRareBoxPrice(150 * 10 ** 18);
   }
 };

@@ -26541,6 +26541,151 @@
           }
         }
       }
+    },
+    "3f8048514f7129dbf0c8f77dc999ad8fd74c19d67050a3f7581dc292c8a768d7": {
+      "address": "0xDa71f57935730F13d3374FCBb719EbC1756BBd98",
+      "txHash": "0xbd90eff206d66586d54de2bf08d964819839037c21c5fc491edb5df0313e0cd6",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:25"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:30"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "../@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:20"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:74"
+          },
+          {
+            "contract": "PausableUpgradeable",
+            "label": "_paused",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:28"
+          },
+          {
+            "contract": "PausableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:96"
+          },
+          {
+            "contract": "SecretBox",
+            "label": "lastBlockNumberCalled",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "SecretBox.sol:15"
+          },
+          {
+            "contract": "SecretBox",
+            "label": "game",
+            "type": "t_contract(CryptoWars)9143",
+            "src": "SecretBox.sol:17"
+          },
+          {
+            "contract": "SecretBox",
+            "label": "characters",
+            "type": "t_contract(Characters)15223",
+            "src": "SecretBox.sol:18"
+          },
+          {
+            "contract": "SecretBox",
+            "label": "weapons",
+            "type": "t_contract(Weapons)24706",
+            "src": "SecretBox.sol:19"
+          },
+          {
+            "contract": "SecretBox",
+            "label": "xBlade",
+            "type": "t_contract(IERC20)32024",
+            "src": "SecretBox.sol:21"
+          },
+          {
+            "contract": "SecretBox",
+            "label": "commonBoxPrice",
+            "type": "t_uint256",
+            "src": "SecretBox.sol:23"
+          },
+          {
+            "contract": "SecretBox",
+            "label": "rareBoxPrice",
+            "type": "t_uint256",
+            "src": "SecretBox.sol:24"
+          },
+          {
+            "contract": "SecretBox",
+            "label": "commonBoxAmount",
+            "type": "t_uint256",
+            "src": "SecretBox.sol:25"
+          },
+          {
+            "contract": "SecretBox",
+            "label": "rareBoxAmount",
+            "type": "t_uint256",
+            "src": "SecretBox.sol:26"
+          },
+          {
+            "contract": "SecretBox",
+            "label": "cwController",
+            "type": "t_contract(CWController)3385",
+            "src": "SecretBox.sol:28"
+          }
+        ],
+        "types": {
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_contract(CryptoWars)9143": {
+            "label": "contract CryptoWars"
+          },
+          "t_contract(Characters)15223": {
+            "label": "contract Characters"
+          },
+          "t_contract(Weapons)24706": {
+            "label": "contract Weapons"
+          },
+          "t_contract(IERC20)32024": {
+            "label": "contract IERC20"
+          },
+          "t_contract(CWController)3385": {
+            "label": "contract CWController"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
     }
   }
 }
