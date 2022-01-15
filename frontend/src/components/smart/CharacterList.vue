@@ -582,6 +582,17 @@ input::-webkit-inner-spin-button {
   .character-item-wrap {
     margin-bottom: 0;
   }
+  .character-item.addnew{
+    height: 304px;
+  }
+  .recruit.btn-secondary{
+    width: 117px;
+    height: 120px;
+    font-size: 18px;
+  }
+  .recruit.btn-secondary .price{
+    font-size: 13px;
+  }
 }
 
 </style>

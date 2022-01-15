@@ -247,7 +247,7 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped>
+<style>
 @media (min-width: 1700px) {
   .inventory {
     margin-left: 95px;
@@ -256,8 +256,48 @@ export default Vue.extend({
 }
 
 @media (min-width: 1200px) {
-  .tab-content {
+  .inventory .tab-content {
     margin-top: 60px;
+  }
+}
+.inventory .heading.tabs .nav-item{
+  flex: none;
+  width: fit-content;
+}
+.inventory .heading.tabs ul:first-child{
+  justify-content: flex-start !important;
+}
+@media (min-width: 1200px) {
+  .inventory.main-font .nav-tabs a.nav-link{
+    width: 220px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+@media (max-width: 1200px) {
+  .inventory.main-font .nav-tabs a.nav-link{
+    width: 180px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+@media (max-width: 992px) {
+  .inventory.main-font .nav-tabs a.nav-link{
+    width: 140px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+@media (max-width: 768px) {
+  .inventory.main-font .nav-tabs a.nav-link{
+    width: fit-content;
+    padding: 0.5rem 1rem;
+  }
+}
+@media (max-width: 575.98px) {
+  .inventory.main-font .nav-tabs a.nav-link{
+    padding: 0.5rem 0.5rem;
+    width: fit-content;
   }
 }
 </style>

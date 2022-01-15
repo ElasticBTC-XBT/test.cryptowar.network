@@ -279,6 +279,9 @@ export default {
   .box-quantity {
     font-size: 18px;
   }
+  .btn-open-box {
+    height: 42px !important;
+  }
 }
 
 @media (max-width: 768px) {

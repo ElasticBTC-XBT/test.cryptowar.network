@@ -236,12 +236,12 @@ export default {
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-color: transparent;
+    margin: 2rem 0;
     margin-left: 0.8rem;;
     min-width: 190px;
     justify-content: center;
     align-items: center;
     display: flex;
-    margin-top: 2rem;
     cursor: pointer;
 }
 
@@ -410,6 +410,15 @@ export default {
   #modal-buyitem .modal-body {
     position: relative;
     top: -38%;
+  }
+  .fragmentAmountText{
+    font-size: 1.4rem;
+  }
+  .fragmentAmountNumber {
+    font-size: 1.5rem;
+  }
+  .dust-list{
+    padding-top: 0;
   }
   /* .dust-quantity-wrap {
     padding: 0 100px;
