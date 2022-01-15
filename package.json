@@ -11,12 +11,14 @@
     "@openzeppelin/contracts": "^3.4.1",
     "@openzeppelin/contracts-upgradeable": "^3.4.1",
     "@truffle/hdwallet-provider": "^1.2.6",
+    "@walletconnect/web3-provider": "^1.7.1",
     "abdk-libraries-solidity": "2.4.0",
     "censor-sensor": "^1.0.6",
     "dotenv": "^8.2.0",
     "solc": "^0.8.9",
     "vue-observe-visibility": "^1.0.0",
-    "vue-spinner": "^1.0.4"
+    "vue-spinner": "^1.0.4",
+    "web3": "^1.6.1"
   },
   "devDependencies": {
     "@openzeppelin/test-helpers": "^0.5.11",

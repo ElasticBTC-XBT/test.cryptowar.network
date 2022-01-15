@@ -829,7 +829,7 @@ export function createStore(web3: Web3) {
           refreshUserDetails = true;
         }
 
-        const accounts = await web3.eth.requestAccounts();
+        const accounts = await web3.eth.getAccounts();
 
         if (!_.isEqual(state.accounts, accounts)) {
           commit('setAccounts', { accounts });

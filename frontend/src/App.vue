@@ -8,7 +8,8 @@
       </div>
       <div
         class="fullscreen-warning"
-        v-if="showMetamaskWarning"
+        v-if="showMetamaskWarning && isMetamask"
+        sytle="z-index: 100"
       >
         <div class="starter-panel not-connect">
           <span class="starter-panel-heading"
@@ -33,13 +34,15 @@
               v-html="'Hide Warning'"
             />
           </div>
+          <div class="back-btn" @click="isMetamask = false; hideWalletWarning = false">
+            <i class="fas fa-chevron-left"></i>
+          </div>
         </div>
       </div>
       <div
         class="fullscreen-warning"
         v-if="
           !hideWalletWarning &&
-          !showMetamaskWarning &&
           (errorMessage ||
             (ownCharacters.length === 0 &&
               skillBalance === '0' &&
@@ -93,7 +96,20 @@
             class="hide-modal"
             @click="toggleHideWalletWarning"
           ><img src='./assets/images/btn-close.svg'/></button>
-          <div class="button-div">
+          <div class="button-div" v-if="!isMetamask">
+            <big-button
+              v-bind:class="[isConnecting ? 'disabled' : '']"
+              class="btn btn-pink-bg modal-btn"
+              v-html="`Connect via Walletconnect`"
+              @click="connectWalletconnect"
+            />
+            <big-button
+              class="btn btn-pink-bg modal-btn"
+              v-html="`Connect via metamask`"
+              @click="checkMetamask"
+            />
+          </div>
+          <div class="button-div" v-if="isMetamask">
             <big-button
               class="btn btn-pink-bg modal-btn"
               v-html="`Configure MetaMask`"
@@ -102,7 +118,7 @@
             <big-button
               v-bind:class="[isConnecting ? 'disabled' : '']"
               class="btn btn-pink-bg modal-btn"
-              v-html="`Connect to MetaMask`"
+              v-html="`Connect to metamask`"
               @click="connectMetamask"
             />
           </div>
@@ -114,7 +130,8 @@
 
 <script>
 import BN from "bignumber.js";
-
+import WalletConnect from "@walletconnect/client";
+import QRCodeModal from "@walletconnect/qrcode-modal";
 import { mapState, mapActions, mapGetters } from "vuex";
 import _ from "lodash";
 import Vue from "vue";
@@ -133,6 +150,7 @@ Vue.directive("visible", (el, bind) => {
 export default {
   inject: [
     "web3",
+    "walletConnectProvider",
     "featureFlagStakeOnly",
     "expectedNetworkId",
     "expectedNetworkName",
@@ -150,6 +168,11 @@ export default {
     isConnecting: false,
     recruitCost: "",
     isMaintenance: false,
+    connector: new WalletConnect({
+      bridge: "https://bridge.walletconnect.org", // Required
+      qrcodeModal: QRCodeModal,
+    }),
+    isMetamask: undefined,
   }),
 
   computed: {
@@ -232,6 +255,13 @@ export default {
     checkStorage() {
       this.hideWalletWarning =
         localStorage.getItem("hideWalletWarning") === "true";
+    },
+
+    checkMetamask() {
+      this.isMetamask = true;
+      if(this.showMetamaskWarning) {
+        this.hideWalletWarning = true;
+      }
     },
 
     async initializeRecruitCost() {
@@ -352,9 +382,10 @@ export default {
     },
 
     async connectMetamask() {
-      const web3 = this.web3.currentProvider;
       this.isConnecting = true;
       this.errorMessage = "Connecting to MetaMask...";
+
+      const web3 = this.web3.givenProvider;
       web3
         .request({ method: "eth_requestAccounts" })
         .then(() => {
@@ -368,6 +399,47 @@ export default {
           this.errorMessage = "Error: MetaMask could not get permissions.";
           this.isConnecting = false;
         });
+
+      this.isConnecting = true;
+      this.errorMessage = "Connecting to MetaMask...";
+    },
+
+    async connectWalletconnect() {
+      this.isConnecting = true;
+      this.errorMessage = "Connecting to Walletconnect...";
+
+      this.web3.setProvider(this.walletConnectProvider);
+      await this.walletConnectProvider.enable();
+      QRCodeModal.close();
+
+      if (!this.connector.connected) {
+        this.connector.createSession();
+      }
+
+      // Subscribe to connection events
+      this.connector.on("connect", (error) => {
+        if (error) {
+          throw error;
+        }
+
+        const web3 = this.web3.currentProvider;
+        web3
+          .request({ method: "eth_getAccounts" })
+          .then(() => {
+            this.errorMessage = "Success: Walletconnect connected.";
+            this.isConnecting = false;
+
+            this.initializeStore();
+            this.toggleHideWalletWarning();
+          })
+          .catch(() => {
+            this.errorMessage = "Error: Walletconnect could not get permissions.";
+            this.isConnecting = false;
+          });
+      });
+      this.errorMessage = "Success: Walletconnect connected.";
+      this.isConnecting = false;
+      this.hideWalletWarning = true;
     },
 
     toggleHideWalletWarning() {
@@ -405,7 +477,7 @@ export default {
 
   },
 
-  mounted() {
+  async mounted() {
     this.checkStorage();
 
     Events.$on("setting:hideRewards", () => this.checkStorage());
@@ -432,6 +504,9 @@ export default {
     });
 
     this.showWarningDialog();
+    if (this.connector.connected) {
+      this.connectWalletconnect();
+    }
   },
 
   async created() {
@@ -1161,6 +1236,14 @@ div.bg-success {
 .modal-btn.btn-blue-bg {
   background-size: 210px 54px !important;
   min-height: 54px;
+}
+
+.back-btn {
+  position: absolute;
+  font-size: 30px;
+  top: 30px;
+  left: 50px;
+  cursor: pointer;
 }
 
 @media (max-width: 767.98px) {
