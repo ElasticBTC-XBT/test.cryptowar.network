@@ -385,8 +385,8 @@ export default {
   }
 
   .weapon-icon .placeholder {
-    max-width: 160px;
-    max-height: 160px;
+    max-width: 130px;
+    max-height: 130px;
   }
 
   .weapon-icon.isBlacksmith .placeholder {
@@ -435,7 +435,7 @@ export default {
   .weapon-icon .name {
     font-size: 14px;
     margin-top: 8px;
-    margin-bottom: 40px;
+    margin-bottom: 8px;
   }
 
   .small-durability-bar-wrap {

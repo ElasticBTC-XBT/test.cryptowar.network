@@ -94,4 +94,9 @@ h2 {
     font-size: 1.5rem;
   }
 }
+@media (max-width: 575.98px) {
+  .button.encounter-button h1{
+    font-size: 1em;
+  }
+}
 </style>

@@ -86,7 +86,7 @@
                     <div>
                       <b-form-select id="select-stamina" v-model="fightMultiplier" :options='setStaminaSelectorValues()' @change="setFightMultiplier()">
                       </b-form-select>
-                      <div class="dropdown-icon"></div>
+                      <label for="select-stamina" class="dropdown-icon"></label>
                     </div>
                   </div>
                 </div>
@@ -138,37 +138,37 @@
               </div>
               <div class="row list-enemy">
                 <div class="encounter" v-for="(e, i) in targets" :key="i">
-                <div class="encounter-container">
-                <div class="enemy-character">
-                    <div class="encounter-element">
-                      <span :class="getCharacterTrait(e.trait).toLowerCase() + '-icon element-icon circle-element' " />
+                  <div class="encounter-container">
+                    <div class="enemy-character">
+                        <div class="encounter-element">
+                          <span :class="getCharacterTrait(e.trait).toLowerCase() + '-icon element-icon circle-element' " />
+                        </div>
+
+                        <div class="enemy-id">ID {{i}}</div>
+
+                        <div class="">
+                          <img class="mx-auto enemy-img" :src="getEnemyArt(e.power)" alt="Enemy" />
+                          <img class="enemy-around-img" :src="getEnemyArtAround(e.trait)" alt="Enemy Around">
+                        </div>
+
+                        <div class="encounter-power">{{ e.power }} Power</div>
+
+                        <div class="xp-gain">+{{ getPotentialXp(e) }} XP</div>
+                      </div>
+
+                      <div class="victory-chance">
+                        {{ getWinChance(e.power, e.trait) }} Victory
+                      </div>
+                      <big-button
+                          style="margin: 0 auto"
+                          class="encounter-button btn-styled"
+                          :mainText="`FIGHT`"
+                          :disabled="(timeMinutes === 59 && timeSeconds >= 30) || waitingResults || !weaponHasDurability(selectedWeaponId) || !charHasStamina()"
+                          @click="onClickEncounter(e), (showModalFight = true)"
+                        />
+                      <p v-if="isLoadingTargets">Loading...</p>
                     </div>
-
-                    <div class="enemy-id">ID {{i}}</div>
-
-                    <div class="">
-                      <img class="mx-auto enemy-img" :src="getEnemyArt(e.power)" alt="Enemy" />
-                      <img class="enemy-around-img" :src="getEnemyArtAround(e.trait)" alt="Enemy Around">
-                    </div>
-
-                    <div class="encounter-power">{{ e.power }} Power</div>
-
-                    <div class="xp-gain">+{{ getPotentialXp(e) }} XP</div>
-                  </div>
-
-                <div class="victory-chance">
-                  {{ getWinChance(e.power, e.trait) }} Victory
                 </div>
-                <big-button
-                    style="margin: 0 auto"
-                    class="encounter-button btn-styled"
-                    :mainText="`FIGHT`"
-                    :disabled="(timeMinutes === 59 && timeSeconds >= 30) || waitingResults || !weaponHasDurability(selectedWeaponId) || !charHasStamina()"
-                    @click="onClickEncounter(e), (showModalFight = true)"
-                  />
-                <p v-if="isLoadingTargets">Loading...</p>
-                </div>
-              </div>
               </div>
             </div>
           </div>
@@ -715,7 +715,7 @@ export default {
   text-align: end;
 }
 
-.info-weapon > div > div > div{
+.info-weapon > div > div > .dropdown-icon{
   background-repeat: no-repeat;
   background-size: contain;
   background-image: url('../assets/v2/dropdown-icon.svg');
@@ -1169,10 +1169,75 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
 }
 
 @media (max-width: 575.98px) {
+  .info-weapon > div > div > .dropdown-icon{
+    width: 16px;
+    height: 16px;
+    margin-left: 196px;
+    margin-top: -28px;
+    pointer-events: none;
+  }
+  .custom-select{
+    width: 230px;
+    height: 45px;
+  }
+  .combat-enemy-container h4{
+    margin: 0 !important;
+  }
+  .choose_weapon{
+    width: 13rem;
+    height: 38px;
+    font-size: 1em;
+  }
+  .enemy-id{
+    top: 14px;
+    right: 20px;
+    font-size: 1em;
+  }
+  .encounter img{
+    width: 120px;
+  }
+  .enemy-img{
+    top: 70px;
+  }
+  .enemy-around-img{
+    top: -110px;
+  }
+  .weapon-icon-wrapper.combat{
+    height: 270px;
+  }
+  .combat-enemy-container .weapon-icon-wrapper{
+    width: 13rem;
+  }
   .show-reforged {
     width: 100%;
     justify-content: center;
     display: block;
+  }
+  .encounter-power{
+    bottom: 26px;
+    font-size: 1em;
+  }
+  .enemy-character{
+    width: 11.5em;
+    height: 16em;
+  }
+  .xp-gain{
+    bottom: 10px;
+    font-size: .8em;
+  }
+  .victory-chance{
+    font-size: 1em;
+  }
+  .circle-element{
+    width: 2.8rem !important;
+    height: 2.8rem !important;
+  }
+  .button.encounter-button{
+    width: 120px !important;
+    height: 46px;
+  }
+  .combat-hints .property-icon{
+    width: 260px;
   }
   .row{
     margin: 0;
