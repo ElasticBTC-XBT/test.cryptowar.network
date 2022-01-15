@@ -111,7 +111,7 @@
               :style="`--staminaReady: ${
                 (getCharacterStamina(c.id) / maxStamina) * 100
               }%;`"
-              v-tooltip.bottom="{content: toolTipHtml(timeUntilCharacterHasMaxStamina(c.id), getSecondPerStamina(c.id)), trigger: (isMobile() ? 'click' : 'hover')}
+              v-tooltip.bottom="{content: toolTipHtml(timeUntilCharacterHasMaxStamina(c.id), getTimeStamina(c.level + 1)), trigger: (isMobile() ? 'click' : 'hover')}
               "
             >
               <div class="stamina-text">
@@ -210,6 +210,23 @@ export default Vue.extend({
       if (id === currentCharId) {
         return "character-highlight";
       } else return "character";
+    },
+
+    getTimeStamina(level: any){
+      if(level === 1){
+        return (420 / 60).toFixed(2);
+      }
+
+      else if(level >= 2 && level <= 29){
+        return (((level - 2) *  21 + 462) / 60).toFixed(2);
+      }
+
+      else if(level >= 30 && level <= 54){
+        return (((level - 30) *  81 + 4050) / 60).toFixed(2);
+      }
+
+      else
+        return (6000 / 60).toFixed(2);
     },
 
     toolTipHtml(time: string, minutesPerStamina: string): string {

@@ -745,12 +745,18 @@ button.close {
   color: #a50eb3 !important;
 }
 
-#loadingModal .modal-content,
 #fightResultsModal .modal-content,
-#listHeroToCareerModal .modal-content,
 #listHeroToChallengeModal .modal-content{
   min-width: 36rem;
   height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+#listHeroToCareerModal .modal-content,
+#loadingModal .modal-content{
+  min-width: 36rem;
+  height: 350px;
   display: flex;
   align-items: center;
 }
