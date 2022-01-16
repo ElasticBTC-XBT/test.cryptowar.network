@@ -1043,6 +1043,7 @@ div.bg-success {
   padding: 0 1em;
   height: calc(100vh - 56px);
   margin: auto;
+  margin-top: 88px;
 }
 
 .fullscreen-warning {
@@ -1233,6 +1234,11 @@ div.bg-success {
   }
   .blank-slate .button h1{
     font-size: 1.5rem;
+  }
+}
+@media (max-width: 1400px) {
+  .content {
+    margin-top: 102px;
   }
 }
 </style>

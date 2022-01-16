@@ -145,6 +145,12 @@ export default Vue.extend({
 </script>
 
 <style>
+.main-nav-div{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
 /** Suggest to move this to atomic folder structure like assets/css **/
 a {
   text-decoration: none;
