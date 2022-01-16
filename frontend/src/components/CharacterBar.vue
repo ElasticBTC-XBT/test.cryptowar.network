@@ -19,11 +19,11 @@ export default {
 
 <style scoped>
 .character-bar {
-  padding: 0.5em 1.2em 0.5em 1.2em;
-  background-color: #000;
+  /* padding: 0.5em 1.2em 0.5em 1.2em; */
+  /* background-color: #000; */
   position: relative;
-  left: -16px;
-  width: 101.9%;
+  /* left: -16px; */
+  width: 100%;
 }
 /* .character-bar::before{
   content: "";
@@ -55,12 +55,12 @@ export default {
 
 @media (max-width: 767.98px){
   .character-bar {
-    padding: 0.5em 1.2em 0.5em 3.4em;
-    width: 102.3%;
+    /* padding: 0.5em 1.2em 0.5em 3.4em; */
+    width: 100%;
   }
 
   .nav-bottom-line{
-    width: 113.8%;
+    width: 100%;
   }
 /* .character-bar::before{
   content: "";
@@ -80,33 +80,33 @@ export default {
 
 @media (max-width: 575.98px) {
   .character-bar {
-    padding: 0.5em 1.2em 0.5em 3.4em;
-    width: 102.9%;
+    /* padding: 0.5em 1.2em 0.5em 3.4em; */
+    width: 100%;
   }
 
   .nav-bottom-line{
-    width: 117.5%;
+    width: 100%;
   }
 }
 
 @media (max-width: 414px) {
   .character-bar {
-    padding: 0.5em 1.2em 0.5em 3.4em;
-    width: 103.9%;
+    /* padding: 0.5em 1.2em 0.5em 3.4em; */
+    width: 100%;
   }
 
   .nav-bottom-line{
-    width: 125%;
+    width: 100%;
   }
 }
 @media (max-width: 375px) {
   .character-bar {
-    padding: 0.5em 1.2em 0.5em 3.8em;
-    width: 104%;
+    /* padding: 0.5em 1.2em 0.5em 3.8em; */
+    width: 100%;
   }
 
   .nav-bottom-line{
-    width: 128.3%;
+    width: 100%;
   }
 }
 </style>

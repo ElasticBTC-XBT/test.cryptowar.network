@@ -1248,7 +1248,7 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
 
   .character-bar {
     /* padding: 0.5em 1.2em 0.5em 3.4em; */
-    width: 103.7%;
+    width: 100%;
   }
 
   .nav-bottom-line{
@@ -1310,7 +1310,7 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
 
 @media (max-width: 375px) {
   .character-bar {
-    width: 104.2%;
+    width: 100%;
   }
 
   .nav-bottom-line{

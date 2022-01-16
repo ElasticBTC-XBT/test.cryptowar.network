@@ -358,7 +358,6 @@ li.character-highlight .element-icon{
   margin: 0 auto;
 }
 
-
 .centered-list {
   justify-content: center;
 }
@@ -464,5 +463,62 @@ li.character-highlight .element-icon{
 }
 .hidden {
   display: none;
+}
+
+@media (max-width: 1220px) {
+  .character-full-list {
+    width: 100%;
+  }
+}
+@media (max-width: 992px) {
+  .character-full-list .character, .character-full-list .character-highlight{
+    margin: 2px;
+  }
+  .character-display-container{
+    padding: 0;
+  }
+  .character-lis{
+    padding: 0;
+  }
+}
+@media (max-width: 920px) {
+  .character-full-list .character, .character-full-list .character-highlight{
+    width: auto;
+  }
+  li.character .element-icon{
+    display: none;
+  }
+}
+@media (max-width: 767.98px) {
+  .character-bar{
+    padding: 0;
+  }
+  .character-list{
+    padding: 0.5rem 0;
+  }
+}
+@media (max-width: 660px) {
+  li.character{
+    padding: 5px 5px;
+  }
+  .name-list{
+    width: auto;
+    justify-content: space-between;
+    font-size: .9em;
+  }
+  .name-list div{
+    width: auto;
+  }
+  .character-full-list .character, .character-full-list .character-highlight{
+    width: 180px;
+  }
+  .character-full-list .character > div, .character-full-list .character-highlight > div{
+    width: 100%;
+  }
+}
+@media (max-width: 576px) {
+  .character-full-list .character, .character-full-list .character-highlight{
+    width: 150px;
+  }
 }
 </style>
