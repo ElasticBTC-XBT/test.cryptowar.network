@@ -726,6 +726,7 @@ export default {
   /* right: -120px; */
   margin-left: 235px;
   margin-top: -35px;
+  pointer-events: none;
 }
 
 .message-box {
@@ -1174,7 +1175,6 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
     height: 16px;
     margin-left: 196px;
     margin-top: -28px;
-    pointer-events: none;
   }
   .custom-select{
     width: 230px;
