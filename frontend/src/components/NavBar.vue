@@ -149,7 +149,7 @@ export default Vue.extend({
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 10;
+  z-index: 1001;
 }
 /** Suggest to move this to atomic folder structure like assets/css **/
 a {

@@ -1214,7 +1214,7 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
     display: block;
   }
   .encounter-power{
-    bottom: 26px;
+    bottom: 35px;
     font-size: 1em;
   }
   .enemy-character{
@@ -1222,7 +1222,7 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
     height: 16em;
   }
   .xp-gain{
-    bottom: 10px;
+    bottom: 20px;
     font-size: .8em;
   }
   .victory-chance{

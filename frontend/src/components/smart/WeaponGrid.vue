@@ -892,6 +892,26 @@ input::-webkit-inner-spin-button{
 }
 
 /* Needed to adjust weapon list */
+
+
+
+
+@media (max-width: 1400px) {
+  .weapon-grid.blacksmith .dust-wrap {
+    padding: 20px 15px;
+  }
+}
+
+@media (max-width: 1200px){
+  .filters.market-active{
+    max-width: inherit;
+  }
+}
+@media (max-width: 1024px) {
+  .weapon-grid.blacksmith .dust-wrap {
+    padding-bottom: 10px;
+  }
+}
 @media all and (max-width: 767.98px) {
   .weapon-grid {
     padding-left: 2em;
@@ -909,23 +929,9 @@ input::-webkit-inner-spin-button{
     padding: 40px 0 60px 0;
   }
 }
-
-@media (max-width: 1024px) {
-  .weapon-grid.blacksmith .dust-wrap {
-    padding-bottom: 10px;
-  }
-}
-
-
-@media (max-width: 1400px) {
-  .weapon-grid.blacksmith .dust-wrap {
-    padding: 20px 15px;
-  }
-}
-
-@media (max-width: 1200px){
-  .filters.market-active{
-    max-width: inherit;
+@media (max-width: 576px) {
+  .weapon-grid {
+    padding-left: 0;
   }
 }
 

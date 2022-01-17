@@ -472,7 +472,7 @@ li.character-highlight .element-icon{
 }
 @media (max-width: 992px) {
   .character-full-list .character, .character-full-list .character-highlight{
-    margin: 2px;
+    margin: 8px;
   }
   .character-display-container{
     padding: 0;
@@ -481,13 +481,13 @@ li.character-highlight .element-icon{
     padding: 0;
   }
 }
-@media (max-width: 920px) {
+@media (max-width: 930px) {
   .character-full-list .character, .character-full-list .character-highlight{
     width: auto;
   }
-  li.character .element-icon{
+  /* li.character .element-icon{
     display: none;
-  }
+  } */
 }
 @media (max-width: 767.98px) {
   .character-bar{
@@ -509,16 +509,17 @@ li.character-highlight .element-icon{
   .name-list div{
     width: auto;
   }
-  .character-full-list .character, .character-full-list .character-highlight{
-    width: 180px;
+  li.character .element-icon{
+    width: 45px;
+    height: 45px;
   }
-  .character-full-list .character > div, .character-full-list .character-highlight > div{
-    width: 100%;
+  .character-full-list .character > div:not(.element-icon), .character-full-list .character-highlight > div:not(.element-icon){
+    width: 180px;
   }
 }
 @media (max-width: 576px) {
-  .character-full-list .character, .character-full-list .character-highlight{
-    width: 150px;
+  .character-full-list .character > div:not(.element-icon), .character-full-list .character-highlight > div:not(.element-icon){
+    width: 140px;
   }
 }
 </style>
