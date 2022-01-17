@@ -286,7 +286,7 @@ li.character {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  /* border: 2px solid #5D5A62; */
+  border: 3px solid #F58B5B;
 }
 
 li.character .element-icon{
@@ -295,9 +295,9 @@ li.character .element-icon{
 }
 
 li.character-highlight {
-  border: solid #9e8a57 3px;
-  /* font-weight: 800; */
-  /* padding: 5px; */
+  /* border: solid #9e8a57 3px;
+  font-weight: 800;
+  padding: 5px;
   padding: 0.5rem 0.5rem 0.5rem;
   border-radius: 10px;
   margin: 10x;
@@ -305,7 +305,18 @@ li.character-highlight {
   cursor: pointer;
   display: flex;
   justify-content: space-evenly;
+  align-items: center; */
+
+  /* background: transparent; */
+  padding: 0.5rem 0.5rem 0.5rem;
+  margin: 5px;
+  vertical-align: middle;
+  cursor: pointer;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-evenly;
   align-items: center;
+  border: 3px solid #9e8a57;
 }
 
 li.character-highlight .element-icon{
@@ -498,7 +509,7 @@ li.character-highlight .element-icon{
   }
 }
 @media (max-width: 660px) {
-  li.character{
+  .character-full-list .character, .character-full-list .character-highlight{
     padding: 5px 5px;
   }
   .name-list{
@@ -509,7 +520,7 @@ li.character-highlight .element-icon{
   .name-list div{
     width: auto;
   }
-  li.character .element-icon{
+  .character-full-list .character .element-icon, .character-full-list .character-highlight .element-icon{
     width: 45px;
     height: 45px;
   }
