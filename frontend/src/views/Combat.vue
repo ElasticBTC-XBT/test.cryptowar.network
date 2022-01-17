@@ -743,6 +743,7 @@ export default {
 }
 
 .custom-select{
+  cursor: pointer;
   background-color: #000;
   border: 1px solid #5bc7f5;
   width: 272px;

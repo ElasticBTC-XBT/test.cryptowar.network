@@ -510,7 +510,7 @@ li.character-highlight .element-icon{
 }
 @media (max-width: 660px) {
   .character-full-list .character, .character-full-list .character-highlight{
-    padding: 5px 5px;
+    padding: 5px;
   }
   .name-list{
     width: auto;
@@ -529,8 +529,47 @@ li.character-highlight .element-icon{
   }
 }
 @media (max-width: 576px) {
+  .character-full-list .character, .character-full-list .character-highlight{
+    margin: 6px;
+  }
+  .name-list{
+    font-size: .75em;
+  }
+  .character-full-list .character .element-icon, .character-full-list .character-highlight .element-icon{
+    width: 1rem;
+    height: 2.5rem;
+    margin-right: 2px;
+  }
   .character-full-list .character > div:not(.element-icon), .character-full-list .character-highlight > div:not(.element-icon){
-    width: 140px;
+    width: 120px;
+  }
+  .fire-icon{
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .earth-icon{
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .water-icon{
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .lightning-icon{
+    width: 1rem;
+    height: 1rem;
+  }
+  .trait-icon{
+    position: static;
+  }
+  .small-stamina-char{
+    height: 15px;
+  }
+  .character-full-list .character, .character-full-list .character-highlight{
+    padding: 2px;
   }
 }
 </style>
