@@ -241,9 +241,12 @@ export default Vue.extend({
 
     toolTipHtml(time: string, minutesPerStamina: string): string {
       return (
-        `Regenerates 1 point every ${minutesPerStamina} minutes, stamina bar will be full at: ` +
-        time
+        `Regenerates 1 point every ${minutesPerStamina} minutes`
       );
+      // return (
+      //   `Regenerates 1 point every ${minutesPerStamina} minutes, stamina bar will be full at: ` +
+      //   time
+      // );
     },
 
     formattedSkill(skill: number): number {
