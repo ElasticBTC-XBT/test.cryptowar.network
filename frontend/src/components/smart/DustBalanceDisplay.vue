@@ -192,11 +192,12 @@ export default {
     margin: 50px auto 0;
     height: 324px;
     width: 225px;
+    margin-top: 0 !important;
   }
 
-  /* .dust-quantity-wrap {
-    padding: 0 50px;
-  } */
+  .dust-quantity-wrap {
+    margin-bottom: 5rem;
+  }
 
   .dust-image {
     max-width: 200px;

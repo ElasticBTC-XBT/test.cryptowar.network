@@ -231,18 +231,19 @@ export default {
 }
 .buttonFightFragment {
   border: none;
-    height: 47px;
-    background-image: url('../../assets/images/bg-fight-button.png');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    background-color: transparent;
-    margin: 2rem 0;
-    margin-left: 0.8rem;;
-    min-width: 190px;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    cursor: pointer;
+  height: 47px;
+  background-image: url('../../assets/images/bg-fight-button.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  margin: 2rem 0;
+  margin-left: 0.8rem;;
+  min-width: 190px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  cursor: pointer;
+  margin-bottom: 5rem;
 }
 
 .notEnoughImage {
