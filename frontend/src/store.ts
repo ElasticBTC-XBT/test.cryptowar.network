@@ -846,7 +846,7 @@ export function createStore(web3: Web3) {
         }
       },
 
-      setUpContractEvents({ state, commit }) {
+      setUpContractEvents({ state, commit, dispatch }) {
         state.eventSubscriptions().forEach(sub => sub.unsubscribe());
 
         const emptySubsPayload: SetEventSubscriptionsPayload = {
@@ -875,11 +875,11 @@ export function createStore(web3: Web3) {
                 commit('addNewOwnedCharacterId', characterId);
 
                 await Promise.all([
-                  this.cache.dispatch('fetchCharacter', characterId),
-                  this.cache.dispatch('fetchSkillBalance'),
-                  this.cache.dispatch('fetchFightRewardSkill'),
-                  this.cache.dispatch('fetchFightRewardXp'),
-                  this.cache.dispatch('fetchDustBalance')
+                  dispatch('fetchCharacter', characterId),
+                  dispatch('fetchSkillBalance'),
+                  dispatch('fetchFightRewardSkill'),
+                  dispatch('fetchFightRewardXp'),
+                  dispatch('fetchDustBalance')
                 ]);
               }
             )
@@ -901,8 +901,8 @@ export function createStore(web3: Web3) {
                 commit('addNewOwnedWeaponId', weaponId);
 
                 await Promise.all([
-                  this.cache.dispatch('fetchWeapon', weaponId),
-                  this.cache.dispatch('fetchSkillBalance')
+                  dispatch('fetchWeapon', weaponId),
+                  dispatch('fetchSkillBalance')
                 ]);
               }
             )
@@ -924,9 +924,9 @@ export function createStore(web3: Web3) {
                 commit('addNewOwnedShieldId', shieldId);
 
                 await Promise.all([
-                  this.cache.dispatch('fetchShield', shieldId),
-                  this.cache.dispatch('fetchSkillBalance'),
-                  this.cache.dispatch('fetchDustBalance')
+                  dispatch('fetchShield', shieldId),
+                  dispatch('fetchSkillBalance'),
+                  dispatch('fetchDustBalance')
                 ]);
               }
             )
@@ -944,8 +944,8 @@ export function createStore(web3: Web3) {
                 }
 
                 await Promise.all([
-                  this.cache.dispatch('fetchCharacter', data.returnValues.character),
-                  this.cache.dispatch('fetchSkillBalance')
+                  dispatch('fetchCharacter', data.returnValues.character),
+                  dispatch('fetchSkillBalance')
                 ]);
               }
             )
@@ -962,7 +962,7 @@ export function createStore(web3: Web3) {
                   return;
                 }
 
-                await Promise.all([this.cache.dispatch('fetchInGameOnlyFunds')]);
+                await Promise.all([dispatch('fetchInGameOnlyFunds')]);
               }
             )
           );
@@ -979,7 +979,7 @@ export function createStore(web3: Web3) {
                     return;
                   }
 
-                  await this.cache.dispatch('fetchSkillBalance');
+                  await dispatch('fetchSkillBalance');
                 }
               )
             );
@@ -1687,7 +1687,7 @@ export function createStore(web3: Web3) {
           dispatch('updateWeaponIds'),
           this.cache.dispatch('fetchFightRewardSkill'),
           this.cache.dispatch('fetchFightRewardXp'),
-          this.cache.dispatch('fetchDustBalance')
+          dispatch('fetchDustBalance')
         ]);
       },
 
@@ -1730,7 +1730,7 @@ export function createStore(web3: Web3) {
           dispatch('updateWeaponIds'),
           this.cache.dispatch('fetchFightRewardSkill'),
           this.cache.dispatch('fetchFightRewardXp'),
-          this.cache.dispatch('fetchDustBalance')
+          dispatch('fetchDustBalance')
         ]);
       },
 
@@ -1774,7 +1774,7 @@ export function createStore(web3: Web3) {
           dispatch('updateWeaponIds'),
           this.cache.dispatch('fetchFightRewardSkill'),
           this.cache.dispatch('fetchFightRewardXp'),
-          this.cache.dispatch('fetchDustBalance')
+          dispatch('fetchDustBalance')
         ]);
       },
 
@@ -2522,7 +2522,7 @@ export function createStore(web3: Web3) {
         return xpCharaIdPairs;
       },
 
-      async purchaseCommonSecretBox({ state }) {
+      async purchaseCommonSecretBox({ state, dispatch }) {
         const { xBladeToken, BlindBox, CryptoWars } = state.contracts();
         if (!xBladeToken || !BlindBox || !state.defaultAccount || !CryptoWars) return;
 
@@ -2542,10 +2542,10 @@ export function createStore(web3: Web3) {
         });
 
         await Promise.all([
-          this.cache.dispatch('fetchTotalCommonBoxSupply')
+          dispatch('fetchTotalCommonBoxSupply')
         ]);
       },
-      async openCommonBox({state}, {boxId}) {
+      async openCommonBox({ state, dispatch }, {boxId}) {
         try{
           //error cho nay
           const {BlindBox} = state.contracts();
@@ -2554,7 +2554,7 @@ export function createStore(web3: Web3) {
             gas:'800000'
           });
           await Promise.all([
-            this.cache.dispatch('fetchTotalCommonBoxSupply')
+            dispatch('fetchTotalCommonBoxSupply')
           ]);
         }catch(error) {
           console.log('???', error);
