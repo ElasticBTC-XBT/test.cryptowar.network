@@ -160,12 +160,12 @@
                   {{ getWinChance(e.power, e.trait) }} Victory
                 </div>
                 <big-button
-                    style="margin: 0 auto"
-                    class="encounter-button btn-styled"
-                    :mainText="`FIGHT`"
-                    :disabled="(timeMinutes === 59 && timeSeconds >= 30) || waitingResults || !weaponHasDurability(selectedWeaponId) || !charHasStamina()"
-                    @click="onClickEncounter(e), (showModalFight = true)"
-                  />
+                  style="margin: 0 auto"
+                  class="encounter-button btn-styled"
+                  :mainText="`FIGHT`"
+                  :disabled="(timeMinutes === 59 && timeSeconds >= 30) || waitingResults || !weaponHasDurability(selectedWeaponId) || !charHasStamina()"
+                  @click="onClickEncounter(e), (showModalFight = true)"
+                />
                 <p v-if="isLoadingTargets">Loading...</p>
                 </div>
               </div>
@@ -229,7 +229,14 @@ export default {
       soundWin: new Audio(require("../assets/sound/sound_win.wav")),
       soundLose: new Audio(require("../assets/sound/sound_lose.wav")),
       showModalFight: false,
+      checkData: 0,
     };
+  },
+
+  updated(){
+    if(this.checkData !== 5){
+      this.checkData = 0;
+    }
   },
 
   created() {
@@ -480,11 +487,16 @@ export default {
       );
       const totalPower =
         characterPower * weaponMultiplier + selectedWeapon.bonusPower;
-
       //Formula taken from getXpGainForFight funtion of CryptoWars.sol
+      if(targetToFight.power === null && this.checkData <= 3){
+        this.checkData++;
+        this.targets();
+      }
+      if(targetToFight.power !== null){
+        this.checkData = 5;
+      }
       return (
-        Math.floor((targetToFight.power / totalPower) * this.fightXpGain) *
-        this.fightMultiplier
+        Math.floor((targetToFight.power / totalPower) * this.fightXpGain) * this.fightMultiplier
       );
     },
 
