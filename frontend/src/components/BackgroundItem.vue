@@ -63,8 +63,9 @@
 <script>
 import { getCharacterArt, getCharacterTrait } from "../character-arts-placeholder";
 import { CharacterTrait, RequiredXp } from "../interfaces";
-import { mapGetters, mapState, mapActions } from "vuex";
+import { mapActions, mapGetters, mapState  } from "vuex";
 import { getCleanName } from "../rename-censor";
+import { mapCacheActions } from 'vuex-cache';
 
 export default {
   props: [
@@ -123,7 +124,8 @@ export default {
   },
 
   methods: {
-    ...mapActions(["requestFight, fetchCharacters"]),
+    ...mapCacheActions(["fetchCharacters"]),
+    ...mapActions(["requestFight"]),
     RequiredXp,
 
     tooltipHtml(character) {

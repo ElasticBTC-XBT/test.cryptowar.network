@@ -164,6 +164,7 @@ export default Vue.extend({
   },
 
   methods: {
+    //@ts-ignore
     ...(mapActions(['claimTokenRewards']) as StoreMappedActions),
     toggleGraphics() {
       this.showGraphics = !this.showGraphics;

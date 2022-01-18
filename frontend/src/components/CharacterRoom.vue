@@ -57,6 +57,7 @@
 import CharacterRoomArtPvp from "../components/CharacterRoomArtPvp.vue";
 import { mapActions, mapState } from "vuex";
 import Web3 from "web3";
+import { mapCacheActions } from 'vuex-cache';
 
 export default {
   props: ["characterId", "room", "selectedWeaponId", "selectedCharacterId", "isRequest", "handleRequestFight","handleCancelFight", "isCancel", "handleShowWeapon"],
@@ -64,7 +65,8 @@ export default {
     CharacterRoomArtPvp,
   },
   methods: {
-    ...mapActions(["fetchCharacters", "requestFight", "getStartTimeRoom"]),
+    ...mapCacheActions(["fetchCharacters"]),
+    ...mapActions(["requestFight", "getStartTimeRoom"]),
     // handleRequestFight() {
     //   //@ts-ignore
     //   this.requestFight({

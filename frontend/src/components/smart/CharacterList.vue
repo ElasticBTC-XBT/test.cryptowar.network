@@ -203,6 +203,7 @@ import { mapActions, mapGetters, mapState } from 'vuex';
 import { getCharacterArt } from '../../character-arts-placeholder';
 // import BackgroundItem from '../BackgroundItem.vue';
 import CharacterArt from '../CharacterArt.vue';
+import { mapCacheActions } from 'vuex-cache';
 
 const sorts = [
   { name: 'Any', dir: '' },
@@ -352,8 +353,8 @@ export default {
   },
 
   methods: {
-    ...mapActions(['fetchCharacters', 'mintCharacter']),
-
+    ...mapCacheActions(['fetchCharacters']),
+    ...mapActions(['mintCharacter']),
     getCharacterArt,
 
     async onMintCharacter() {

@@ -12305,6 +12305,11 @@ vuedl@0.0.7:
   resolved "https://registry.yarnpkg.com/vuedl/-/vuedl-0.0.7.tgz#148b8cf08333d64ae908b4c6fce6e9b17939a418"
   integrity sha512-5MxRWUBWFm06UE5niQKLAhipbzuPdjlq4eDrYDqX7aw/BTExQDAFFv9c+doeFhL9J1DjIo5bURRWJDr1SdHC6g==
 
+vuex-cache@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/vuex-cache/-/vuex-cache-3.4.0.tgz#0aec66b7abb370b1a089f678681af8efe5a9289b"
+  integrity sha512-C0HJvVTEdjn8gq0EXemcJCBgAyPLnms8VGz/kMakrpaF6XNwkZY5KvySkdBJSY6rp0eTdWMoHPVU2Oq+dK7WEQ==
+
 vuex@^3.6.2:
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.6.2.tgz#236bc086a870c3ae79946f107f16de59d5895e71"

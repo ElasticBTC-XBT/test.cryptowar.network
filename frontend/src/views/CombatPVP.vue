@@ -427,13 +427,7 @@ export default {
   // },
 
   methods: {
-    ...mapActions([
-      "fetchTargets",
-      "doEncounter",
-      "fetchFightRewardSkill",
-      "fetchFightRewardXp",
-      "getXPRewardsIfWin",
-    ]),
+    ...mapActions(["doEncounter", "getXPRewardsIfWin", "fetchTargets", "fetchFightRewardSkill", "fetchFightRewardXp"]),
     ...mapMutations(["setIsInCombat"]),
     checkActive(){
       if(this.changeMode || this.careerMode || this.requestChallenge){

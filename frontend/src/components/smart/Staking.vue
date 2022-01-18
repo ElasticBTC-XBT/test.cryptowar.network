@@ -152,7 +152,7 @@
 <script>
 import { toBN } from '../../utils/common';
 import { mapActions, mapState } from 'vuex';
-
+import { mapCacheActions } from 'vuex-cache';
 import { formatDurationFromSeconds, secondsToDDHHMMSS } from '../../utils/date-time';
 import { isStakeType } from '../../interfaces/State';
 import { stakeTypeThatCanHaveUnclaimedRewardsStakedTo } from '../../stake-types';
@@ -411,13 +411,8 @@ export default {
     },
   },
   methods: {
-    ...mapActions([
-      'fetchStakeDetails',
-      'stake',
-      'unstake',
-      'stakeUnclaimedRewards',
-      'claimReward',
-    ]),
+    ...mapCacheActions(['fetchStakeDetails',]),
+    ...mapActions(['stake', 'unstake', 'stakeUnclaimedRewards', 'claimReward']),
 
     updateEstimates() {
       if (this.stakeUnlockTimeLeftCurrentEstimate > 0) {

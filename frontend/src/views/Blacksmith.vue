@@ -533,6 +533,7 @@ import WeaponGrid from '../components/smart/WeaponGrid.vue';
 import BigButton from '../components/BigButton.vue';
 import Vue from 'vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
+import { mapCacheActions } from 'vuex-cache';
 import WeaponIcon from '../components/WeaponIcon.vue';
 import { BModal } from 'bootstrap-vue';
 import { Contracts, IState } from '@/interfaces';
@@ -650,6 +651,7 @@ export default Vue.extend({
   },
 
   methods: {
+    ...mapCacheActions(['fetchTotalWeaponRenameTags']),
     ...mapActions(['reforgeWeapon', 'renameWeapon',
       'fetchTotalWeaponRenameTags', 'burnWeapon', 'reforgeWeaponWithDust', 'massBurnWeapons']),
 
@@ -754,6 +756,7 @@ export default Vue.extend({
       try {
         (this.$refs['new-weapons'] as BModal).show();
         this.spin = true;
+        //@ts-ignore
         await this.reforgeWeaponWithDust({
           reforgeWeaponId: this.reforgeWeaponId,
           lesserDust: this.lesserDust,
@@ -778,6 +781,7 @@ export default Vue.extend({
       try {
         (this.$refs['new-dust'] as BModal).show();
         this.spin = true;
+        //@ts-ignore
         await this.massBurnWeapons({
           burnWeaponIds: this.burnWeaponIds,
         });
@@ -802,6 +806,7 @@ export default Vue.extend({
         return;
       }
 
+      //@ts-ignore
       await this.renameWeapon({id: this.reforgeWeaponId, name: this.weaponRename});
       if(this.contracts.WeaponRenameTagConsumables) {
         this.haveRename = await this.contracts.WeaponRenameTagConsumables.methods.getItemCount().call({ from: this.defaultAccount });

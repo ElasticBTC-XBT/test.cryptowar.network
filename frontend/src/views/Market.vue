@@ -501,6 +501,7 @@ import { getShieldNameFromSeed } from '@/shield-name';
 import { fromWeiEther, apiUrl, defaultOptions } from '../utils/common';
 import NftList, { NftIdType } from '@/components/smart/NftList.vue';
 import { getCleanName } from '../rename-censor';
+import { mapCacheActions } from 'vuex-cache';
 
 type SellType = 'weapon' | 'character' | 'shield';
 type WeaponId = string;
@@ -723,7 +724,8 @@ export default Vue.extend({
   },
 
   methods: {
-    ...(mapActions([
+    //@ts-ignore
+    ...(mapCacheActions([
       'fetchAllMarketNftIds',
       'fetchAllMarketCharacterNftIdsPage',
       'fetchAllMarketWeaponNftIdsPage',
@@ -732,18 +734,21 @@ export default Vue.extend({
       'fetchNumberOfCharacterListings',
       'fetchNumberOfShieldListings',
       'fetchMarketNftIdsBySeller',
-      'fetchMarketNftPrice',
       'fetchMarketTax',
+      'fetchSellerOfNft',
+      'fetchTotalShieldSupply',
+      'fetchBoxPrice'
+    ]) as StoreMappedActions),
+
+    ...(mapActions([
+      'fetchMarketNftPrice',
       'checkMarketItemOwnership',
       'addMarketListing',
       'changeMarketListingPrice',
       'cancelMarketListing',
       'purchaseMarketListing',
-      'fetchSellerOfNft',
-      'fetchTotalShieldSupply',
       'setupWeaponsWithIdsRenames',
       'setupCharactersWithIdsRenames',
-      'fetchBoxPrice'
     ]) as StoreMappedActions),
 
     clearData() {

@@ -205,6 +205,7 @@ import { mapActions, mapGetters, mapMutations, mapState } from 'vuex';
 import { IState, IWeapon } from '../../interfaces';
 import WeaponIcon from '../WeaponIcon.vue';
 import DustBalanceDisplay from '../smart/DustBalanceDisplay.vue';
+// import { mapCacheActions } from 'vuex-cache';
 
 type StoreMappedState = Pick<IState, 'ownedWeaponIds'>;
 

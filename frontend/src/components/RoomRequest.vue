@@ -61,12 +61,13 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapActions, mapState,mapMutations, mapGetters } from "vuex";
+import {  mapActions, mapState, mapMutations, mapGetters } from "vuex";
 import { getCleanName } from "../rename-censor";
 // import CharacterRoom from "./CharacterRoom.vue";
 // import CharacterRoomArt from "./CharacterRoomArt.vue";
 import BackgroundItem from "./BackgroundItem.vue";
 // import CharacterRoomArt from "./CharacterRoomArt.vue";
+import { mapCacheActions } from 'vuex-cache';
 
 export default Vue.extend({
 
@@ -86,7 +87,8 @@ export default Vue.extend({
   props: ["request", "handleFight", "isMine", "isDone", "cancelRequestFight", "isWin", "handleShowWeapon"],
 
   methods: {
-    ...mapActions(["fetchCharacters", "fight", "getRoom", "checkPlayerPower","fetchWeaponId"]),
+    ...mapCacheActions(["fetchCharacters", "fetchWeaponId"]),
+    ...mapActions(["fight", "getRoom", "checkPlayerPower"]),
     ...mapMutations(['setIsInCombat']),
     getCleanCharacterName(id: number) {
       return getCleanName(this.getCharacterName(id));
@@ -106,6 +108,7 @@ export default Vue.extend({
 
   async mounted() {
     if (this.request.heroId) {
+      //@ts-ignore
       await this.fetchCharacters([this.request.heroId]);
     }
     //@ts-ignore

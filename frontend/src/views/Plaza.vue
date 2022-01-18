@@ -171,6 +171,7 @@ import { fromWeiEther, toBN } from "../utils/common";
 import { BModal, BvModalEvent } from "bootstrap-vue";
 import Vue from "vue";
 import { getCleanName, isProfaneIsh } from "../rename-censor";
+import { mapCacheActions } from "vuex-cache";
 
 let getConsumablesCountInterval: any = null;
 
@@ -303,11 +304,13 @@ export default Vue.extend({
       "changeCharacterTraitEarth",
       "changeCharacterTraitFire",
       "changeCharacterTraitWater",
+    ]),
+    ...mapCacheActions([
       "fetchTotalRenameTags",
       "fetchTotalCharacterFireTraitChanges",
       "fetchTotalCharacterEarthTraitChanges",
       "fetchTotalCharacterWaterTraitChanges",
-      "fetchTotalCharacterLightningTraitChanges",
+      "fetchTotalCharacterLightningTraitChanges"
     ]),
 
     async onMintCharacter() {
@@ -365,6 +368,7 @@ export default Vue.extend({
         id: this.currentCharacter.id,
         name: this.characterRename.trim(),
       });
+      //@ts-ignore
       this.haveRename = await this.fetchTotalRenameTags();
     },
 
@@ -389,6 +393,7 @@ export default Vue.extend({
       case "Fire":
         await this.changeCharacterTraitFire({ id: this.currentCharacter.id });
         this.haveChangeTraitFire =
+            //@ts-ignore
             await this.fetchTotalCharacterFireTraitChanges();
         break;
       case "Earth":
@@ -396,6 +401,7 @@ export default Vue.extend({
           id: this.currentCharacter.id,
         });
         this.haveChangeTraitEarth =
+            //@ts-ignore
             await this.fetchTotalCharacterEarthTraitChanges();
         break;
       case "Water":
@@ -403,6 +409,7 @@ export default Vue.extend({
           id: this.currentCharacter.id,
         });
         this.haveChangeTraitWater =
+            //@ts-ignore
             await this.fetchTotalCharacterWaterTraitChanges();
         break;
       case "Lightning":
@@ -410,20 +417,26 @@ export default Vue.extend({
           id: this.currentCharacter.id,
         });
         this.haveChangeTraitLightning =
+            //@ts-ignore
             await this.fetchTotalCharacterLightningTraitChanges();
         break;
       }
     },
 
     async loadConsumablesCount() {
+      //@ts-ignore
       this.haveRename = await this.fetchTotalRenameTags(); // the other type of call returned 0 on testnet but not on local
       this.haveChangeTraitFire =
+      //@ts-ignore
         await this.fetchTotalCharacterFireTraitChanges();
       this.haveChangeTraitEarth =
+      //@ts-ignore
         await this.fetchTotalCharacterEarthTraitChanges();
       this.haveChangeTraitWater =
+      //@ts-ignore
         await this.fetchTotalCharacterWaterTraitChanges();
       this.haveChangeTraitLightning =
+      //@ts-ignore
         await this.fetchTotalCharacterLightningTraitChanges();
     },
   },

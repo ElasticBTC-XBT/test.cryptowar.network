@@ -206,7 +206,7 @@ import { CharacterPower, CharacterTrait, GetTotalMultiplierForTrait, WeaponEleme
 import CombatResults from '../components/CombatResults.vue';
 import { toBN, fromWeiEther } from '../utils/common';
 import WeaponIcon from '../components/WeaponIcon.vue';
-import { mapActions, mapGetters, mapState, mapMutations } from 'vuex';
+import { mapGetters, mapState, mapMutations, mapActions } from 'vuex';
 import CharacterBar from "../components/CharacterBar.vue";
 
 export default {
@@ -319,13 +319,7 @@ export default {
 
 
   methods: {
-    ...mapActions([
-      "fetchTargets",
-      "doEncounter",
-      "fetchFightRewardSkill",
-      "fetchFightRewardXp",
-      "getXPRewardsIfWin",
-    ]),
+    ...mapActions(["doEncounter", "getXPRewardsIfWin", "fetchTargets", "fetchFightRewardSkill", "fetchFightRewardXp"]),
     ...mapMutations(["setIsInCombat"]),
     getEnemyArt,
     getEnemyArtAround,

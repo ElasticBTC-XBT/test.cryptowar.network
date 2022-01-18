@@ -369,6 +369,7 @@ export default Vue.extend({
   },
 
   methods: {
+    //@ts-ignore
     ...(mapActions(['purchaseShield', 'fetchShields', 'purchaseRenameTag', 'purchaseWeaponRenameTag',
       'purchaseRenameTagDeal', 'purchaseWeaponRenameTagDeal',
       'purchaseCharacterFireTraitChange', 'purchaseCharacterEarthTraitChange',

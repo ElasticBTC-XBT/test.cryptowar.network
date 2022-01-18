@@ -9,7 +9,8 @@
 <script lang="ts">
 import Vue from "vue";
 import Web3 from "web3";
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
+import { mapCacheActions } from 'vuex-cache';
 import { Accessors } from "vue/types/options";
 import { Contracts, IState } from "../interfaces";
 import { SkillShopListing } from "../interfaces/SkillShopListing";
@@ -156,7 +157,8 @@ export default Vue.extend({
   },
 
   methods: {
-    ...(mapActions(["fetchBoxPrice", 'fetchTotalRareBoxSupply','fetchTotalCommonBoxSupply', 'fetchTotalEpicBoxSupply']) as StoreMappedActions),
+    //@ts-ignore
+    ...(mapCacheActions(["fetchBoxPrice", 'fetchTotalRareBoxSupply','fetchTotalCommonBoxSupply', 'fetchTotalEpicBoxSupply']) as StoreMappedActions),
     convertWeiToSkill(wei: string) {
       return fromWeiEther(wei);
     },

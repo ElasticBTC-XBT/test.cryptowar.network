@@ -80,8 +80,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-
+import { mapGetters } from 'vuex';
+import { mapCacheActions } from 'vuex-cache';
 import CharacterList from '../components/smart/CharacterList.vue';
 import WeaponGrid from '../components/smart/WeaponGrid.vue';
 import BigButton from '../components/BigButton.vue';
@@ -99,7 +99,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['fetchRaidData', 'fetchOwnedCharacterRaidStatus'])
+    ...mapCacheActions(['fetchRaidData', 'fetchOwnedCharacterRaidStatus'])
   },
 
   async mounted() {

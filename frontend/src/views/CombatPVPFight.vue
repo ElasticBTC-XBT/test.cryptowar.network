@@ -167,7 +167,7 @@ export default {
 
 
   methods: {
-    ...mapActions(['fetchTargets', 'doEncounter', 'fetchFightRewardSkill', 'fetchFightRewardXp', 'getXPRewardsIfWin']),
+    ...mapActions(["doEncounter", "getXPRewardsIfWin", "fetchTargets", "fetchFightRewardSkill", "fetchFightRewardXp"]),
     ...mapMutations(['setIsInCombat']),
     weaponHasDurability(id) {
       return this.getWeaponDurability(id) >= this.fightMultiplier * 3;

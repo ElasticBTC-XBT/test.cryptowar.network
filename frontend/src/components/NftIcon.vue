@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapCacheActions } from 'vuex-cache';
 // Comment
 export default {
   props: ['nft', 'isDefault', 'isShop', 'isLoading', 'favorite'],
@@ -104,7 +104,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['fetchTotalShieldSupply', 'fetchTotalRenameTags', 'fetchTotalWeaponRenameTags',
+    ...mapCacheActions(['fetchTotalShieldSupply', 'fetchTotalRenameTags', 'fetchTotalWeaponRenameTags',
       'fetchTotalCharacterFireTraitChanges', 'fetchTotalCharacterEarthTraitChanges',
       'fetchTotalCharacterWaterTraitChanges', 'fetchTotalCharacterLightningTraitChanges',
       'fetchTotalRareBoxSupply','fetchTotalCommonBoxSupply',]),
