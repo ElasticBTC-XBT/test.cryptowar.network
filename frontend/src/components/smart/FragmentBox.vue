@@ -9,7 +9,10 @@
         <div class="buttonFightFragment" @click="$bvModal.hide('fragmentOpenBoxModal')"><span>GO TO CHECK</span></div>
       </b-modal>
        <b-modal id="successOpenBox" hide-footer hide-header hide-header-close>
-         <div class="congratsText">Check your new weapon at Weapon Store</div>
+         <!-- <div class="congratsText">Check your new item at Weapon Store</div> -->
+         <div class="itemWeapon" >
+          <WeaponSelect :weapon="this.weaponReceive"/>
+         </div>
         <div class="buttonFightFragment" @click="$bvModal.hide('successOpenBox')"><span>GO TO CHECK</span></div>
       </b-modal>
       <b-modal id="modal-buyitem">
@@ -62,6 +65,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import WeaponSelect from '@/components/WeaponSelect.vue';
 
 export default {
   props: ['isBlacksmith'],
@@ -73,11 +77,13 @@ export default {
       isConvertingFragmentToBox: false,
       errorMessage: '',
       boxId: -1,
-      boxType: ''
+      boxType: '',
+      weaponReceive: null
     };
   },
 
   components: {
+    WeaponSelect
   },
 
   computed: {
@@ -89,7 +95,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["getFragmentAmount", "convertFragmentToBox", "openCommonBox", "getMyBoxes", "getBoxDetail"]),
+    ...mapActions(["getFragmentAmount", "convertFragmentToBox", "openCommonBox", "getMyBoxes", "getBoxDetail", "fetchWeaponId"]),
     async handleConvertBox() {
       try{
         if(this.xGemAmount < this.fragmentPerBox) {
@@ -101,10 +107,8 @@ export default {
           const response = await this.convertFragmentToBox();
           if(response) {
             this.boxId = response.boxId;
-            const objectXGem = await this.getFragmentAmount();
-            this.xGemAmount = objectXGem.fragmentAmount;
-            this.fragmentPerBox = objectXGem.fragmentPerBox;
-            const boxTypeReturn = await this.getBoxDetail({boxId:this.boxId});
+            this.xGemAmount -= this.fragmentPerBox;
+            const boxTypeReturn = await this.getBoxDetail({boxId:response.boxId});
             switch(boxTypeReturn) {
             case 1: {
               this.boxType= 'rare';
@@ -128,6 +132,7 @@ export default {
           }
         }
       }catch(error) {
+        console.log('error nha', error);
         this.isConvertingFragmentToBox =false;
       }
     },
@@ -136,7 +141,9 @@ export default {
       case "common": {
         try{
           this.isConvertingFragmentToBox=true;
-          await this.openCommonBox({boxId: this.boxId});
+          const res = await this.openCommonBox({boxId: this.boxId});
+          const weapon = await this.fetchWeaponId(res?.[0]?.returnValues?.tokenId);
+          this.weaponReceive = weapon;
           this.isConvertingFragmentToBox=false;
           setTimeout(() => {
             this.$bvModal.show('successOpenBox');
@@ -157,7 +164,7 @@ export default {
       const objectXGem = await this.getFragmentAmount();
       this.xGemAmount = Number(objectXGem.fragmentAmount);
       this.fragmentPerBox = Number(objectXGem.fragmentPerBox);
-    }, 100);
+    }, 500);
   }
 };
 </script>
@@ -179,6 +186,16 @@ export default {
 .fragmentAmountText {
   font-size: 1.5rem;
   font-weight: 600;
+}
+
+.itemWeapon {
+  min-width: 19em;
+  height: 26.5em;
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url(../../assets/images/bg-item-top.png);
+  position: relative;
 }
 
 .waiting {

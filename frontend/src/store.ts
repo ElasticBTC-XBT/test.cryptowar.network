@@ -2536,26 +2536,27 @@ export function createStore(web3: Web3) {
             .send(defaultCallOptions(state));
         }
 
-        await BlindBox.methods.buy(0).send({
+        const res = await BlindBox.methods.buy(0).send({
           from: state.defaultAccount,
           gas: '500000'
         });
-
         await Promise.all([
           dispatch('fetchTotalCommonBoxSupply')
         ]);
+        return res.events.NewBlindBox.returnValues.boxId;
       },
       async openCommonBox({ state, dispatch }, {boxId}) {
         try{
           //error cho nay
           const {BlindBox} = state.contracts();
-          await BlindBox?.methods.open(boxId).send({
+          const res= await BlindBox?.methods.open(boxId).send({
             from: state.defaultAccount,
             gas:'800000'
           });
           await Promise.all([
             dispatch('fetchTotalCommonBoxSupply')
           ]);
+          return res?.events.Transfer;
         }catch(error) {
           console.log('???', error);
         }
@@ -2575,7 +2576,7 @@ export function createStore(web3: Web3) {
             .send(defaultCallOptions(state));
         }
 
-        await BlindBox.methods.buy(1).send({
+        const res = await BlindBox.methods.buy(1).send({
           from: state.defaultAccount,
           gas: '500000'
         });
@@ -2583,6 +2584,7 @@ export function createStore(web3: Web3) {
         await Promise.all([
           this.cache.dispatch('fetchTotalCommonBoxSupply')
         ]);
+        return res.events.NewBlindBox.returnValues.boxId;
       },
 
       async purchaseEpicSecretBox({ state }) {
@@ -2599,7 +2601,7 @@ export function createStore(web3: Web3) {
             .send(defaultCallOptions(state));
         }
 
-        await BlindBox.methods.buy(2).send({
+        const res = await BlindBox.methods.buy(2).send({
           from: state.defaultAccount,
           gas: '500000'
         });
@@ -2607,6 +2609,7 @@ export function createStore(web3: Web3) {
         await Promise.all([
           this.cache.dispatch('fetchTotalEpicBoxSupply')
         ]);
+        return res.events.NewBlindBox.returnValues.boxId;
       },
 
       async openCommonSecretBox({ state }) {

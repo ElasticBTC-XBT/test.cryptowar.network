@@ -87,6 +87,7 @@ export default {
   align-items: center;
   justify-content: center;
   margin-top: 8em;
+  list-style: none;
 }
 
 .lobby-item.btn-secondary{
@@ -131,6 +132,7 @@ export default {
     flex-direction: column;
     margin-top: 37px;
     padding-left: 0;
+    list-style: none;
   }
 
   .addnew.addmore.addnew.lobby-box-item-wrap {

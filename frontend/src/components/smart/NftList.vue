@@ -4,6 +4,22 @@
       <div class="centered-text-div" v-if="(!nftIdTypes || nftIdTypes.length === 0)">
         <span>Nothing to buy at this time</span>
       </div>
+      <b-modal id="successOpenBox" hide-footer hide-header hide-header-close>
+         <!-- <div class="congratsText">Check your new item at Weapon Store</div> -->
+         <div class="itemWeapon" >
+          <WeaponSelect :weapon="this.weaponReceive"/>
+         </div>
+        <div class="buttonFightFragment" @click="$bvModal.hide('successOpenBox')"><span>GO TO CHECK</span></div>
+      </b-modal>
+         <div v-if="isLoadingBox" id="fight-overlay">
+            <div class="waiting animation" v-if="isLoadingBox" margin="auto">
+                  <div class="fighting-img"></div>
+                  <!-- <div class="waiting-text">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    Waiting for fight results...
+                  </div> -->
+                </div>
+            </div>
 
       <ul class="row nft-grid nft-list">
         <li
@@ -150,6 +166,7 @@ import { Nft } from '@/interfaces/Nft';
 import Vue from 'vue';
 import { Accessors, PropType } from 'vue/types/options';
 import { IState } from '@/interfaces';
+import WeaponSelect from "@/components/WeaponSelect.vue";
 
 const sorts = [
   { name: 'Any', dir: '' },
@@ -165,6 +182,9 @@ interface Data {
   priceSort: string;
   showFavoriteNfts: boolean;
   checkBuy: string;
+  lastBoxId: string | number;
+  isLoadingBox: boolean;
+  weaponReceive: any;
 }
 
 export interface NftIdType {
@@ -194,6 +214,8 @@ interface StoreMappedActions {
   purchaseRareSecretBox(): Promise<void>;
   purchaseEpicSecretBox(): Promise<void>;
   openCommonSecretBox(): Promise<void>;
+  openCommonBox(): Promise<void>;
+  fetchWeaponId(weaponId: (string | number)): Promise<any>;
 }
 
 export default Vue.extend({
@@ -272,11 +294,15 @@ export default Vue.extend({
       sorts,
       showFavoriteNfts: true,
       checkBuy: "",
+      lastBoxId: '',
+      weaponReceive: null,
+      isLoadingBox: false
     } as Data;
   },
 
   components: {
-    NftIcon
+    NftIcon,
+    WeaponSelect
   },
 
   computed: {
@@ -316,6 +342,7 @@ export default Vue.extend({
       const allIgnore: NftIdType[] = [];
       if (!this.showFavoriteNfts) {
         for (const type in Object.keys(this.favorites)) {
+          //@ts-ignore
           for(const id in Object.keys(this.favorites[type])) {
             allIgnore.push({ type, id });
           }
@@ -374,7 +401,7 @@ export default Vue.extend({
       'purchaseRenameTagDeal', 'purchaseWeaponRenameTagDeal',
       'purchaseCharacterFireTraitChange', 'purchaseCharacterEarthTraitChange',
       'purchaseCharacterWaterTraitChange', 'purchaseCharacterLightningTraitChange',
-      'purchaseCommonSecretBox', 'purchaseRareSecretBox', 'purchaseEpicSecretBox', 'openCommonSecretBox'
+      'purchaseCommonSecretBox', 'purchaseRareSecretBox', 'purchaseEpicSecretBox', 'openCommonSecretBox', 'openCommonBox','fetchWeaponId'
     ]) as StoreMappedActions),
     ...mapMutations(['setCurrentNft']),
 
@@ -418,12 +445,15 @@ export default Vue.extend({
 
     toggleFavorite(e: Event, type: string, id: number) {
       e.preventDefault();
+      //@ts-ignore
       if (this.favorites[type] && this.favorites[type][id]) {
+        //@ts-ignore
         this.$delete(this.favorites[type], id);
       } else {
+        //@ts-ignore
         if(!this.favorites[type]) {
           this.$set(this.favorites, type, {});
-        }
+        }//@ts-ignore
         this.$set(this.favorites[type], id, true);
       }
 
@@ -449,61 +479,99 @@ export default Vue.extend({
     },
 
     isFavorite(type: string, id: number): boolean {
+      //@ts-ignore
       return this.favorites && this.favorites[type] && this.favorites[type][id];
     },
 
     async buyItem(item: nftItem) {
-      if(item.type === 'shield'){
-        console.log('buying shield');
-        await this.purchaseShield();
-      }
-
-      if (item.type === 'SecretBox') {
-        console.log('Buying secret box');
-        if (item.id === 0) { //Common Box
-          await this.purchaseCommonSecretBox();
+      try{
+        this.isLoadingBox = true;
+        if(item.type === 'shield'){
+          console.log('buying shield');
+          await this.purchaseShield();
         }
-        if (item.id === 1) { // Rare Box
-          await this.purchaseRareSecretBox();
+
+        if (item.type === 'SecretBox') {
+          console.log('Buying secret box');
+          if (item.id === 0) { //Common Box
+            const boxId =  await this.purchaseCommonSecretBox();
+            console.log('jwq', boxId);
+            //@ts-ignore
+            this.lastBoxId = boxId;
+            this.isLoadingBox = false;
+          }
+          if (item.id === 1) { // Rare Box
+            const boxId = await this.purchaseRareSecretBox();
+            //@ts-ignore
+            this.lastBoxId = boxId;
+            this.isLoadingBox = false;
+          }
+          if (item.id === 3) { // Epic Box
+            const boxId = await this.purchaseEpicSecretBox();
+            //@ts-ignore
+            this.lastBoxId = boxId;
+            this.isLoadingBox = false;
+          }
+          //@ts-ignore
+          this.$bvModal.show('modal-buyitem');
         }
-        if (item.id === 3) { // Epic Box
-          await this.purchaseEpicSecretBox();
+
+        if(item.type === 'CharacterRenameTag'){
+          await this.purchaseRenameTag();
+          this.isLoadingBox = false;
         }
-        //@ts-ignore
-        this.$bvModal.show('modal-buyitem');
-      }
+        if(item.type === 'CharacterRenameTagDeal'){
+          await this.purchaseRenameTagDeal();
+          this.isLoadingBox = false;
+        }
 
-      if(item.type === 'CharacterRenameTag'){
-        await this.purchaseRenameTag();
-      }
-      if(item.type === 'CharacterRenameTagDeal'){
-        await this.purchaseRenameTagDeal();
-      }
+        if(item.type === 'WeaponRenameTag'){
+          await this.purchaseWeaponRenameTag();
+          this.isLoadingBox = false;
+        }
+        if(item.type === 'WeaponRenameTagDeal'){
+          await this.purchaseWeaponRenameTagDeal();
+          this.isLoadingBox = false;
+        }
 
-      if(item.type === 'WeaponRenameTag'){
-        await this.purchaseWeaponRenameTag();
-      }
-      if(item.type === 'WeaponRenameTagDeal'){
-        await this.purchaseWeaponRenameTagDeal();
-      }
-
-      if(item.type === 'CharacterFireTraitChange'){
-        await this.purchaseCharacterFireTraitChange();
-      }
-      if(item.type === 'CharacterEarthTraitChange'){
-        await this.purchaseCharacterEarthTraitChange();
-      }
-      if(item.type === 'CharacterWaterTraitChange'){
-        await this.purchaseCharacterWaterTraitChange();
-      }
-      if(item.type === 'CharacterLightningTraitChange'){
-        await this.purchaseCharacterLightningTraitChange();
+        if(item.type === 'CharacterFireTraitChange'){
+          await this.purchaseCharacterFireTraitChange();
+          this.isLoadingBox = false;
+        }
+        if(item.type === 'CharacterEarthTraitChange'){
+          await this.purchaseCharacterEarthTraitChange();
+          this.isLoadingBox = false;
+        }
+        if(item.type === 'CharacterWaterTraitChange'){
+          await this.purchaseCharacterWaterTraitChange();
+          this.isLoadingBox = false;
+        }
+        if(item.type === 'CharacterLightningTraitChange'){
+          await this.purchaseCharacterLightningTraitChange();
+          this.isLoadingBox = false;
+        }
+      }catch(error) {
+        this.isLoadingBox = false;
       }
     },
 
-    async openBox(item: nftItem) {
-      if (item.id === 0) {
-        await this.openCommonSecretBox();
+    async openBox() {
+      try{
+        this.isLoadingBox = true;
+        //@ts-ignore
+        const res = await this.openCommonBox({boxId: this.lastBoxId});
+        //@ts-ignore
+        const weapon = await this.fetchWeaponId(res?.[0]?.returnValues?.tokenId);
+        console.log('weapon Receive', weapon);
+        console.log('res nhan dc', res);
+        this.weaponReceive = weapon;
+        this.isLoadingBox = false;
+        setTimeout(() => {
+          //@ts-ignore
+          this.$bvModal.show('successOpenBox');
+        }, 1000);
+      }catch(error) {
+        this.isLoadingBox = false;
       }
     },
 
@@ -582,6 +650,65 @@ export default Vue.extend({
   display: flex;
   flex-direction: row;
   align-self: center;
+}
+.itemWeapon {
+  min-width: 19em;
+  height: 26.5em;
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url(../../assets/images/bg-item-top.png);
+  position: relative;
+}
+.waiting {
+  margin: auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0;
+  position: fixed;
+  z-index: 3;
+}
+.animation{
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.waiting.animation .fighting-img {
+  background-image: url(../../assets/images/diamond.gif);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 10rem;
+  height: 10rem;
+}
+#fight-overlay {
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+.buttonFightFragment {
+  border: none;
+    height: 47px;
+    background-image: url('../../assets/images/bg-fight-button.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    margin-left: 0.8rem;;
+    min-width: 190px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-top: 2rem;
+    cursor: pointer;
 }
 
 .show-favorite-checkbox {

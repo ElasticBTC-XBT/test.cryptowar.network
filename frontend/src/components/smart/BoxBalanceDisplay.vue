@@ -1,7 +1,9 @@
 <template>
   <div class="box-list row">
        <b-modal id="successOpenBox" hide-footer hide-header hide-header-close>
-         <div class="congratsText">Check your new weapon at Weapon Store</div>
+         <div class="itemWeapon" >
+          <WeaponSelect :weapon="this.weaponReceive"/>
+         </div>
         <div class="buttonFightFragment" @click="$bvModal.hide('successOpenBox')"><span>GO TO CHECK</span></div>
       </b-modal>
      <div v-if="isOpeningBox" id="fight-overlay">
@@ -75,6 +77,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import WeaponSelect from '../WeaponSelect.vue';
 
 export default {
   props: [],
@@ -83,11 +86,13 @@ export default {
     return {
       listBoxInventory: [],
       isOpeningBox: false,
-      errorMessage: ''
+      errorMessage: '',
+      weaponReceive: null
     };
   },
 
   components: {
+    WeaponSelect
   },
 
   watch: {
@@ -105,57 +110,67 @@ export default {
   },
 
   methods: {
-    ...mapActions(["getMyBoxes", "getBoxDetail", "openCommonBox"]),
+    ...mapActions(["getMyBoxes", "getBoxDetail", "openCommonBox", "fetchWeaponId"]),
     async handleOpenBox(type) {
-      switch(type){
-      case 'common': {
-        const listCommon = this.listBoxInventory.filter(item => item.type ==="0");
-        if(!listCommon || listCommon.length===0) {
+      try {
+        switch(type){
+        case 'common': {
+          const listCommon = this.listBoxInventory.filter(item => item.type ==="0");
+          if(!listCommon || listCommon.length===0) {
+            break;
+          }
+          this.isOpeningBox = true;
+          const res = await this.openCommonBox({boxId:listCommon[0].id});
+          const weapon = await this.fetchWeaponId(res?.[0]?.returnValues?.tokenId);
+          this.weaponReceive = weapon;
+          this.isOpeningBox=false;
+          setTimeout(() => {
+            this.$bvModal.show('successOpenBox');
+          }, 1000);
+          setTimeout(async () => {
+            this.listBoxInventory = await this.getMyBoxes();
+          }, 2000);
           break;
         }
-        this.isOpeningBox = true;
-        await this.openCommonBox({boxId:listCommon[0].id});
+        case 'rare': {
+          const listRare = this.listBoxInventory.filter(item => item.type ==="1");
+          if(!listRare || listRare.length===0) {
+            break;
+          }
+          this.isOpeningBox = true;
+          const res =await this.openCommonBox({boxId: listRare[0].id});
+          const weapon = await this.fetchWeaponId(res?.[0]?.returnValues?.tokenId);
+          this.weaponReceive = weapon;
+          this.isOpeningBox = false;
+          setTimeout(() => {
+            this.$bvModal.show('successOpenBox');
+          }, 1000);
+          setTimeout(async () => {
+            this.listBoxInventory = await this.getMyBoxes();
+          }, 2000);
+          break;
+        }
+        default:{
+          const listEpic = this.listBoxInventory.filter(item => item.type ==="2");
+          if(!listEpic || listEpic.length ===0) {
+            break;
+          }
+          this.isOpeningBox = true;
+          const res=await this.openCommonBox({boxId: listEpic[0].id});
+          const weapon = await this.fetchWeaponId(res?.[0]?.returnValues?.tokenId);
+          this.weaponReceive = weapon;
+          this.isOpeningBox = false;
+          setTimeout(() => {
+            this.$bvModal.show('successOpenBox');
+          }, 1000);
+          setTimeout(async () => {
+            this.listBoxInventory = await this.getMyBoxes();
+          }, 2000);
+          break;
+        }
+        }
+      }catch(error) {
         this.isOpeningBox=false;
-        setTimeout(() => {
-          this.$bvModal.show('successOpenBox');
-        }, 1000);
-        setTimeout(async () => {
-          this.listBoxInventory = await this.getMyBoxes();
-        }, 2000);
-        break;
-      }
-      case 'rare': {
-        const listRare = this.listBoxInventory.filter(item => item.type ==="1");
-        if(!listRare || listRare.length===0) {
-          break;
-        }
-        this.isOpeningBox = true;
-        await this.openCommonBox({boxId: listRare[0].id});
-        this.isOpeningBox = false;
-        setTimeout(() => {
-          this.$bvModal.show('successOpenBox');
-        }, 1000);
-        setTimeout(async () => {
-          this.listBoxInventory = await this.getMyBoxes();
-        }, 2000);
-        break;
-      }
-      default:{
-        const listEpic = this.listBoxInventory.filter(item => item.type ==="2");
-        if(!listEpic || listEpic.length ===0) {
-          break;
-        }
-        this.isOpeningBox = true;
-        await this.openCommonBox({boxId: listEpic[0].id});
-        this.isOpeningBox = false;
-        setTimeout(() => {
-          this.$bvModal.show('successOpenBox');
-        }, 1000);
-        setTimeout(async () => {
-          this.listBoxInventory = await this.getMyBoxes();
-        }, 2000);
-        break;
-      }
       }
     }
   },
@@ -208,6 +223,15 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
+}
+.itemWeapon {
+  min-width: 19em;
+  height: 26.5em;
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url(../../assets/images/bg-item-top.png);
+  position: relative;
 }
 .waiting.animation .fighting-img {
   background-image: url(../../assets/images/diamond.gif);
