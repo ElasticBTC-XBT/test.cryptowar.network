@@ -445,4 +445,12 @@ export default {
   font-size: 18px;
   font-weight: bold;
 }
+
+@media (max-width: 575.98px) {
+  .market-bot {
+    height: auto;
+    overflow: unset;
+    margin-bottom: 50px;
+  }
+}
 </style>

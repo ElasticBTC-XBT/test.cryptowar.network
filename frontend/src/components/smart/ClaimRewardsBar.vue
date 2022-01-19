@@ -226,6 +226,9 @@ export default Vue.extend({
         .multipliedBy(60)
         .multipliedBy(60);
       // return message
+      if(!toSec.toNumber()){
+        return "";
+      }
       return ` Next -1% reduction happens in ${secondsToDDHHMMSS(
         toSec.toNumber()
       )}.`;

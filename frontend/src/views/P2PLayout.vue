@@ -125,7 +125,9 @@
             <div v-if="selectedCharacter" class="info-user-footer">
               <div class="info-user-footer-item">
                 <div>Amount a match
-                  <input class="inputAmountBox" type="text" v-model="matchReward">
+                  <input class="inputAmountBox" type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                  v-model="matchReward" placeholder="Typing a number">
+                  <!-- {{matchReward}} -->
                 </div>
               </div>
               <div class="info-user-footer-item">
@@ -134,7 +136,8 @@
                     Toal deposit
                     <span>Min = value * 210%</span>
                   </span>
-                  <input class="inputAmountBox" type="text" v-model="totalDeposit">
+                  <input class="inputAmountBox" type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                  v-model="totalDeposit" placeholder="Typing a number">
                 </div>
               </div>
               <button @click="handleCreateRoom()">List HERO to Career Mode</button>
@@ -1240,6 +1243,7 @@ export default {
 .list-heroes{
   display: flex;
   justify-content: center;
+  padding-bottom: 5rem;
 }
 
 .list-request {
@@ -1773,6 +1777,11 @@ export default {
   color: #fff;
   font-size: 1.3em;
   font-weight: 600;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 
 @media (max-width: 767.98px) {
