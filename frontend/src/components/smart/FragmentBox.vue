@@ -171,6 +171,7 @@ export default {
           }
         }
       }catch(error) {
+        console.log('error nha', error);
         this.isConvertingFragmentToBox =false;
       }
     },

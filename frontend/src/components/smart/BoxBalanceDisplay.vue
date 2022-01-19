@@ -170,7 +170,6 @@ export default {
         }
         }
       }catch(error) {
-        console.log('error o day', error);
         this.isOpeningBox=false;
       }
     }
