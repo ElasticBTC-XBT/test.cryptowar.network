@@ -3578,10 +3578,14 @@ export function createStore(web3: Web3) {
         //@ts-ignore
         const fragmentAmount = await BlindBox?.methods.getFragmentAmount(state.defaultAccount).call(defaultCallOptions(state));
         const fragmentPerBox = await BlindBox?.methods.fragmentPerBox().call(defaultCallOptions(state));
+        const fragmentPerCommonBox = await BlindBox?.methods.commonPriceByXGem().call(defaultCallOptions(state));
+        const fragmentPerHero = await BlindBox?.methods.mintHeroPriceByXGem().call(defaultCallOptions(state));
         if(fragmentAmount) {
           return {
             fragmentAmount,
-            fragmentPerBox
+            fragmentPerBox,
+            fragmentPerCommonBox,
+            fragmentPerHero
           };
         }else {
           return 0;
@@ -3597,8 +3601,22 @@ export function createStore(web3: Web3) {
         const {BlindBox} = state.contracts();
         //@ts-ignore
         const res = await BlindBox?.methods.getBox(boxId).call(defaultCallOptions(state));
-        console.log(res);
         return res;
+      },
+      async buyCommonBoxWithXGem({state}) {
+        const {BlindBox} = state.contracts();
+        const res = await BlindBox?.methods.buyCommonBoxWithXGem().send(defaultCallOptions(state));
+        if(res) {
+          return res.events.NewBlindBox.returnValues;
+        }else {
+          return false;
+        }
+      },
+      async mintHeroWithXGem({state, dispatch}) {
+        const {BlindBox} = state.contracts();
+        const res = await BlindBox?.methods.mintHeroWithXGem().send(defaultCallOptions(state));
+        await Promise.all([dispatch('fetchCharacter',res?.events.Transfer.returnValues.tokenId)]);
+        return res?.events.Transfer;
       }
     },
   });

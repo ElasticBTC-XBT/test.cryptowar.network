@@ -226,25 +226,25 @@ export default Vue.extend({
   async mounted() {
     document.querySelector(".app.app-v2")?.classList.remove("bg2");
     // @ts-ignore
-    this.fetchBoxPriceInterval = setInterval(() => {
-      this.fetchBoxPrice();
-    }, 3000);
-    // @ts-ignore
-    this.fetchCommonBoxSupplyInterval = setInterval(async () => {
-      this.commonBoxSupply = await this.fetchTotalCommonBoxSupply();
-    }, 3000);
-    // @ts-ignore
-    this.fetchRareBoxSupplyInterval = setInterval(async () => {
-      this.rareBoxSupply = await this.fetchTotalRareBoxSupply();
-    }, 3000);
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 3000);
+    // this.fetchBoxPriceInterval = setInterval(() => {
+    //   this.fetchBoxPrice();
+    // }, 3000);
+    // // @ts-ignore
+    // this.fetchCommonBoxSupplyInterval = setInterval(async () => {
+    //   this.commonBoxSupply = await this.fetchTotalCommonBoxSupply();
+    // }, 3000);
+    // // @ts-ignore
+    // this.fetchRareBoxSupplyInterval = setInterval(async () => {
+    //   this.rareBoxSupply = await this.fetchTotalRareBoxSupply();
+    // }, 3000);
+    // setTimeout(() => {
+    //   this.isLoading = false;
+    // }, 3000);
   },
   beforeDestroy() {
-    clearInterval(this.fetchBoxPriceInterval);
-    clearInterval(this.fetchCommonBoxSupplyInterval);
-    clearInterval(this.fetchRareBoxSupplyInterval);
+    // clearInterval(this.fetchBoxPriceInterval);
+    // clearInterval(this.fetchCommonBoxSupplyInterval);
+    // clearInterval(this.fetchRareBoxSupplyInterval);
   },
 });
 </script>

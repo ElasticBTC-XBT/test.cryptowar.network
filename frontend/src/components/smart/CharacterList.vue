@@ -66,7 +66,6 @@
         <b-button
           class="gtag-link-others btn-blue-bg"
           v-html="`SEARCH`"
-          @click="filterAll"
         ></b-button>
       </div>
 
