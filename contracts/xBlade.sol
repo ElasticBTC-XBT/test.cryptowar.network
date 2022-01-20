@@ -236,7 +236,7 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
         uint256 fee = 0;
         uint256 transferAmount = amount;
         if (isSellAddress(to) && !isExceptionAddress(from)) {
-            fee = amount.mul(sellFeeRate).div(10**2);
+            fee = amount.mul(sellFeeRate).div(10**3);
             transferAmount = amount.sub(fee);
         }
         return (fee, transferAmount);
