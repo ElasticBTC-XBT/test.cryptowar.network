@@ -1,6 +1,6 @@
 <template>
   <div class="body main-font">
-    <character-bar/>
+    <character-bar :setCountTargetToFight="setCountTargetToFight"/>
     <div class="nav-bottom-line"></div>
     <div v-if="ownWeapons.length > 0 && ownCharacters.length > 0">
       <div class="row" v-if="error !== null">
@@ -160,12 +160,12 @@
                   {{ getWinChance(e.power, e.trait) }} Victory
                 </div>
                 <big-button
-                    style="margin: 0 auto"
-                    class="encounter-button btn-styled"
-                    :mainText="`FIGHT`"
-                    :disabled="(timeMinutes === 59 && timeSeconds >= 30) || waitingResults || !weaponHasDurability(selectedWeaponId) || !charHasStamina()"
-                    @click="onClickEncounter(e), (showModalFight = true)"
-                  />
+                  style="margin: 0 auto"
+                  class="encounter-button btn-styled"
+                  :mainText="`FIGHT`"
+                  :disabled="(timeMinutes === 59 && timeSeconds >= 30) || waitingResults || !weaponHasDurability(selectedWeaponId) || !charHasStamina()"
+                  @click="onClickEncounter(e), (showModalFight = true)"
+                />
                 <p v-if="isLoadingTargets">Loading...</p>
                 </div>
               </div>
@@ -229,6 +229,7 @@ export default {
       soundWin: new Audio(require("../assets/sound/sound_win.wav")),
       soundLose: new Audio(require("../assets/sound/sound_lose.wav")),
       showModalFight: false,
+      countTargetToFight: 0,
     };
   },
 
@@ -330,6 +331,10 @@ export default {
     getEnemyArtAround,
     weaponHasDurability(id) {
       return this.getWeaponDurability(id) >= this.fightMultiplier * 3;
+    },
+
+    setCountTargetToFight(){
+      this.countTargetToFight = 0;
     },
 
     pauseSound() {
@@ -482,6 +487,10 @@ export default {
         characterPower * weaponMultiplier + selectedWeapon.bonusPower;
 
       //Formula taken from getXpGainForFight funtion of CryptoWars.sol
+      if(targetToFight.power === null && this.countTargetToFight <= 3){
+        this.countTargetToFight++;
+        this.targets();
+      }
       return (
         Math.floor((targetToFight.power / totalPower) * this.fightXpGain) *
         this.fightMultiplier

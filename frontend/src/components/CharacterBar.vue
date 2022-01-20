@@ -1,6 +1,6 @@
 <template>
   <div class="character-bar">
-    <character-display />
+    <character-display :setCountTargetToFight="setCountTargetToFight" />
     <!-- <div class="character-bar-divider"/> -->
     <!-- <img src="../assets/infoDivider.png" class="info-divider"> -->
     <!-- <div class="nav-bottom-line"></div> -->
@@ -11,6 +11,12 @@
 import CharacterDisplay from './smart/CharacterDisplay.vue';
 
 export default {
+  props: {
+    setCountTargetToFight:{
+      type: Function,
+      default: null
+    },
+  },
   components: {
     CharacterDisplay,
   },

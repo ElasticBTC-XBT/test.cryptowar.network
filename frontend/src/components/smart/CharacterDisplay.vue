@@ -75,7 +75,7 @@
           }%;`"
           v-for="c in filteredCharactersForList"
           :key="c.id"
-          @click="!getIsInCombat && setCurrentCharacter(c.id) && alert(c.id)"
+          @click="!getIsInCombat && setCurrentCharacter(c.id) && alert(c.id), setCountTargetToFight()"
           v-tooltip="{content: `Power: ${CharacterPower(c.level).toLocaleString()}<br>
           <span>Level </span>
           <span
@@ -159,6 +159,12 @@ import { toBN, fromWeiEther } from "../../utils/common";
 import { getCleanName } from "../../rename-censor";
 
 export default Vue.extend({
+  props: {
+    setCountTargetToFight:{
+      type: Function,
+      default: null
+    },
+  },
   components: {
     // CharacterArt,
     // SmallBar,
