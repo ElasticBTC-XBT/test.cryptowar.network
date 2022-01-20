@@ -449,13 +449,14 @@ export default {
         this.showModalFight = false;
         this.fightResults = results;
 
+        this.soundFight.pause();
+        this.soundFight.currentTime = 0;
+
         await this.fetchFightRewardSkill();
         await this.fetchFightRewardXp();
 
         this.error = null;
 
-        this.soundFight.pause();
-        this.soundFight.currentTime = 0;
       } catch (e) {
         console.error(e);
         this.error = e.message;
