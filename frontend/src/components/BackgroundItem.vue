@@ -204,6 +204,7 @@ export default {
   background-repeat: no-repeat;
   background-size: 100% 100%;;
   max-height: 432px;
+  position: relative;
 }
 
 .character-portrait .character-art {
@@ -450,7 +451,20 @@ export default {
   .market-bot {
     height: auto;
     overflow: unset;
-    margin-bottom: 50px;
+    position: absolute;
+    bottom: 45px;
+    right: 0;
+    left: 0;
+    margin-right: 0;
+    /* margin-bottom: 50px; */
+  }
+
+  .placeholder div:first-child{
+    margin-top: -20px;
+  }
+
+  .character-art{
+    height: 432px;
   }
 }
 </style>
