@@ -745,14 +745,24 @@ button.close {
   color: #a50eb3 !important;
 }
 
-#loadingModal .modal-content,
 #fightResultsModal .modal-content,
-#listHeroToCareerModal .modal-content,
 #listHeroToChallengeModal .modal-content{
   min-width: 36rem;
   height: 100%;
   display: flex;
   align-items: center;
+}
+
+#listHeroToCareerModal .modal-content,
+#loadingModal .modal-content{
+  min-width: 36rem;
+  height: 350px;
+  display: flex;
+  align-items: center;
+}
+
+#listHeroToCareerModal .modal-content{
+  height: 475px;
 }
 
 #fightResultsModal .close{
@@ -921,12 +931,22 @@ button.close {
 }
 
 @media (max-width: 577px){
+
+  #listHeroToCareerModal .modal-body{
+    width: 300px;
+  }
+
+  #listHeroToCareerModal .modal-content{
+  min-width: 20rem;
+  height: 240px;
+  background-size: contain !important;
+}
+
   .main-font .nav-tabs a.nav-link{
     font-size: 15px;
   }
   #loadingModal .modal-content,
   #fightResultsModal .modal-content,
-  #listHeroToCareerModal .modal-content,
   #listHeroToChallengeModal .modal-content,
   #requestFightModal .modal-content{
     min-width: 20rem;
@@ -1037,6 +1057,7 @@ div.bg-success {
     rgba(44, 58, 65, 1) 100%
   );
 }
+
 </style>
 <style scoped>
 .content {

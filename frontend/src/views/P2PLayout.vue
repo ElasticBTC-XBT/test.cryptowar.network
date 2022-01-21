@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-12">
           <div class="quantity-heroes">
-            <div><span>{{quantityHeroes().length}}</span> Heroes In Career Mode</div>
+            <div><span>{{quantityHeroes(1).length}}</span> Heroes In Career Mode</div>
           </div>
         </div>
       </div>
@@ -125,7 +125,9 @@
             <div v-if="selectedCharacter" class="info-user-footer">
               <div class="info-user-footer-item">
                 <div>Amount a match
-                  <input class="inputAmountBox" type="text" v-model="matchReward">
+                  <input class="inputAmountBox" type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                  v-model="matchReward" placeholder="Typing a number">
+                  <!-- {{matchReward}} -->
                 </div>
               </div>
               <div class="info-user-footer-item">
@@ -134,7 +136,8 @@
                     Toal deposit
                     <span>Min = value * 210%</span>
                   </span>
-                  <input class="inputAmountBox" type="text" v-model="totalDeposit">
+                  <input class="inputAmountBox" type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                  v-model="totalDeposit" placeholder="Typing a number">
                 </div>
               </div>
               <button @click="handleCreateRoom()">List HERO to Career Mode</button>
@@ -212,7 +215,7 @@
                     (myRequestMode= false)
                 "
                 :active="careerMode"
-                ><div>CAREER MODE <div>{{quantityHeroes().length}}</div></div></b-nav-item
+                ><div>CAREER MODE <div>{{quantityHeroes(1).length}}</div></div></b-nav-item
               >
               <b-nav-item
                 class="nav-item"
@@ -223,7 +226,7 @@
                     (myRequestMode= false)
                 "
                 :active="requestChallenge"
-                ><div>REQUEST TO CHALLENGE <div>{{this.filterCareerModeRequest(careerModeRequest).length}}</div></div></b-nav-item
+                ><div>REQUEST TO CHALLENGE <div>{{quantityHeroes(2).length}}</div></div></b-nav-item
               >
               <b-nav-item
                 class="nav-item"
@@ -234,7 +237,7 @@
                     (myRequestMode= false)
                 "
                 :active="changeMode"
-                ><div>MY CAREER MODE <div>{{this.filterMyCareerModeRooms(careerModeRooms).length}}</div></div></b-nav-item
+                ><div>MY CAREER MODE <div>{{quantityHeroes(3).length}}</div></div></b-nav-item
               >
               <b-nav-item
                 class="nav-item"
@@ -245,7 +248,7 @@
                     (myRequestMode= true)
                 "
                 :active="myRequestMode"
-                ><div>MY REQUEST<div>{{this.filterMyRequestRoom(this.myCareerModeRequest).length}}</div></div></b-nav-item
+                ><div>MY REQUEST<div>{{quantityHeroes(4).length}}</div></div></b-nav-item
               >
             </b-nav>
           </div>
@@ -396,7 +399,7 @@ export default {
       listMyRequest: [],
       weaponToShow: null,
       valueSearchId: "",
-      arrayValue: [],
+      quantityHeroesMyRequest: null,
     };
   },
 
@@ -473,6 +476,10 @@ export default {
   //       this.titleResults = "Better luck Next Time";
   //     }
   //   },
+  // },
+
+  // created(){
+  //   this.quantityHeroesMyRequest = this.filterMyRequestRoom();
   // },
 
   methods: {
@@ -835,7 +842,7 @@ export default {
       const listRoomRequest = this.careerModeRequest.filter((item) => {
         const roomCareer = this.careerModeRooms.find(room => room.id === item.roomId);
         if(this.valueSearchId !== ""){
-          return item.done === '0' && !roomCareer.claimed && item.characterId === this.valueSearchId;
+          return item.done === '0' && !roomCareer.claimed && item.heroId === this.valueSearchId;
         }
         return item.done === '0' && !roomCareer.claimed;
       });
@@ -872,7 +879,7 @@ export default {
         newCareerModeRequest.push(object[i]);
       }
       if(this.valueSearchId !== ""){
-        return newCareerModeRequest.filter(item => item.done !== '2' && item.characterId === this.valueSearchId);
+        return newCareerModeRequest.filter(item => item.done !== '2' && item.heroId === this.valueSearchId);
       }
       return newCareerModeRequest.filter(item => item.done !== '2');
     },
@@ -957,12 +964,46 @@ export default {
     },
 
     // quantityHeroes
-    quantityHeroes(){
-      return this.careerModeRooms.filter((item)=> {
-        const _matchReward = fromWeiEther(item.matchReward);
-        const _totalDeposit = fromWeiEther(item.totalDeposit);
-        return item.owner!==this.defaultAccount && !item.claimed && Number(_matchReward) < Number(_totalDeposit);
-      });
+    quantityHeroes(check){
+      if(check === 1){
+        return this.careerModeRooms.filter((item)=> {
+          const _matchReward = fromWeiEther(item.matchReward);
+          const _totalDeposit = fromWeiEther(item.totalDeposit);
+          return item.owner!==this.defaultAccount && !item.claimed && Number(_matchReward) < Number(_totalDeposit);
+        });
+      }
+
+      else if(check === 2){
+        const newCareerModeRequest = [];
+        const object = {};
+        for(let i = 0 ;i< this.careerModeRequest.length; i++) {
+          object[this.careerModeRequest[i].id] = this.careerModeRequest[i];
+        }
+        for(const i in object) {
+          newCareerModeRequest.push(object[i]);
+        }
+        const listRoomRequest = this.careerModeRequest.filter((item) => {
+          const roomCareer = this.careerModeRooms.find(room => room.id === item.roomId);
+          return item.done === '0' && !roomCareer.claimed;
+        });
+        return listRoomRequest;
+      }
+
+      else if(check === 3){
+        return this.careerModeRooms.filter((item)=> item.owner===this.defaultAccount && !item.claimed);
+      }
+
+      else if(check === 4){
+        const newCareerModeRequest = [];
+        const object = {};
+        for(let i = 0 ;i< this.myCareerModeRequest.length; i++) {
+          object[this.myCareerModeRequest[i].id] = this.myCareerModeRequest[i];
+        }
+        for(const i in object) {
+          newCareerModeRequest.push(object[i]);
+        }
+        return newCareerModeRequest.filter(item => item.done !== '2');
+      }
     }
 
     // setStaminaSelectorValues() {
@@ -1202,6 +1243,7 @@ export default {
 .list-heroes{
   display: flex;
   justify-content: center;
+  padding-bottom: 5rem;
 }
 
 .list-request {
@@ -1286,7 +1328,7 @@ export default {
 }
 
 .item{
-  min-width: 19em;
+  min-width: 18em;
   height: 26.5em;
   background-position: left;
   background-repeat: no-repeat;
@@ -1735,6 +1777,11 @@ export default {
   color: #fff;
   font-size: 1.3em;
   font-weight: 600;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 
 @media (max-width: 767.98px) {
