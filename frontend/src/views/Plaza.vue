@@ -36,7 +36,7 @@
       />
       <big-button
         v-if="heroAmount > 0"
-        class="button"
+        class="button mint-hero"
         :mainText="`Mint Hero`"
         :disabled="!canRecruit() || heroAmount < 1"
         @click="onMintCharacter"
@@ -511,4 +511,17 @@ export default Vue.extend({
   color:#f58b5b;
   text-shadow: 1px 2px 3px #666;
 }
+.mint-hero{
+  margin: 0;
+}
+</style>
+<style>
+  .mint-hero h1{
+    margin: 0 !important;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  .mint-hero h2{
+    margin: 0 !important;
+  }
 </style>

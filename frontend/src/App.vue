@@ -534,6 +534,7 @@ body {
     rgba(20, 20, 20, 1) 100%,
     rgba(36, 39, 32, 1) 100%
   );
+  overscroll-behavior: none;
 }
 
 .no-margin {
@@ -577,6 +578,7 @@ button,
 
   // font-size: 2rem;
   text-align: center;
+  margin: auto;
 }
 
 .error {
