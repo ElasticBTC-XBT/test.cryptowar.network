@@ -1,7 +1,7 @@
 pragma solidity ^0.6.2;
 
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20PausableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20BurnableUpgradeable.sol";
 
 contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
     using SafeMathUpgradeable for uint256;
