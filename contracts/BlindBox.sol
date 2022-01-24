@@ -50,6 +50,8 @@ contract BlindBox is
 
     uint256 public commonPriceByXGem;
     uint256 public mintHeroPriceByXGem;
+    uint256 public rarePriceByXGem;
+    uint256 public epicPriceByXGem;
 
     event NewBlindBox(uint256 indexed boxId, address indexed minter);
     event Burned(address indexed owner, uint256 indexed burned);
@@ -148,6 +150,14 @@ contract BlindBox is
 
         if (_type == 4) {
             mintHeroPriceByXGem = _price;
+        }
+
+        if (_type == 5) {
+            rarePriceByXGem = _price;
+        }
+
+        if (_type == 6) {
+            epicPriceByXGem = _price;
         }
     }
 
@@ -291,19 +301,49 @@ contract BlindBox is
         emit NewBlindBox(tokenId, msg.sender);
     }
 
-    function mintHeroWithXGem() public {
+    function buyRareBoxWithXGem() public {
         require(
-            fragmentQty[msg.sender] >= mintHeroPriceByXGem,
+            fragmentQty[msg.sender] >= rarePriceByXGem,
             "Not enough fragment to buy common box"
         );
+
         fragmentQty[msg.sender] = fragmentQty[msg.sender].sub(
-            mintHeroPriceByXGem
+            rarePriceByXGem
         );
-        uint256 seed = uint256(
-            keccak256(abi.encodePacked(blockhash(block.number - 1), msg.sender))
-        );
-        characters.mint(msg.sender, seed);
+        uint256 tokenId = tokens.length;
+        tokens.push(Box(Type.RARE));
+        _mint(msg.sender, tokenId);
+        emit NewBlindBox(tokenId, msg.sender);
     }
+
+    function buyEpicBoxWithXGem() public {
+        require(
+            fragmentQty[msg.sender] >= epicPriceByXGem,
+            "Not enough fragment to buy common box"
+        );
+
+        fragmentQty[msg.sender] = fragmentQty[msg.sender].sub(
+            epicPriceByXGem
+        );
+        uint256 tokenId = tokens.length;
+        tokens.push(Box(Type.EPIC));
+        _mint(msg.sender, tokenId);
+        emit NewBlindBox(tokenId, msg.sender);
+    }
+
+    // function mintHeroWithXGem() public {
+    //     require(
+    //         fragmentQty[msg.sender] >= mintHeroPriceByXGem,
+    //         "Not enough fragment to buy common box"
+    //     );
+    //     fragmentQty[msg.sender] = fragmentQty[msg.sender].sub(
+    //         mintHeroPriceByXGem
+    //     );
+    //     uint256 seed = uint256(
+    //         keccak256(abi.encodePacked(blockhash(block.number - 1), msg.sender))
+    //     );
+    //     characters.mint(msg.sender, seed);
+    // }
 
     function addFragment(address account, uint256 qty) public onlyGameAdmin {
         require(qty < 30, "Max 30 fragment");
