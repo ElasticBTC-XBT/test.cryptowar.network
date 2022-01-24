@@ -1107,8 +1107,8 @@ export function createStore(web3: Web3) {
       async fetchUserGameDetails({ state, commit }) {
         if (featureFlagStakeOnly) return;
 
-        const ownedCommonBoxIds = await dispatch('getMyBoxes');
-        const myXgem = await dispatch('getFragmentAmount');
+        const ownedCommonBoxIds = await this.cache.dispatch('getMyBoxes');
+        const myXgem = await this.cache.dispatch('getFragmentAmount');
         commit('updateMyXgem', {
           myXgem: Number(myXgem.fragmentAmount)
         });
