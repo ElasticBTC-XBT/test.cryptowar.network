@@ -48,7 +48,7 @@ export default {
 
   async created() {
     this.waitingLeaderboardOutcome = true;
-    const leaderboardData = await fetch(apiUrl('static/leaderboard'),defaultOptions);
+    const leaderboardData = await fetch(await apiUrl('static/leaderboard'),await defaultOptions);
     const leaderboards = await leaderboardData.json();
 
     this.leaderboards = leaderboards.leaderboard;
