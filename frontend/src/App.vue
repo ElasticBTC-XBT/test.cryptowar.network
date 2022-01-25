@@ -125,6 +125,7 @@ import SmallButton from "./components/SmallButton.vue";
 import NavBar from "./components/NavBar.vue";
 // import CharacterBar from "./components/CharacterBar.vue";
 // import { apiUrl, defaultOptions } from "./utils/common";
+import { getAddresses } from "./addresses";
 
 Vue.directive("visible", (el, bind) => {
   el.style.visibility = bind.value ? "visible" : "hidden";
@@ -134,8 +135,8 @@ export default {
   inject: [
     "web3",
     "featureFlagStakeOnly",
-    "expectedNetworkId",
-    "expectedNetworkName",
+    // "expectedNetworkId",
+    // "expectedNetworkName",
   ],
   components: {
     NavBar,
@@ -150,6 +151,8 @@ export default {
     isConnecting: false,
     recruitCost: "",
     isMaintenance: false,
+    expectedNetworkId: 0,
+    expectedNetworkName: "",
   }),
 
   computed: {
@@ -181,6 +184,7 @@ export default {
     },
 
     showNetworkError() {
+      this.getExpectedNetwork();
       return (
         this.expectedNetworkId &&
         this.currentNetworkId !== null &&
@@ -220,6 +224,12 @@ export default {
       "fetchWaxBridgeDetails",
       "fetchRewardsClaimTax",
     ]),
+
+    getExpectedNetwork(){
+      const expectedNetwork = getAddresses(this.currentNetworkId);
+      this.expectedNetworkId = parseInt(expectedNetwork.VUE_APP_EXPECTED_NETWORK_ID, 10);
+      this.expectedNetworkName = expectedNetwork.VUE_APP_EXPECTED_NETWORK_NAME;
+    },
 
     async updateCharacterStamina(id) {
       if (this.featureFlagStakeOnly) return;
