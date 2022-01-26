@@ -15,11 +15,12 @@ import P2PLayout from './views/P2PLayout.vue'
 import Lobby from './views/Lobby.vue'
 import Inventory from './views/Inventory.vue'
 
-import CombatPVP from './views/CombatPVP.vue'
-import Arena from './views/Arena.vue'
-import CombatPVPFight from './views/CombatPVPFight.vue'
-import RPS from './views/RPS.vue'
-import Maintenance from './views/Maintenance.vue'
+import CombatPVP from './views/CombatPVP.vue';
+import Arena from './views/Arena.vue';
+import CombatPVPFight from './views/CombatPVPFight.vue';
+import RPS from './views/RPS.vue';
+import Maintenance from './views/Maintenance.vue';
+import LuckyWheel from './views/LuckyWheel.vue';
 
 import {
   raid as featureFlagRaid,
@@ -77,8 +78,9 @@ function createRouter() {
       { path: '/p2p', name: 'P2P', component: P2PLayout },
       { path: '/lobby', name: 'lobby', component: Lobby },
       { path: '/maintenance', name: 'maintenance', component: Maintenance },
-    ],
-  })
+      { path: '/luckywheel', name: 'luckywheel', component: LuckyWheel },
+    ]
+  });
 
   if (featureFlagRaid) {
     router.addRoute({ path: '/raid/', name: 'raid', component: Raid })

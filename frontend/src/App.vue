@@ -260,12 +260,7 @@ export default {
       await this.updateCharacterStamina(this.currentCharacterId)
     },
     $route(to) {
-      document
-        .querySelector('.app.app-v2')
-        .classList.toggle(
-          'bg2',
-          this.$route.name === 'lobby' || this.$route.name === 'arena'
-        )
+      document.querySelector(".app.app-v2").classList.toggle("bg2", this.$route.name === 'lobby' || this.$route.name === 'arena' || this.$route.name === 'luckywheel');
       // react to route changes
       window.gtag('event', 'page_view', {
         page_title: to.name,
@@ -534,7 +529,8 @@ export default {
   },
 
   async mounted() {
-    this.checkStorage()
+    document.querySelector(".app.app-v2").classList.toggle("bg2", this.$route.name === 'lobby' || this.$route.name === 'arena' || this.$route.name === 'luckywheel');
+    this.checkStorage();
 
     Events.$on('setting:hideRewards', () => this.checkStorage())
     Events.$on('setting:useGraphics', () => this.checkStorage())
