@@ -427,6 +427,7 @@ export default {
 @media (max-width: 576px) {
   .trait {
     height: 45px;
+    top: 10px;
   }
 
   .circle-element {
