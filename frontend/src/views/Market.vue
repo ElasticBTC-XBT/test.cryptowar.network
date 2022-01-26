@@ -1760,6 +1760,18 @@ export default Vue.extend({
 
 <style scoped>
 
+html {
+  overscroll-behavior: auto;
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  overscroll-behavior: auto;
+  overflow: auto;
+  height: 100%;
+}
+
 .search-btn-selling{
   display: flex;
   justify-content: center;

@@ -71,6 +71,17 @@ export default {
 }
 
 @media (max-width: 576px) {
+  html {
+    overscroll-behavior: auto;
+    overflow: hidden;
+    height: 100%;
+  }
+
+  body {
+    overscroll-behavior: auto;
+    overflow: auto;
+    height: 100%;
+  }
   .referal-link {
     flex-direction: column;
     align-items: center;
