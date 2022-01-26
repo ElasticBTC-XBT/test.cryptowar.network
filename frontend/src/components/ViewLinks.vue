@@ -13,17 +13,12 @@
 
     <li class="nav-line"></li>
 
-    <router-link
-      :to="{ name: '#' }"
-      exact
-      class="nav-link mr-xl-1 ml-xl-1 mr-2xl-4 ml-2xl-4 disabled"
-      v-if="!featureFlagStakeOnly"
-    >
+    <router-link :to="{ name: 'arena' }" exact class="nav-link mr-xl-1 ml-xl-1 mr-2xl-4 ml-2xl-4"
+    v-if="!featureFlagStakeOnly">
       <li @click="hideOption()" class="nav-item nav-top-links nav-icon-box">
         <img src="../assets/v2/arena_icon.svg" alt="" class="nav-icon" />
         <span class="gtag-link-others arena" tagname="plaza_screen">Arena</span>
       </li>
-      <span class="comming-soon" style="text-align: center">Coming soon</span>
     </router-link>
 
     <li class="nav-line"></li>
@@ -66,20 +61,8 @@
 
     <li class="nav-line"></li>
 
-    <!-- <router-link :to="{ name: 'plaza' }" exact class="nav-link"
-    v-if="!featureFlagStakeOnly">
-      <li class="nav-item nav-top-links">
-        <span class="gtag-link-others" tagname="plaza_screen">Plaza</span>
-      </li>
-    </router-link> -->
-
-    <router-link
-      :to="{ name: 'inventory' }"
-      exact
-      class="nav-link mr-xl-2 ml-xl-2 mr-2xl-3 ml-2xl-3"
-      v-if="!featureFlagStakeOnly"
-    >
-      <li @click="hideOption()" class="nav-item nav-top-links nav-img-item-box">
+    <router-link :to="{ name: 'inventory' }" exact class="nav-link mr-xl-2 ml-xl-2 mr-2xl-3 ml-2xl-3"   v-if="!featureFlagStakeOnly">
+      <li @click="hideOption()" class="nav-item nav-top-links nav-img-item-box" >
         <span class="nav-img-item">
           <img
             src="../assets/v2/inventory.svg"
@@ -148,36 +131,6 @@
         <span class="nav-item-hover">Black Smith</span>
       </li>
     </router-link>
-
-    <!-- <router-link :to="{ name: 'combat' }" exact class="nav-link"  v-if="!featureFlagStakeOnly">
-      <li class="nav-item nav-top-links" >
-        <span class="gtag-link-others" tagname="combat_screen">Combat</span>
-      </li>
-    </router-link> -->
-
-    <!-- <router-link :to="{ name: 'raid' }" exact class="nav-link"  v-if="!featureFlagStakeOnly && featureFlagRaid">
-      <li class="nav-item nav-top-links">
-        <span class="gtag-link-others" tagname="raid_screen">Raid</span>
-      </li>
-    </router-link> -->
-
-    <!-- <router-link :to="{ name: 'select-stake-type' }" exact class="nav-link">
-      <li class="nav-item nav-top-links">
-        <span class="gtag-link-others" tagname="stake_screen">Stake</span>
-      </li>
-    </router-link> -->
-
-    <!-- <router-link :to="{ name: 'P2P' }" exact class="nav-link">
-      <li class="nav-item nav-top-links">
-        <span class="gtag-link-others" tagname="pvp_screen">PvP</span>
-      </li>
-    </router-link> -->
-
-    <!-- <div exact class="nav-link">
-      <li class="nav-item nav-top-links">
-        <a href="https://www.cryptowar.network/buy" target="_blank" class="gtag-link-others" tagname="shop_screen">Buy IDO</a>
-      </li>
-    </div>-->
   </b-navbar-nav>
 </template>
 
