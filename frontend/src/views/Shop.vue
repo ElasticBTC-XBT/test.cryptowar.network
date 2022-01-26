@@ -17,6 +17,7 @@ import { SkillShopListing } from "../interfaces/SkillShopListing";
 import BigNumber from "bignumber.js";
 import { fromWeiEther, toBN } from "../utils/common";
 import NftList from "@/components/smart/NftList.vue";
+import Bignumber from 'bignumber.js';
 
 type StoreMappedState = Pick<
 IState,
@@ -27,6 +28,10 @@ IState,
 | "ownedCharacterIds"
 | "ownedWeaponIds"
 | "ownedShieldIds"
+| "commonBoxPriceXgem"
+| "rareBoxPriceXgem"
+| "epicBoxPriceXgem"
+| "myXgem"
 >;
 
 interface StoreMappedGetters {
@@ -86,6 +91,13 @@ export default Vue.extend({
       "ownedCharacterIds",
       "ownedWeaponIds",
       "ownedShieldIds",
+      "commonBoxPriceXgem",
+      "rareBoxPriceXgem",
+      "epicBoxPriceXgem",
+      'skillBalance',
+      'inGameOnlyFunds',
+      'skillRewards',
+      'myXgem'
     ]) as Accessors<StoreMappedState>),
     ...(mapGetters([
       "contracts",
@@ -115,36 +127,62 @@ export default Vue.extend({
     shopOffersNftList(): SkillShopListing[] {
       const { common, rare, epic } = this.getBoxPrice();
 
+      const xBladeBalance = fromWeiEther(
+        Bignumber.sum(
+          //@ts-ignore
+          toBN(this.skillBalance),
+          //@ts-ignore
+          toBN(this.inGameOnlyFunds),
+          //@ts-ignore
+          toBN(this.skillRewards)
+          //commit
+        )
+      );
+
       const nftList = [
         {
           id: 0,
           type: "SecretBox",
           nftPrice: toBN(fromWeiEther(common)).toNumber(),
           name: "Common Box",
-          description: "Get common weapon, 1% chance to get 5-stars weapon",
+          description:
+       "0.4% chance to get 5-stars weapon, 1% chance to get 4-stars weapon, 2% chance to get 3-stars weapon, 8.5% chance to get 2-stars weapon, 88.1% chance to get 1-stars weapon",
           image: "common-box.png",
           isSoldOut: Number(this.commonBoxSupply) === 0,
-          supply: this.commonBoxSupply
+          supply: this.commonBoxSupply,
+          isDisable: Number(xBladeBalance) < toBN(fromWeiEther(common)).toNumber() ,
+          nftPriceXgem: this.commonBoxPriceXgem,
+          isDisableXgem: Number(this.myXgem) < this.commonBoxPriceXgem
         },
         {
           id: 1,
           type: "SecretBox",
           nftPrice: toBN(fromWeiEther(rare)).toNumber(),
           name: "Rare Box",
-          description: "Get rare weapon, 4% chance to get 5-stars weapon",
+          description:
+      "2.5% chance to get 5-stars weapon, 5% chance to get 4-stars weapon, 10% chance to get 3-stars weapon, 56% chance to get 2-stars weapon, 26.5% chance to get 1-stars weapon",
           image: "rare-box.png",
           isSoldOut: Number(this.rareBoxSupply) === 0,
-          supply: this.rareBoxSupply
+          supply: this.rareBoxSupply,
+          isDisable:  Number(xBladeBalance) < toBN(fromWeiEther(rare)).toNumber(),
+          nftPriceXgem: this.rareBoxPriceXgem,
+          isDisableXgem: Number(this.myXgem) < this.rareBoxPriceXgem
         },
         {
-          id: 3,
+          id: 2,
           type: "SecretBox",
           nftPrice: toBN(fromWeiEther(epic)).toNumber(),
           name: "Epic Box",
-          description: "Get epic weapon, 6% chance to get 5-stars weapon",
+          description:
+       `0.6% chance to get 5-stars weapon, 
+       1.5% chance to get 4-stars weapon, 2.5% chance to get 3-stars weapon, 10% chance to get 2-stars weapon, 
+       84.4% chance to get 1-stars weapon and 1% chance to get hero`,
           image: "epic-box.png",
           isSoldOut: Number(this.epicBoxSupply) === 0,
-          supply: this.epicBoxSupply
+          supply: this.epicBoxSupply,
+          isDisable:  Number(xBladeBalance) < toBN(fromWeiEther(epic)).toNumber(),
+          nftPriceXgem: this.epicBoxPriceXgem,
+          isDisableXgem: Number(this.myXgem) < this.epicBoxPriceXgem
         },
       ] as SkillShopListing[];
 

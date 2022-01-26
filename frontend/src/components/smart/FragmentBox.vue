@@ -34,14 +34,8 @@
             </div>
           </div>
         </b-modal>
-        <div class="col-lg-12 d-flex justify-content-end align-items-end">
-            <div class="d-flex flex-column">
-                <span class="fragmentAmountText">Your xGem</span>
-                <span class="fragmentAmountNumber">{{xGemAmount}} 💎</span>
-            </div>
-        </div>
         <div class="dust-list row">
-            <div
+            <!-- <div
             class="col-lg-4 d-flex flex-column align-items-center"
             :class="isBlacksmith ? 'col-6' : 'col-12'"
             >
@@ -52,11 +46,9 @@
                 <div class="commBox"></div>
             </div>
             <div class="buttonFightFragment" @click="purchaseItem">
-                <!-- <div class="dust-quantity text-center"> -->
                 <span>{{'OPEN ('+fragmentPerCommonBox+'💎)'}}</span>
-                <!-- </div> -->
             </div>
-            </div>
+            </div> -->
             <div
             class="col-lg-4 d-flex flex-column align-items-center"
             :class="isBlacksmith ? 'col-6' : 'col-12'"
@@ -67,37 +59,31 @@
             >
                 <div class="dust-image dust-image2"></div>
             </div>
-            <div class="buttonFightFragment" @click="handleConvertBox">
+            <div :class="checkDisableButton() ? 'buttonFightFragmentDisable' : 'buttonFightFragment'" @click="checkDisableButton() ?() => {}: handleConvertBox()">
                 <!-- <div class="dust-quantity text-center"> -->
-                <span>{{'OPEN ('+fragmentPerBox+'💎)'}}</span>
+                <span>{{'BUY ('+fragmentPerBox+'💎)'}}</span>
                 <!-- </div> -->
             </div>
             </div>
-            <div
+            <!-- <div
             class="col-lg-4 d-flex flex-column align-items-center"
             :class="isBlacksmith ? 'col-6' : 'col-12'"
-            >
+            > -->
             <div v-if="isConvertingFragmentToBox" id="fight-overlay">
             <div class="waiting animation" v-if="isConvertingFragmentToBox" margin="auto">
                   <div class="fighting-img"></div>
-                  <!-- <div class="waiting-text">
-                    <i class="fas fa-spinner fa-spin"></i>
-                    Waiting for fight results...
-                  </div> -->
                 </div>
             </div>
-            <div
+            <!-- <div
                 class="character-item addnew dust-container"
                 :class="isBlacksmith && 'no-corner'"
             >
                 <div class="mintHero"/>
             </div>
             <div class="buttonFightFragment" @click="handleMintHero">
-                <!-- <div class="dust-quantity text-center"> -->
                 <span>{{'RECRUIT ('+fragmentPerHero+'💎)'}}</span>
-                <!-- </div> -->
             </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -132,7 +118,7 @@ export default {
 
   computed: {
     ...mapGetters(['getPowerfulDust', 'getGreaterDust', 'getLesserDust', 'ownCharacters']),
-    ...mapState(["characters"]),
+    ...mapState(["characters","myXgem"]),
 
   },
 
@@ -152,7 +138,7 @@ export default {
     ]),
     async handleConvertBox() {
       try{
-        if(this.xGemAmount < this.fragmentPerBox) {
+        if(this.myXgem < this.fragmentPerBox) {
           this.errorMessage = "Not enough xGem!";
           this.$bvModal.show('fragmentOpenBoxModal');
         }
@@ -161,7 +147,6 @@ export default {
           const response = await this.convertFragmentToBox();
           if(response) {
             this.boxId = response.boxId;
-            this.xGemAmount -= this.fragmentPerBox;
             const boxTypeReturn = await this.getBoxDetail({boxId:response.boxId});
             switch(boxTypeReturn) {
             case 1: {
@@ -211,8 +196,14 @@ export default {
       }
       }
     },
+    checkDisableButton() {
+      if(this.myXgem < this.fragmentPerBox) {
+        return true;
+      }
+      return false;
+    },
     async purchaseItem() {
-      if(this.xGemAmount < this.fragmentPerCommonBox) {
+      if(this.xGemAmount > this.fragmentPerCommonBox) {
         this.errorMessage = "Not enough xGem!";
         this.$bvModal.show('fragmentOpenBoxModal');
         return;
@@ -280,10 +271,7 @@ export default {
   async mounted() {
     setTimeout(async () => {
       const objectXGem = await this.getFragmentAmount();
-      this.xGemAmount = Number(objectXGem.fragmentAmount);
       this.fragmentPerBox = Number(objectXGem.fragmentPerBox);
-      this.fragmentPerCommonBox = Number(objectXGem.fragmentPerCommonBox);
-      this.fragmentPerHero = Number(objectXGem.fragmentPerHero);
     }, 500);
   }
 };
@@ -394,20 +382,34 @@ export default {
   transition: opacity 0.3s ease;
 }
 .buttonFightFragment {
-  border: none;
-  height: 47px;
-  background-image: url('../../assets/images/bg-fight-button.png');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-color: transparent;
-  margin: 2rem 0;
-  margin-left: 0.8rem;;
-  min-width: 190px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  cursor: pointer;
-  margin-bottom: 5rem;
+    border: none;
+    height: 47px;
+    background-image: url('../../assets/images/bg-fight-button.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    margin-left: 0.8rem;;
+    min-width: 190px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-top: 2rem;
+    cursor: pointer;
+}
+.buttonFightFragmentDisable {
+    border: none;
+    height: 47px;
+    background-image: url('../../assets/images/bg-fight-button.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    margin-left: 0.8rem;;
+    min-width: 190px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-top: 2rem;
+    opacity: 0.7;
 }
 
 .notEnoughImage {

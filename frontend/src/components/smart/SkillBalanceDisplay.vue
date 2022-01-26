@@ -1,6 +1,8 @@
 <template>
   <div class="skill-balance-display">
-    <div
+    <div class="balance-container">
+      <div class="xbladeContainer">
+      <div
       size="sm"
       class="my-2 my-sm-0"
       variant="primary"
@@ -9,8 +11,6 @@
     >
       <div class="btn-buy gtag-link-others" tagname="buy_skill">+</div>
     </div>
-
-    <div class="balance-container">
       <span
         class="balance"
         v-tooltip="{
@@ -20,6 +20,17 @@
         @mouseover="hover = !isMobile() || true"
         @mouseleave="hover = !isMobile()"
         >{{ formattedTotalSkillBalance }} <span class="xblade">xBlade</span>
+      </span>
+      </div>
+      <span
+        class="balance"
+        v-tooltip="{
+          content: totalSkillTooltipHtml,
+          trigger: isMobile() ? 'click' : 'hover',
+        }"
+        @mouseover="hover = !isMobile() || true"
+        @mouseleave="hover = !isMobile()"
+        >{{ myXgem }} <span class="xblade">💎</span>
       </span>
     </div>
 
@@ -69,6 +80,7 @@ export default Vue.extend({
       "inGameOnlyFunds",
       "waxBridgeWithdrawableBnb",
       "waxBridgeTimeUntilLimitExpires",
+      "myXgem"
     ]) as Accessors<StoreMappedState>),
     ...(mapGetters({
       availableBNB: "waxBridgeAmountOfBnbThatCanBeWithdrawnDuringPeriod",
@@ -194,6 +206,12 @@ export default Vue.extend({
   color: #fff;
   font-size: 1.25rem;
   font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.xbladeContainer {
+  display: flex;
 }
 
 .balance-text {

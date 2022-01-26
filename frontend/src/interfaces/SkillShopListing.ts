@@ -7,4 +7,7 @@ export interface SkillShopListing extends Nft {
   image: string;
   isSoldOut: boolean
   supply: number;
+  isDisable: boolean;
+  nftPriceXgem: string;
+  isDisableXgem: boolean;
 }

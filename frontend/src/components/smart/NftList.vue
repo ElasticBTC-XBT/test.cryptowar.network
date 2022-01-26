@@ -1,5 +1,14 @@
 <template>
   <div>
+    <div v-if="isLoadingBox" id="fight-overlay2">
+            <div class="waiting animation" v-if="isLoadingBox" margin="auto">
+                  <div class="fighting-img"></div>
+                  <!-- <div class="waiting-text">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    Waiting for fight results...
+                  </div> -->
+                </div>
+            </div>
     <div v-if="isShop">
       <div class="centered-text-div" v-if="(!nftIdTypes || nftIdTypes.length === 0)">
         <span>Nothing to buy at this time</span>
@@ -11,21 +20,10 @@
          </div>
         <div class="buttonFightFragment" @click="$bvModal.hide('successOpenBox')"><span>GO TO CHECK</span></div>
       </b-modal>
-         <div v-if="isLoadingBox" id="fight-overlay">
-            <div class="waiting animation" v-if="isLoadingBox" margin="auto">
-                  <div class="fighting-img"></div>
-                  <!-- <div class="waiting-text">
-                    <i class="fas fa-spinner fa-spin"></i>
-                    Waiting for fight results...
-                  </div> -->
-                </div>
-            </div>
-
       <ul class="row nft-grid nft-list">
         <li
           class="col-md-12 col-lg-3"
-          :disabled="nft.isSoldOut"
-          @click="checkBuy = nft; buyItem(checkBuy);"
+          :disabled="nft.isSoldOut || nft.isDisable"
            v-for="nft in nftIdTypes" :key="`${nft.type}.${nft.id}`"
         >
           <div class="nft-item-content">
@@ -35,24 +33,41 @@
               @mouseover="hover = !isMobile() || true"
               @mouseleave="hover = !isMobile()" />
             </div>
-            <div class="btn-open-wrap">
-              <b-button
-                :disabled="nft.isSoldOut"
-                class="shop-button btn-blue-bg btn-open-box"
-              >
-                <span v-if="!nft.isSoldOut && nft.id !== 2">
-                  Buy ({{ Math.round(nft.nftPrice) }} xBlade)
-                </span>
-                <span v-if="!nft.isSoldOut && nft.id === 2">
-                  Buy ({{ Math.round(nft.nftPrice) }} 💎)
-                </span>
-                <span  v-if="nft.isSoldOut && !isLoading">
-                  SOLD OUT
-                </span>
-                <span  v-if="isLoading">
-                  LOADING
-                </span>
-              </b-button>
+            <div class="buttonContainer">
+              <div class="btn-open-wrap">
+                <b-button
+                  :disabled="nft.isSoldOut || nft.isDisable"
+                  class="buttonBuy"
+                  @click="checkBuy = nft; nft.isSoldOut || nft.isDisable? () => {}: buyItem(checkBuy);"
+                >
+                  <span v-if="!nft.isSoldOut">
+                    ({{ Math.round(nft.nftPrice) }} xBlade)
+                  </span>
+                  <span  v-if="nft.isSoldOut && !isLoading">
+                    SOLD OUT
+                  </span>
+                  <span  v-if="isLoading">
+                    LOADING
+                  </span>
+                </b-button>
+              </div>
+              <div class="btn-open-wrap">
+                <b-button
+                  :disabled="nft.isSoldOut || nft.isDisableXgem"
+                  class="buttonBuy"
+                  @click="checkBuy = nft; nft.isSoldOut || nft.isDisableXgem? () => {}: buyItemWithXgem(checkBuy);"
+                >
+                  <span v-if="!nft.isSoldOut">
+                    ({{ Math.round(nft.nftPriceXgem) }} 💎 )
+                  </span>
+                  <span  v-if="nft.isSoldOut && !isLoading">
+                    SOLD OUT
+                  </span>
+                  <span  v-if="isLoading">
+                    LOADING
+                  </span>
+                </b-button>
+              </div>
             </div>
           </div>
         </li>
@@ -167,6 +182,8 @@ import Vue from 'vue';
 import { Accessors, PropType } from 'vue/types/options';
 import { IState } from '@/interfaces';
 import WeaponSelect from "@/components/WeaponSelect.vue";
+import { fromWeiEther, toBN } from '@/utils/common';
+import Bignumber from 'bignumber.js';
 
 const sorts = [
   { name: 'Any', dir: '' },
@@ -190,6 +207,12 @@ interface Data {
 export interface NftIdType {
   id: number | string;
   type: string;
+  image: string;
+  isSoldOut: boolean;
+  name: string;
+  nftPrice: number | string;
+  supply: number | string;
+  isDisable: boolean;
 }
 
 type StoreMappedState = Pick<IState, 'ownedShieldIds'>;
@@ -199,24 +222,27 @@ interface StoreMappedGetters {
   shieldsWithIds(ids: string[]): Nft[];
 }
 
-interface StoreMappedActions {
-  purchaseShield(): Promise<void>;
-  fetchShields(shieldIds: (string | number)[]): Promise<void>;
-  purchaseRenameTag(): Promise<void>;
-  purchaseRenameTagDeal(): Promise<void>;
-  purchaseWeaponRenameTag(): Promise<void>;
-  purchaseWeaponRenameTagDeal(): Promise<void>;
-  purchaseCharacterFireTraitChange(): Promise<void>;
-  purchaseCharacterEarthTraitChange(): Promise<void>;
-  purchaseCharacterWaterTraitChange(): Promise<void>;
-  purchaseCharacterLightningTraitChange(): Promise<void>;
-  purchaseCommonSecretBox(): Promise<void>;
-  purchaseRareSecretBox(): Promise<void>;
-  purchaseEpicSecretBox(): Promise<void>;
-  openCommonSecretBox(): Promise<void>;
-  openCommonBox(): Promise<void>;
-  fetchWeaponId(weaponId: (string | number)): Promise<any>;
-}
+// interface StoreMappedActions {
+//   purchaseShield(): Promise<void>;
+//   fetchShields(shieldIds: (string | number)[]): Promise<void>;
+//   purchaseRenameTag(): Promise<void>;
+//   purchaseRenameTagDeal(): Promise<void>;
+//   purchaseWeaponRenameTag(): Promise<void>;
+//   purchaseWeaponRenameTagDeal(): Promise<void>;
+//   purchaseCharacterFireTraitChange(): Promise<void>;
+//   purchaseCharacterEarthTraitChange(): Promise<void>;
+//   purchaseCharacterWaterTraitChange(): Promise<void>;
+//   purchaseCharacterLightningTraitChange(): Promise<void>;
+//   purchaseCommonSecretBox(): Promise<void>;
+//   purchaseRareSecretBox(): Promise<void>;
+//   purchaseEpicSecretBox(): Promise<void>;
+//   openCommonSecretBox(): Promise<void>;
+//   openCommonBox(): Promise<void>;
+//   fetchWeaponId(weaponId: (string | number)): Promise<any>;
+//   buyCommonBoxWithXgem(): Promise<void>;
+//   buyRareBoxWithXgem(): Promise<void>;
+//   buyEpicBoxWithXgem(): Promise<void>;
+// }
 
 export default Vue.extend({
   model: {
@@ -306,77 +332,77 @@ export default Vue.extend({
   },
 
   computed: {
-    ...(mapState(['ownedShieldIds']) as Accessors<StoreMappedState>),
+    ...(mapState(['ownedShieldIds', 'skillBalance','inGameOnlyFunds', 'skillRewards', 'myXgem']) as Accessors<StoreMappedState>),
     ...(mapGetters(['shieldsWithIds','nftsWithIdType']) as Accessors<StoreMappedGetters>),
 
-    nftsToDisplay(): NftIdType[] {
-      if (this.showGivenNftIdTypes) {
-        return this.nftIdTypes;
-      }
+    // nftsToDisplay(): NftIdType[] {
+    //   if (this.showGivenNftIdTypes) {
+    //     return this.nftIdTypes;
+    //   }
 
-      const nfts: NftIdType[] = [];
-      // push different kinds of nfts to nfts array here
-      this.ownedShieldIds?.forEach(id => { nfts.push({ id, type: 'shield' }); });
+    //   const nfts: NftIdType[] = [];
+    //   // push different kinds of nfts to nfts array here
+    //   this.ownedShieldIds?.forEach(id => { nfts.push({ id, type: 'shield' }); });
 
-      return nfts;
-    },
+    //   return nfts;
+    // },
 
-    displayNfts(): Nft[] {
-      if(this.isMarket && this.showGivenNftIdTypes) {
-        const type = this.nftIdTypes && this.nftIdTypes[0]?.type;
-        switch(type) {
-        case('shield'):
-          return this.shieldsWithIds(this.nftsToDisplay.map(x => x.id.toString())).filter(Boolean);
-        default:
-          return [];
-        }
-      }
+    // displayNfts(): Nft[] {
+    //   if(this.isMarket && this.showGivenNftIdTypes) {
+    //     const type = this.nftIdTypes && this.nftIdTypes[0]?.type;
+    //     switch(type) {
+    //     case('shield'):
+    //       return this.shieldsWithIds(this.nftsToDisplay.map(x => x.id.toString())).filter(Boolean);
+    //     default:
+    //       return [];
+    //     }
+    //   }
 
-      return this.nftsWithIdType(this.nftsToDisplay).filter(Boolean);
-    },
+    //   return this.nftsWithIdType(this.nftsToDisplay).filter(Boolean);
+    // },
 
-    nonIgnoredNfts(): Nft[] {
-      let items: Nft[] = [];
-      this.displayNfts.forEach((x) => items.push(x));
+    // nonIgnoredNfts(): Nft[] {
+    //   let items: Nft[] = [];
+    //   this.displayNfts.forEach((x) => items.push(x));
 
-      const allIgnore: NftIdType[] = [];
-      if (!this.showFavoriteNfts) {
-        for (const type in Object.keys(this.favorites)) {
-          //@ts-ignore
-          for(const id in Object.keys(this.favorites[type])) {
-            allIgnore.push({ type, id });
-          }
-        }
-      }
-      items = items.filter((x) => allIgnore.findIndex((y) => y.id === x.id && y.type === x.type) < 0);
+    //   const allIgnore: NftIdType[] = [];
+    //   if (!this.showFavoriteNfts) {
+    //     for (const type in Object.keys(this.favorites)) {
+    //       //@ts-ignore
+    //       for(const id in Object.keys(this.favorites[type])) {
+    //         allIgnore.push({ type, id });
+    //       }
+    //     }
+    //   }
+    //   items = items.filter((x) => allIgnore.findIndex((y) => y.id === x.id && y.type === x.type) < 0);
 
-      if(this.typeFilter) {
-        items = items.filter((x) => x.type?.localeCompare(this.typeFilter, undefined, { sensitivity: 'base' } ) === 0);
-      }
+    //   if(this.typeFilter) {
+    //     items = items.filter((x) => x.type?.localeCompare(this.typeFilter, undefined, { sensitivity: 'base' } ) === 0);
+    //   }
 
-      if (this.starFilter) {
-        items = items.filter((x) => x.stars === +this.starFilter - 1);
-      }
+    //   if (this.starFilter) {
+    //     items = items.filter((x) => x.stars === +this.starFilter - 1);
+    //   }
 
-      if (this.elementFilter) {
-        items = items.filter((x) => x.element?.includes(this.elementFilter));
-      }
+    //   if (this.elementFilter) {
+    //     items = items.filter((x) => x.element?.includes(this.elementFilter));
+    //   }
 
-      if (this.showLimit > 0 && items.length > this.showLimit) {
-        items = items.slice(0, this.showLimit);
-      }
+    //   if (this.showLimit > 0 && items.length > this.showLimit) {
+    //     items = items.slice(0, this.showLimit);
+    //   }
 
-      const favoriteNfts: Nft[] = [];
-      for (const key in this.favorites) {
-        const i = items.findIndex((y) => y?.id === +key);
-        if (i !== -1) {
-          favoriteNfts.push(items[i]);
-          items.splice(i, 1);
-        }
-      }
+    //   const favoriteNfts: Nft[] = [];
+    //   for (const key in this.favorites) {
+    //     const i = items.findIndex((y) => y?.id === +key);
+    //     if (i !== -1) {
+    //       favoriteNfts.push(items[i]);
+    //       items.splice(i, 1);
+    //     }
+    //   }
 
-      return favoriteNfts.concat(items);
-    }
+    //   return favoriteNfts.concat(items);
+    // }
   },
 
   watch: {
@@ -401,12 +427,66 @@ export default Vue.extend({
       'purchaseRenameTagDeal', 'purchaseWeaponRenameTagDeal',
       'purchaseCharacterFireTraitChange', 'purchaseCharacterEarthTraitChange',
       'purchaseCharacterWaterTraitChange', 'purchaseCharacterLightningTraitChange',
-      'purchaseCommonSecretBox', 'purchaseRareSecretBox', 'purchaseEpicSecretBox', 'openCommonSecretBox', 'openCommonBox','fetchWeaponId'
-    ]) as StoreMappedActions),
+      'purchaseCommonSecretBox', 'purchaseRareSecretBox', 'purchaseEpicSecretBox', 'openCommonSecretBox', 'openCommonBox','fetchWeaponId',
+      'buyRareBoxWithXGem', 'buyEpicBoxWithXGem', 'buyCommonBoxWithXGem', 'updateMyXgem'
+    ])),
     ...mapMutations(['setCurrentNft']),
 
     async onShieldBuy() {
       await this.purchaseShield();
+    },
+
+    checkDisableButtonBuy() {
+      const xBladeBalance = fromWeiEther(
+        Bignumber.sum(
+          //@ts-ignore
+          toBN(this.skillBalance),
+          //@ts-ignore
+          toBN(this.inGameOnlyFunds),
+          //@ts-ignore
+          toBN(this.skillRewards)
+        )
+      );
+      // const commonBoxInfo = this.nftIdTypes.find(item => item.id ===0);
+      // const rareBoxInfo = this.nftIdTypes.find(item => item.id===1);
+      // const epicBoxInfo = this.nftIdTypes.find(item => item.id ===2);
+      //@ts-ignore
+      console.log('1111', xBladeBalance);
+      // console.log('2222', commonBoxInfo?.nftPrice);
+      // console.log('3333', xBladeBalance> commonBoxInfo?.nftPrice);
+      this.nftIdTypes.map((item, index) => {
+        return {
+          ...item,
+          isDisable: xBladeBalance > this.nftIdTypes[index].nftPrice
+        };
+      });
+      console.log('1212', this.nftIdTypes);
+      // if(Number(xBladeBalance) < Number(commonBoxInfo?.nftPrice)) {
+      //   this.nftIdTypes.map(item => {
+      //     if(item.id === 0) {
+      //       item.isDisable = true;
+      //     }
+      //     return item;
+      //   });
+      // }
+      // //@ts-ignore
+      // if(Number(xBladeBalance) > Number(rareBoxInfo?.nftPrice)) {
+      //   this.nftIdTypes.map(item => {
+      //     if(item.id === 1) {
+      //       item.isDisable = true;
+      //     }
+      //     return item;
+      //   });
+      // }
+      // //@ts-ignore
+      // if(Number(xBladeBalance) > Number(epicBoxInfo?.nftPrice)) {
+      //   this.nftIdTypes.map(item => {
+      //     if(item.id === 2) {
+      //       item.isDisable = true;
+      //     }
+      //     return item;
+      //   });
+      // }
     },
 
     saveFilters() {
@@ -483,6 +563,31 @@ export default Vue.extend({
       return this.favorites && this.favorites[type] && this.favorites[type][id];
     },
 
+    async buyItemWithXgem(item: nftItem) {
+      try {
+        this.isLoadingBox = true;
+        if(item.id ===0) {
+          const response = await this.buyCommonBoxWithXGem();
+          //@ts-ignore
+          this.lastBoxId = response.boxId;
+          this.isLoadingBox = false;
+        }else if(item.id ===1) {
+          const response = await this.buyRareBoxWithXGem();
+          //@ts-ignore
+          this.lastBoxId = response.boxId;
+          this.isLoadingBox = false;
+        }else {
+          const response = await this.buyEpicBoxWithXGem();
+          //@ts-ignore
+          this.lastBoxId = response.boxId;
+          this.isLoadingBox = false;
+        }
+        //@ts-ignore
+        this.$bvModal.show('modal-buyitem');
+      }catch(error) {
+        this.isLoadingBox =false;
+      }
+    },
     async buyItem(item: nftItem) {
       try{
         this.isLoadingBox = true;
@@ -492,10 +597,8 @@ export default Vue.extend({
         }
 
         if (item.type === 'SecretBox') {
-          console.log('Buying secret box');
           if (item.id === 0) { //Common Box
             const boxId =  await this.purchaseCommonSecretBox();
-            console.log('jwq', boxId);
             //@ts-ignore
             this.lastBoxId = boxId;
             this.isLoadingBox = false;
@@ -506,7 +609,7 @@ export default Vue.extend({
             this.lastBoxId = boxId;
             this.isLoadingBox = false;
           }
-          if (item.id === 3) { // Epic Box
+          if (item.id === 2) { // Epic Box
             const boxId = await this.purchaseEpicSecretBox();
             //@ts-ignore
             this.lastBoxId = boxId;
@@ -562,8 +665,6 @@ export default Vue.extend({
         const res = await this.openCommonBox({boxId: this.lastBoxId});
         //@ts-ignore
         const weapon = await this.fetchWeaponId(res?.[0]?.returnValues?.tokenId);
-        console.log('weapon Receive', weapon);
-        console.log('res nhan dc', res);
         this.weaponReceive = weapon;
         this.isLoadingBox = false;
         setTimeout(() => {
@@ -684,9 +785,9 @@ export default Vue.extend({
   width: 10rem;
   height: 10rem;
 }
-#fight-overlay {
+#fight-overlay2 {
   position: fixed;
-  z-index: 99999;
+  z-index: 999999;
   top: 0;
   left: 0;
   width: 100%;
@@ -711,6 +812,21 @@ export default Vue.extend({
     cursor: pointer;
 }
 
+.buttonContainer {
+  display: flex;
+}
+.buttonBuy {
+    border: none !important;
+    border-radius: 0;
+    min-width: 90px;
+    min-height: 42px;
+    font-weight: bold;
+    position: relative;
+    text-align: center;
+    background-repeat: no-repeat !important;
+    background-image: url('../../assets/images/bg-fight-button.png');
+    background-size: 100% 100%;
+}
 .show-favorite-checkbox {
   margin-left: 5px;
 }
