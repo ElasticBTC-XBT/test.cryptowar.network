@@ -1,32 +1,39 @@
 <template>
   <div class="body main-font">
     <ul class="arena-box">
-      <li class="character-item addnew addmore">
-        <div class="arena-item-box">
-          <router-link :to="{ name: 'rps' }" exact class="">
-            <b-button
-              class="arena-item"
-              v-tooltip="'RPS'"
-              tagname="recruit_character"
-              @click="checkRpsClick = true"
-            >
-              <img src="../assets/v2/rps.svg" alt="" class="arena-img" />
-            </b-button>
-          </router-link>
-        </div>
-      </li>
-      <li class="character-item addnew addmore">
-        <div class="arena-item-box">
+      <router-link
+        :to="{ name: 'arena' }"
+        exact
+        class="character-item addnew addmore mr-xl-5"
+        style="position: relative"
+      >
+        <li class="arena-item-box">
           <b-button
             class="arena-item"
-            @click="onMintCharacter"
+            v-tooltip="'RPS'"
+            tagname="recruit_character"
+            @click="checkRpsClick = true"
+          >
+            <img src="../assets/v2/rps.svg" alt="" class="arena-img" />
+          </b-button>
+        </li>
+        <span class="comming-soon">Comming soon</span>
+      </router-link>
+      <router-link
+        :to="{ name: 'luckywheel' }"
+        exact
+        class="character-item addnew addmore"
+      >
+        <li class="arena-item-box">
+          <b-button
+            class="arena-item"
             v-tooltip="'Lucky Wheel'"
             tagname="recruit_character"
           >
             <img src="../assets/v2/lucky-wheel.svg" alt="" class="arena-img" />
           </b-button>
-        </div>
-      </li>
+        </li>
+      </router-link>
     </ul>
   </div>
 </template>
@@ -89,7 +96,25 @@ export default {
   background-size: cover;
 }
 
+.comming-soon {
+  position: absolute;
+  font-size: 24px;
+  text-transform: uppercase;
+  bottom: 10px;
+}
+
+.character-item:hover .comming-soon {
+  color: #fff;
+}
+
 @media (max-width: 767.98px) {
+  .arena-box {
+    flex-direction: column-reverse;
+  }
+  .comming-soon {
+    font-size: 18px;
+    padding: 0;
+  }
 }
 
 @media (max-width: 575.98px) {

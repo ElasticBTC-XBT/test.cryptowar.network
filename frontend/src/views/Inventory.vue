@@ -21,6 +21,11 @@
           <box-balance-display />
         </div>
       </b-tab>
+      <b-tab title="Others">
+        <div class="tab-content">
+          <other-balance-display />
+        </div>
+      </b-tab>
     </b-tabs>
   </div>
 </template>
@@ -31,6 +36,7 @@ import CharaterList from '../components/smart/CharacterList.vue'
 import WeaponGrid from '../components/smart/WeaponGrid.vue'
 import DustBalanceDisplay from '../components/smart/DustBalanceDisplay.vue'
 import BoxBalanceDisplay from '../components/smart/BoxBalanceDisplay.vue'
+import OtherBalanceDisplay from '../components/smart/OtherBalanceDisplay.vue'
 import Web3 from 'web3'
 import { mapGetters, mapState } from 'vuex'
 import { mapCacheActions } from 'vuex-cache'
@@ -90,6 +96,7 @@ export default Vue.extend({
     WeaponGrid,
     DustBalanceDisplay,
     BoxBalanceDisplay,
+    OtherBalanceDisplay,
   },
   data() {
     return {

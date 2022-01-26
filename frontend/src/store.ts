@@ -2427,6 +2427,65 @@ export function createStore(web3: Web3) {
         ])
       },
 
+      async spinLuckyWheel({ state }) {
+        const { xBladeToken, BlindBox } = state.contracts()
+        if (!xBladeToken || !BlindBox || !state.defaultAccount) return
+
+        const allowance = await xBladeToken.methods
+          .allowance(state.defaultAccount, BlindBox.options.address)
+          .call(defaultCallOptions(state))
+
+        if (!toBN(allowance).gt(0)) {
+          await xBladeToken.methods
+            .approve(
+              BlindBox.options.address,
+              web3.utils.toWei('100000000', 'ether')
+            )
+            .send(defaultCallOptions(state))
+        }
+
+        try {
+          let result
+          const res = await BlindBox.methods.spinLuckyWheel().send({
+            from: state.defaultAccount,
+            gas: '500000',
+          })
+          if (res !== null && res !== undefined) {
+            result = {
+              reward: parseInt(res.events.Spin.returnValues.result, 10),
+              transactionHash: res.transactionHash,
+            }
+            return result
+          }
+        } catch {
+          return null
+        }
+      },
+
+      async claimStamina({ state }, { id, stamina }) {
+        const { Characters, BlindBox, xBladeToken } = state.contracts()
+        if (!Characters || !BlindBox || !xBladeToken) return
+
+        const allowance = await xBladeToken.methods
+          .allowance(state.defaultAccount, BlindBox.options.address)
+          .call(defaultCallOptions(state))
+
+        if (!toBN(allowance).gt(0)) {
+          await xBladeToken.methods
+            .approve(
+              BlindBox.options.address,
+              web3.utils.toWei('100000000', 'ether')
+            )
+            .send(defaultCallOptions(state))
+        }
+
+        await Characters.methods.claimStamina(id, stamina).send({
+          from: state.defaultAccount,
+        })
+
+        await this.dispatch('fetchCharacterStamina', id)
+      },
+
       async claimTokenRewards({ state }) {
         const { CryptoWars: CryptoBlades } = state.contracts()
         if (!CryptoBlades) return
@@ -2542,6 +2601,27 @@ export function createStore(web3: Web3) {
           rarePrice,
           epicPrice,
         })
+      },
+
+      async fetchSpinWheelPrice({ state }) {
+        const { BlindBox } = state.contracts()
+        if (!BlindBox || !state.defaultAccount) return
+
+        const spinWheelPrice = await BlindBox.methods
+          .spinWheelPrice()
+          .call(defaultCallOptions(state))
+        return spinWheelPrice
+      },
+
+      async fetchUnclaimedStamina({ state }) {
+        const { BlindBox } = state.contracts()
+        if (!BlindBox || !state.defaultAccount) return
+
+        const unclaimedStamina = await BlindBox.methods
+          .getUnclaimedStamina(state.defaultAccount)
+          .call(defaultCallOptions(state))
+
+        return parseInt(unclaimedStamina, 10)
       },
 
       async fetchTotalRenameTags({ state }) {

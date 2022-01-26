@@ -256,7 +256,9 @@ export default {
         .querySelector('.app.app-v2')
         .classList.toggle(
           'bg2',
-          this.$route.name === 'lobby' || this.$route.name === 'arena'
+          this.$route.name === 'lobby' ||
+            this.$route.name === 'arena' ||
+            this.$route.name === 'luckywheel'
         )
       // react to route changes
       window?.gtag?.('event', 'page_view', {
@@ -505,6 +507,14 @@ export default {
   },
 
   async mounted() {
+    document
+      .querySelector('.app.app-v2')
+      .classList.toggle(
+        'bg2',
+        this.$route.name === 'lobby' ||
+          this.$route.name === 'arena' ||
+          this.$route.name === 'luckywheel'
+      )
     this.checkStorage()
 
     Events.$on('setting:hideRewards', () => this.checkStorage())
@@ -906,13 +916,15 @@ button.close {
 
 #cancelRequestModal .close,
 #requestSelect .close,
-#selectHeroOrWeaponModal .close {
+#selectHeroOrWeaponModal .close,
+#selectHeroModal .close {
   margin-right: 55px;
 }
 
 #selectHeroOrWeaponModal .close,
 #listHeroToChallengeModal .close,
-#listHeroToCareerModal .close {
+#listHeroToCareerModal .close,
+#selectHeroModal .close {
   margin-right: 30px;
 }
 
@@ -926,17 +938,20 @@ button.close {
   align-items: center;
 }
 
-#selectHeroOrWeaponModal .modal-content {
+#selectHeroOrWeaponModal .modal-content,
+#selectHeroModal .modal-content {
   height: 100%;
 }
 
-#selectHeroOrWeaponModal .modal-dialog {
+#selectHeroOrWeaponModal .modal-dialog,
+#selectHeroModal .modal-dialog {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-#selectHeroOrWeaponModal .modal-body {
+#selectHeroOrWeaponModal .modal-body,
+#selectHeroModal .modal-body {
   overflow: scroll;
 }
 
@@ -950,7 +965,9 @@ button.close {
   margin-top: 25px;
 }
 
-#selectHeroOrWeaponModal .modal-content {
+#selectHeroOrWeaponModal .modal-content,
+#selectHeroModal .modal-content,
+#setStaminalModal .modal-content {
   background-image: url(./assets/v2/bg-modal.png);
 }
 
@@ -968,7 +985,8 @@ button.close {
 //   border-color: rgba(24, 27, 30, 0.5) !important;
 // }
 
-#selectHeroOrWeaponModal .list {
+#selectHeroOrWeaponModal .list,
+#selectHeroModal .list {
   color: #fff;
   overflow-y: scroll;
   padding: 0;
@@ -1085,7 +1103,8 @@ button.close {
 
   #showWeaponModal .modal-content,
   #claimModal .modal-content,
-  #selectHeroOrWeaponModal .modal-content {
+  #selectHeroOrWeaponModal .modal-content,
+  #selectHeroModal .modal-content {
     width: 350px;
     background-image: none;
     background-color: #0c012c;
@@ -1094,17 +1113,16 @@ button.close {
     position: relative;
   }
 
-  #selectHeroOrWeaponModal .modal-content {
+  #selectHeroOrWeaponModal .modal-content,
+  #selectHeroModal .modal-content {
     padding: 0;
-  }
-
-  #selectHeroOrWeaponModal .modal-content {
     height: 646px;
   }
 
   #showWeaponModal .modal-content::after,
   #claimModal .modal-content::after,
-  #selectHeroOrWeaponModal .modal-content::after {
+  #selectHeroOrWeaponModal .modal-content::after,
+  #selectHeroModal .modal-content::after {
     content: '';
     background-image: url(./assets/v2/corner_yellow.svg);
     background-repeat: no-repeat;
@@ -1117,7 +1135,8 @@ button.close {
   }
 
   #claimModal .close,
-  #selectHeroOrWeaponModal .close {
+  #selectHeroOrWeaponModal .close,
+  #selectHeroModal .close {
     z-index: 1;
   }
 }
