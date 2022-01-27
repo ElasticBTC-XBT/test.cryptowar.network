@@ -93,8 +93,8 @@ module.exports = {
           )
         ),
       network_id: 0x38,
-      confirmations: 20,
-      timeoutBlocks: 200,
+      confirmations: 10,
+      timeoutBlocks: 2000,
       gas: 5600000,
       skipDryRun: true,
     },
