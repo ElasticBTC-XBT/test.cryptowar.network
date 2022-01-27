@@ -471,9 +471,9 @@ contract BlindBox is
         uint24 monsterRoll,
         uint256 seed
     ) external pure returns (uint256 _fragmentAmmount) {
-        _fragmentAmmount = seed.mod(4).add(5);
+        _fragmentAmmount = 1;
         if (playerRoll < monsterRoll) {
-            _fragmentAmmount = seed.mod(4).add(1);
+            return _fragmentAmmount;
         }
         if (seed.mod(1000) < 100) {
             _fragmentAmmount = _fragmentAmmount.add(1);
