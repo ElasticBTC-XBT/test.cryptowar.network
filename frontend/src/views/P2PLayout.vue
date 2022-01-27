@@ -48,7 +48,7 @@
         <button @click="$bvModal.hide('claimModal'), careerMode = true, changeMode = false, requestChallenge = false,
           checkSelect = false, addClass = ''" class="listHeroToCareerModal-btn confirm">GO TO CHECK</button>
       </b-modal>
-      <b-modal id="loadingModal" :no-close-on-backdrop="true" hide-footer centered hide-header-close>
+      <b-modal id="loadingModal" hide-footer centered hide-header-close>
         <div class="centerLoading">
           <pulse-loader :loading="true"/>
         </div>
@@ -742,30 +742,25 @@ export default {
       }
       else {
         // @ts-ignore
-        try {
-          const res = await this.createCareerRoom({
-            // @ts-ignore
-            character: this.selectedCharacter.id,
-            // @ts-ignore
-            weapon: this.selectedWeapon.id,
-            // @ts-ignore
-            matchReward: this.matchReward,
-            // @ts-ignore
-            totalDeposit: this.totalDeposit
-          });
-          if(res) {
-            this.selectedCharacter= null;
-            this.selectedWeapon=null;
-            this.errorMessage='';
-            this.$bvModal.hide('loadingModal');
-            this.getCareerRooms({cursor:0});
-            setTimeout(() => {
-              this.$bvModal.show('listHeroToCareerModal');
-            }, 500);
-          }
-        }
-        catch{
+        const res = await this.createCareerRoom({
+        // @ts-ignore
+          character: this.selectedCharacter.id,
+          // @ts-ignore
+          weapon: this.selectedWeapon.id,
+          // @ts-ignore
+          matchReward: this.matchReward,
+          // @ts-ignore
+          totalDeposit: this.totalDeposit
+        });
+        if(res) {
+          this.selectedCharacter= null;
+          this.selectedWeapon=null;
+          this.errorMessage='';
           this.$bvModal.hide('loadingModal');
+          this.getCareerRooms({cursor:0});
+          setTimeout(() => {
+            this.$bvModal.show('listHeroToCareerModal');
+          }, 500);
         }
         // console.log('hiihi', result);
         // if(result) {
@@ -1981,5 +1976,18 @@ input::-webkit-inner-spin-button {
 
 @media (min-width: 768px) {
 
+}
+</style>
+<style>
+html {
+  overscroll-behavior: auto;
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  overscroll-behavior: auto;
+  overflow: auto;
+  height: 100%;
 }
 </style>
