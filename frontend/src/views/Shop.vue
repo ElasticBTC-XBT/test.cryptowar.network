@@ -189,16 +189,14 @@ export default Vue.extend({
         {
           id: 3,
           type: "SecretBox",
-          // nftPrice: toBN(fromWeiEther(epic)).toNumber(),
+          nftPrice: this.blindBoxPriceXgem,
           onlyUseXgem: true,
           name: "Blind Box",
-          description:
-       `89% chance to get common box, 
-       6% chance to get rare box and 5% chance to get epic box`,
+          description:`89% chance to get common box, 6% chance to get rare box and 5% chance to get epic box`,
           image: "blind-box.png",
-          // isSoldOut: Number(this.epicBoxSupply) === 0,
-          // supply: this.epicBoxSupply,
-          // isDisable:  Number(xBladeBalance) < toBN(fromWeiEther(epic)).toNumber(),
+          isSoldOut: false,
+          supply: 999,
+          isDisable: Number(this.myXgem) < this.blindBoxPriceXgem,
           nftPriceXgem: this.blindBoxPriceXgem,
           isDisableXgem: Number(this.myXgem) < this.blindBoxPriceXgem
         },
