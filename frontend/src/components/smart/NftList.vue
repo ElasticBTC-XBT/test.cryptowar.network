@@ -74,8 +74,8 @@
         </li>
         <b-modal id="modal-buyitem">
           <span v-if="this.boxType.length>2" class="congratsText">You received a {{this.boxType[0].toUpperCase() + this.boxType.slice(1)}} Box</span>
-          <div :class="this.boxType +'-box'"></div>
-          <div>
+          <div v-if="this.boxType.length>2"  :class="this.boxType +'-box'"></div>
+          <div v-if="this.boxType.length>2">
             <div>
               <b-button class="mt-3" block @click="$bvModal.hide('modal-buyitem')">LATER</b-button>
             </div>
@@ -83,16 +83,14 @@
               <b-button class="mt-2" block @click="$bvModal.hide('modal-buyitem'); openBox()">OPEN NOW</b-button>
             </div>
           </div>
-          <div v-if="this.boxType.length ===0">
-          <div :class="checkBuy.image?checkBuy.image.split('.')[0]:''"></div>
-          <div>
+          <div v-if="this.boxType.length===0" :class="checkBuy.image?checkBuy.image.split('.')[0]:''"></div>
+          <div v-if="this.boxType.length===0">
             <div>
               <b-button class="mt-3" block @click="$bvModal.hide('modal-buyitem')">LATER</b-button>
             </div>
             <div>
               <b-button class="mt-2" block @click="openBox(checkBuy); $bvModal.hide('modal-buyitem'); ">OPEN NOW</b-button>
             </div>
-          </div>
           </div>
         </b-modal>
         <!-- <b-modal id="modal-selectitem">
@@ -527,16 +525,19 @@ export default Vue.extend({
       try {
         this.isLoadingBox = true;
         if(item.id ===0) {
+          this.boxType = '';
           const response = await this.buyCommonBoxWithXGem();
           //@ts-ignore
           this.lastBoxId = response.boxId;
           this.isLoadingBox = false;
         }else if(item.id ===1) {
+          this.boxType = '';
           const response = await this.buyRareBoxWithXGem();
           //@ts-ignore
           this.lastBoxId = response.boxId;
           this.isLoadingBox = false;
         }else if(item.id ===2) {
+          this.boxType = '';
           const response = await this.buyEpicBoxWithXGem();
           //@ts-ignore
           this.lastBoxId = response.boxId;
@@ -548,23 +549,21 @@ export default Vue.extend({
             this.lastBoxId = response.boxId;
             const boxTypeReturn = await this.getBoxDetail({boxId:response.boxId});
             switch(boxTypeReturn) {
-            case 1: {
+            case '1': {
               this.boxType= 'rare';
               break;
             }
-            case 2: {
+            case '2': {
               this.boxType = 'epic';
               break;
             }
             default: {
               this.boxType = 'common';
+              break;
             }
-              setTimeout(() => {
-                this.isLoadingBox = false;
-              }, 4000);
             }
-            this.isLoadingBox = false;
           }
+          this.isLoadingBox = false;
         }
         //@ts-ignore
         this.$bvModal.show('modal-buyitem');
@@ -575,6 +574,7 @@ export default Vue.extend({
     async buyItem(item: nftItem) {
       try{
         this.isLoadingBox = true;
+        this.boxType = "";
         if(item.type === 'shield'){
           console.log('buying shield');
           await this.purchaseShield();
