@@ -1150,6 +1150,7 @@ export function createStore(web3: Web3) {
           state.contracts().BlindBox?.methods.rarePriceByXGem().call(defaultCallOptions(state)),
           state.contracts().BlindBox?.methods.epicPriceByXGem().call(defaultCallOptions(state)),
           state.contracts().BlindBox?.methods.fragmentPerBox().call(defaultCallOptions(state)),
+          //@ts-ignore
           state.contracts().BlindBox?.methods.getFragmentAmount(state?.defaultAccount).call(defaultCallOptions(state))
         ]);
 
