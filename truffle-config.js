@@ -131,7 +131,7 @@ module.exports = {
       network_id: "*",
       confirmations: 10,
       timeoutBlocks: 200,
-      gas: 300000000,
+      gas: 100000000,
       gasPrice: 2100000000,
       // gasPrice: 100000000,
 
