@@ -141,8 +141,8 @@ module.exports = {
       provider: () =>
         new HDWalletProvider(
           hdWalletProviderOptions(
-            process.env.BINANCE_MAINNET_WALLET_PRIVATE_KEY,
-            process.env.BINANCE_MAINNET_WALLET_MNEMONIC,
+            process.env.BINANCE_WALLET_PRIVATE_KEY,
+            process.env.BINANCE_WALLET_MNEMONIC,
             {
               providerOrUrl: "https://testnet-rpc.thundercore.com",
             }
@@ -234,6 +234,8 @@ module.exports = {
   api_keys: {
     bscscan: process.env.BSCSCAN_API_KEY,
     polygonscan: process.env.POLYGONSCAN_API_KEY,
+    thundercore_test: process.env.THUNDER_CORE_API_KEY,
+    thundercore: process.env.THUNDER_CORE_API_KEY,
   },
   // subscribers: {
   //   abisToTs: require('./truffle-subscriber-abis-to-ts.js')

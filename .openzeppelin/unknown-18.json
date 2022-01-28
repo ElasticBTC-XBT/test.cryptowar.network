@@ -1,13 +1,18 @@
 {
   "manifestVersion": "3.2",
   "admin": {
-    "address": "0xAEf7A94b0c32509F5c847f50e4Ce829D9452CfD7",
-    "txHash": "0xd5bdfd4ae54249095898a7088bc167d5720ec7f15a4386f68e759281692c8f25"
+    "address": "0x696Fe083bB63c8788a3d498901be0E6A1c893Ff8",
+    "txHash": "0x344a52697f82dac2e5cbdab64204d17306b27640099186ddd0619896d4d1ed69"
   },
   "proxies": [
     {
       "address": "0x27a339d9B59b21390d7209b78a839868E319301B",
       "txHash": "0x3f2124f49528fff477828660877c52fc010bd078ae239a0c7a2917f18d2b5357",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x199aBCe26b6108B788F2Cc6B3eE9c3aa04948360",
+      "txHash": "0xa20a116c14831c22a14d8678d2d7a2a3d9bd6bea7cd03b05008be27fc323b30e",
       "kind": "transparent"
     }
   ],
@@ -172,6 +177,437 @@
             "label": "airdropEnabled",
             "type": "t_bool",
             "src": "../project:/contracts/xBlade.sol:23"
+          }
+        ],
+        "types": {
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(address => mapping(address => uint256))"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_uint8": {
+            "label": "uint8"
+          },
+          "t_array(t_uint256)44_storage": {
+            "label": "uint256[44]"
+          }
+        }
+      }
+    },
+    "8a59f1051948a19f428f17a31af6605ffdec798584061c99f5a92d7ac2a2047b": {
+      "address": "0x97399bBD83aFf0397F9165d269043FbbD4ED3Cb5",
+      "txHash": "0x76df30cb29b3f882355972d2262399af6c41f2cee868efde293389add44b944a",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:25"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:30"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "ERC20Upgradeable",
+            "label": "_balances",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:37"
+          },
+          {
+            "contract": "ERC20Upgradeable",
+            "label": "_allowances",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:39"
+          },
+          {
+            "contract": "ERC20Upgradeable",
+            "label": "_totalSupply",
+            "type": "t_uint256",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:41"
+          },
+          {
+            "contract": "ERC20Upgradeable",
+            "label": "_name",
+            "type": "t_string_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:43"
+          },
+          {
+            "contract": "ERC20Upgradeable",
+            "label": "_symbol",
+            "type": "t_string_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:44"
+          },
+          {
+            "contract": "ERC20Upgradeable",
+            "label": "_decimals",
+            "type": "t_uint8",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:45"
+          },
+          {
+            "contract": "ERC20Upgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)44_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:312"
+          },
+          {
+            "contract": "ERC20BurnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC20/ERC20BurnableUpgradeable.sol:50"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "../@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:20"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:74"
+          },
+          {
+            "contract": "xBlade",
+            "label": "tokenBlacklist",
+            "type": "t_mapping(t_address,t_bool)",
+            "src": "xBladeTT.sol:12"
+          },
+          {
+            "contract": "xBlade",
+            "label": "_sellAddresses",
+            "type": "t_mapping(t_address,t_bool)",
+            "src": "xBladeTT.sol:13"
+          },
+          {
+            "contract": "xBlade",
+            "label": "_exceptionAddresses",
+            "type": "t_mapping(t_address,t_bool)",
+            "src": "xBladeTT.sol:14"
+          },
+          {
+            "contract": "xBlade",
+            "label": "_nextClaimTime",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "xBladeTT.sol:15"
+          },
+          {
+            "contract": "xBlade",
+            "label": "canClaim",
+            "type": "t_bool",
+            "src": "xBladeTT.sol:17"
+          },
+          {
+            "contract": "xBlade",
+            "label": "sellFeeRate",
+            "type": "t_uint256",
+            "src": "xBladeTT.sol:18"
+          },
+          {
+            "contract": "xBlade",
+            "label": "feeAddress",
+            "type": "t_address",
+            "src": "xBladeTT.sol:19"
+          },
+          {
+            "contract": "xBlade",
+            "label": "rewardCycleBlock",
+            "type": "t_uint256",
+            "src": "xBladeTT.sol:20"
+          },
+          {
+            "contract": "xBlade",
+            "label": "threshHoldTopUpRate",
+            "type": "t_uint256",
+            "src": "xBladeTT.sol:21"
+          },
+          {
+            "contract": "xBlade",
+            "label": "stakerAddress",
+            "type": "t_address",
+            "src": "xBladeTT.sol:22"
+          },
+          {
+            "contract": "xBlade",
+            "label": "airdropEnabled",
+            "type": "t_bool",
+            "src": "xBladeTT.sol:23"
+          },
+          {
+            "contract": "xBlade",
+            "label": "bridgeContract",
+            "type": "t_address",
+            "src": "xBladeTT.sol:27"
+          },
+          {
+            "contract": "xBlade",
+            "label": "lastFundingPeriod",
+            "type": "t_uint256",
+            "src": "xBladeTT.sol:29"
+          },
+          {
+            "contract": "xBlade",
+            "label": "totalPeriodFundedAmount",
+            "type": "t_uint256",
+            "src": "xBladeTT.sol:30"
+          },
+          {
+            "contract": "xBlade",
+            "label": "fundingRules",
+            "type": "t_struct(FundingRules)25789_storage",
+            "src": "xBladeTT.sol:32"
+          }
+        ],
+        "types": {
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_struct(FundingRules)25789_storage": {
+            "label": "struct xBlade.FundingRules",
+            "members": [
+              {
+                "label": "periodLength",
+                "type": "t_uint256"
+              },
+              {
+                "label": "maxPeriodFunds",
+                "type": "t_uint256"
+              },
+              {
+                "label": "threshold",
+                "type": "t_uint256"
+              },
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(address => mapping(address => uint256))"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_uint8": {
+            "label": "uint8"
+          },
+          "t_array(t_uint256)44_storage": {
+            "label": "uint256[44]"
+          }
+        }
+      }
+    },
+    "fe5097dba6d15e74a781ac021fd543cf811a2817c2f9a8a28730ed3009732d92": {
+      "address": "0x54f1f65611319602FDbA4DD750eE524bFBFB23dE",
+      "txHash": "0x857555e95a48f1d48e0679b6689d2e07cc83e3f085869e9425eb79cc38ee050e",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:25"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:30"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "ERC20Upgradeable",
+            "label": "_balances",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:37"
+          },
+          {
+            "contract": "ERC20Upgradeable",
+            "label": "_allowances",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:39"
+          },
+          {
+            "contract": "ERC20Upgradeable",
+            "label": "_totalSupply",
+            "type": "t_uint256",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:41"
+          },
+          {
+            "contract": "ERC20Upgradeable",
+            "label": "_name",
+            "type": "t_string_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:43"
+          },
+          {
+            "contract": "ERC20Upgradeable",
+            "label": "_symbol",
+            "type": "t_string_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:44"
+          },
+          {
+            "contract": "ERC20Upgradeable",
+            "label": "_decimals",
+            "type": "t_uint8",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:45"
+          },
+          {
+            "contract": "ERC20Upgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)44_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:312"
+          },
+          {
+            "contract": "PausableUpgradeable",
+            "label": "_paused",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:28"
+          },
+          {
+            "contract": "PausableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:96"
+          },
+          {
+            "contract": "ERC20PausableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/token/ERC20/ERC20PausableUpgradeable.sol:37"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "../@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:20"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:74"
+          },
+          {
+            "contract": "xBlade",
+            "label": "tokenBlacklist",
+            "type": "t_mapping(t_address,t_bool)",
+            "src": "xBlade.sol:12"
+          },
+          {
+            "contract": "xBlade",
+            "label": "_sellAddresses",
+            "type": "t_mapping(t_address,t_bool)",
+            "src": "xBlade.sol:13"
+          },
+          {
+            "contract": "xBlade",
+            "label": "_exceptionAddresses",
+            "type": "t_mapping(t_address,t_bool)",
+            "src": "xBlade.sol:14"
+          },
+          {
+            "contract": "xBlade",
+            "label": "_nextClaimTime",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "xBlade.sol:15"
+          },
+          {
+            "contract": "xBlade",
+            "label": "canClaim",
+            "type": "t_bool",
+            "src": "xBlade.sol:17"
+          },
+          {
+            "contract": "xBlade",
+            "label": "sellFeeRate",
+            "type": "t_uint256",
+            "src": "xBlade.sol:18"
+          },
+          {
+            "contract": "xBlade",
+            "label": "feeAddress",
+            "type": "t_address",
+            "src": "xBlade.sol:19"
+          },
+          {
+            "contract": "xBlade",
+            "label": "rewardCycleBlock",
+            "type": "t_uint256",
+            "src": "xBlade.sol:20"
+          },
+          {
+            "contract": "xBlade",
+            "label": "threshHoldTopUpRate",
+            "type": "t_uint256",
+            "src": "xBlade.sol:21"
+          },
+          {
+            "contract": "xBlade",
+            "label": "stakerAddress",
+            "type": "t_address",
+            "src": "xBlade.sol:22"
+          },
+          {
+            "contract": "xBlade",
+            "label": "airdropEnabled",
+            "type": "t_bool",
+            "src": "xBlade.sol:23"
           }
         ],
         "types": {

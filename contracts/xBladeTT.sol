@@ -26,8 +26,8 @@ contract xBlade is ERC20BurnableUpgradeable, OwnableUpgradeable {
 
     address public bridgeContract;
 
-    uint256 lastFundingPeriod = 0;
-    uint256 totalPeriodFundedAmount = 0;
+    uint256 lastFundingPeriod;
+    uint256 totalPeriodFundedAmount;
 
     FundingRules fundingRules;
 
