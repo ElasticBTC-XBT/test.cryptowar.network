@@ -190,7 +190,8 @@ export function createStore(web3: Web3) {
       myXgem: 0,
       commonBoxPriceXgem: 0,
       rareBoxPriceXgem: 0,
-      epicBoxPriceXgem: 0
+      epicBoxPriceXgem: 0,
+      blindBoxPriceXgem: 0
     },
 
     getters: {
@@ -812,13 +813,18 @@ export function createStore(web3: Web3) {
         state.myCareerModeRequest = payload.request;
       },
       updateMyXgem(state: IState, payload: {myXgem: number | string}) {
-        console.log('payload ne', payload);
         state.myXgem = payload.myXgem;
       },
-      updateBoxPriceXgem(state: IState, payload: {commonBoxPriceXgem: string, rareBoxPriceXgem: string, epicBoxPriceXgem: string}) {
+      updateBoxPriceXgem(state: IState, payload: {
+        commonBoxPriceXgem: number | string,
+        rareBoxPriceXgem: number | string,
+        epicBoxPriceXgem: number | string,
+        blindBoxPriceXgem: number | string})
+      {
         state.commonBoxPriceXgem = payload.commonBoxPriceXgem;
         state.rareBoxPriceXgem = payload.rareBoxPriceXgem;
         state.epicBoxPriceXgem = payload.epicBoxPriceXgem;
+        state.blindBoxPriceXgem = payload.blindBoxPriceXgem;
       }
     },
 
@@ -1108,11 +1114,6 @@ export function createStore(web3: Web3) {
         if (featureFlagStakeOnly) return;
 
         const ownedCommonBoxIds = await this.cache.dispatch('getMyBoxes');
-        const myXgem = await this.cache.dispatch('getFragmentAmount');
-        commit('updateMyXgem', {
-          myXgem: Number(myXgem.fragmentAmount)
-        });
-
         const [
           ownedCharacterIds,
           ownedWeaponIds,
@@ -1121,7 +1122,9 @@ export function createStore(web3: Web3) {
           maxDurability,
           commonBoxPriceXgem,
           rareBoxPriceXgem,
-          epicBoxPriceXgem
+          epicBoxPriceXgem,
+          blindBoxPriceXgem,
+          myXgem
         ] = await Promise.all([
           state
             .contracts()
@@ -1145,7 +1148,9 @@ export function createStore(web3: Web3) {
             .call(defaultCallOptions(state)),
           state.contracts().BlindBox?.methods.commonPriceByXGem().call(defaultCallOptions(state)),
           state.contracts().BlindBox?.methods.rarePriceByXGem().call(defaultCallOptions(state)),
-          state.contracts().BlindBox?.methods.epicPriceByXGem().call(defaultCallOptions(state))
+          state.contracts().BlindBox?.methods.epicPriceByXGem().call(defaultCallOptions(state)),
+          state.contracts().BlindBox?.methods.fragmentPerBox().call(defaultCallOptions(state)),
+          state.contracts().BlindBox?.methods.getFragmentAmount(state?.defaultAccount).call(defaultCallOptions(state))
         ]);
 
         commit('updateUserDetails', {
@@ -1159,7 +1164,11 @@ export function createStore(web3: Web3) {
         commit('updateBoxPriceXgem', {
           commonBoxPriceXgem,
           rareBoxPriceXgem,
-          epicBoxPriceXgem
+          epicBoxPriceXgem,
+          blindBoxPriceXgem
+        });
+        commit('updateMyXgem', {
+          myXgem: Number(myXgem)
         });
 
         await Promise.all([

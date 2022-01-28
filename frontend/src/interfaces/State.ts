@@ -131,4 +131,5 @@ export interface IState {
   commonBoxPriceXgem: number | string;
   rareBoxPriceXgem: number | string;
   epicBoxPriceXgem: number | string;
+  blindBoxPriceXgem: number | string;
 }

@@ -28,7 +28,7 @@
         >
           <div class="nft-item-content">
             <div class="character-item addnew nft-container">
-              <nft-icon :nft="nft" :isShop="isShop" :isLoading="isLoading" :favorite="isFavorite(nft.typeId, nft.id)"
+              <nft-icon :nft="nft" :isShop="isShop" :isLoading="isLoading" :favorite="isFavorite(nft.typeId, nft.id)" :isBlindBox="nft.onlyUseXgem"
               v-tooltip.top="{ content: itemDescriptionHtml(nft) , trigger: (isMobile() ? 'click' : 'hover') }"
               @mouseover="hover = !isMobile() || true"
               @mouseleave="hover = !isMobile()" />
@@ -38,6 +38,7 @@
                 <b-button
                   :disabled="nft.isSoldOut || nft.isDisable"
                   class="buttonBuy"
+                  v-if="!nft.onlyUseXgem"
                   @click="checkBuy = nft; nft.isSoldOut || nft.isDisable? () => {}: buyItem(checkBuy);"
                 >
                   <span v-if="!nft.isSoldOut">
@@ -63,7 +64,7 @@
                   <span  v-if="nft.isSoldOut && !isLoading">
                     SOLD OUT
                   </span>
-                  <span  v-if="isLoading">
+                  <span v-if="isLoading && !nft.onlyUseXgem">
                     LOADING
                   </span>
                 </b-button>
@@ -72,6 +73,17 @@
           </div>
         </li>
         <b-modal id="modal-buyitem">
+          <span v-if="this.boxType.length>2" class="congratsText">You received a {{this.boxType[0].toUpperCase() + this.boxType.slice(1)}} Box</span>
+          <div :class="this.boxType +'-box'"></div>
+          <div>
+            <div>
+              <b-button class="mt-3" block @click="$bvModal.hide('modal-buyitem')">LATER</b-button>
+            </div>
+            <div>
+              <b-button class="mt-2" block @click="$bvModal.hide('modal-buyitem'); openBox()">OPEN NOW</b-button>
+            </div>
+          </div>
+          <div v-if="this.boxType.length ===0">
           <div :class="checkBuy.image?checkBuy.image.split('.')[0]:''"></div>
           <div>
             <div>
@@ -80,6 +92,7 @@
             <div>
               <b-button class="mt-2" block @click="openBox(checkBuy); $bvModal.hide('modal-buyitem'); ">OPEN NOW</b-button>
             </div>
+          </div>
           </div>
         </b-modal>
         <!-- <b-modal id="modal-selectitem">
@@ -160,7 +173,7 @@
           @click="onNftClick(nft.type, nft.id)"
           @contextmenu="canFavorite && toggleFavorite($event, nft.type, nft.id)"
         >
-          <nft-icon :favorite="isFavorite(nft.type, nft.id)" :nft="nft" :isShop="isShop"/>
+          <nft-icon :favorite="isFavorite(nft.type, nft.id)" :nft="nft" :isShop="isShop" :isBlindBox="nft.onlyUseXgem"/>
           <div class="above-wrapper" v-if="$slots.above || $scopedSlots.above">
             <slot name="above" :nft="nft"></slot>
           </div>
@@ -182,8 +195,6 @@ import Vue from 'vue';
 import { Accessors, PropType } from 'vue/types/options';
 import { IState } from '@/interfaces';
 import WeaponSelect from "@/components/WeaponSelect.vue";
-import { fromWeiEther, toBN } from '@/utils/common';
-import Bignumber from 'bignumber.js';
 
 const sorts = [
   { name: 'Any', dir: '' },
@@ -202,6 +213,7 @@ interface Data {
   lastBoxId: string | number;
   isLoadingBox: boolean;
   weaponReceive: any;
+  boxType: string;
 }
 
 export interface NftIdType {
@@ -322,7 +334,8 @@ export default Vue.extend({
       checkBuy: "",
       lastBoxId: '',
       weaponReceive: null,
-      isLoadingBox: false
+      isLoadingBox: false,
+      boxType: ''
     } as Data;
   },
 
@@ -428,65 +441,12 @@ export default Vue.extend({
       'purchaseCharacterFireTraitChange', 'purchaseCharacterEarthTraitChange',
       'purchaseCharacterWaterTraitChange', 'purchaseCharacterLightningTraitChange',
       'purchaseCommonSecretBox', 'purchaseRareSecretBox', 'purchaseEpicSecretBox', 'openCommonSecretBox', 'openCommonBox','fetchWeaponId',
-      'buyRareBoxWithXGem', 'buyEpicBoxWithXGem', 'buyCommonBoxWithXGem', 'updateMyXgem'
+      'buyRareBoxWithXGem', 'buyEpicBoxWithXGem', 'buyCommonBoxWithXGem', 'updateMyXgem','convertFragmentToBox','getBoxDetail'
     ])),
     ...mapMutations(['setCurrentNft']),
 
     async onShieldBuy() {
       await this.purchaseShield();
-    },
-
-    checkDisableButtonBuy() {
-      const xBladeBalance = fromWeiEther(
-        Bignumber.sum(
-          //@ts-ignore
-          toBN(this.skillBalance),
-          //@ts-ignore
-          toBN(this.inGameOnlyFunds),
-          //@ts-ignore
-          toBN(this.skillRewards)
-        )
-      );
-      // const commonBoxInfo = this.nftIdTypes.find(item => item.id ===0);
-      // const rareBoxInfo = this.nftIdTypes.find(item => item.id===1);
-      // const epicBoxInfo = this.nftIdTypes.find(item => item.id ===2);
-      //@ts-ignore
-      console.log('1111', xBladeBalance);
-      // console.log('2222', commonBoxInfo?.nftPrice);
-      // console.log('3333', xBladeBalance> commonBoxInfo?.nftPrice);
-      this.nftIdTypes.map((item, index) => {
-        return {
-          ...item,
-          isDisable: xBladeBalance > this.nftIdTypes[index].nftPrice
-        };
-      });
-      console.log('1212', this.nftIdTypes);
-      // if(Number(xBladeBalance) < Number(commonBoxInfo?.nftPrice)) {
-      //   this.nftIdTypes.map(item => {
-      //     if(item.id === 0) {
-      //       item.isDisable = true;
-      //     }
-      //     return item;
-      //   });
-      // }
-      // //@ts-ignore
-      // if(Number(xBladeBalance) > Number(rareBoxInfo?.nftPrice)) {
-      //   this.nftIdTypes.map(item => {
-      //     if(item.id === 1) {
-      //       item.isDisable = true;
-      //     }
-      //     return item;
-      //   });
-      // }
-      // //@ts-ignore
-      // if(Number(xBladeBalance) > Number(epicBoxInfo?.nftPrice)) {
-      //   this.nftIdTypes.map(item => {
-      //     if(item.id === 2) {
-      //       item.isDisable = true;
-      //     }
-      //     return item;
-      //   });
-      // }
     },
 
     saveFilters() {
@@ -576,11 +536,35 @@ export default Vue.extend({
           //@ts-ignore
           this.lastBoxId = response.boxId;
           this.isLoadingBox = false;
-        }else {
+        }else if(item.id ===2) {
           const response = await this.buyEpicBoxWithXGem();
           //@ts-ignore
           this.lastBoxId = response.boxId;
           this.isLoadingBox = false;
+        }
+        else {
+          const response = await this.convertFragmentToBox();
+          if(response) {
+            this.lastBoxId = response.boxId;
+            const boxTypeReturn = await this.getBoxDetail({boxId:response.boxId});
+            switch(boxTypeReturn) {
+            case 1: {
+              this.boxType= 'rare';
+              break;
+            }
+            case 2: {
+              this.boxType = 'epic';
+              break;
+            }
+            default: {
+              this.boxType = 'common';
+            }
+              setTimeout(() => {
+                this.isLoadingBox = false;
+              }, 4000);
+            }
+            this.isLoadingBox = false;
+          }
         }
         //@ts-ignore
         this.$bvModal.show('modal-buyitem');

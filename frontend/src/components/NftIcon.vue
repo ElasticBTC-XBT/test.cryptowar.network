@@ -42,7 +42,7 @@
         <img class="placeholder-box" :src="imgPath(nft.image)" v-if="isShop" />
         <h2 v-if="isShop" class="nft-name">{{ nft.name }}</h2>
         <div class="box-quantity-wrap">
-          <div class="box-quantity">
+          <div v-if="!isBlindBox" class="box-quantity">
             Supply left:
             <span v-if="isShop" class="nft-supply">{{ isLoading ? "Loading" : nft.supply }}</span>
           </div>
@@ -62,7 +62,7 @@
 import { mapCacheActions } from 'vuex-cache';
 // Comment
 export default {
-  props: ['nft', 'isDefault', 'isShop', 'isLoading', 'favorite'],
+  props: ['nft', 'isDefault', 'isShop', 'isLoading', 'favorite', 'isBlindBox'],
   async created() {
 
   },

@@ -32,6 +32,7 @@ IState,
 | "rareBoxPriceXgem"
 | "epicBoxPriceXgem"
 | "myXgem"
+| "blindBoxPriceXgem"
 >;
 
 interface StoreMappedGetters {
@@ -97,7 +98,8 @@ export default Vue.extend({
       'skillBalance',
       'inGameOnlyFunds',
       'skillRewards',
-      'myXgem'
+      'myXgem',
+      'blindBoxPriceXgem'
     ]) as Accessors<StoreMappedState>),
     ...(mapGetters([
       "contracts",
@@ -183,6 +185,22 @@ export default Vue.extend({
           isDisable:  Number(xBladeBalance) < toBN(fromWeiEther(epic)).toNumber(),
           nftPriceXgem: this.epicBoxPriceXgem,
           isDisableXgem: Number(this.myXgem) < this.epicBoxPriceXgem
+        },
+        {
+          id: 3,
+          type: "SecretBox",
+          // nftPrice: toBN(fromWeiEther(epic)).toNumber(),
+          onlyUseXgem: true,
+          name: "Blind Box",
+          description:
+       `89% chance to get common box, 
+       6% chance to get rare box and 5% chance to get epic box`,
+          image: "blind-box.png",
+          // isSoldOut: Number(this.epicBoxSupply) === 0,
+          // supply: this.epicBoxSupply,
+          // isDisable:  Number(xBladeBalance) < toBN(fromWeiEther(epic)).toNumber(),
+          nftPriceXgem: this.blindBoxPriceXgem,
+          isDisableXgem: Number(this.myXgem) < this.blindBoxPriceXgem
         },
       ] as SkillShopListing[];
 
