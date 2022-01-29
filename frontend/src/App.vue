@@ -41,6 +41,24 @@
       </div>
       <div
         class="fullscreen-warning"
+        v-if="!checkIncorectNetwork && !showMetamaskWarning && hideWalletWarning"
+        sytle="z-index: 100"
+      >
+        <div class="starter-panel not-connect">
+          <span class="starter-panel-heading"
+            >Incorrect Network</span
+          >
+          <div class="center row button-div">
+            <big-button
+              class="btn btn-pink-bg modal-btn"
+              v-html="`Switch to BSC Network`"
+              @click="configureMetaMask"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="fullscreen-warning"
         v-if="
           !hideWalletWarning &&
           (errorMessage ||
@@ -176,6 +194,7 @@ export default {
     isMetamask: undefined,
     expectedNetworkId: 0,
     expectedNetworkName: "",
+    checkIncorectNetwork: true,
   }),
 
   computed: {
@@ -524,6 +543,10 @@ export default {
     // if(window.location.pathname !== '/maintenance'){
     //   window.location.href = 'maintenance';
     // }
+    const expectedNetworkID = await this.web3.eth.net.getId();
+    if(getAddresses(expectedNetworkID).VUE_APP_EXPECTED_NETWORK_ID !== expectedNetworkID.toString()){
+      this.checkIncorectNetwork = false;
+    }
     try {
       await this.initializeStore();
     } catch (e) {
