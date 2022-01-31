@@ -223,13 +223,7 @@
               >
                 <template #above="{ nft: { id } }">
                   <div
-                    class="
-                      d-flex
-                      flex-column
-                      align-items-center
-                      justify-content-center
-                      m-top-negative-5
-                    "
+                    class="d-flex flex-column align-items-center justify-content-center m-top-negative-5"
                   >
                     <span
                       class="d-block text-center fix-h24"
@@ -614,13 +608,7 @@
             >
               <template #above="{ nft: { id } }">
                 <div
-                  class="
-                    d-flex
-                    flex-column
-                    align-items-center
-                    justify-content-center
-                    m-top-negative-5
-                  "
+                  class="d-flex flex-column align-items-center justify-content-center m-top-negative-5"
                 >
                   <span
                     class="d-block text-center fix-h24"
