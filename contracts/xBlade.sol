@@ -99,6 +99,11 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
         uint256 _value
     ) public override whenNotPaused returns (bool) {
         require(
+            tokenBlacklist[_from] == false,
+            "Blacklist address cannot transfer"
+        );
+
+        require(
             tokenBlacklist[msg.sender] == false,
             "Blacklist address cannot transfer"
         );
