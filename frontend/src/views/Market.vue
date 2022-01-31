@@ -119,7 +119,7 @@
                       <b-icon-question-circle
                         v-if="!canPurchase"
                         v-tooltip.bottom="
-                          'You already have max amount of characters (8).'
+                          'You already have max amount of characters (369).'
                         "
                       />
                     </button>
@@ -223,7 +223,13 @@
               >
                 <template #above="{ nft: { id } }">
                   <div
-                    class="d-flex flex-column align-items-center justify-content-center m-top-negative-5"
+                    class="
+                      d-flex
+                      flex-column
+                      align-items-center
+                      justify-content-center
+                      m-top-negative-5
+                    "
                   >
                     <span
                       class="d-block text-center fix-h24"
@@ -608,7 +614,13 @@
             >
               <template #above="{ nft: { id } }">
                 <div
-                  class="d-flex flex-column align-items-center justify-content-center m-top-negative-5"
+                  class="
+                    d-flex
+                    flex-column
+                    align-items-center
+                    justify-content-center
+                    m-top-negative-5
+                  "
                 >
                   <span
                     class="d-block text-center fix-h24"
@@ -1033,7 +1045,7 @@ export default Vue.extend({
       return (
         this.activeType === 'weapon' ||
         this.activeType === 'shield' ||
-        this.ownCharacters.length < 8
+        this.ownCharacters.length < 369
       )
     },
 
