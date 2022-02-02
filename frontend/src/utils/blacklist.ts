@@ -25,9 +25,9 @@ export function calculateFightTax(
   // const isLucky = random() % 100 < 33
   // const weight = isBlackList && !isLucky ? '1.8' : '1.5'
   // return toBN(baseTax).multipliedBy(toBN(weight)).toString()
-  const isLucky = random(0, 100) % 100 < 33;
-  const weight = isBlackList && !isLucky ? "1.9" : "1.7";
-  const fightTax = parseInt((Number(baseTax) * 369 * 1.5).toString(), 10);
-  return parseInt(toBN(fightTax).multipliedBy(toBN(weight)).toString(), 10).toString();
+  const isLucky = random(0, 100) % 100 < 33
+  const weight = isBlackList && !isLucky ? '1.8' : '1.5'
+  const fightTax = parseInt((Number(baseTax) * 369 * 1.5).toString(), 10)
+  return toBN(fightTax).multipliedBy(toBN(weight)).toFixed(0).toString()
 }
 export default isBlacklist
