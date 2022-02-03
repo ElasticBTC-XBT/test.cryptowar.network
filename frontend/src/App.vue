@@ -34,7 +34,7 @@
               v-html="'Hide Warning'"
             />
           </div>
-          <div
+          <!-- <div
             class="back-btn"
             @click="
               isMetamask = false
@@ -42,7 +42,7 @@
             "
           >
             <i class="fas fa-chevron-left"></i>
-          </div>
+          </div> -->
         </div>
       </div>
       <div
@@ -134,12 +134,12 @@
             <big-button
               v-bind:class="[isConnecting ? 'disabled' : '']"
               class="btn btn-pink-bg modal-btn"
-              v-html="`Connect via Walletconnect`"
+              v-html="`Walletconnect`"
               @click="connectWalletconnect"
             />
             <big-button
               class="btn btn-pink-bg modal-btn"
-              v-html="`Connect via metamask`"
+              v-html="`Metamask`"
               @click="checkMetamask"
             />
           </div>
@@ -207,10 +207,10 @@ export default {
       bridge: 'https://bridge.walletconnect.org', // Required
       qrcodeModal: QRCodeModal,
     }),
-    isMetamask: undefined,
     expectedNetworkId: 0,
     expectedNetworkName: '',
     checkIncorectNetwork: true,
+    isMetamask: false,
   }),
 
   computed: {
@@ -500,6 +500,7 @@ export default {
 
     toggleHideWalletWarning() {
       this.hideWalletWarning = !this.hideWalletWarning
+      this.isMetamask = false
       if (this.hideWalletWarning)
         localStorage.setItem('hideWalletWarning', 'true')
       else localStorage.setItem('hideWalletWarning', 'false')
