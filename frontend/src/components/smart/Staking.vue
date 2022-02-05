@@ -134,7 +134,10 @@ https://github.com/SharedStake/SharedStake-ui/blob/8bd7e9873640043dba75c32fdc69d
         </button>
 
         <button
-          v-if="stakeUnclaimedRewardsButtonShown"
+          v-if="
+            stakeUnclaimedRewardsButtonShown &&
+            isStakeUnclaimedRewardsButtonShown
+          "
           class="btn btn-primary spacing-top"
           :disabled="!canStakeUnclaimedRewards"
           tagname="stake"
@@ -196,6 +199,7 @@ export default {
 
       stakeUnlockTimeLeftCurrentEstimate: 0,
       stakeRewardDistributionTimeLeftCurrentEstimate: 0,
+      isStakeUnclaimedRewardsButtonShown: false,
     }
   },
   async mounted() {
@@ -411,11 +415,8 @@ export default {
     },
 
     stakeUnclaimedRewardsButtonShown() {
-      return (
-        stakeTypeThatCanHaveUnclaimedRewardsStakedTo === this.stakeType &&
-        this.isDeposit
-      )
-      // return true;
+      this.checkStakeUnclaimedRewardsButtonShown()
+      return true
     },
 
     canStakeUnclaimedRewards() {
@@ -431,6 +432,13 @@ export default {
   methods: {
     ...mapCacheActions(['fetchStakeDetails']),
     ...mapActions(['stake', 'unstake', 'stakeUnclaimedRewards', 'claimReward']),
+
+    async checkStakeUnclaimedRewardsButtonShown() {
+      console.log(this.isStakeUnclaimedRewardsButtonShown)
+      this.isStakeUnclaimedRewardsButtonShown =
+        (await stakeTypeThatCanHaveUnclaimedRewardsStakedTo) ===
+          this.stakeType && this.isDeposit
+    },
 
     updateEstimates() {
       if (this.stakeUnlockTimeLeftCurrentEstimate > 0) {

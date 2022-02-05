@@ -60,8 +60,8 @@ export default {
   async created() {
     this.waitingLeaderboardOutcome = true
     const leaderboardData = await fetch(
-      apiUrl('static/leaderboard'),
-      defaultOptions
+      await apiUrl('static/leaderboard'),
+      await defaultOptions
     )
     const leaderboards = await leaderboardData.json()
 

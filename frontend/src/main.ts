@@ -43,9 +43,23 @@ const walletConnectProvider = new WalletConnectProvider({
 const web3 = new Web3(
   Web3.givenProvider || process.env.VUE_APP_WEB3_FALLBACK_PROVIDER
 )
+let networkCurrent = 0
+const checkNetwork = async () => {
+  try {
+    const networkId = await web3.eth.net.getId()
+    if (networkCurrent !== 0 && networkId !== networkCurrent) {
+      location.reload()
+    }
+    networkCurrent = networkId
+  } catch (e) {
+    console.error(e)
+  }
+  setTimeout(checkNetwork, 500)
+}
+
+checkNetwork()
 
 Vue.config.productionTip = false
-
 Vue.use(Vuex)
 Vue.use(VueRouter)
 Vue.use(VTooltip)

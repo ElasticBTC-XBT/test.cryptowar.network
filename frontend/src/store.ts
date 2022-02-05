@@ -38,6 +38,7 @@ import { Nft } from './interfaces/Nft'
 import { getWeaponNameFromSeed } from '@/weapon-name'
 import isBlacklist, { calculateFightTax } from './utils/blacklist'
 import RoomRequest from './interfaces/RoomRequest'
+import { getAddresses } from './addresses'
 
 const defaultCallOptions = (state: IState) => ({ from: state.defaultAccount })
 
@@ -275,11 +276,12 @@ export function createStore(web3: Web3) {
           return getWeaponNameFromSeed(weaponId, stars)
         }
       },
-      getExchangeUrl() {
-        return (
-          process.env.VUE_APP_EXCHANGE_URL ||
+      getExchangeUrl(state: IState) {
+        const expectedNetwork = getAddresses(state.currentNetworkId || 56)
+        const temp =
+          expectedNetwork.VUE_APP_EXCHANGE_URL ||
           'https://pancake.kiemtienonline360.com/#/swap?outputCurrency=0x27a339d9B59b21390d7209b78a839868E319301B'
-        )
+        return temp
       },
 
       ownCharacters(state, getters) {
@@ -429,19 +431,12 @@ export function createStore(web3: Web3) {
             )
           }
 
-          return `${(date.getMonth() + 1).toString().padStart(2, '0')}/${date
-            .getDate()
-            .toString()
-            .padStart(2, '0')}/${date
-            .getFullYear()
-            .toString()
-            .padStart(4, '0')} ${date
-            .getHours()
-            .toString()
-            .padStart(2, '0')}:${date
-            .getMinutes()
-            .toString()
-            .padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`
+          return `${(date.getMonth() + 1).toString().padStart(2, '0')}
+          /${date.getDate().toString().padStart(2, '0')}
+          /${date.getFullYear().toString().padStart(4, '0')}
+           ${date.getHours().toString().padStart(2, '0')}
+          :${date.getMinutes().toString().padStart(2, '0')}
+          :${date.getSeconds().toString().padStart(2, '0')}`
         }
       },
 
@@ -460,19 +455,12 @@ export function createStore(web3: Web3) {
             )
           }
 
-          return `${(date.getMonth() + 1).toString().padStart(2, '0')}/${date
-            .getDate()
-            .toString()
-            .padStart(2, '0')}/${date
-            .getFullYear()
-            .toString()
-            .padStart(4, '0')} ${date
-            .getHours()
-            .toString()
-            .padStart(2, '0')}:${date
-            .getMinutes()
-            .toString()
-            .padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`
+          return `${(date.getMonth() + 1).toString().padStart(2, '0')}
+          /${date.getDate().toString().padStart(2, '0')}
+          /${date.getFullYear().toString().padStart(4, '0')}
+           ${date.getHours().toString().padStart(2, '0')}
+          :${date.getMinutes().toString().padStart(2, '0')}
+          :${date.getSeconds().toString().padStart(2, '0')}`
         }
       },
 
@@ -853,6 +841,9 @@ export function createStore(web3: Web3) {
         const networkId = await web3.eth.net.getId()
 
         if (state.currentNetworkId !== networkId) {
+          // if(state.currentNetworkId){
+          //   location.reload();
+          // }
           commit('setNetworkId', networkId)
           refreshUserDetails = true
         }

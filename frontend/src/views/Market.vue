@@ -204,7 +204,7 @@
                   </div>
                 </template>
               </weapon-grid>
-              <nft-list
+              <!-- <nft-list
                 v-on:nft-filters-changed="searchAllShieldListings(0)"
                 v-if="activeType === 'shield'"
                 :showGivenNftIdTypes="true"
@@ -223,7 +223,13 @@
               >
                 <template #above="{ nft: { id } }">
                   <div
-                    class="d-flex flex-column align-items-center justify-content-center m-top-negative-5"
+                    class="
+                      d-flex
+                      flex-column
+                      align-items-center
+                      justify-content-center
+                      m-top-negative-5
+                    "
                   >
                     <span
                       class="d-block text-center fix-h24"
@@ -279,7 +285,7 @@
                     <span>sold</span>
                   </div>
                 </template>
-              </nft-list>
+              </nft-list> -->
               <b-pagination
                 class="customPagination"
                 style="margin-top: 20px"
@@ -591,7 +597,7 @@
               </template>
             </character-list>
 
-            <nft-list
+            <!-- <nft-list
               v-if="activeType === 'shield'"
               :showGivenNftIdTypes="true"
               :showReforgedToggle="false"
@@ -608,7 +614,13 @@
             >
               <template #above="{ nft: { id } }">
                 <div
-                  class="d-flex flex-column align-items-center justify-content-center m-top-negative-5"
+                  class="
+                    d-flex
+                    flex-column
+                    align-items-center
+                    justify-content-center
+                    m-top-negative-5
+                  "
                 >
                   <span
                     class="d-block text-center fix-h24"
@@ -635,14 +647,14 @@
                   <span class="d-block text-center" v-else
                     >Loading price...</span
                   >
-                  <!-- <b-button
+                  <b-button
                     v-if="id !== null && !searchResultsOwned"
                     :hidden="convertWeiToSkill(nftPricesById[id]) === '0'"
                     @click="selectedNftId = id; purchaseNft();"
                     variant="primary"
                     class="gtag-link-others">
                     {{ convertWeiToSkill(nftPricesById[id]) !== '0' ? 'Purchase' : 'Sold' }}
-                  </b-button> -->
+                  </b-button>
                 </div>
               </template>
               <template #sold="{ nft: { id } }">
@@ -656,7 +668,7 @@
                   <span>sold</span>
                 </div>
               </template>
-            </nft-list>
+            </nft-list> -->
           </div>
           <div
             class="col-12 col-xl-9 col-md-12 col-sm-12 sell-grid"
@@ -1521,7 +1533,7 @@ export default Vue.extend({
     },
 
     async searchAllCharacterListingsThroughAPI(page: number) {
-      const url = new URL(apiUrl('static/market/character'))
+      const url = new URL(await apiUrl('static/market/character'))
       const params = {
         element: '' + this.characterTraitFilter(),
         minLevel: '' + this.characterMinLevelFilter(),
@@ -1535,8 +1547,7 @@ export default Vue.extend({
       }
 
       url.search = new URLSearchParams(params).toString()
-
-      const charactersData = await fetch(url.toString(), defaultOptions)
+      const charactersData = await fetch(url.toString(), await defaultOptions)
       const characters = await charactersData.json()
       this.allListingsAmount = characters.page.total
       this.allSearchResults = characters.idResults
@@ -1593,7 +1604,7 @@ export default Vue.extend({
     },
 
     async searchAllWeaponListingsThroughAPI(page: number) {
-      const url = new URL(apiUrl('static/market/weapon'))
+      const url = new URL(await apiUrl('static/market/weapon'))
       const params = {
         element: '' + this.weaponTraitFilter(),
         minStars: '' + this.weaponStarFilter(),
@@ -1605,9 +1616,8 @@ export default Vue.extend({
         pageSize: '' + (this.weaponShowLimit || defaultLimit),
         pageNum: '' + page,
       }
-
       url.search = new URLSearchParams(params).toString()
-      const weaponsData = await fetch(url.toString(), defaultOptions)
+      const weaponsData = await fetch(url.toString(), await defaultOptions)
       const weapons = await weaponsData.json()
       this.allListingsAmount = weapons.page.total
       this.allSearchResults = weapons.idResults
@@ -1651,7 +1661,7 @@ export default Vue.extend({
     },
 
     async searchAllShieldListingsThroughAPI(page: number) {
-      const url = new URL(apiUrl('static/market/shield'))
+      const url = new URL(await apiUrl('static/market/shield'))
       const params = {
         element: '' + this.nftTraitFilter(),
         minStars: '' + this.nftStarFilter(),
@@ -1663,8 +1673,7 @@ export default Vue.extend({
       }
 
       url.search = new URLSearchParams(params).toString()
-
-      const shieldsData = await fetch(url.toString(), defaultOptions)
+      const shieldsData = await fetch(url.toString(), await defaultOptions)
       const shields = await shieldsData.json()
       this.allListingsAmount = shields.page.total
       this.allSearchResults = shields.idResults
@@ -1770,7 +1779,7 @@ export default Vue.extend({
     async searchCharacterListingsBySeller(
       sellerAddress: string
     ): Promise<string[]> {
-      const url = new URL(apiUrl('static/market/character'))
+      const url = new URL(await apiUrl('static/market/character'))
       const params = {
         element: '' + this.characterTraitFilter(),
         minLevel: '' + this.characterMinLevelFilter(),
@@ -1784,7 +1793,7 @@ export default Vue.extend({
 
       url.search = new URLSearchParams(params).toString()
 
-      const charactersData = await fetch(url.toString(), defaultOptions)
+      const charactersData = await fetch(url.toString(), await defaultOptions)
       const characters = await charactersData.json()
       return characters.idResults
     },
@@ -1792,7 +1801,7 @@ export default Vue.extend({
     async searchWeaponListingsBySeller(
       sellerAddress: string
     ): Promise<string[]> {
-      const url = new URL(apiUrl('static/market/weapon'))
+      const url = new URL(await apiUrl('static/market/weapon'))
       const params = {
         element: '' + this.weaponTraitFilter(),
         minStars: '' + this.weaponStarFilter(),
@@ -1807,7 +1816,7 @@ export default Vue.extend({
 
       url.search = new URLSearchParams(params).toString()
 
-      const weaponsData = await fetch(url.toString(), defaultOptions)
+      const weaponsData = await fetch(url.toString(), await defaultOptions)
       const weapons = await weaponsData.json()
       return weapons.idResults
     },
@@ -1815,7 +1824,7 @@ export default Vue.extend({
     async searchShieldListingsBySeller(
       sellerAddress: string
     ): Promise<NftIdType[]> {
-      const url = new URL(apiUrl('static/market/shield'))
+      const url = new URL(await apiUrl('static/market/shield'))
       const params = {
         element: '' + this.nftTraitFilter(),
         minStars: '' + this.nftStarFilter(),
@@ -1827,16 +1836,17 @@ export default Vue.extend({
       }
 
       url.search = new URLSearchParams(params).toString()
-
-      const shieldsData = await fetch(url.toString(), defaultOptions)
+      const shieldsData = await fetch(url.toString(), await defaultOptions)
       const shields = await shieldsData.json()
       return shields.idResults
     },
 
     async searchItemsSoldBySeller(sellerAddress: string): Promise<any[]> {
-      const url = new URL(apiUrl(`static/market/transactions/${sellerAddress}`))
+      const url = new URL(
+        await apiUrl(`static/market/transactions/${sellerAddress}`)
+      )
 
-      const weaponsData = await fetch(url.toString(), defaultOptions)
+      const weaponsData = await fetch(url.toString(), await defaultOptions)
       const weapons = await weaponsData.json()
       return weapons.results
     },

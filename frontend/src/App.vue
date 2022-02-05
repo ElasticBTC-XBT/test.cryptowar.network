@@ -48,6 +48,28 @@
       <div
         class="fullscreen-warning"
         v-if="
+          !checkIncorectNetwork &&
+          !isMaintenance &&
+          !showMetamaskWarning &&
+          hideWalletWarning &&
+          !canShowApp
+        "
+        sytle="z-index: 100"
+      >
+        <div class="starter-panel not-connect switch-network">
+          <span class="starter-panel-heading">Incorrect Network</span>
+          <div class="center row button-div">
+            <big-button
+              class="btn btn-pink-bg modal-btn"
+              v-html="`Switch to BSC Network`"
+              @click="configureMetaMask"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="fullscreen-warning"
+        v-if="
           !hideWalletWarning &&
           (errorMessage ||
             (ownCharacters.length === 0 &&
@@ -154,6 +176,7 @@ import SmallButton from './components/SmallButton.vue'
 import NavBar from './components/NavBar.vue'
 // import CharacterBar from "./components/CharacterBar.vue";
 // import { apiUrl, defaultOptions } from "./utils/common";
+import { getAddresses } from './addresses'
 
 Vue.directive('visible', (el, bind) => {
   el.style.visibility = bind.value ? 'visible' : 'hidden'
@@ -164,8 +187,8 @@ export default {
     'web3',
     'walletConnectProvider',
     'featureFlagStakeOnly',
-    'expectedNetworkId',
-    'expectedNetworkName',
+    // "expectedNetworkId",
+    // "expectedNetworkName",
   ],
   components: {
     NavBar,
@@ -185,6 +208,9 @@ export default {
       qrcodeModal: QRCodeModal,
     }),
     isMetamask: undefined,
+    expectedNetworkId: 0,
+    expectedNetworkName: '',
+    checkIncorectNetwork: true,
   }),
 
   computed: {
@@ -216,6 +242,7 @@ export default {
     },
 
     showNetworkError() {
+      this.getExpectedNetwork()
       return (
         this.expectedNetworkId &&
         this.currentNetworkId !== null &&
@@ -260,6 +287,15 @@ export default {
       'fetchWaxBridgeDetails',
       'fetchRewardsClaimTax',
     ]),
+
+    getExpectedNetwork() {
+      const expectedNetwork = getAddresses(this.currentNetworkId)
+      this.expectedNetworkId = parseInt(
+        expectedNetwork.VUE_APP_EXPECTED_NETWORK_ID,
+        10
+      )
+      this.expectedNetworkName = expectedNetwork.VUE_APP_EXPECTED_NETWORK_NAME
+    },
 
     async updateCharacterStamina(id) {
       if (this.featureFlagStakeOnly) return
@@ -533,6 +569,13 @@ export default {
     // if(window.location.pathname !== '/maintenance'){
     //   window.location.href = 'maintenance';
     // }
+    const expectedNetworkID = await this.web3.eth.net.getId()
+    if (
+      getAddresses(expectedNetworkID).VUE_APP_EXPECTED_NETWORK_ID !==
+      expectedNetworkID.toString()
+    ) {
+      this.checkIncorectNetwork = false
+    }
     try {
       await this.initializeStore()
     } catch (e) {
@@ -1363,10 +1406,10 @@ div.bg-success {
     margin-bottom: 1rem;
     justify-content: center;
   }
-  .starter-panel {
+  /* .starter-panel{
     background-size: auto 100%;
     background-position: -150px -36px;
-  }
+  } */
   .blank-slate .button h1 {
     font-size: 1.5rem;
   }
@@ -1374,6 +1417,23 @@ div.bg-success {
 @media (max-width: 1400px) {
   .content {
     margin-top: 102px;
+  }
+}
+.not-connect.switch-network {
+  width: 450px;
+  height: 320px;
+  justify-content: space-around;
+}
+@media (max-width: 767.98px) {
+  .not-connect.switch-network {
+    width: 400px;
+    height: 290px;
+  }
+}
+@media (max-width: 375.98px) {
+  .not-connect.switch-network {
+    width: 300px;
+    height: 210px;
   }
 }
 </style>
