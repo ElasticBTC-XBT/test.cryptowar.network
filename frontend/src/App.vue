@@ -41,10 +41,10 @@
       </div>
       <div
         class="fullscreen-warning"
-        v-if="!checkIncorectNetwork && !showMetamaskWarning && hideWalletWarning"
+        v-if="!checkIncorectNetwork && !isMaintenance && !showMetamaskWarning && hideWalletWarning && !canShowApp"
         sytle="z-index: 100"
       >
-        <div class="starter-panel not-connect">
+        <div class="starter-panel not-connect switch-network">
           <span class="starter-panel-heading"
             >Incorrect Network</span
           >
@@ -1376,10 +1376,10 @@ div.bg-success {
     margin-bottom: 1rem;
     justify-content: center;
   }
-  .starter-panel{
+  /* .starter-panel{
     background-size: auto 100%;
     background-position: -150px -36px;
-  }
+  } */
   .blank-slate .button h1{
     font-size: 1.5rem;
   }
@@ -1387,6 +1387,23 @@ div.bg-success {
 @media (max-width: 1400px) {
   .content {
     margin-top: 102px;
+  }
+}
+.not-connect.switch-network{
+  width: 450px;
+  height: 320px;
+  justify-content:space-around;
+}
+@media (max-width: 767.98px) {
+  .not-connect.switch-network{
+    width: 400px;
+    height: 290px;
+  }
+}
+@media (max-width: 375.98px) {
+  .not-connect.switch-network{
+    width: 300px;
+    height: 210px;
   }
 }
 </style>
