@@ -68,8 +68,8 @@ module.exports = {
             process.env.BINANCE_WALLET_PRIVATE_KEY,
             process.env.BINANCE_WALLET_MNEMONIC,
             {
-              providerOrUrl: "wss://data-seed-prebsc-2-s1.binance.org:8545/",
-              // providerOrUrl:"https://data-seed-prebsc-2-s1.binance.org:8545"
+              // providerOrUrl: "wss://data-seed-prebsc-1-s1.binance.org:8545/",
+              providerOrUrl: "https://data-seed-prebsc-1-s1.binance.org:8545/",
             }
           )
         ),
@@ -78,7 +78,6 @@ module.exports = {
       confirmations: 2,
       gas: 8000000, //8000000,
       skipDryRun: true,
-      gasPrice: 60000000000
     },
     bscmainnet: {
       provider: () =>
@@ -88,7 +87,8 @@ module.exports = {
             process.env.BINANCE_MAINNET_WALLET_MNEMONIC,
             {
               // providerOrUrl: "https://bsc-dataseed.binance.org/",
-              providerOrUrl: "https://speedy-nodes-nyc.moralis.io/eba7d2e0234f08d2741c13aa/bsc/mainnet",
+              providerOrUrl:
+                "https://speedy-nodes-nyc.moralis.io/eba7d2e0234f08d2741c13aa/bsc/mainnet",
             }
           )
         ),
@@ -105,7 +105,8 @@ module.exports = {
             process.env.BINANCE_MAINNET_WALLET_PRIVATE_KEY,
             process.env.BINANCE_MAINNET_WALLET_MNEMONIC,
             {
-              providerOrUrl: "https://speedy-nodes-nyc.moralis.io/eba7d2e0234f08d2741c13aa/avalanche/mainnet",
+              providerOrUrl:
+                "https://speedy-nodes-nyc.moralis.io/eba7d2e0234f08d2741c13aa/avalanche/mainnet",
             }
           )
         ),
@@ -161,7 +162,8 @@ module.exports = {
             process.env.BINANCE_MAINNET_WALLET_PRIVATE_KEY,
             process.env.BINANCE_MAINNET_WALLET_MNEMONIC,
             {
-              providerOrUrl: "https://speedy-nodes-nyc.moralis.io/eba7d2e0234f08d2741c13aa/polygon/mainnet",
+              providerOrUrl:
+                "https://speedy-nodes-nyc.moralis.io/eba7d2e0234f08d2741c13aa/polygon/mainnet",
             }
           )
         ),
@@ -224,7 +226,7 @@ module.exports = {
         // The metadata hash can be removed from the bytecode via option "none".
         // The other options are "ipfs" and "bzzr1".
         // If the option is omitted, "ipfs" is used by default.
-        bytecodeHash: "ipfs"
+        bytecodeHash: "ipfs",
       },
     },
   },

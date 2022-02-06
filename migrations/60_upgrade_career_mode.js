@@ -1,11 +1,11 @@
-const { upgradeProxy } = require("@openzeppelin/truffle-upgrades");
+const {upgradeProxy} = require("@openzeppelin/truffle-upgrades");
 
 const CareerMode = artifacts.require("CareerMode");
 
 module.exports = async function (deployer, network) {
   let careerModeProxy;
   if (network === "bsctestnet") {
-    careerModeProxy = "0x7F28dEb744F967b47d9330F986b865eDDd5fb4B1";
+    careerModeProxy = "0x70CB095816927865e0596929e9A84D48ca5faB58";
   }
 
   if (network === "bscmainnet") {

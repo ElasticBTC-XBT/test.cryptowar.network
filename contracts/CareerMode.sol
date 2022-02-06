@@ -361,7 +361,10 @@ contract CareerMode is
         feeRate = _rate;
     }
 
-    function setMinimumRoundDuration(uint256 _minimumRoundDuration) public restricted{
+    function setMinimumRoundDuration(uint256 _minimumRoundDuration)
+        public
+        restricted
+    {
         minimumRoundDuration = _minimumRoundDuration;
     }
 
@@ -539,4 +542,12 @@ contract CareerMode is
         return roomsByAddress[account];
     }
 
+    function getMyRooms(address _account) public view returns (Room[] memory) {
+        uint256[] memory ownedRoomIds = roomsByAddress[_account];
+        Room[] memory values = new Room[](ownedRoomIds.length);
+        for (uint256 i = 0; i < ownedRoomIds.length; i++) {
+            values[i] = careerModeRooms[ownedRoomIds[i]];
+        }
+        return values;
+    }
 }
