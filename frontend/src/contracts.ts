@@ -143,7 +143,6 @@ async function setUpStakingContracts(web3: Web3) {
       ),
     }
   }
-  // consoqle.log('process.env.VUE_APP_XBLADE_TOKEN_CONTRACT_ADDRESS', process.env.VUE_APP_XBLADE_TOKEN_CONTRACT_ADDRESS);
   const xBladeTokenAddress =
     expectedNetwork.VUE_APP_XBLADE_TOKEN_CONTRACT_ADDRESS ||
     (xBladeTokenNetworks as Networks)[networkId]!.address

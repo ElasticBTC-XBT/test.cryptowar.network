@@ -135,7 +135,7 @@
               v-bind:class="[isConnecting ? 'disabled' : '']"
               class="btn btn-pink-bg modal-btn"
               v-html="`Connect via Walletconnect`"
-              @click="connectWalletconnect"
+              @click="connectWalletConnect"
             />
             <big-button
               class="btn btn-pink-bg modal-btn"
@@ -459,9 +459,9 @@ export default {
       this.errorMessage = 'Connecting to MetaMask...'
     },
 
-    async connectWalletconnect() {
+    async connectWalletConnect() {
       this.isConnecting = true
-      this.errorMessage = 'Connecting to Walletconnect...'
+      this.errorMessage = 'Connecting to WalletConnect...'
 
       this.web3.setProvider(this.walletConnectProvider)
       await this.walletConnectProvider.enable()
@@ -481,7 +481,7 @@ export default {
         web3
           .request({ method: 'eth_getAccounts' })
           .then(() => {
-            this.errorMessage = 'Success: Walletconnect connected.'
+            this.errorMessage = 'Success: WalletConnect connected.'
             this.isConnecting = false
 
             this.initializeStore()
@@ -489,11 +489,11 @@ export default {
           })
           .catch(() => {
             this.errorMessage =
-              'Error: Walletconnect could not get permissions.'
+              'Error: WalletConnect could not get permissions.'
             this.isConnecting = false
           })
       })
-      this.errorMessage = 'Success: Walletconnect connected.'
+      this.errorMessage = 'Success: WalletConnect connected.'
       this.isConnecting = false
       this.hideWalletWarning = true
     },
@@ -560,12 +560,12 @@ export default {
 
     this.showWarningDialog()
     if (this.connector.connected) {
-      this.connectWalletconnect()
+      this.connectWalletConnect()
     }
   },
 
   async created() {
-    // this.isMaintenance = process.env.VUE_APP_MAINTAINANCE;
+    // this.isMaintenance = process.env.VITE_MAINTAINANCE;
     // if(window.location.pathname !== '/maintenance'){
     //   window.location.href = 'maintenance';
     // }

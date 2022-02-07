@@ -1,0 +1,15 @@
+diff --git a/node_modules/bootstrap-vue-dialog/package.json b/node_modules/bootstrap-vue-dialog/package.json
+index ba4bfdc..5fd17bd 100644
+--- a/node_modules/bootstrap-vue-dialog/package.json
++++ b/node_modules/bootstrap-vue-dialog/package.json
+@@ -13,8 +13,8 @@
+     "prepublish": "npm run build",
+     "test": "jest --env=jsdom"
+   },
+-  "main": "dist/bootstrap-vue-dialog.cjs.js",
+-  "module": "dist/bootstrap-vue-dialog.esm.js",
++  "main": "dist/bootstrap-vue-dialog.min.js",
++  "module": "dist/bootstrap-vue-dialog.min.js",
+   "browser": "dist/bootstrap-vue-dialog.js",
+   "cdn": "dist/bootstrap-vue-dialog.min.js",
+   "unpkg": "dist/bootstrap-vue-dialog.min.js",

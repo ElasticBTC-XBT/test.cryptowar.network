@@ -70,7 +70,7 @@ const BSC_TESTNET = {
 
 import Web3 from 'web3'
 const web3 = new Web3(
-  Web3.givenProvider || process.env.VUE_APP_WEB3_FALLBACK_PROVIDER
+  Web3.givenProvider || import.meta.env.VITE_WEB3_FALLBACK_PROVIDER
 )
 
 export const getAddressesAuto = async () => {

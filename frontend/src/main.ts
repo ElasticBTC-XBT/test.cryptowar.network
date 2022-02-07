@@ -28,10 +28,10 @@ import {
 } from './feature-flags'
 
 let expectedNetworkId: number | null = null
-if (process.env.VUE_APP_EXPECTED_NETWORK_ID) {
-  expectedNetworkId = parseInt(process.env.VUE_APP_EXPECTED_NETWORK_ID, 10)
+if (import.meta.env.VITE_EXPECTED_NETWORK_ID) {
+  expectedNetworkId = parseInt(import.meta.env.VITE_EXPECTED_NETWORK_ID, 10)
 }
-const expectedNetworkName = process.env.VUE_APP_EXPECTED_NETWORK_NAME
+const expectedNetworkName = import.meta.env.VITE_EXPECTED_NETWORK_NAME
 
 const walletConnectProvider = new WalletConnectProvider({
   rpc: {
@@ -41,7 +41,7 @@ const walletConnectProvider = new WalletConnectProvider({
 })
 
 const web3 = new Web3(
-  Web3.givenProvider || process.env.VUE_APP_WEB3_FALLBACK_PROVIDER
+  Web3.givenProvider || import.meta.env.VITE_WEB3_FALLBACK_PROVIDER
 )
 let networkCurrent = 0
 const checkNetwork = async () => {

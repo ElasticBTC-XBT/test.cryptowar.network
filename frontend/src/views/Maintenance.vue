@@ -27,16 +27,16 @@ export default {
   methods: {
     getMaintenance() {
       this.isMaintenance =
-        process.env.VUE_APP_MAINTAINANCE &&
-        process.env.VUE_APP_MAINTAINANCE === 'true'
+        import.meta.env.VITE_MAINTAINANCE &&
+        import.meta.env.VITE_MAINTAINANCE === 'true'
           ? true
           : false
     },
   },
   created() {
     this.isMaintenance =
-      process.env.VUE_APP_MAINTAINANCE &&
-      process.env.VUE_APP_MAINTAINANCE === 'true'
+      import.meta.env.VITE_MAINTAINANCE &&
+      import.meta.env.VITE_MAINTAINANCE === 'true'
         ? true
         : false
   },
