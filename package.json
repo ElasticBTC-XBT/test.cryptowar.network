@@ -37,7 +37,7 @@
     "yargs": "^17.0.1"
   },
   "scripts": {
-    "postinstall": "npm run contract:prepare && lerna exec -- npm install",
+    "postinstall": "npm run contract:prepare && lerna exec -- yarn",
     "lint": "lerna exec -- npm run lint",
     "build:frontend": "npm run build && cd frontend && npm run build",
     "start:frontend": "cd frontend && npm start",
