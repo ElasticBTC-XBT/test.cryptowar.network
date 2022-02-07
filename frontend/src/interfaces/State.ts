@@ -134,4 +134,5 @@ export interface IState {
   epicBoxPriceXgem: number | string
   blindBoxPriceXgem: number | string
   cache?: StoreCache
+  myCareerModeRoom: CareerModeRoom[]
 }

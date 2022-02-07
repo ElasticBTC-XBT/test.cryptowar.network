@@ -458,11 +458,7 @@
       </b-modal>
       <div v-if="changeMode">
         <div class="row list-heroes" style="margin-left: 0">
-          <div
-            class="itemCareer"
-            v-for="i in this.filterMyCareerModeRooms(careerModeRooms)"
-            :key="i.id"
-          >
+          <div class="itemCareer" v-for="i in quantityHeroes(3)" :key="i.id">
             <CharacterRoom
               :characterId="i.characterId"
               :room="i"
@@ -508,11 +504,7 @@
       </b-modal>
       <div v-if="careerMode">
         <div class="row list-heroes" style="margin-left: 0">
-          <div
-            class="itemCareer"
-            v-for="i in this.filterCareerModeRooms(careerModeRooms)"
-            :key="i.id"
-          >
+          <div class="itemCareer" v-for="i in quantityHeroes(1)" :key="i.id">
             <CharacterRoom
               :characterId="i.characterId"
               :room="i"
@@ -655,6 +647,7 @@ export default {
       'defaultAccount',
       'rewardPvp',
       'myCareerModeRequest',
+      'myCareerModeRoom',
     ]),
     ...mapGetters([
       'getTargetsByCharacterIdAndWeaponId',
@@ -754,6 +747,7 @@ export default {
       'getListParticipatedRoom',
       'cancelRequestFight',
       'fetchWeaponId',
+      'getMyRoomsPvp',
     ]),
     ...mapMutations(['setIsInCombat']),
     RequiredXp,
@@ -1003,7 +997,7 @@ export default {
             this.selectedWeapon = null
             this.errorMessage = ''
             this.$bvModal.hide('loadingModal')
-            this.getCareerRooms({ cursor: 0 })
+            await this.getMyRoomsPvp()
             setTimeout(() => {
               this.$bvModal.show('listHeroToCareerModal')
             }, 500)
@@ -1259,9 +1253,7 @@ export default {
         })
         return listRoomRequest
       } else if (check === 3) {
-        return this.careerModeRooms.filter(
-          (item) => item.owner === this.defaultAccount && !item.claimed
-        )
+        return this.myCareerModeRoom
       } else if (check === 4) {
         const newCareerModeRequest = []
         const object = {}
@@ -1328,6 +1320,7 @@ export default {
   },
   async beforeMount() {
     await this.getCareerRooms({ cursor: 0 })
+    await this.getMyRoomsPvp()
     await this.getRewardPvp()
     await this.getListParticipatedRoom()
     await this.getRequests()

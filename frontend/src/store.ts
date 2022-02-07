@@ -190,6 +190,7 @@ export function createStore(web3: Web3) {
       rareBoxPriceXgem: 0,
       epicBoxPriceXgem: 0,
       blindBoxPriceXgem: 0,
+      myCareerModeRoom: [],
     },
 
     getters: {
@@ -803,6 +804,12 @@ export function createStore(web3: Web3) {
         payload: { request: RoomRequest[] }
       ) {
         state.myCareerModeRequest = payload.request
+      },
+      updateMyCareerModeRoom(
+        state: IState,
+        payload: { myCareerModeRoom: CareerModeRoom[] }
+      ) {
+        state.myCareerModeRoom = payload.myCareerModeRoom
       },
       updateMyXgem(state: IState, payload: { myXgem: number | string }) {
         state.myXgem = payload.myXgem
@@ -3826,6 +3833,33 @@ export function createStore(web3: Web3) {
         } else {
           return false
         }
+      },
+      async getMyRoomsPvp({ state, commit }) {
+        const { CareerMode } = state.contracts()
+        const result: CareerModeRoom[] = await CareerMode?.methods
+          .getMyRooms(state?.defaultAccount)
+          .call(defaultCallOptions(state))
+        const myRooms = result.map((r) => ({
+          characterId: r.characterId,
+          claimed: r.claimed,
+          matchReward: r.matchReward,
+          owner: r.owner,
+          totalDeposit: r.totalDeposit,
+          weaponId: r.weaponId,
+          id: r.id,
+        }))
+        commit('updateMyCareerModeRoom', { myCareerModeRoom: myRooms })
+        // commit('updateMyCareerModeRoom', {
+        //   myCareerModeRoom: result.map((r) => ({
+        //     characterId: r.characterId,
+        //     claimed: r.claimed,
+        //     matchReward: r.matchReward,
+        //     owner: r.owner,
+        //     totalDeposit: r.totalDeposit,
+        //     weaponId: r.weaponId,
+        //     id: r.id,
+        //   })),
+        // })
       },
       // async getPriceBoxByXgem({state, commit}) {
       //   const {BlindBox} = state.contracts();
