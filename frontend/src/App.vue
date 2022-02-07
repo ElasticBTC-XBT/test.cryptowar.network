@@ -174,25 +174,26 @@ import MetaMaskOnboarding from '@metamask/onboarding'
 import BigButton from './components/BigButton.vue'
 import SmallButton from './components/SmallButton.vue'
 import NavBar from './components/NavBar.vue'
-// import CharacterBar from "./components/CharacterBar.vue";
-// import { apiUrl, defaultOptions } from "./utils/common";
 import { getAddresses } from './addresses'
 
 Vue.directive('visible', (el, bind) => {
   el.style.visibility = bind.value ? 'visible' : 'hidden'
 })
 
+const xBladeAsset = {
+  type: 'ERC20',
+  options: {
+    address: '0xcaf53066e36eef55ed0663419adff6e503bd134f',
+    symbol: 'xBlade',
+    decimals: 18,
+    image: 'https://cryptowar.network/android-chrome-512x512.png',
+  },
+}
+
 export default {
-  inject: [
-    'web3',
-    'walletConnectProvider',
-    'featureFlagStakeOnly',
-    // "expectedNetworkId",
-    // "expectedNetworkName",
-  ],
+  inject: ['web3', 'walletConnectProvider'],
   components: {
     NavBar,
-    // CharacterBar,
     BigButton,
     SmallButton,
   },
@@ -298,8 +299,6 @@ export default {
     },
 
     async updateCharacterStamina(id) {
-      if (this.featureFlagStakeOnly) return
-
       if (id !== null) {
         await this.fetchCharacterStamina(id)
       }
@@ -373,18 +372,10 @@ export default {
         try {
           await web3.request({
             method: 'wallet_watchAsset',
-            params: {
-              type: 'ERC20',
-              options: {
-                address: '0xcaf53066e36eef55ed0663419adff6e503bd134f',
-                symbol: 'xBlade',
-                decimals: 18,
-                image: 'https://cryptowar.network/android-chrome-512x512.png',
-              },
-            },
+            params: xBladeAsset,
           })
         } catch (error) {
-          console.error(error)
+          console.error(`Watch asset error: ${error}`)
         }
       } else {
         {
@@ -419,15 +410,7 @@ export default {
           try {
             await web3.request({
               method: 'wallet_watchAsset',
-              params: {
-                type: 'ERC20',
-                options: {
-                  address: '0x27a339d9B59b21390d7209b78a839868E319301B',
-                  symbol: 'xBlade',
-                  decimals: 18,
-                  image: 'https://cryptowar.network/android-chrome-512x512.png',
-                },
-              },
+              params: xBladeAsset,
             })
           } catch (error) {
             console.error(error)
@@ -593,17 +576,13 @@ export default {
       this.ownCharacters.forEach(async (c) => {
         await this.updateCharacterStamina(c.id)
       })
-    }, 3000)
+    }, 5000)
 
-    this.availableStakeTypes.forEach((item) => {
-      this.fetchStakeDetails({ stakeType: item })
-    })
-
+    // TODO: Debug 3 function to get error reason
     this.slowPollIntervalId = setInterval(async () => {
       await Promise.all([
         this.fetchCharacterTransferCooldownForOwnCharacters(),
         this.setupWeaponDurabilities(),
-        // this.fetchWaxBridgeDetails(),
         this.fetchRewardsClaimTax(),
       ])
     }, 10 * 1000)

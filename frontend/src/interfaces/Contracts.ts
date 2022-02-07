@@ -43,7 +43,7 @@ export type StakingContracts = Partial<
 
 export interface Contracts {
   xBladeToken: Contract<IERC20>
-  staking: StakingContracts
+  staking?: StakingContracts
 
   CryptoWars?: Contract<CryptoWars>
   Randoms?: Contract<IRandoms>

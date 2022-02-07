@@ -33,7 +33,6 @@ import {
   reforging as featureFlagReforging,
 } from './feature-flags'
 import { IERC721, IStakingRewards, IERC20 } from '../../build/abi-interfaces'
-// import { stakeTypeThatCanHaveUnclaimedRewardsStakedTo } from './stake-types';
 import { Nft } from './interfaces/Nft'
 import { getWeaponNameFromSeed } from '@/weapon-name'
 import isBlacklist, { calculateFightTax } from './utils/blacklist'
@@ -47,23 +46,6 @@ interface SetEventSubscriptionsPayload {
 }
 
 type StakingRewardsAlias = Contract<IStakingRewards> | null
-
-interface StakingContracts {
-  StakingRewards: StakingRewardsAlias
-  StakingToken: Contract<IERC20> | null
-  RewardToken: Contracts['xBladeToken']
-}
-
-function getStakingContracts(
-  contracts: Contracts,
-  stakeType: StakeType
-): StakingContracts {
-  return {
-    StakingRewards: contracts.staking[stakeType]?.StakingRewards || null,
-    StakingToken: contracts.staking[stakeType]?.StakingToken || null,
-    RewardToken: contracts.xBladeToken,
-  }
-}
 
 interface RaidData {
   expectedFinishTime: string
@@ -697,12 +679,7 @@ export function createStore(web3: Web3) {
       updateWeaponDurability(state: IState, { weaponId, durability }) {
         Vue.set(state.weaponDurabilities, weaponId, durability)
       },
-      updateWeaponRename(state: IState, { weaponId, renameString }) {
-        console.log('rename for ' + weaponId + ' is ' + renameString)
-        if (renameString !== undefined) {
-          Vue.set(state.weaponRenames, weaponId, renameString)
-        }
-      },
+
       updateCharacterStamina(state: IState, { characterId, stamina }) {
         Vue.set(state.characterStaminas, characterId, stamina)
       },
@@ -731,14 +708,6 @@ export function createStore(web3: Web3) {
         { stakeType, ...payload }: { stakeType: StakeType } & IStakeState
       ) {
         Vue.set(state.staking, stakeType, payload)
-      },
-
-      updateStakeOverviewDataPartial(
-        state,
-        payload: { stakeType: StakeType } & IStakeOverviewState
-      ) {
-        const { stakeType, ...data } = payload
-        Vue.set(state.stakeOverviews, stakeType, data)
       },
 
       updateRaidData(state, payload: RaidData) {
@@ -838,9 +807,7 @@ export function createStore(web3: Web3) {
         await dispatch('pollAccountsAndNetwork')
 
         await dispatch('setupCharacterStaminas')
-        await dispatch('setupCharacterRenames')
         await dispatch('setupWeaponDurabilities')
-        await dispatch('setupWeaponRenames')
       },
 
       async pollAccountsAndNetwork({ dispatch, state, commit }) {
@@ -1008,59 +975,6 @@ export function createStore(web3: Web3) {
               )
             )
           }
-        }
-
-        function setupStakingEvents(
-          this: any,
-          stakeType: StakeType,
-          StakingRewards: StakingRewardsAlias
-        ) {
-          if (!StakingRewards) return
-
-          subscriptions.push(
-            StakingRewards.events.RewardPaid(
-              { filter: { user: state.defaultAccount } },
-              async (err: Error, data: any) => {
-                if (err) {
-                  console.error(err, data)
-                  return
-                }
-
-                await this.cache.dispatch('fetchStakeDetails', { stakeType })
-              }
-            )
-          )
-
-          subscriptions.push(
-            StakingRewards.events.RewardAdded(async (err: Error, data: any) => {
-              if (err) {
-                console.error(err, data)
-                return
-              }
-
-              await this.cache.dispatch('fetchStakeDetails', { stakeType })
-            })
-          )
-
-          subscriptions.push(
-            StakingRewards.events.RewardsDurationUpdated(
-              async (err: Error, data: any) => {
-                if (err) {
-                  console.error(err, data)
-                  return
-                }
-
-                await this.cache.dispatch('fetchStakeDetails', { stakeType })
-              }
-            )
-          )
-        }
-
-        const staking = state.contracts().staking
-        for (const stakeType of Object.keys(staking).filter(isStakeType)) {
-          const stakingEntry = staking[stakeType]!
-
-          setupStakingEvents(stakeType, stakingEntry.StakingRewards)
         }
 
         const payload: SetEventSubscriptionsPayload = {
@@ -1454,38 +1368,6 @@ export function createStore(web3: Web3) {
         }
       },
 
-      async setupWeaponRenames({ state }) {
-        const [ownedWeaponIds] = await Promise.all([
-          state
-            .contracts()
-            .CryptoWars!.methods.getMyWeapons()
-            .call(defaultCallOptions(state)),
-        ])
-
-        for (const weapId of ownedWeaponIds) {
-          this.cache.dispatch('fetchWeaponRename', weapId)
-        }
-      },
-
-      async setupWeaponsWithIdsRenames({ dispatch }, weaponIds: string[]) {
-        for (const weapId of weaponIds) {
-          dispatch('fetchWeaponRename', weapId)
-        }
-      },
-
-      async fetchWeaponRename({ state, commit }, weaponId: number) {
-        const renameString = await state
-          .contracts()
-          .WeaponRenameTagConsumables!.methods.getWeaponRename(weaponId)
-          .call(defaultCallOptions(state))
-        if (
-          renameString !== '' &&
-          state.weaponRenames[weaponId] !== renameString
-        ) {
-          commit('updateWeaponRename', { weaponId, renameString })
-        }
-      },
-
       async setupCharacterStaminas({ state }) {
         const [ownedCharacterIds] = await Promise.all([
           state
@@ -1511,40 +1393,6 @@ export function createStore(web3: Web3) {
         const stamina = parseInt(staminaString, 10)
         if (state.characterStaminas[characterId] !== stamina) {
           commit('updateCharacterStamina', { characterId, stamina })
-        }
-      },
-      async setupCharacterRenames({ state }) {
-        const [ownedCharacterIds] = await Promise.all([
-          state
-            .contracts()
-            .CryptoWars!.methods.getMyCharacters()
-            .call(defaultCallOptions(state)),
-        ])
-
-        for (const charId of ownedCharacterIds) {
-          this.cache.dispatch('fetchCharacterRename', charId)
-        }
-      },
-      async setupCharactersWithIdsRenames(
-        { dispatch },
-        characterIds: string[]
-      ) {
-        for (const charId of characterIds) {
-          dispatch('fetchCharacterRename', charId)
-        }
-      },
-      async fetchCharacterRename({ state, commit }, characterId: number) {
-        const renameString = await state
-          .contracts()
-          .CharacterRenameTagConsumables!.methods.getCharacterRename(
-            characterId
-          )
-          .call(defaultCallOptions(state))
-        if (
-          renameString !== '' &&
-          state.characterRenames[characterId] !== renameString
-        ) {
-          commit('updateCharacterRename', { characterId, renameString })
         }
       },
 
@@ -1956,187 +1804,6 @@ export function createStore(web3: Web3) {
           bnbGasUsed,
           fragmentOutcome,
         ]
-      },
-
-      async fetchStakeOverviewData({ getters }) {
-        await Promise.all(
-          (getters.availableStakeTypes as StakeType[]).map((stakeType) =>
-            this.cache.dispatch('fetchStakeOverviewDataPartial', { stakeType })
-          )
-        )
-      },
-
-      async fetchStakeOverviewDataPartial(
-        { state, commit },
-        { stakeType }: { stakeType: StakeType }
-      ) {
-        const { StakingRewards } = getStakingContracts(
-          state.contracts(),
-          stakeType
-        )
-        if (!StakingRewards) return
-
-        const [rewardRate, rewardsDuration, totalSupply, minimumStakeTime] =
-          await Promise.all([
-            StakingRewards.methods.rewardRate().call(defaultCallOptions(state)),
-            StakingRewards.methods
-              .rewardsDuration()
-              .call(defaultCallOptions(state)),
-            StakingRewards.methods
-              .totalSupply()
-              .call(defaultCallOptions(state)),
-            StakingRewards.methods
-              .minimumStakeTime()
-              .call(defaultCallOptions(state)),
-          ])
-
-        const stakeSkillOverviewData: IStakeOverviewState = {
-          rewardRate,
-          rewardsDuration: parseInt(rewardsDuration, 10),
-          totalSupply,
-          minimumStakeTime: parseInt(minimumStakeTime, 10),
-        }
-        commit('updateStakeOverviewDataPartial', {
-          stakeType,
-          ...stakeSkillOverviewData,
-        })
-      },
-
-      async fetchStakeDetails(
-        { state, commit },
-        { stakeType }: { stakeType: StakeType }
-      ) {
-        if (!state.defaultAccount) return
-
-        const { StakingRewards, StakingToken } = getStakingContracts(
-          state.contracts(),
-          stakeType
-        )
-        if (!StakingRewards || !StakingToken) return
-
-        const [
-          ownBalance,
-          stakedBalance,
-          remainingCapacityForDeposit,
-          remainingCapacityForWithdraw,
-          contractBalance,
-          currentRewardEarned,
-          rewardMinimumStakeTime,
-          rewardDistributionTimeLeft,
-          unlockTimeLeft,
-        ] = await Promise.all([
-          StakingToken.methods
-            .balanceOf(state.defaultAccount)
-            .call(defaultCallOptions(state)),
-          StakingRewards.methods
-            .balanceOf(state.defaultAccount)
-            .call(defaultCallOptions(state)),
-          Promise.resolve(null as string | null),
-          StakingRewards.methods.totalSupply().call(defaultCallOptions(state)),
-          StakingToken.methods
-            .balanceOf(StakingRewards.options.address)
-            .call(defaultCallOptions(state)),
-          StakingRewards.methods
-            .earned(state.defaultAccount)
-            .call(defaultCallOptions(state)),
-          StakingRewards.methods
-            .minimumStakeTime()
-            .call(defaultCallOptions(state)),
-          StakingRewards.methods
-            .getStakeRewardDistributionTimeLeft()
-            .call(defaultCallOptions(state)),
-          StakingRewards.methods
-            .getStakeUnlockTimeLeft()
-            .call(defaultCallOptions(state)),
-        ])
-
-        const stakeData: { stakeType: StakeType } & IStakeState = {
-          stakeType,
-          ownBalance,
-          stakedBalance,
-          remainingCapacityForDeposit,
-          remainingCapacityForWithdraw,
-          contractBalance,
-          currentRewardEarned,
-          rewardMinimumStakeTime: parseInt(rewardMinimumStakeTime, 10),
-          rewardDistributionTimeLeft: parseInt(rewardDistributionTimeLeft, 10),
-          unlockTimeLeft: parseInt(unlockTimeLeft, 10),
-        }
-        commit('updateStakeData', stakeData)
-      },
-
-      async stake(
-        { state },
-        { amount, stakeType }: { amount: string; stakeType: StakeType }
-      ) {
-        const { StakingRewards, StakingToken } = getStakingContracts(
-          state.contracts(),
-          stakeType
-        )
-        if (!StakingRewards || !StakingToken) return
-
-        await StakingToken.methods
-          .approve(StakingRewards.options.address, amount)
-          .send({
-            from: state.defaultAccount,
-          })
-
-        await StakingRewards.methods.stake(amount).send({
-          from: state.defaultAccount,
-        })
-
-        await this.cache.dispatch('fetchStakeDetails', { stakeType })
-      },
-
-      async unstake(
-        { state },
-        { amount, stakeType }: { amount: string; stakeType: StakeType }
-      ) {
-        const { StakingRewards } = getStakingContracts(
-          state.contracts(),
-          stakeType
-        )
-        if (!StakingRewards) return
-
-        await StakingRewards.methods.withdraw(amount).send({
-          from: state.defaultAccount,
-        })
-
-        await this.cache.dispatch('fetchStakeDetails', { stakeType })
-      },
-
-      // async stakeUnclaimedRewards(
-      //   { state },
-      //   { stakeType }: { stakeType: StakeType }
-      // ) {
-      //   if (stakeType !== stakeTypeThatCanHaveUnclaimedRewardsStakedTo) return;
-
-      //   const { CryptoWars: CryptoBlades } = state.contracts();
-      //   if (!CryptoBlades) return;
-
-      //   await CryptoBlades.methods
-      //     .stakeUnclaimedRewards()
-      //     .send(defaultCallOptions(state));
-
-      //   await Promise.all([
-      //     this.cache.dispatch('fetchSkillBalance'),
-      //     this.cache.dispatch('fetchStakeDetails', { stakeType }),
-      //     this.cache.dispatch('fetchFightRewardSkill')
-      //   ]);
-      // },
-
-      async claimReward({ state }, { stakeType }: { stakeType: StakeType }) {
-        const { StakingRewards } = getStakingContracts(
-          state.contracts(),
-          stakeType
-        )
-        if (!StakingRewards) return
-
-        await StakingRewards.methods.getReward().send({
-          from: state.defaultAccount,
-        })
-
-        await this.cache.dispatch('fetchStakeDetails', { stakeType })
       },
 
       async fetchRaidData({ state, commit }) {

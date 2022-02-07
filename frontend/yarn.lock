@@ -7056,18 +7056,18 @@ web3-utils@1.6.1:
     randombytes "^2.1.0"
     utf8 "3.0.0"
 
-web3@^1.3.4:
-  version "1.6.1"
-  resolved "https://registry.npmjs.org/web3/-/web3-1.6.1.tgz"
-  integrity sha512-c299lLiyb2/WOcxh7TinwvbATaMmrgNIeAzbLbmOKHI0LcwyfsB1eu2ReOIrfrCYDYRW2KAjYr7J7gHawqDNPQ==
+web3@1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/web3/-/web3-1.7.0.tgz#5867cd10a2bebb5c33fc218368e3f6f826f6897e"
+  integrity sha512-n39O7QQNkpsjhiHMJ/6JY6TaLbdX+2FT5iGs8tb3HbIWOhPm4+a7UDbr5Lkm+gLa9aRKWesZs5D5hWyEvg4aJA==
   dependencies:
-    web3-bzz "1.6.1"
-    web3-core "1.6.1"
-    web3-eth "1.6.1"
-    web3-eth-personal "1.6.1"
-    web3-net "1.6.1"
-    web3-shh "1.6.1"
-    web3-utils "1.6.1"
+    web3-bzz "1.7.0"
+    web3-core "1.7.0"
+    web3-eth "1.7.0"
+    web3-eth-personal "1.7.0"
+    web3-net "1.7.0"
+    web3-shh "1.7.0"
+    web3-utils "1.7.0"
 
 webidl-conversions@^3.0.0:
   version "3.0.1"

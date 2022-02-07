@@ -156,11 +156,6 @@ async function setUpStakingContracts(web3: Web3) {
 }
 
 export async function setUpContracts(web3: Web3): Promise<Contracts> {
-  const stakingContracts = await setUpStakingContracts(web3)
-
-  if (featureFlagStakeOnly) {
-    return stakingContracts
-  }
   const expectedNetwork = await getAddressesAuto()
   const networkId = expectedNetwork.VUE_APP_NETWORK_ID || '5777'
   const cryptoBladesContractAddr =
@@ -300,7 +295,6 @@ export async function setUpContracts(web3: Web3): Promise<Contracts> {
   }
 
   return {
-    ...stakingContracts,
     CryptoWars,
     Randoms,
     Characters,
