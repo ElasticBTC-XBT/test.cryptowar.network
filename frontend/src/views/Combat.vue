@@ -6,7 +6,7 @@
     />
     <div class="nav-bottom-line"></div>
     <div v-if="ownWeapons.length > 0 && ownCharacters.length > 0">
-      <div class="row" v-if="error !== null">
+      <div class="row" v-if="!!error">
         <div class="col error">Error: {{ error }}</div>
       </div>
       <!-- v-if="fightResults[0]" -->
@@ -248,8 +248,7 @@
   </div>
 </template>
 
-<script>
-// import Character from "../components/Character.vue";
+<script lang="ts">
 import BigButton from '../components/BigButton.vue'
 import WeaponGrid from '../components/smart/WeaponGrid.vue'
 import { getEnemyArtAround } from '../enemy-art-around'
@@ -260,7 +259,6 @@ import {
   GetTotalMultiplierForTrait,
   WeaponElement,
 } from '../interfaces'
-// import Hint from '../components/Hint.vue';
 import CombatResults from '../components/CombatResults.vue'
 import { toBN, fromWeiEther } from '../utils/common'
 import WeaponIcon from '../components/WeaponIcon.vue'
