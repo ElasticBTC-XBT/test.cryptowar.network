@@ -7,6 +7,7 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./Promos.sol";
 import "./util.sol";
 import "./interfaces/ITransferCooldownable.sol";
+import "./BlindBox.sol";
 
 contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeable, ITransferCooldownable {
 
@@ -109,6 +110,8 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
     mapping(uint256 => uint256) public latestUpdateTimestamp;
     mapping(uint256 => mapping(uint256 => uint8)) public expectedLevel_v2;
     bytes32 public constant BLIND_BOX = keccak256("BLIND_BOX");
+
+    BlindBox public blindBox;
 
     event NewCharacter(uint256 indexed character, address indexed minter);
     event LevelUp(address indexed owner, uint256 indexed character, uint16 level);
@@ -264,6 +267,13 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
             }
             char.xp = uint16(newXp);
         }
+    }
+
+    function claimStamina(uint256 _id, uint256 _claimStamina) public canMintCharacter {
+        blindBox.claimStamina(msg.sender, _claimStamina);
+        uint64 _claimTime = uint64(_claimStamina * setSecondsPerStamina(_id));
+        Character storage char = tokens[_id];
+        char.staminaTimestamp = uint64(char.staminaTimestamp - _claimTime);
     }
 
     function getStaminaTimestamp(uint256 id) public view noFreshLookup(id) returns (uint64) {

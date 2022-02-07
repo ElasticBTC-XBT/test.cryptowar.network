@@ -53,9 +53,13 @@ contract BlindBox is
     uint256 public rarePriceByXGem;
     uint256 public epicPriceByXGem;
 
+    uint256 public spinWheelPrice;
+    mapping(address => uint256) public unclaimedStamina;
+
     event NewBlindBox(uint256 indexed boxId, address indexed minter);
     event Burned(address indexed owner, uint256 indexed burned);
     event Open(address indexed minter, uint256 stars);
+    event Spin(address indexed spinner, uint256 result);
 
     function initialize(
         address _weapon,
@@ -307,9 +311,7 @@ contract BlindBox is
             "Not enough fragment to buy common box"
         );
 
-        fragmentQty[msg.sender] = fragmentQty[msg.sender].sub(
-            rarePriceByXGem
-        );
+        fragmentQty[msg.sender] = fragmentQty[msg.sender].sub(rarePriceByXGem);
         uint256 tokenId = tokens.length;
         tokens.push(Box(Type.RARE));
         _mint(msg.sender, tokenId);
@@ -322,9 +324,7 @@ contract BlindBox is
             "Not enough fragment to buy common box"
         );
 
-        fragmentQty[msg.sender] = fragmentQty[msg.sender].sub(
-            epicPriceByXGem
-        );
+        fragmentQty[msg.sender] = fragmentQty[msg.sender].sub(epicPriceByXGem);
         uint256 tokenId = tokens.length;
         tokens.push(Box(Type.EPIC));
         _mint(msg.sender, tokenId);
@@ -481,5 +481,64 @@ contract BlindBox is
         if (seed.mod(1000) < 50) {
             _fragmentAmmount = _fragmentAmmount.add(1);
         }
+    }
+
+    function getUnclaimedStamina(address _account)
+        public
+        view
+        returns (uint256)
+    {
+        return unclaimedStamina[_account];
+    }
+
+    function claimStamina(address _account, uint256 _claimStamina) public {
+        require(
+            _claimStamina <= getUnclaimedStamina(msg.sender),
+            "Not enough stamina to claim"
+        );
+        unclaimedStamina[_account] = unclaimedStamina[_account].sub(
+            _claimStamina
+        );
+    }
+
+    function mintWithType(Type _type) private {
+        uint256 tokenId = tokens.length;
+        tokens.push(Box(_type));
+        _mint(msg.sender, tokenId);
+        emit NewBlindBox(tokenId, msg.sender);
+    }
+
+    function spinLuckyWheel() external returns (uint256 _result) {
+        require(
+            xBlade.balanceOf(msg.sender) > spinWheelPrice,
+            "No money no spin"
+        );
+        uint256 seed = uint256(
+            keccak256(abi.encodePacked(blockhash(block.number - 1), msg.sender))
+        );
+        uint256 roll = seed % 10000;
+        if (roll < 50) {
+            mintWithType(Type.EPIC);
+            _result = 0;
+        } else if (roll < 150) {
+            mintWithType(Type.RARE);
+            _result = 1;
+        } else if (roll < 350) {
+            mintWithType(Type.COMMON);
+            _result = 2;
+        } else if (roll < 800) {
+            unclaimedStamina[msg.sender] = unclaimedStamina[msg.sender].add(20);
+            _result = 3;
+        } else if (roll < 1800) {
+            unclaimedStamina[msg.sender] = unclaimedStamina[msg.sender].add(10);
+            _result = 4;
+        } else if (roll < 3000) {
+            unclaimedStamina[msg.sender] = unclaimedStamina[msg.sender].add(5);
+            _result = 5;
+        } else {
+            fragmentQty[msg.sender] = fragmentQty[msg.sender].add(10);
+            _result = 6;
+        }
+        emit Spin(msg.sender, _result);
     }
 }
