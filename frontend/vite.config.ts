@@ -1,5 +1,8 @@
 import { defineConfig } from 'vite'
-import { createVuePlugin as vue } from 'vite-plugin-vue2'
+import {
+  createVuePlugin as vue,
+  vueComponentNormalizer,
+} from 'vite-plugin-vue2'
 // yarn add --dev @esbuild-plugins/node-globals-polyfill
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
 // yarn add --dev @esbuild-plugins/node-modules-polyfill
@@ -20,13 +23,25 @@ export default defineConfig({
     alias: {
       web3: path.resolve(__dirname, './node_modules/web3/dist/web3.min.js'),
       '@': path.resolve(__dirname, './src'),
+      vue: require.resolve('vue/dist/vue.js'),
     },
-    extensions: ['.esm.js', '.cjs.js', '.js', '.ts', '.jsx', '.tsx', '.json'],
+    extensions: [
+      '.esm.js',
+      '.cjs.js',
+      '.js',
+      '.ts',
+      '.jsx',
+      '.tsx',
+      '.json',
+      '.vue',
+    ],
   },
   define: {
     // global: 'globalThis',
     'process.env': {},
   },
+  assetsInclude: ['**/*.wav'],
+
   optimizeDeps: {
     esbuildOptions: {
       // Node.js global to browser globalThis

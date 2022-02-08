@@ -182,22 +182,6 @@ export function createStore(web3: Web3) {
         return _.isFunction(state.contracts) ? state.contracts() : null!
       },
 
-      availableStakeTypes(state: IState) {
-        return Object.keys(state.contracts().staking).filter(isStakeType)
-      },
-
-      hasStakedBalance(state) {
-        if (!state.contracts) return false
-
-        const staking = state.contracts().staking
-        for (const stakeType of Object.keys(staking).filter(isStakeType)) {
-          if (state.staking[stakeType].stakedBalance !== '0') {
-            return true
-          }
-        }
-        return false
-      },
-
       getTargetsByCharacterIdAndWeaponId(state: IState) {
         return (characterId: number, weaponId: number) => {
           const targetsByWeaponId =

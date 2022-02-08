@@ -264,8 +264,12 @@ import { toBN, fromWeiEther } from '../utils/common'
 import WeaponIcon from '../components/WeaponIcon.vue'
 import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
 import CharacterBar from '../components/CharacterBar.vue'
+import Vue from 'vue'
+import SoundFight from '../assets/sound/sound_fight.wav'
+import SoundWin from '../assets/sound/sound_win.wav'
+import SoundLose from '../assets/sound/sound_lose.wav'
 
-export default {
+export default Vue.extend({
   data() {
     return {
       selectedWeaponId: null,
@@ -281,12 +285,9 @@ export default {
       selectedWeapon: null,
       fightMultiplier: Number(localStorage.getItem('fightMultiplier')),
       staminaPerFight: 40,
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      soundFight: new Audio(require('../assets/sound/sound_fight.wav')),
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      soundWin: new Audio(require('../assets/sound/sound_win.wav')),
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      soundLose: new Audio(require('../assets/sound/sound_lose.wav')),
+      soundFight: new Audio(SoundFight),
+      soundWin: new Audio(SoundWin),
+      soundLose: new Audio(SoundLose),
       showModalFight: false,
       countTargetToFight: 0,
     }
@@ -527,7 +528,7 @@ export default {
     },
 
     formattedSkill(skill) {
-      const skillBalance = fromWeiEther(skill, 'ether')
+      const skillBalance = fromWeiEther(skill)
       return `${toBN(skillBalance).toFixed(6)} xBlade`
     },
 
@@ -609,12 +610,11 @@ export default {
   components: {
     BigButton,
     WeaponGrid,
-    // Hint,
     CombatResults,
     WeaponIcon,
     CharacterBar,
   },
-}
+})
 </script>
 
 <style scoped>

@@ -71,10 +71,7 @@
         class="fullscreen-warning"
         v-if="
           !hideWalletWarning &&
-          (errorMessage ||
-            (ownCharacters.length === 0 &&
-              skillBalance === '0' &&
-              !hasStakedBalance))
+          (errorMessage || (ownCharacters.length === 0 && skillBalance === '0'))
         "
       >
         <div class="starter-panel connect-wallet">
@@ -222,13 +219,7 @@ export default {
       'currentCharacterId',
       'staking',
     ]),
-    ...mapGetters([
-      'contracts',
-      'ownCharacters',
-      'getExchangeUrl',
-      'availableStakeTypes',
-      'hasStakedBalance',
-    ]),
+    ...mapGetters(['contracts', 'ownCharacters', 'getExchangeUrl']),
 
     canShowApp() {
       return (
@@ -500,9 +491,7 @@ export default {
         !this.showMetamaskWarning &&
         (this.errorMessage ||
           this.showNetworkError ||
-          (this.ownCharacters.length === 0 &&
-            this.skillBalance === '0' &&
-            !this.hasStakedBalance))
+          (this.ownCharacters.length === 0 && this.skillBalance === '0'))
       ) {
         this.$dialog.notify.warning(
           `You have hidden the wallet warning and it would now be displayed. If you are trying to play,
