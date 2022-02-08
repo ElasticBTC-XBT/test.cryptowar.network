@@ -451,7 +451,7 @@ export function createStore(web3: Web3) {
           if (state.maxDurability !== currentDurability) {
             date.setTime(
               date.getTime() +
-                (state.maxDurability - currentDurability) * (50 * 60000)
+              (state.maxDurability - currentDurability) * (50 * 60000)
             )
           }
 
@@ -2380,8 +2380,8 @@ export function createStore(web3: Web3) {
           nftContractAddr === Weapons.options.address
             ? Weapons
             : nftContractAddr === Characters.options.address
-            ? Characters
-            : Shields
+              ? Characters
+              : Shields
 
         await NFTContract.methods
           .approve(NFTMarket.options.address, tokenId)
@@ -2772,14 +2772,12 @@ export function createStore(web3: Web3) {
       async claimTokenRewards({ state }) {
         const { CryptoWars: CryptoBlades } = state.contracts()
         if (!CryptoBlades) return
-
         await CryptoBlades.methods.claimTokenRewards().send({
           from: state.defaultAccount,
         })
-
         await Promise.all([
+          this.dispatch('fetchFightRewardSkill'),
           this.cache.dispatch('fetchSkillBalance'),
-          this.cache.dispatch('fetchFightRewardSkill'),
         ])
       },
 

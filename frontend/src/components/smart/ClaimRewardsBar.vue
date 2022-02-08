@@ -3,7 +3,17 @@
     <div class="claim-reward-bar">
       <!-- <b-icon-exclamation-circle-fill class="rewards-claimable-icon" scale="1.2"
       variant="success" :hidden="!canClaimTokens && !canClaimXp" v-tooltip.bottom="'Rewards ready to claim!'"/> -->
-
+      <b-modal id="claimRewardsSucessModal" hide-footer centered>
+        <div class="claimRewardsSucessModal-head">CryptoWar Message</div>
+        <div class="claimRewardsSucessModal-body">Claim Rewards sucess</div>
+        <button
+          class="mt-3 btn-buy btn-close-fight-results"
+          block
+          @click="$bvModal.hide('claimRewardsSucessModal')"
+        >
+          Close
+        </button>
+      </b-modal>
       <div :disabled="!canClaimTokens" @click="claimSkill(ClaimStage.Claim)">
         <b-button
           class="gtag-link-others btn-pink-bg btn-claim-reward"
@@ -302,6 +312,7 @@ export default Vue.extend({
     async onClaimTokens() {
       if (this.canClaimTokens) {
         await this.claimTokenRewards()
+        this.$bvModal.show('claimRewardsSucessModal')
       }
     },
 
@@ -374,6 +385,36 @@ export default Vue.extend({
   text-align: center;
 }
 
+.claimRewardsSucessModal-head {
+  font-size: 1.8em;
+  font-weight: 600;
+  color: #f58b5b;
+  text-align: center;
+}
+
+.claimRewardsSucessModal-body {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 1.3em;
+  color: #fff;
+}
+
+#claimRewardsSucessModal button {
+  border-radius: 0;
+  border: none;
+  background-image: url(../../assets/v2/btn-fight.png);
+  width: 130px;
+  height: 42px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  margin: 0 auto;
+  display: block;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 3;
+}
+
 @media (max-width: 576px) {
   .claim-reward-bar {
     flex-direction: column;
@@ -396,6 +437,15 @@ export default Vue.extend({
 
   .claim-xblade-reward-info {
     width: 100%;
+  }
+
+  .claimRewardsSucessModal-head {
+    font-size: 1.5em;
+  }
+
+  .claimRewardsSucessModal-body {
+    font-size: 1.2em;
+    margin: 5px 0;
   }
 }
 </style>

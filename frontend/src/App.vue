@@ -904,7 +904,8 @@ button.close {
 }
 
 #listHeroToCareerModal .modal-content,
-#loadingModal .modal-content {
+#loadingModal .modal-content,
+#claimRewardsSucessModal .modal-content {
   min-width: 36rem;
   height: 350px;
   display: flex;
@@ -915,7 +916,8 @@ button.close {
   height: 475px;
 }
 
-#fightResultsModal .close {
+#fightResultsModal .close,
+#claimRewardsSucessModal .close {
   margin-right: 12px;
   z-index: 2;
 }
@@ -1086,7 +1088,8 @@ button.close {
     width: 300px;
   }
 
-  #listHeroToCareerModal .modal-content {
+  #listHeroToCareerModal .modal-content,
+  #claimRewardsSucessModal .modal-content {
     min-width: 20rem;
     height: 240px;
     background-size: contain !important;
