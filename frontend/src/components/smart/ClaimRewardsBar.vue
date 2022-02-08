@@ -5,7 +5,7 @@
       variant="success" :hidden="!canClaimTokens && !canClaimXp" v-tooltip.bottom="'Rewards ready to claim!'"/> -->
       <b-modal id="claimRewardsSucessModal" hide-footer centered>
         <div class="claimRewardsSucessModal-head">CryptoWar Message</div>
-        <div class="claimRewardsSucessModal-body">Claim Rewards sucess</div>
+        <div class="claimRewardsSucessModal-body">Claim Rewards success</div>
         <button
           class="mt-3 btn-buy btn-close-fight-results"
           block
