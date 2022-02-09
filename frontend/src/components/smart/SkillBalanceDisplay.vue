@@ -12,7 +12,7 @@
           <div class="btn-buy gtag-link-others" tagname="buy_skill">+</div>
         </div>
         <span
-          class="balance"
+          class="balance balance-center"
           v-tooltip="{
             content: totalSkillTooltipHtml,
             trigger: isMobile() ? 'click' : 'hover',
@@ -224,6 +224,13 @@ export default Vue.extend({
   color: #fff;
 }
 
+.balance-center {
+  display: flex;
+  align-items: center;
+}
+.balance-center .xblade {
+  margin-left: 5px;
+}
 @media (max-width: 767.98px) {
   .balance-container {
     margin: 0 1.3rem;
@@ -242,6 +249,9 @@ export default Vue.extend({
     align-items: center;
     justify-content: center;
     font-size: 2em;
+  }
+  .balance-center {
+    margin-left: 10px;
   }
 }
 </style>
