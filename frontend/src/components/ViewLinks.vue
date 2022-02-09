@@ -1,11 +1,6 @@
 <template>
   <b-navbar-nav>
-    <router-link
-      :to="{ name: 'lobby' }"
-      exact
-      class="nav-link ml-2xl-4"
-      v-if="!featureFlagStakeOnly"
-    >
+    <router-link :to="{ name: 'lobby' }" exact class="nav-link ml-2xl-4">
       <li @click="hideOption()" class="nav-item nav-top-links lobby">
         <span class="gtag-link-others" tagname="plaza_screen">Lobby</span>
       </li>
@@ -17,7 +12,6 @@
       :to="{ name: 'arena' }"
       exact
       class="nav-link mr-xl-1 ml-xl-1 mr-2xl-4 ml-2xl-4"
-      v-if="!featureFlagStakeOnly"
     >
       <li @click="hideOption()" class="nav-item nav-top-links nav-icon-box">
         <img src="../assets/v2/arena_icon.svg" alt="" class="nav-icon" />
@@ -69,7 +63,6 @@
       :to="{ name: 'inventory' }"
       exact
       class="nav-link mr-xl-2 ml-xl-2 mr-2xl-3 ml-2xl-3"
-      v-if="!featureFlagStakeOnly"
     >
       <li @click="hideOption()" class="nav-item nav-top-links nav-img-item-box">
         <span class="nav-img-item">
@@ -90,7 +83,7 @@
       :to="{ name: 'market' }"
       exact
       class="nav-link mr-xl-2 ml-xl-2 mr-2xl-3 ml-2xl-3"
-      v-if="!featureFlagStakeOnly && featureFlagMarket"
+      v-if="featureFlagMarket"
     >
       <li @click="hideOption()" class="nav-item nav-top-links nav-img-item-box">
         <span class="nav-img-item">

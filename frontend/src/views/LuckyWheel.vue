@@ -77,7 +77,7 @@
     >
       <span class="loading-icon">
         Waiting for your approve
-        <i class="fas fa-spinner fa-spin"></i        <i class="fas fa-spinner fa-spin"></i>
+        <i class="fas fa-spinner fa-spin"></i>
       </span>
     </b-modal>
   </div>
@@ -132,7 +132,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['spinLuckyWheel']),
+    ...mapActions(['spinLuckyWheel', 'fetchSkillBalance']),
 
     async spin() {
       // Check testnet or mainnet
@@ -141,11 +141,12 @@ export default {
         networkId = res
       })
       this.isSpinning = true
+      let rewardPosition = 0
       this.$refs.loadingModal.show()
       const result = await this.spinLuckyWheel()
       this.$refs.loadingModal.hide()
       if (result === null) {
-        this.$dialog.notify.error(`Fail to spin, please try again`)
+        this.$dialog.notify.error(`Failed to spin, please try again`)
         this.isSpinning = false
       } else {
         this.$dialog.notify.success(
@@ -161,7 +162,6 @@ export default {
               link
             </a>`
         )
-        let rewardPosition = 0
         switch (result.reward) {
           case 0: // Get Epic box (5)
             rewardPosition = this.getRandomBetween(128, 177)
@@ -430,11 +430,25 @@ export default {
   font-weight: 700;
   margin-top: -20px;
 }
+.reward-modal-body .reward-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 30px;
+  margin-top: 30px;
+}
+.reward-modal-quantity {
+  color: #f58b5b;
+}
 .congrate-emoji {
-  margin-right: 40px;
-ht: 305px;
-  }
+  margin-right: 15px;
+}
+.loading-icon {
+  font-size: 40px;
+  min-width: 305px;
+}
 
+@media (max-width: 768px) {
   .wheel__inner {
     width: 290px;
     height: 290px;
@@ -489,7 +503,6 @@ ht: 305px;
   }
   .congrate-emoji {
     width: 40px;
-    margin-right: 20px;
   }
   .reward-modal-body .reward-container {
     margin-top: 60px;

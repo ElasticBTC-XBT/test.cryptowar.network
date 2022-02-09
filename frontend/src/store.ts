@@ -2793,15 +2793,26 @@ export function createStore(web3: Web3) {
             .send(defaultCallOptions(state))
         }
 
-        const res = await BlindBox.methods.spinLuckyWheel().send({
-          from: state.defaultAccount,
-          gas: '500000',
-        })
-
-        return {
-          reward: parseInt(res.events.Spin.returnValues.result, 10),
-          transactionHash: res.transactionHash,
-        }
+        let result
+        await BlindBox.methods
+          .spinLuckyWheel()
+          .send({
+            from: state.defaultAccount,
+            gas: '500000',
+          })
+          .then((res) => {
+            console.log(res)
+            if (res !== null && res !== undefined) {
+              result = {
+                reward: parseInt(res.events.Spin.returnValues.result, 10),
+                transactionHash: res.transactionHash,
+              }
+            }
+          })
+          .catch(() => {
+            result = null
+          })
+        return result
       },
 
       async claimTokenRewards({ state }) {
