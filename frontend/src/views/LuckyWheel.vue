@@ -76,6 +76,7 @@
       style="justify-content: center"
     >
       <span class="loading-icon">
+        Waiting for your approve
         <i class="fas fa-spinner fa-spin"></i>
       </span>
     </b-modal>
@@ -131,7 +132,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['spinLuckyWheel']),
+    ...mapActions(['spinLuckyWheel', 'fetchSkillBalance']),
 
     async spin() {
       // Check testnet or mainnet
@@ -189,6 +190,7 @@ export default {
         this.$refs.wheel.style.transition = `unset`
         this.$refs.wheel.style.transform = `rotate(0deg)`
         this.isSpinning = false
+        this.fetchSkillBalance()
         this.$dialog.notify.success(
           `Your transaction
           <a
@@ -422,7 +424,7 @@ export default {
   margin-top: -20px;
 }
 .congrate-emoji {
-  margin-right: 40px;
+  margin-right: 20px;
 }
 .reward-modal-body .reward-container {
   display: flex;
