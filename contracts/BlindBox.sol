@@ -163,6 +163,10 @@ contract BlindBox is
         if (_type == 6) {
             epicPriceByXGem = _price;
         }
+
+        if (_type == 7) {
+            spinWheelPrice = _price;
+        }
     }
 
     function setBoxesQty(
@@ -513,6 +517,7 @@ contract BlindBox is
             xBlade.balanceOf(msg.sender) > spinWheelPrice,
             "No money no spin"
         );
+        xBlade.transferFrom(msg.sender, address(this), spinWheelPrice);
         uint256 seed = uint256(
             keccak256(abi.encodePacked(blockhash(block.number - 1), msg.sender))
         );
@@ -532,7 +537,7 @@ contract BlindBox is
         } else if (roll < 1800) {
             unclaimedStamina[msg.sender] = unclaimedStamina[msg.sender].add(10);
             _result = 4;
-        } else if (roll < 3000) {
+        } else if (roll < 8800) {
             unclaimedStamina[msg.sender] = unclaimedStamina[msg.sender].add(5);
             _result = 5;
         } else {
