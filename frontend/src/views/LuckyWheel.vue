@@ -65,6 +65,20 @@
         </div>
       </div>
     </b-modal>
+
+    <b-modal
+      class="centered-modal text-center"
+      ref="loadingModal"
+      hide-footer
+      hide-header
+      no-close-on-backdrop
+      no-close-on-esc
+      style="justify-content: center"
+    >
+      <span class="loading-icon">
+        <i class="fas fa-spinner fa-spin"></i>
+      </span>
+    </b-modal>
   </div>
 </template>
 
@@ -73,6 +87,8 @@ import BigButton from '../components/BigButton.vue'
 import { mapActions } from 'vuex'
 
 export default {
+  inject: ['web3'],
+
   components: {
     BigButton,
   },
@@ -118,22 +134,27 @@ export default {
     ...mapActions(['spinLuckyWheel']),
 
     async spin() {
+      // Check testnet or mainnet
+      let networkId = 0
+      this.web3.eth.net.getId().then((res) => {
+        networkId = res
+      })
       this.isSpinning = true
       let rewardPosition = 0
+      this.$refs.loadingModal.show()
       const result = await this.spinLuckyWheel()
-      switch (parseInt(result)) {
-        // Get Epic box (5)
-        case 0:
+      this.$refs.loadingModal.hide()
+      switch (result.reward) {
+        case 0: // Get Epic box (5)
           rewardPosition = this.getRandomBetween(128, 177)
           this.rewardIndex = 5
           break
-        // Get Rare box (3)
-        case 1:
+        case 1: // Get Rare box (3)
           rewardPosition = this.getRandomBetween(231, 281)
           this.rewardIndex = 3
           break
-        // Get Common box (1)
-        case 2:
+        case 2: {
+          // Get Common box (1)
           const angle = this.getRandomBetween(0, 100)
           if (angle % 2 === 0) {
             rewardPosition = this.getRandomBetween(0, 22)
@@ -142,23 +163,20 @@ export default {
           }
           this.rewardIndex = 1
           break
-        // Get 20 stamina (2)
-        case 3:
+        }
+        case 3: // Get 20 stamina (2)
           rewardPosition = this.getRandomBetween(285, 331)
           this.rewardIndex = 2
           break
-        // Get 10 stamina (4)
-        case 4:
+        case 4: // Get 10 stamina (4)
           rewardPosition = this.getRandomBetween(181, 227)
           this.rewardIndex = 4
           break
-        // Get 5 stamina (6)
-        case 5:
+        case 5: // Get 5 stamina (6)
           rewardPosition = this.getRandomBetween(79, 124)
           this.rewardIndex = 6
           break
-        // Get 10 xGem (7)
-        case 6:
+        case 6: // Get 10 xGem (7)
           rewardPosition = this.getRandomBetween(28, 73)
           this.rewardIndex = 7
           break
@@ -171,6 +189,17 @@ export default {
         this.$refs.wheel.style.transition = `unset`
         this.$refs.wheel.style.transform = `rotate(0deg)`
         this.isSpinning = false
+        this.$dialog.notify.success(
+          `Your transaction
+          <a
+            target="_blank"
+            href='https://${networkId === '97' ? '' : 'testnet.'}bscscan.com/tx/
+            ${result.transactionHash}'
+            style="color: #f58c6e"
+          >
+            link
+          </a>`
+        )
       }, 10000)
     },
 
@@ -407,6 +436,11 @@ export default {
 }
 .reward-modal-quantity {
   color: #f58b5b;
+}
+
+.loading-icon {
+  font-size: 40px;
+  min-width: 300px;
 }
 
 @media (max-width: 767px) {

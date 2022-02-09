@@ -2797,7 +2797,11 @@ export function createStore(web3: Web3) {
           from: state.defaultAccount,
           gas: '500000',
         })
-        return res.events.Spin.returnValues.result;
+
+        return {
+          reward: parseInt(res.events.Spin.returnValues.result, 10),
+          transactionHash: res.transactionHash,
+        }
       },
 
       async claimTokenRewards({ state }) {
