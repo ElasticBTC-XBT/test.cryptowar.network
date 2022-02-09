@@ -70,6 +70,7 @@
 
 <script>
 import BigButton from '../components/BigButton.vue'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
@@ -114,44 +115,55 @@ export default {
   },
 
   methods: {
-    spin() {
+    ...mapActions(['spinLuckyWheel']),
+
+    async spin() {
       this.isSpinning = true
-      const randomNum = Math.floor(Math.random() * 200) + 1
       let rewardPosition = 0
-      // Get Epic box (5)
-      if (randomNum === 1) {
-        rewardPosition = this.getRandomBetween(128, 177)
-        this.rewardIndex = 5
+      const result = await this.spinLuckyWheel()
+      switch (parseInt(result)) {
+        // Get Epic box (5)
+        case 0:
+          rewardPosition = this.getRandomBetween(128, 177)
+          this.rewardIndex = 5
+          break
         // Get Rare box (3)
-      } else if (randomNum === 2 || randomNum === 3) {
-        rewardPosition = this.getRandomBetween(231, 281)
-        this.rewardIndex = 3
+        case 1:
+          rewardPosition = this.getRandomBetween(231, 281)
+          this.rewardIndex = 3
+          break
         // Get Common box (1)
-      } else if (randomNum >= 4 && randomNum <= 7) {
-        const angle = this.getRandomBetween(0, 100)
-        if (angle % 2 === 0) {
-          rewardPosition = this.getRandomBetween(0, 22)
-        } else {
-          rewardPosition = this.getRandomBetween(337, 360)
-        }
-        this.rewardIndex = 1
+        case 2:
+          const angle = this.getRandomBetween(0, 100)
+          if (angle % 2 === 0) {
+            rewardPosition = this.getRandomBetween(0, 22)
+          } else {
+            rewardPosition = this.getRandomBetween(337, 360)
+          }
+          this.rewardIndex = 1
+          break
         // Get 20 stamina (2)
-      } else if (randomNum >= 8 && randomNum <= 17) {
-        rewardPosition = this.getRandomBetween(285, 331)
-        this.rewardIndex = 2
+        case 3:
+          rewardPosition = this.getRandomBetween(285, 331)
+          this.rewardIndex = 2
+          break
         // Get 10 stamina (4)
-      } else if (randomNum >= 18 && randomNum <= 38) {
-        rewardPosition = this.getRandomBetween(181, 227)
-        this.rewardIndex = 4
-        // Get 10 xGem (7)
-      } else if (randomNum >= 38 && randomNum <= 62) {
-        rewardPosition = this.getRandomBetween(28, 73)
-        this.rewardIndex = 7
+        case 4:
+          rewardPosition = this.getRandomBetween(181, 227)
+          this.rewardIndex = 4
+          break
         // Get 5 stamina (6)
-      } else {
-        rewardPosition = this.getRandomBetween(79, 124)
-        this.rewardIndex = 6
+        case 5:
+          rewardPosition = this.getRandomBetween(79, 124)
+          this.rewardIndex = 6
+          break
+        // Get 10 xGem (7)
+        case 6:
+          rewardPosition = this.getRandomBetween(28, 73)
+          this.rewardIndex = 7
+          break
       }
+
       this.$refs.wheel.style.transform = `rotate(${rewardPosition + 1800}deg)`
 
       setTimeout(() => {

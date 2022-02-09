@@ -2776,6 +2776,30 @@ export function createStore(web3: Web3) {
         ])
       },
 
+      async spinLuckyWheel({ state }) {
+        const { xBladeToken, BlindBox } = state.contracts()
+        if (!xBladeToken || !BlindBox) return
+
+        const allowance = await xBladeToken.methods
+          .allowance(state.defaultAccount, BlindBox.options.address)
+          .call(defaultCallOptions(state))
+
+        if (!toBN(allowance).gt(0)) {
+          await xBladeToken.methods
+            .approve(
+              BlindBox.options.address,
+              web3.utils.toWei('100000000', 'ether')
+            )
+            .send(defaultCallOptions(state))
+        }
+
+        const res = await BlindBox.methods.spinLuckyWheel().send({
+          from: state.defaultAccount,
+          gas: '500000',
+        })
+        return res.events.Spin.returnValues.result;
+      },
+
       async claimTokenRewards({ state }) {
         const { CryptoWars: CryptoBlades } = state.contracts()
         if (!CryptoBlades) return
