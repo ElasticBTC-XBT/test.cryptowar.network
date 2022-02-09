@@ -70,7 +70,7 @@
         <div v-if="ownCharacters.length > 0">
           <div class="chara-head-box">
             <h1 class="chara-title">
-              Characters ({{ ownCharacters.length }}/369)
+              Characters ({{ ownCharacters.length }})
             </h1>
             <!-- <b-button
               v-if="canChangeTrait()"

@@ -119,7 +119,7 @@
                       <b-icon-question-circle
                         v-if="!canPurchase"
                         v-tooltip.bottom="
-                          'You already have max amount of characters (369).'
+                          'You already have max amount of characters.'
                         "
                       />
                     </button>
