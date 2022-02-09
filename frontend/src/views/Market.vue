@@ -1165,52 +1165,69 @@ export default Vue.extend({
           this.nftPricesById[id] = price
         })
       )
-      this.resultSearch = this.allSearchResults
-      // filter price character
-      if (this.activeType === 'character') {
-        this.idFilter(this.characterIdFilter())
-        this.minPriceFilter(parseFloat(this.characterMinPriceFilter()))
-        this.maxPriceFilter(parseFloat(this.characterMaxPriceFilter()))
-        this.sortPrice(this.characterPriceOrder())
-        if (
-          this.characterMaxLevelFilter() !== 255 ||
-          this.characterTraitFilter()
-        ) {
-          const dataSearch = this.charactersWithIds(this.resultSearch)
-          if (dataSearch.length !== 0) {
-            if (this.characterMaxLevelFilter() !== 255)
-              this.levelFilter(
-                this.characterMinLevelFilter(),
-                this.characterMaxLevelFilter(),
-                dataSearch
-              )
-            if (this.characterTraitFilter())
-              this.elementFilter(this.characterTraitFilter(), dataSearch)
-          }
-        }
-      }
-      // filter price weapon
-      else if (this.activeType === 'weapon') {
-        this.idFilter(this.weaponIdFilter())
-        this.sortPrice(this.weaponPriceOrder())
-        this.minPriceFilter(parseFloat(this.weaponMinPriceFilter()))
-        this.maxPriceFilter(parseFloat(this.weaponMaxPriceFilter()))
-        if (this.weaponStarFilter() || this.weaponTraitFilter()) {
-          const dataSearch = this.weaponsWithIds(this.resultSearch)
-          if (dataSearch.length !== 0) {
-            if (this.weaponStarFilter())
-              this.starFilter(this.weaponStarFilter(), dataSearch)
-            if (this.weaponTraitFilter())
-              this.elementFilter(this.weaponTraitFilter(), dataSearch)
-          }
-        }
-      }
-      this.totalPages = this.resultSearch.length
-      this.resultSearch = this.resultSearch.slice(
-        (this.currentPage - 1) * this.characterShowLimit,
-        (this.currentPage - 1) * this.characterShowLimit +
-          this.characterShowLimit
-      )
+      // this.resultSearch = this.allSearchResults
+      // // filter price character
+      // if (this.activeType === 'character') {
+      //   this.idFilter(this.characterIdFilter())
+      //   this.minPriceFilter(parseFloat(this.characterMinPriceFilter()))
+      //   this.maxPriceFilter(parseFloat(this.characterMaxPriceFilter()))
+      //   this.sortPrice(this.characterPriceOrder())
+      //   if (
+      //     this.characterMaxLevelFilter() !== 255 ||
+      //     this.characterTraitFilter()
+      //   ) {
+      //     const dataSearch = this.charactersWithIds(this.resultSearch)
+      //     if (dataSearch.length !== 0) {
+      //       if (this.characterMaxLevelFilter() !== 255)
+      //         this.levelFilter(
+      //           this.characterMinLevelFilter(),
+      //           this.characterMaxLevelFilter(),
+      //           dataSearch
+      //         )
+      //       if (this.characterTraitFilter())
+      //         this.elementFilter(this.characterTraitFilter(), dataSearch)
+      //     }
+      //   }
+      // }
+      // // filter price weapon
+      // else if (this.activeType === 'weapon') {
+      //   this.idFilter(this.weaponIdFilter())
+      //   this.sortPrice(this.weaponPriceOrder())
+      //   this.minPriceFilter(parseFloat(this.weaponMinPriceFilter()))
+      //   this.maxPriceFilter(parseFloat(this.weaponMaxPriceFilter()))
+      //   if (this.weaponStarFilter() || this.weaponTraitFilter()) {
+      //     const dataSearch = this.weaponsWithIds(this.resultSearch)
+      //     if (dataSearch.length !== 0) {
+      //       if (this.weaponStarFilter())
+      //         this.starFilter(this.weaponStarFilter(), dataSearch)
+      //       if (this.weaponTraitFilter())
+      //         this.elementFilter(this.weaponTraitFilter(), dataSearch)
+      //     }
+      //   }
+      // }
+      // this.totalPages = this.resultSearch.length
+      // this.resultSearch = this.resultSearch.slice(
+      //   (this.currentPage - 1) * this.characterShowLimit,
+      //   (this.currentPage - 1) * this.characterShowLimit +
+      //     this.characterShowLimit
+      // )
+    },
+
+    async searchAllCharacterListings(page: number) {
+      this.activeType = 'character'
+      this.marketOutcome = true
+      this.waitingMarketOutcome = true
+      this.currentPage = page + 1
+
+      await this.searchAllCharacterListingsThroughChain(page)
+
+      // searchResultsOwned does not mesh with this function
+      // will need per-result checking of it, OR filtering out own NFTs
+      //this.searchResultsOwned = nftSeller === this.defaultAccount;
+      this.searchResultsOwned = false // temp
+
+      this.waitingMarketOutcome = false
+      this.marketOutcome = false
     },
 
     async searchAllCharacterListingsThroughChain(page: number) {
@@ -1228,6 +1245,105 @@ export default Vue.extend({
         minLevel: 255,
         maxLevel: 255,
       })
+      this.resultSearch = this.allSearchResults
+      // filter price character
+      this.idFilter(this.characterIdFilter())
+      this.minPriceFilter(parseFloat(this.characterMinPriceFilter()))
+      this.maxPriceFilter(parseFloat(this.characterMaxPriceFilter()))
+      this.sortPrice(this.characterPriceOrder())
+      if (
+        this.characterMaxLevelFilter() !== 255 ||
+        this.characterTraitFilter()
+      ) {
+        const dataSearch = this.charactersWithIds(this.resultSearch)
+        if (dataSearch.length !== 0) {
+          if (this.characterMaxLevelFilter() !== 255)
+            this.levelFilter(
+              this.characterMinLevelFilter(),
+              this.characterMaxLevelFilter(),
+              dataSearch
+            )
+          if (this.characterTraitFilter())
+            this.elementFilter(this.characterTraitFilter(), dataSearch)
+        }
+      }
+      this.totalPages = this.resultSearch.length
+      this.resultSearch = this.resultSearch.slice(
+        (this.currentPage - 1) * this.characterShowLimit,
+        (this.currentPage - 1) * this.characterShowLimit +
+          this.characterShowLimit
+      )
+    },
+
+    async searchAllWeaponListings(page: number) {
+      this.activeType = 'weapon'
+      this.marketOutcome = true
+      this.waitingMarketOutcome = true
+      this.currentPage = page + 1
+      // try {
+      //   if(useBlockchain === true)
+      //     await this.searchAllWeaponListingsThroughChain(page);
+      //   else
+      //     await this.searchAllWeaponListingsThroughAPI(page);
+      //   // searchResultsOwned does not mesh with this function
+      //   // will need per-result checking of it, OR filtering out own NFTs
+      //   //this.searchResultsOwned = nftSeller === this.defaultAccount;
+      //   this.searchResultsOwned = false; // temp
+      //   this.waitingMarketOutcome = false;
+      //   this.marketOutcome = false;
+      // } catch {
+      //   this.waitingMarketOutcome = false;
+      //   this.marketOutcome = false;
+      // }
+      await this.searchAllWeaponListingsThroughChain(page)
+      // searchResultsOwned does not mesh with this function
+      // will need per-result checking of it, OR filtering out own NFTs
+      //this.searchResultsOwned = nftSeller === this.defaultAccount;
+      this.searchResultsOwned = false // temp
+      this.waitingMarketOutcome = false
+      this.marketOutcome = false
+    },
+
+    async searchAllWeaponListingsThroughChain(page: number) {
+      // const filterStar = this.weaponStarFilter() !== 0 ? this.weaponStarFilter() - 1 : 255;
+      this.allListingsAmount = await this.fetchNumberOfWeaponListings({
+        nftContractAddr: this.contractAddress,
+        trait: 255,
+        stars: 255,
+      })
+
+      this.allSearchResults = await this.fetchAllMarketWeaponNftIdsPage({
+        nftContractAddr: this.contractAddress,
+        limit: this.allListingsAmount || defaultLimit,
+        pageNumber: page - page,
+        trait: 255,
+        stars: 255,
+      })
+      this.resultSearch = this.allSearchResults
+      // filter price weapon
+      this.idFilter(this.weaponIdFilter())
+      this.sortPrice(this.weaponPriceOrder())
+      this.minPriceFilter(parseFloat(this.weaponMinPriceFilter()))
+      this.maxPriceFilter(parseFloat(this.weaponMaxPriceFilter()))
+      if (this.weaponStarFilter() || this.weaponTraitFilter()) {
+        const dataSearch = this.weaponsWithIds(this.resultSearch)
+        if (dataSearch.length !== 0) {
+          if (this.weaponStarFilter())
+            this.starFilter(this.weaponStarFilter(), dataSearch)
+          if (this.weaponTraitFilter())
+            this.elementFilter(this.weaponTraitFilter(), dataSearch)
+        }
+      }
+      this.totalPages = this.resultSearch.length
+      this.resultSearch = this.resultSearch.slice(
+        (this.currentPage - 1) * this.characterShowLimit,
+        (this.currentPage - 1) * this.characterShowLimit +
+          this.characterShowLimit
+      )
+
+      // this.minPriceFilter(parseFloat(this.weaponMinPriceFilter()));
+      // this.maxPriceFilter(parseFloat(this.weaponMaxPriceFilter()));
+      // this.sortPrice(this.weaponPriceOrder());
     },
 
     idFilter(id: string) {
@@ -1422,6 +1538,34 @@ export default Vue.extend({
       }
     },
 
+    async cancelNftListing() {
+      this.marketOutcome = true
+
+      if (this.selectedNftId === null) return
+
+      this.waitingMarketOutcome = true
+      try {
+        const results = await this.cancelMarketListing({
+          nftContractAddr: this.contractAddress,
+          tokenId:
+            this.activeType === 'weapon' || this.activeType === 'character'
+              ? this.selectedNftId
+              : this.selectedNftId.split('.')[1],
+        })
+
+        this.waitingMarketOutcome = false
+        this.marketOutcome = true
+        this.marketOutcomeHeading = 'Successfully taken off the market'
+        this.marketOutcomeActiveType = this.activeType
+        this.marketOutcomeID = results.nftID
+
+        await this.searchOwnListings(this.activeType)
+      } catch {
+        this.marketOutcome = false
+        this.waitingMarketOutcome = false
+      }
+    },
+
     async purchaseNft() {
       this.marketOutcome = true
       this.marketOutcomeHeading = null
@@ -1487,51 +1631,6 @@ export default Vue.extend({
       }
     },
 
-    async cancelNftListing() {
-      this.marketOutcome = true
-
-      if (this.selectedNftId === null) return
-
-      this.waitingMarketOutcome = true
-      try {
-        const results = await this.cancelMarketListing({
-          nftContractAddr: this.contractAddress,
-          tokenId:
-            this.activeType === 'weapon' || this.activeType === 'character'
-              ? this.selectedNftId
-              : this.selectedNftId.split('.')[1],
-        })
-
-        this.waitingMarketOutcome = false
-        this.marketOutcome = true
-        this.marketOutcomeHeading = 'Successfully taken off the market'
-        this.marketOutcomeActiveType = this.activeType
-        this.marketOutcomeID = results.nftID
-
-        await this.searchOwnListings(this.activeType)
-      } catch {
-        this.marketOutcome = false
-        this.waitingMarketOutcome = false
-      }
-    },
-
-    async searchAllCharacterListings(page: number) {
-      this.activeType = 'character'
-      this.marketOutcome = true
-      this.waitingMarketOutcome = true
-      this.currentPage = page + 1
-
-      await this.searchAllCharacterListingsThroughChain(page)
-
-      // searchResultsOwned does not mesh with this function
-      // will need per-result checking of it, OR filtering out own NFTs
-      //this.searchResultsOwned = nftSeller === this.defaultAccount;
-      this.searchResultsOwned = false // temp
-
-      this.waitingMarketOutcome = false
-      this.marketOutcome = false
-    },
-
     async searchAllCharacterListingsThroughAPI(page: number) {
       const url = new URL(await apiUrl('static/market/character'))
       const params = {
@@ -1551,56 +1650,6 @@ export default Vue.extend({
       const characters = await charactersData.json()
       this.allListingsAmount = characters.page.total
       this.allSearchResults = characters.idResults
-    },
-
-    async searchAllWeaponListings(page: number) {
-      this.activeType = 'weapon'
-      this.marketOutcome = true
-      this.waitingMarketOutcome = true
-      this.currentPage = page + 1
-      // try {
-      //   if(useBlockchain === true)
-      //     await this.searchAllWeaponListingsThroughChain(page);
-      //   else
-      //     await this.searchAllWeaponListingsThroughAPI(page);
-      //   // searchResultsOwned does not mesh with this function
-      //   // will need per-result checking of it, OR filtering out own NFTs
-      //   //this.searchResultsOwned = nftSeller === this.defaultAccount;
-      //   this.searchResultsOwned = false; // temp
-      //   this.waitingMarketOutcome = false;
-      //   this.marketOutcome = false;
-      // } catch {
-      //   this.waitingMarketOutcome = false;
-      //   this.marketOutcome = false;
-      // }
-      await this.searchAllWeaponListingsThroughChain(page)
-      // searchResultsOwned does not mesh with this function
-      // will need per-result checking of it, OR filtering out own NFTs
-      //this.searchResultsOwned = nftSeller === this.defaultAccount;
-      this.searchResultsOwned = false // temp
-      this.waitingMarketOutcome = false
-      this.marketOutcome = false
-    },
-
-    async searchAllWeaponListingsThroughChain(page: number) {
-      // const filterStar = this.weaponStarFilter() !== 0 ? this.weaponStarFilter() - 1 : 255;
-      this.allListingsAmount = await this.fetchNumberOfWeaponListings({
-        nftContractAddr: this.contractAddress,
-        trait: 255,
-        stars: 255,
-      })
-
-      this.allSearchResults = await this.fetchAllMarketWeaponNftIdsPage({
-        nftContractAddr: this.contractAddress,
-        limit: this.allListingsAmount || defaultLimit,
-        pageNumber: page - page,
-        trait: 255,
-        stars: 255,
-      })
-
-      // this.minPriceFilter(parseFloat(this.weaponMinPriceFilter()));
-      // this.maxPriceFilter(parseFloat(this.weaponMaxPriceFilter()));
-      // this.sortPrice(this.weaponPriceOrder());
     },
 
     async searchAllWeaponListingsThroughAPI(page: number) {
