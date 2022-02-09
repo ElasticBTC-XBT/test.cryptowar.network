@@ -51,6 +51,14 @@
                   currentCharacter && currentCharacterStamina < staminaPerFight
                 "
               >
+                <div
+                  class="message-box message-weapon-durability"
+                  v-if="
+                    selectedWeaponId && !weaponHasDurability(selectedWeaponId)
+                  "
+                >
+                  This weapon does not have enough durability.
+                </div>
                 You need {{ staminaPerFight }} stamina to do battle.
                 <h4>Stamina Cost Per Fight</h4>
                 <b-form-select
@@ -66,7 +74,12 @@
 
           <div
             class="message-box"
-            v-if="selectedWeaponId && !weaponHasDurability(selectedWeaponId)"
+            v-if="
+              selectedWeaponId &&
+              !weaponHasDurability(selectedWeaponId) &&
+              currentCharacter &&
+              currentCharacterStamina >= staminaPerFight
+            "
           >
             This weapon does not have enough durability.
           </div>
@@ -1135,6 +1148,10 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
   padding: 0;
 }
 
+.message-box.message-weapon-durability {
+  font-size: 1.2em;
+}
+
 @media (max-width: 1334px) {
   .enemy-list {
     flex-flow: row wrap;
@@ -1348,6 +1365,10 @@ button.btn.button.main-font.dark-bg-text.encounter-button.btn-styled.encounter-b
   .title-results {
     /* display: none; */
     top: 2px;
+  }
+
+  .message-box {
+    font-size: 1.2em;
   }
 }
 .element-icon {

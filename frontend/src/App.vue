@@ -907,7 +907,7 @@ button.close {
 #loadingModal .modal-content,
 #claimRewardsSucessModal .modal-content {
   min-width: 36rem;
-  height: 350px;
+  height: 360px;
   display: flex;
   align-items: center;
 }
