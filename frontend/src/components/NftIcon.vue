@@ -161,7 +161,7 @@ export default {
       commonBoxSupply: 0,
       rareBoxSupply: 0,
       quantityOwned: 0,
-      images: require.context('../assets/', false, /\.png$/),
+      images: import.meta.glob('../assets/*.png'),
     }
   },
 
