@@ -28,7 +28,6 @@
           <div class="lobby-item-box">
             <b-button
               class="lobby-item"
-              @click="onMintCharacter"
               v-tooltip="'PvP'"
               tagname="recruit_character"
             >
@@ -46,7 +45,6 @@
           <div class="lobby-item-box">
             <b-button
               class="lobby-item"
-              @click="onMintCharacter"
               v-tooltip="'Raid Boss'"
               tagname="recruit_character"
             >

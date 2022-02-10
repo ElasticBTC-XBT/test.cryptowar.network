@@ -259,7 +259,7 @@ export default {
           this.$route.name === 'lobby' || this.$route.name === 'arena'
         )
       // react to route changes
-      window.gtag('event', 'page_view', {
+      window?.gtag?.('event', 'page_view', {
         page_title: to.name,
         page_location: to.fullPath,
         page_path: to.path,
@@ -516,13 +516,13 @@ export default {
       if (!tagname) return
 
       if (e.target.nodeName === 'BUTTON') {
-        window.gtag('event', 'button_clicked', {
+        window?.gtag?.('event', 'button_clicked', {
           value: tagname,
         })
       }
 
       if (e.target.className.includes('gtag-link-others')) {
-        window.gtag('event', 'nav', {
+        window?.gtag?.('event', 'nav', {
           event_category: 'navigation',
           event_label: 'navbar',
           value: tagname,
