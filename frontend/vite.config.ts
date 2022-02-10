@@ -61,6 +61,10 @@ export default defineConfig({
     exclude: ['scripts'],
   },
   build: {
+    sourcemap: true,
+    commonjsOptions: {
+      transformMixedEsModules: true,
+    },
     rollupOptions: {
       plugins: [
         // Enable rollup polyfills plugin
