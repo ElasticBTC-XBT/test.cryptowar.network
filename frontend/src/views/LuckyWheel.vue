@@ -448,7 +448,15 @@ export default {
   min-width: 305px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
+  .wheel-wrapper {
+    width: 345px;
+    height: 345px;
+  }
+  .wheel {
+    width: 305px;
+    height: 305px;
+  }
   .wheel__inner {
     width: 290px;
     height: 290px;
