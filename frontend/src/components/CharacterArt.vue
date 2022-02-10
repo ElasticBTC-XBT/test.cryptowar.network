@@ -174,7 +174,6 @@ export default {
     getCharacterArt,
   },
   mounted() {
-    // this.fetchScore()
     this.allLoaded = true
     this.showPlaceholder = true
     return
