@@ -63,8 +63,5 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ],
-  "resolutions": {
-    "ethereumjs-util": "7.1.4"
-  }
+  ]
 }
