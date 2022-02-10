@@ -65,7 +65,7 @@
                   "
                 >
                   <span v-if="!nft.isSoldOut">
-                    ({{ Math.round(nft.nftPrice) }} xBlade)
+                    {{ Math.round(nft.nftPrice) }} xBlade
                   </span>
                   <span v-if="nft.isSoldOut && !isLoading"> SOLD OUT </span>
                   <span v-if="isLoading"> LOADING </span>
@@ -83,7 +83,7 @@
                   "
                 >
                   <span v-if="!nft.isSoldOut">
-                    ({{ Math.round(nft.nftPriceXgem) }} 💎 )
+                    {{ Math.round(nft.nftPriceXgem) }} 💎
                   </span>
                   <span v-if="nft.isSoldOut && !isLoading"> SOLD OUT </span>
                   <span v-if="isLoading && !nft.onlyUseXgem"> LOADING </span>
