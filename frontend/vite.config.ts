@@ -34,6 +34,7 @@ export default defineConfig({
       '.tsx',
       '.json',
       '.vue',
+      '.mjs',
     ],
   },
   define: {
@@ -57,6 +58,7 @@ export default defineConfig({
         NodeModulesPolyfillPlugin(),
       ],
     },
+    exclude: ['scripts'],
   },
   build: {
     rollupOptions: {

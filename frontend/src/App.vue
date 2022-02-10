@@ -131,12 +131,12 @@
             <big-button
               v-bind:class="[isConnecting ? 'disabled' : '']"
               class="btn btn-pink-bg modal-btn"
-              v-html="`Connect via Walletconnect`"
+              v-html="`Connect via WalletConnect`"
               @click="connectWalletConnect"
             />
             <big-button
               class="btn btn-pink-bg modal-btn"
-              v-html="`Connect via metamask`"
+              v-html="`Connect via MetaMask`"
               @click="checkMetamask"
             />
           </div>
