@@ -61,7 +61,6 @@ export default defineConfig({
     exclude: ['scripts'],
   },
   build: {
-    sourcemap: true,
     commonjsOptions: {
       transformMixedEsModules: true,
     },
