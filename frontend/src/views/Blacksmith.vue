@@ -651,16 +651,12 @@ export default Vue.extend({
       .call({ from: this.defaultAccount })
     this.burnCost = new BN(skillBurnCost).div(new BN(10).pow(18)).toFixed(4)
     this.hideWeapons = this.ownedWeaponIds
-    // if(!this.contracts.WeaponRenameTagConsumables) return;
-    // this.haveRename = await this.contracts.WeaponRenameTagConsumables.methods.getItemCount().call({ from: this.defaultAccount });
   },
 
   methods: {
-    ...mapCacheActions(['fetchTotalWeaponRenameTags']),
     ...mapActions([
       'reforgeWeapon',
       'renameWeapon',
-      'fetchTotalWeaponRenameTags',
       'burnWeapon',
       'reforgeWeaponWithDust',
       'massBurnWeapons',
