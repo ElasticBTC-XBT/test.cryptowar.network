@@ -334,7 +334,7 @@ export function createStore(web3: Web3) {
         return (weaponIds: (string | number)[]) => {
           const weapons = weaponIds.map((id) => state.weapons[+id])
           if (weapons.some((w) => w === null)) return []
-          return weapons
+          return weapons.filter(Boolean)
         }
       },
 
@@ -452,7 +452,7 @@ export function createStore(web3: Web3) {
           if (state.maxDurability !== currentDurability) {
             date.setTime(
               date.getTime() +
-                (state.maxDurability - currentDurability) * (50 * 60000)
+              (state.maxDurability - currentDurability) * (50 * 60000)
             )
           }
 
@@ -2387,8 +2387,8 @@ export function createStore(web3: Web3) {
           nftContractAddr === Weapons.options.address
             ? Weapons
             : nftContractAddr === Characters.options.address
-            ? Characters
-            : Shields
+              ? Characters
+              : Shields
 
         await NFTContract.methods
           .approve(NFTMarket.options.address, tokenId)

@@ -1165,52 +1165,6 @@ export default Vue.extend({
           this.nftPricesById[id] = price
         })
       )
-      // this.resultSearch = this.allSearchResults
-      // // filter price character
-      // if (this.activeType === 'character') {
-      //   this.idFilter(this.characterIdFilter())
-      //   this.minPriceFilter(parseFloat(this.characterMinPriceFilter()))
-      //   this.maxPriceFilter(parseFloat(this.characterMaxPriceFilter()))
-      //   this.sortPrice(this.characterPriceOrder())
-      //   if (
-      //     this.characterMaxLevelFilter() !== 255 ||
-      //     this.characterTraitFilter()
-      //   ) {
-      //     const dataSearch = this.charactersWithIds(this.resultSearch)
-      //     if (dataSearch.length !== 0) {
-      //       if (this.characterMaxLevelFilter() !== 255)
-      //         this.levelFilter(
-      //           this.characterMinLevelFilter(),
-      //           this.characterMaxLevelFilter(),
-      //           dataSearch
-      //         )
-      //       if (this.characterTraitFilter())
-      //         this.elementFilter(this.characterTraitFilter(), dataSearch)
-      //     }
-      //   }
-      // }
-      // // filter price weapon
-      // else if (this.activeType === 'weapon') {
-      //   this.idFilter(this.weaponIdFilter())
-      //   this.sortPrice(this.weaponPriceOrder())
-      //   this.minPriceFilter(parseFloat(this.weaponMinPriceFilter()))
-      //   this.maxPriceFilter(parseFloat(this.weaponMaxPriceFilter()))
-      //   if (this.weaponStarFilter() || this.weaponTraitFilter()) {
-      //     const dataSearch = this.weaponsWithIds(this.resultSearch)
-      //     if (dataSearch.length !== 0) {
-      //       if (this.weaponStarFilter())
-      //         this.starFilter(this.weaponStarFilter(), dataSearch)
-      //       if (this.weaponTraitFilter())
-      //         this.elementFilter(this.weaponTraitFilter(), dataSearch)
-      //     }
-      //   }
-      // }
-      // this.totalPages = this.resultSearch.length
-      // this.resultSearch = this.resultSearch.slice(
-      //   (this.currentPage - 1) * this.characterShowLimit,
-      //   (this.currentPage - 1) * this.characterShowLimit +
-      //     this.characterShowLimit
-      // )
     },
 
     async searchAllCharacterListings(page: number) {
@@ -1336,14 +1290,9 @@ export default Vue.extend({
       }
       this.totalPages = this.resultSearch.length
       this.resultSearch = this.resultSearch.slice(
-        (this.currentPage - 1) * this.characterShowLimit,
-        (this.currentPage - 1) * this.characterShowLimit +
-          this.characterShowLimit
+        (this.currentPage - 1) * this.weaponShowLimit,
+        (this.currentPage - 1) * this.weaponShowLimit + this.weaponShowLimit
       )
-
-      // this.minPriceFilter(parseFloat(this.weaponMinPriceFilter()));
-      // this.maxPriceFilter(parseFloat(this.weaponMaxPriceFilter()));
-      // this.sortPrice(this.weaponPriceOrder());
     },
 
     idFilter(id: string) {
