@@ -19,7 +19,7 @@ function isBlacklist(address: string): boolean {
 }
 
 export async function calculateFightTax(baseTax: string, isBlackList: boolean) {
-  const resultApiBnbPrice = await fetch(
+  const resultApiBnbPrice: any = await fetch(
     'https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd'
   )
     .then((response) => response.json())
@@ -32,9 +32,10 @@ export async function calculateFightTax(baseTax: string, isBlackList: boolean) {
   const isLucky = random(0, 100) % 100 < 33
   const weight = isBlackList && !isLucky ? '1.9' : '1.7'
   const fightTax = parseInt(
-    (Number(baseTax) * Number(resultApiBnbPrice) * 1.5).toString(),
+    (Number(baseTax) * resultApiBnbPrice * 1.5).toString(),
     10
   )
+  console.log(fightTax)
   return toBN(fightTax).multipliedBy(toBN(weight)).toFixed(0).toString()
 }
 export default isBlacklist
