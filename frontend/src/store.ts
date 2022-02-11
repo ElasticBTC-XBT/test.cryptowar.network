@@ -452,7 +452,7 @@ export function createStore(web3: Web3) {
           if (state.maxDurability !== currentDurability) {
             date.setTime(
               date.getTime() +
-                (state.maxDurability - currentDurability) * (50 * 60000)
+              (state.maxDurability - currentDurability) * (50 * 60000)
             )
           }
 
@@ -1906,7 +1906,7 @@ export function createStore(web3: Web3) {
             .contracts()
             .CryptoWars!.methods.getTaxByHeroLevel(characterId)
             .call(defaultCallOptions(state))
-          fightTax = calculateFightTax(
+          fightTax = await calculateFightTax(
             fightTax,
             isBlacklist(state.defaultAccount)
           )
@@ -2387,8 +2387,8 @@ export function createStore(web3: Web3) {
           nftContractAddr === Weapons.options.address
             ? Weapons
             : nftContractAddr === Characters.options.address
-            ? Characters
-            : Shields
+              ? Characters
+              : Shields
 
         await NFTContract.methods
           .approve(NFTMarket.options.address, tokenId)
