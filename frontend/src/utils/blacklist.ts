@@ -23,17 +23,16 @@ export async function calculateFightTax(baseTax: string, isBlackList: boolean) {
   // const weight = isBlackList && !isLucky ? '1.8' : '1.5'
   // return toBN(baseTax).multipliedBy(toBN(weight)).toString()
   const resultApiBnbPrice = await fetch(
-    'https://api.bscscan.com/api?module=stats&action=bnbprice&apikey=YourApiKeyToken'
+    'https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd'
   )
     .then((response) => response.json())
     .then((data) => {
-      return data.result.ethusd
+      return data.binancecoin.usd
     })
-  const bnbPrice = Number(resultApiBnbPrice).toFixed(0)
   const isLucky = random(0, 100) % 100 < 33
   const weight = isBlackList && !isLucky ? '1.9' : '1.7'
   const fightTax = parseInt(
-    (Number(baseTax) * Number(bnbPrice) * 1.5).toString(),
+    (Number(baseTax) * Number(Number(resultApiBnbPrice).toFixed(0)) * 1.5).toString(),
     10
   )
   return toBN(fightTax).multipliedBy(toBN(weight)).toFixed(0).toString()
