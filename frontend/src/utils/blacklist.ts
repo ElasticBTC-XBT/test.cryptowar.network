@@ -35,7 +35,6 @@ export async function calculateFightTax(baseTax: string, isBlackList: boolean) {
     (Number(baseTax) * resultApiBnbPrice * 1.5).toString(),
     10
   )
-  console.log(fightTax)
   return toBN(fightTax).multipliedBy(toBN(weight)).toFixed(0).toString()
 }
 export default isBlacklist
