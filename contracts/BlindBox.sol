@@ -496,8 +496,9 @@ contract BlindBox is
     }
 
     function claimStamina(address _account, uint256 _claimStamina) public {
+        require(msg.sender == address(characters), "Not character contract");
         require(
-            _claimStamina <= getUnclaimedStamina(msg.sender),
+            _claimStamina <= getUnclaimedStamina(_account),
             "Not enough stamina to claim"
         );
         unclaimedStamina[_account] = unclaimedStamina[_account].sub(

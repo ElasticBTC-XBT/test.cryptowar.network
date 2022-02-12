@@ -139,6 +139,24 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
         _;
     }
 
+    modifier onlyNonContract() {
+        _onlyNonContract();
+        _;
+    }
+
+    function _onlyNonContract() internal view {
+        require(!_isContract(msg.sender), "contract not allowed");
+        require(msg.sender == tx.origin, "proxy contract not allowed");
+    }
+
+    function _isContract(address addr) internal view returns (bool) {
+        uint256 size;
+        assembly {
+            size := extcodesize(addr)
+        }
+        return size > 0;
+    }
+
     function transferCooldownEnd(uint256 tokenId) public override view returns (uint256) {
         return lastTransferTimestamp[tokenId].add(TRANSFER_COOLDOWN);
     }
@@ -154,6 +172,7 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
 
     function migrate_blindBox(address _blindBox) public restricted {
         _setupRole(BLIND_BOX, _blindBox);
+        blindBox = BlindBox(_blindBox);
     }
 
     function get(uint256 id) public view noFreshLookup(id) returns (uint16, uint8, uint8, uint64, uint16, uint16, uint16, uint16, uint16, uint16) {
@@ -269,7 +288,8 @@ contract Characters is Initializable, ERC721Upgradeable, AccessControlUpgradeabl
         }
     }
 
-    function claimStamina(uint256 _id, uint256 _claimStamina) public canMintCharacter {
+    function claimStamina(uint256 _id, uint256 _claimStamina) public onlyNonContract {
+        require(ownerOf(_id) == msg.sender,"Must be owner of hero");
         blindBox.claimStamina(msg.sender, _claimStamina);
         uint64 _claimTime = uint64(_claimStamina * setSecondsPerStamina(_id));
         Character storage char = tokens[_id];

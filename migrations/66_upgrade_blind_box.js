@@ -13,6 +13,6 @@ module.exports = async function (deployer, network, accounts) {
   blindBox = await upgradeProxy(blindBoxAddress, BlindBox, {
     deployer,
   });
-  blindBox = await BlindBox.at(blindBoxAddress);
-  await blindBox.setBoxesPrice(7, "100000000000000000000");
+  // blindBox = await BlindBox.at(blindBoxAddress);
+  // await blindBox.setBoxesPrice(7, "100000000000000000000");
 };
