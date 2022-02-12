@@ -34,7 +34,7 @@
       />
       <div class="wheel__price-wrapper">
         Cost per spin
-        <span class="wheel__price">100</span>
+        <span class="wheel__price">{{ spinWheelPrice }}</span>
         xBlade
       </div>
     </div>
@@ -76,7 +76,7 @@
       style="justify-content: center"
     >
       <span class="loading-icon">
-        Waiting for your approve
+        Loading
         <i class="fas fa-spinner fa-spin"></i>
       </span>
     </b-modal>
@@ -85,7 +85,8 @@
 
 <script>
 import BigButton from '../components/BigButton.vue'
-import { mapActions } from 'vuex'
+import { mapCacheActions } from 'vuex-cache'
+import { fromWeiEther, toBN } from '../utils/common'
 
 export default {
   inject: ['web3'],
@@ -128,11 +129,17 @@ export default {
         },
       ],
       rewardIndex: 1,
+      fetchSpinWheelPriceInterval: 0,
+      spinWheelPrice: 0,
     }
   },
 
   methods: {
-    ...mapActions(['spinLuckyWheel', 'fetchSkillBalance']),
+    ...mapCacheActions([
+      'spinLuckyWheel',
+      'fetchSkillBalance',
+      'fetchSpinWheelPrice',
+    ]),
 
     async spin() {
       // Check testnet or mainnet
@@ -219,6 +226,17 @@ export default {
     resetWheel() {
       this.$refs.wheel.style.transition = `cubic-bezier(0.19, 1, 0.22, 1) 10s`
     },
+  },
+
+  async mounted() {
+    this.fetchSpinWheelPriceInterval = setInterval(async () => {
+      this.spinWheelPrice = await this.fetchSpinWheelPrice()
+      this.spinWheelPrice = toBN(fromWeiEther(this.spinWheelPrice)).toNumber()
+    }, 3000)
+  },
+
+  beforeDestroy() {
+    clearInterval(this.fetchSpinWheelPriceInterval)
   },
 }
 </script>

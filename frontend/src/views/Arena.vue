@@ -108,6 +108,13 @@ export default {
 }
 
 @media (max-width: 767.98px) {
+  .arena-box {
+    flex-direction: column-reverse;
+  }
+  .comming-soon {
+    font-size: 18px;
+    padding: 0;
+  }
 }
 
 @media (max-width: 575.98px) {

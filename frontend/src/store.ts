@@ -2793,26 +2793,22 @@ export function createStore(web3: Web3) {
             .send(defaultCallOptions(state))
         }
 
-        let result
-        await BlindBox.methods
-          .spinLuckyWheel()
-          .send({
+        try {
+          let result
+          const res = await BlindBox.methods.spinLuckyWheel().send({
             from: state.defaultAccount,
             gas: '500000',
           })
-          .then((res) => {
-            console.log(res)
-            if (res !== null && res !== undefined) {
-              result = {
-                reward: parseInt(res.events.Spin.returnValues.result, 10),
-                transactionHash: res.transactionHash,
-              }
+          if (res !== null && res !== undefined) {
+            result = {
+              reward: parseInt(res.events.Spin.returnValues.result, 10),
+              transactionHash: res.transactionHash,
             }
-          })
-          .catch(() => {
-            result = null
-          })
-        return result
+            return result
+          }
+        } catch {
+          return null
+        }
       },
 
       async claimStamina({ state }, { id, stamina }) {
@@ -2956,6 +2952,16 @@ export function createStore(web3: Web3) {
         })
       },
 
+      async fetchSpinWheelPrice({ state }) {
+        const { BlindBox } = state.contracts()
+        if (!BlindBox || !state.defaultAccount) return
+
+        const spinWheelPrice = await BlindBox.methods
+          .spinWheelPrice()
+          .call(defaultCallOptions(state))
+        return spinWheelPrice
+      },
+
       async fetchUnclaimedStamina({ state }) {
         const { BlindBox } = state.contracts()
         if (!BlindBox || !state.defaultAccount) return
@@ -2964,7 +2970,7 @@ export function createStore(web3: Web3) {
           .getUnclaimedStamina(state.defaultAccount)
           .call(defaultCallOptions(state))
 
-        return unclaimedStamina
+        return parseInt(unclaimedStamina, 10)
       },
 
       async fetchTotalRenameTags({ state }) {

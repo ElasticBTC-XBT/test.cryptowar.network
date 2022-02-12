@@ -71,7 +71,9 @@
             <button
               @click="selectHero(character)"
               class="btn-claim-stamina"
-              :disabled="getCharacterStamina(character.id) === 200"
+              :disabled="
+                getCharacterStamina(character.id) === 200 || ownedStamina === 0
+              "
             >
               SELECT
             </button>
@@ -90,7 +92,7 @@
       style="justify-content: center"
     >
       <span class="loading-icon">
-        Waiting for your approve
+        Loading
         <i class="fas fa-spinner fa-spin"></i>
       </span>
     </b-modal>
@@ -102,6 +104,8 @@
       title="Set number of stamina you want to add"
       v-if="choosenHero"
       ok-only
+      ok-title="USE"
+      :ok-disabled="parseInt(stamina) === 0"
       ok-variant="secondary btn-pink-bg"
       @ok="onClaimStamina(choosenHero.id, stamina)"
       style="justify-content: center"
@@ -185,6 +189,7 @@ export default {
       choosenHero: null,
       ownedStamina: 0,
       stamina: 0,
+      featchUnclaimedStaminaInterval: 0,
     }
   },
 
@@ -207,8 +212,12 @@ export default {
     },
 
     selectHero(hero) {
-      this.choosenHero = hero
-      this.$refs.setStamina.show()
+      if (this.ownedStamina === 0) {
+        this.$dialog.notify.error("You don't have any stamina left!")
+      } else {
+        this.choosenHero = hero
+        this.$refs.setStamina.show()
+      }
     },
 
     getStaminaClaimable(staminaLost) {
@@ -226,13 +235,22 @@ export default {
         this.$refs.loadingModal.hide()
       })
       this.ownedStamina = await this.fetchUnclaimedStamina()
+      this.stamina = 0
     },
   },
 
   async mounted() {
-    this.choosenHero = this.ownCharacters[0]
-    this.ownedStamina = await this.fetchUnclaimedStamina()
-    this.isLoading = false
+    this.featchUnclaimedStaminaInterval = setInterval(async () => {
+      this.ownedStamina = await this.fetchUnclaimedStamina()
+    }, 3000)
+    setTimeout(() => {
+      this.choosenHero = this.ownCharacters[0]
+      this.isLoading = false
+    }, 4000)
+  },
+
+  beforeDestroy() {
+    clearInterval(this.featchUnclaimedStaminaInterval)
   },
 }
 </script>
@@ -501,6 +519,11 @@ export default {
 @media (max-width: 767px) {
   #selectHeroModal .icon-close {
     margin-right: 10px;
+  }
+
+  .stamina-image {
+    width: 100px;
+    height: 250px;
   }
 }
 </style>
