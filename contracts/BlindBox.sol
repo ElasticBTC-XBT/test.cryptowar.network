@@ -513,7 +513,11 @@ contract BlindBox is
         emit NewBlindBox(tokenId, msg.sender);
     }
 
-    function spinLuckyWheel() external returns (uint256 _result) {
+    function spinLuckyWheel()
+        external
+        onlyNonContract
+        returns (uint256 _result)
+    {
         require(
             xBlade.balanceOf(msg.sender) > spinWheelPrice,
             "No money no spin"
