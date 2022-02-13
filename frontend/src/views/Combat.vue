@@ -201,11 +201,13 @@
 
                       <div class="">
                         <img
+                          loading="lazy"
                           class="mx-auto enemy-img"
                           :src="getEnemyArt(e.power)"
                           alt="Enemy"
                         />
                         <img
+                          loading="lazy"
                           class="enemy-around-img"
                           :src="getEnemyArtAround(e.trait)"
                           alt="Enemy Around"
@@ -677,17 +679,35 @@ export default Vue.extend({
 }
 
 .enemy-character {
-  position: relative;
-  width: 17em;
-  height: 23em;
-  background-position: left;
+  height: 20em;
+  width: 15em;
+  cursor: pointer;
   background-repeat: no-repeat;
-  background-size: contain;
-  background-image: url('../assets/images/bg-item-top.png');
+  background-size: 100% 100%;
+  position: relative;
+  border: 1px solid #3cde9b;
+  border-radius: 15px 40px 15px 15px;
+  background: #0d2f9cbb;
+  background-image: radial-gradient(#cc7d3c -30%, transparent 70%);
+  will-change: border-color;
+  transition: all 0.3s;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.enemy-character::before {
+  content: ' ';
+  width: 65px;
+  height: 60px;
+  background: url('../assets/v2/corner_green.svg') no-repeat 0 0;
+  background-size: cover;
+  position: absolute;
+  right: -5px;
+  top: -8px;
+  will-change: background;
+  transition: all 0.3s;
 }
 
 .enemy-around {
@@ -862,7 +882,7 @@ div.encounter.text-center {
 
 .list-enemy {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   width: 100%;
   /* padding: 0px 14px; */
   margin-top: 20px;

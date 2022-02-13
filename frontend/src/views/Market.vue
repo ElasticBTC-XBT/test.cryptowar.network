@@ -2524,7 +2524,7 @@ button.selected {
 
 .modal-loading {
   position: fixed;
-  z-index: 100;
+  z-index: 1001;
   left: 0;
   top: 0;
   width: 100%;
