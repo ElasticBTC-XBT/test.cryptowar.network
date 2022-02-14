@@ -14,5 +14,5 @@ module.exports = async function (deployer, network, accounts) {
     deployer,
   });
   // blindBox = await BlindBox.at(blindBoxAddress);
-  // await blindBox.setBoxesPrice(7, "100000000000000000000");
+  await blindBox.setBoxesPrice(7, "100000000000000000000");
 };
