@@ -1056,11 +1056,15 @@ export default {
       // @ts-ignore
     },
     async handleCancelRequestFight(roomId, requestId) {
-      this.$bvModal.show('loadingModal')
-      const response = await this.cancelRequestFight({ roomId, requestId })
-      if (response) {
+      try {
+        this.$bvModal.show('loadingModal')
+        const response = await this.cancelRequestFight({ roomId, requestId })
+        if (response) {
+          this.$bvModal.hide('loadingModal')
+          this.getListParticipatedRoom()
+        }
+      } catch {
         this.$bvModal.hide('loadingModal')
-        this.getListParticipatedRoom()
       }
     },
     async handleShowWeapon(weaponId) {
