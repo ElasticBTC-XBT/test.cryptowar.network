@@ -2427,7 +2427,7 @@ export function createStore(web3: Web3) {
         ])
       },
 
-      async spinLuckyWheel({ state }) {
+      async spinLuckyWheel({ state, commit }) {
         const { xBladeToken, BlindBox } = state.contracts()
         if (!xBladeToken || !BlindBox || !state.defaultAccount) return
 
@@ -2451,6 +2451,14 @@ export function createStore(web3: Web3) {
             gas: '500000',
           })
           if (res !== null && res !== undefined) {
+            if (parseInt(res.events.Spin.returnValues.result, 10) === 6) {
+              setTimeout(() => {
+                commit('updateMyXgem', {
+                  myXgem: Number(state.myXgem) + 10,
+                })
+              }, 11000)
+            }
+
             result = {
               reward: parseInt(res.events.Spin.returnValues.result, 10),
               transactionHash: res.transactionHash,

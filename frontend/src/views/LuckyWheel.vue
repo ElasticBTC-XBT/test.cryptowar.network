@@ -27,7 +27,7 @@
     </div>
     <div class="wheel-footer">
       <big-button
-        :disabled="isSpinning"
+        :disabled="isSpinning || isFetchingPrice"
         class="btn btn-blue-bg spin-btn"
         :mainText="`SPIN TO WIN`"
         @click="spin"
@@ -43,10 +43,10 @@
     </div>
 
     <b-modal
-      class="centered-modal text-center"
+      class="centered-modal"
       ref="rewardModal"
       ok-only
-      ok-title="Close"
+      ok-title="Close"s
       ok-variant="secondary btn-pink-bg"
       @ok="resetWheel"
       title="Congratulation!"
@@ -66,11 +66,30 @@
             {{ rewards[rewardIndex - 1].name }}
           </div>
         </div>
+        <div
+          v-if="
+            rewardIndex === 2 ||
+            rewardIndex === 4 ||
+            rewardIndex === 6
+          "
+          style="
+            text-align: center;
+            font-size: 20px;
+            margin-top: 10px;
+          "
+        >
+          To use stamina, please go to <br>
+          <span style="color: #f2be3e;">
+            Inventory
+            <i class="fas fa-arrow-right"></i>
+            Others
+          </span>
+        </div>
       </div>
     </b-modal>
 
     <b-modal
-      class="centered-modal text-center"
+      class="centered-modal"
       ref="loadingModal"
       hide-footer
       hide-header
@@ -474,6 +493,10 @@ export default {
 }
 
 @media (max-width: 767px) {
+  .modal-content {
+    max-width: unset;
+    width: 100vw;
+  }
   .wheel-wrapper {
     width: 345px;
     height: 345px;

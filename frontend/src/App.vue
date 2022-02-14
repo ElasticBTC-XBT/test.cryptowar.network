@@ -1335,11 +1335,12 @@ div.bg-success {
 @media (max-width: 767.98px) {
   .hide-modal {
     right: 0;
-    top: 5px;
+    top: 20px;
   }
 
   .starter-panel {
-    padding-top: 0;
+    padding-top: 1.4em;
+    background-size: cover;
   }
 
   .starter-panel.not-connect {
