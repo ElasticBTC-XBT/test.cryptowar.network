@@ -55,7 +55,7 @@
       <div class="reward-modal-body">
         <span class="reward-text">
           <img src="../assets/v2/congrate-emoji.svg" class="congrate-emoji" />
-          You recived
+          You received
         </span>
         <div class="reward-container">
           <div :class="'reward-img-modal reward-img-' + rewardIndex"></div>
