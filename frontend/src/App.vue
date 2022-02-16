@@ -67,6 +67,16 @@
           </div>
         </div>
       </div>
+      <b-modal id="warning" hide-footer centered>
+        <div class="instructions-list">
+          <p>
+            To recruit your first character you need {{ recruitCost }} xBlade
+            and .001 BNB for gas. You will also need .0015 BNB to do your first
+            few battles, but don't worry, you earn the battle fees back in
+            xBlade rewards immediately!
+          </p>
+        </div>
+      </b-modal>
       <div
         class="fullscreen-warning"
         v-if="
@@ -79,12 +89,12 @@
             errorMessage || 'Get Started With CryptoWars'
           }}</span>
           <div class="instructions-list">
-            <p>
+            <!-- <p>
               To recruit your first character you need {{ recruitCost }} xBlade
               and .001 BNB for gas. You will also need .0015 BNB to do your
               first few battles, but don't worry, you earn the battle fees back
               in xBlade rewards immediately!
-            </p>
+            </p> -->
             <!-- <ul class="unstyled-list">
             <li>1. Buying BNB with fiat: <a href="https://youtu.be/6-sUDUE2RPA" target="_blank" rel="noopener noreferrer">Watch Video</a></li>
             <li>
@@ -298,6 +308,13 @@ export default {
     checkStorage() {
       this.hideWalletWarning =
         localStorage.getItem('hideWalletWarning') === 'true'
+      if (
+        this.ownCharacters.length === 0 &&
+        this.skillBalance === '0' &&
+        !this.hideWalletWarning
+      ) {
+        this.$bvModal.show('warning')
+      }
     },
 
     checkMetamask() {
@@ -503,7 +520,6 @@ export default {
       }
     },
   },
-
   async mounted() {
     this.checkStorage()
 
@@ -1051,6 +1067,12 @@ button.close {
   color: #fff;
 }
 
+#warning .modal-content {
+  display: flex;
+  justify-content: center;
+  width: 750px;
+}
+
 @media (max-width: 577px) {
   #listHeroToCareerModal .modal-body {
     width: 300px;
@@ -1119,6 +1141,24 @@ button.close {
   #claimModal .close,
   #selectHeroOrWeaponModal .close {
     z-index: 1;
+  }
+}
+
+@media (max-width: 767.98px) {
+  #warning .modal-header {
+    position: relative;
+  }
+
+  #warning .modal-header .close {
+    position: absolute;
+    top: -30px;
+    right: -5px;
+  }
+
+  #warning .modal-content {
+    // padding: 0;
+    width: 400px;
+    height: 260px;
   }
 }
 
@@ -1216,6 +1256,9 @@ div.bg-success {
   text-align: center;
   overflow: auto auto;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .starter-panel.not-connect {
@@ -1320,7 +1363,9 @@ div.bg-success {
   }
 
   .starter-panel {
-    padding-top: 0;
+    /* padding-top: 0; */
+    width: 400px;
+    height: 260px;
   }
 
   .starter-panel.not-connect {
@@ -1329,13 +1374,19 @@ div.bg-success {
   }
 
   .starter-panel-heading {
-    font-size: 32px;
+    font-size: 25px;
     margin-top: 0;
+    padding: 0px 10px;
+  }
+
+  .starter-panel p {
+    margin-bottom: 0;
   }
 
   .instructions-list {
     font-size: 16px;
     padding-bottom: 5px;
+    padding: 10px;
   }
 
   .button-div {
@@ -1362,6 +1413,11 @@ div.bg-success {
   .starter-panel.connect-wallet .modal-btn::after {
     bottom: -4px;
     right: 0;
+  }
+
+  #warning .modal-content {
+    width: 400px;
+    height: 260px;
   }
 }
 
