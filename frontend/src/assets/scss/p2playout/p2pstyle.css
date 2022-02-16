@@ -21665,11 +21665,11 @@ button.swiper-pagination-bullet {
 }
 
 .inventory .filters {
-  max-height: 792px;
+  max-height: 830px;
 }
 
 .market .filters {
-  max-height: 1100px;
+  max-height: 1200px;
 }
 
 .filters div {
@@ -21763,6 +21763,14 @@ button.swiper-pagination-bullet {
 
 .filters .search-btn {
   padding: 65px 0;
+}
+
+.filters .search-btn.search {
+  padding-bottom: 10px;
+}
+
+.filters .search-btn.clear {
+  padding: 0;
 }
 
 .filters .search-btn button {
