@@ -37,6 +37,16 @@
         <span class="filter-title">Elements</span>
         <ul class="element-list">
           <li
+            @click="
+              elementFilter = ''
+              saveFilters()
+            "
+            class="element-item"
+            :class="elementFilter === '' && 'selected'"
+          >
+            <span class="element-text" style="margin: 0">Any</span>
+          </li>
+          <li
             class="element-item"
             v-for="element in ['Earth', 'Fire', 'Lightning', 'Water']"
             v-bind:key="element"
@@ -84,10 +94,26 @@
         </div>
       </template>
 
-      <div class="search-btn">
+      <div class="search-btn" style="padding-bottom: 10px">
         <b-button
           class="gtag-link-others btn-blue-bg"
           v-html="`SEARCH`"
+        ></b-button>
+      </div>
+
+      <div class="search-btn" style="padding: 0">
+        <b-button
+          @click="
+            searchValue = ''
+            starFilter = ''
+            elementFilter = ''
+            minPriceFilter = ''
+            maxPriceFilter = ''
+            priceSort = ''
+            saveFilters()
+          "
+          class="gtag-link-others btn-blue-bg"
+          v-html="`CLEAR FILTER`"
         ></b-button>
       </div>
 
@@ -894,7 +920,7 @@ input::-webkit-inner-spin-button {
 }
 
 .filters.market-active.active {
-  height: 1100px;
+  height: 1200px;
 }
 
 @media (width: 1024px) {
