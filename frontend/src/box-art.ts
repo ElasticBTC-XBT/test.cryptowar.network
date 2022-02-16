@@ -5,11 +5,10 @@ import img4 from './assets/blind-box.png'
 
 const allImages = [img1, img2, img3, img4]
 
-export function getBoxArt(img: string) {
-    const [srcImg] = allImages.filter((item) => {
-        return item.includes(img)
-    })
-    console.log(1)
-    console.log(srcImg)
-    return srcImg
+export function getBoxArt(idBox: number) {
+    for (const i in allImages) {
+        if (Number(i) === idBox) {
+            return allImages[i]
+        }
+    }
 }

@@ -88,12 +88,8 @@
         ref="el"
         :class="['glow-' + (nft.stars || 0)]"
       >
-        {{ getBoxArt(nft.image) }} test
-        <img
-          class="placeholder-box"
-          :src="getBoxArt(nft.image)"
-          v-if="isShop"
-        />
+        {{ getBoxArt(nft.id) }} test
+        <img class="placeholder-box" :src="getBoxArt(nft.id)" v-if="isShop" />
         <h2 v-if="isShop" class="nft-name">{{ nft.name }}</h2>
         <div class="box-quantity-wrap">
           <div v-if="!isBlindBox" class="box-quantity">
@@ -191,7 +187,7 @@ export default {
   },
 
   created() {
-    console.log(typeof this.getBoxArt)
+    console.log(this.nft)
   },
 
   async mounted() {
