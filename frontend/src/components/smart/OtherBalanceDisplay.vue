@@ -22,7 +22,12 @@
       </div>
     </div>
 
-    <b-modal id="selectHeroModal" class="modal-box" hide-footer>
+    <b-modal
+      id="selectHeroModal"
+      class="modal-box"
+      ref="selectHeroModal"
+      hide-footer
+    >
       <div class="row list">
         <div
           class="item-wrap"
@@ -95,6 +100,25 @@
         Loading
         <i class="fas fa-spinner fa-spin"></i>
       </span>
+    </b-modal>
+
+    <b-modal
+      class="centered-modal text-center"
+      ref="rewardModal"
+      title="You claimed successfully"
+      ok-variant="secondary btn-pink-bg"
+      ok-only
+      style="justify-content: center"
+    >
+      <div>
+        <div class="stamina-claimed">
+          <img src="../../assets/stamina-point.png" />
+        </div>
+        <div class="stamina-claimed-text">
+          <span style="color: #f58b5b;">{{ staminaClaimed }}</span>
+          Stamina
+        </div>
+      </div>
     </b-modal>
 
     <b-modal
@@ -189,6 +213,7 @@ export default {
       choosenHero: null,
       ownedStamina: 0,
       stamina: 0,
+      staminaClaimed: 0,
       featchUnclaimedStaminaInterval: 0,
     }
   },
@@ -228,13 +253,20 @@ export default {
 
     async onClaimStamina(id, stamina) {
       this.$refs.loadingModal.show()
-      await this.claimStamina({
-        id,
-        stamina,
-      }).finally(() => {
-        this.$refs.loadingModal.hide()
-      })
+      try {
+        await this.claimStamina({
+          id,
+          stamina,
+        })
+        this.$refs.rewardModal.show()
+      }
+      catch {
+        //
+      }
+      this.$refs.loadingModal.hide()
+      this.$refs.selectHeroModal.hide()
       this.ownedStamina = await this.fetchUnclaimedStamina()
+      this.staminaClaimed = this.stamina
       this.stamina = 0
     },
   },
@@ -509,6 +541,24 @@ export default {
   font-size: 18px;
   text-align: center;
 }
+
+.stamina-claimed {
+  background-color: #fff;
+  border-radius: 50%;
+  width: 73px;
+  height: 73px;
+  margin: auto;
+}
+
+.stamina-claimed img {
+  margin: auto;
+}
+
+.stamina-claimed-text {
+  font-size: 40px;
+}
+
+
 
 @media (max-width: 376px) {
   #selectHeroModal .icon-close {

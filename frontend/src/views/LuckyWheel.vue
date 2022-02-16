@@ -27,7 +27,7 @@
     </div>
     <div class="wheel-footer">
       <big-button
-        :disabled="isSpinning || isFetchingPrice"
+        :disabled="disableSpin"
         class="btn btn-blue-bg spin-btn"
         :mainText="`SPIN TO WIN`"
         @click="spin"
@@ -106,15 +106,41 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import BigButton from '../components/BigButton.vue'
 import { fromWeiEther, toBN } from '../utils/common'
+import Bignumber from 'bignumber.js'
 
 export default {
   inject: ['web3'],
 
   components: {
     BigButton,
+  },
+
+  computed: {
+    ...mapState([
+      'skillRewards',
+      'skillBalance',
+      'inGameOnlyFunds',
+    ]),
+
+    formattedTotalSkillBalance() {
+      const xBladeBalance = fromWeiEther(
+        Bignumber.sum(
+          toBN(this.skillBalance),
+          toBN(this.inGameOnlyFunds),
+          toBN(this.skillRewards)
+        )
+      )
+      return toBN(xBladeBalance).toNumber()
+    },
+
+    disableSpin() {
+      return  this.formattedTotalSkillBalance < this.spinWheelPrice ||
+              this.isSpinning ||
+              this.isFetchingPrice
+    },
   },
 
   data: () => {
