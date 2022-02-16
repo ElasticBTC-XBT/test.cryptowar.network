@@ -123,7 +123,8 @@
 
 <script>
 import { mapCacheActions } from 'vuex-cache'
-import { getBoxArt } from '../box-art.ts'
+import { getBoxArt } from '../box-art'
+import { getEnemyArt } from '../enemy-art'
 // Comment
 export default {
   props: ['nft', 'isDefault', 'isShop', 'isLoading', 'favorite', 'isBlindBox'],
