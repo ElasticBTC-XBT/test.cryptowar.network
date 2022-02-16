@@ -15,6 +15,7 @@ const path = require('path')
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
+
   server: {
     port: 8080,
     host: '0.0.0.0',
@@ -63,8 +64,13 @@ export default defineConfig({
   build: {
     commonjsOptions: {
       transformMixedEsModules: true,
+      sourceMap: true,
     },
     rollupOptions: {
+      output: {
+        entryFileNames: `assets/[name].js`,
+        chunkFileNames: `assets/[name].js`,
+      },
       plugins: [
         // Enable rollup polyfills plugin
         // used during production bundling
