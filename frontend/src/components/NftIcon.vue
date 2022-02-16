@@ -88,7 +88,7 @@
         ref="el"
         :class="['glow-' + (nft.stars || 0)]"
       >
-        {{ getBoxArt(nft.image) }}
+        {{ getBoxArt(nft.image) }} test
         <img
           class="placeholder-box"
           :src="getBoxArt(nft.image)"
@@ -183,10 +183,14 @@ export default {
       'fetchTotalRareBoxSupply',
       'fetchTotalCommonBoxSupply',
     ]),
-    getBoxArt,
     imgPath(img) {
       return this.images('./' + img)
     },
+    getBoxArt,
+  },
+
+  created() {
+    console.log(typeof this.getBoxArt)
   },
 
   async mounted() {

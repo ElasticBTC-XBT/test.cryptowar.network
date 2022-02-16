@@ -9,5 +9,6 @@ export function getBoxArt(img: string) {
     const [srcImg] = allImages.filter((item) => {
         return item.includes(img)
     })
+    console.log(srcImg)
     return srcImg
 }
