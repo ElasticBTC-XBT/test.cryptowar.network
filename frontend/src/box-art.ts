@@ -6,7 +6,8 @@ import img4 from './assets/blind-box.png'
 const allImages = [img1, img2, img3, img4]
 
 export function getBoxArt(img: string) {
-    return allImages.filter((item) => {
+    const [srcImg] = allImages.filter((item) => {
         return item.includes(img)
     })
+    return srcImg
 }
