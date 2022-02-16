@@ -88,7 +88,11 @@
         ref="el"
         :class="['glow-' + (nft.stars || 0)]"
       >
-        <img class="placeholder-box" :src="imgPath(nft.image)" v-if="isShop" />
+        <img
+          class="placeholder-box"
+          :src="getBoxArt(nft.image)"
+          v-if="isShop"
+        />
         <h2 v-if="isShop" class="nft-name">{{ nft.name }}</h2>
         <div class="box-quantity-wrap">
           <div v-if="!isBlindBox" class="box-quantity">
@@ -118,6 +122,7 @@
 
 <script>
 import { mapCacheActions } from 'vuex-cache'
+import { getBoxArt } from '../box-art.ts'
 // Comment
 export default {
   props: ['nft', 'isDefault', 'isShop', 'isLoading', 'favorite', 'isBlindBox'],
@@ -161,6 +166,7 @@ export default {
       commonBoxSupply: 0,
       rareBoxSupply: 0,
       quantityOwned: 0,
+      images: import.meta.glob('../assets/*.png'),
     }
   },
 
@@ -176,9 +182,9 @@ export default {
       'fetchTotalRareBoxSupply',
       'fetchTotalCommonBoxSupply',
     ]),
-
+    getBoxArt,
     imgPath(img) {
-      return `/src/assets/${img}`
+      return this.images('./' + img)
     },
   },
 
