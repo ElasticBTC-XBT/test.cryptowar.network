@@ -161,7 +161,6 @@ export default {
       commonBoxSupply: 0,
       rareBoxSupply: 0,
       quantityOwned: 0,
-      images: import.meta.glob('../assets/*.png'),
     }
   },
 
@@ -179,7 +178,7 @@ export default {
     ]),
 
     imgPath(img) {
-      return this.images('./' + img)
+      return `/src/assets/${img}`
     },
   },
 
