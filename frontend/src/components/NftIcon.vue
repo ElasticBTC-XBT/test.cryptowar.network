@@ -88,6 +88,7 @@
         ref="el"
         :class="['glow-' + (nft.stars || 0)]"
       >
+        {{ getBoxArt(nft.image) }}
         <img
           class="placeholder-box"
           :src="getBoxArt(nft.image)"

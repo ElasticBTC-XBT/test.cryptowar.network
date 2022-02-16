@@ -205,6 +205,7 @@
                           :src="getEnemyArt(e.power)"
                           alt="Enemy"
                         />
+                        {{ getEnemyArtAround(e.trait) }}
                         <img
                           class="enemy-around-img"
                           :src="getEnemyArtAround(e.trait)"
