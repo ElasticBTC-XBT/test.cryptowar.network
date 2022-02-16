@@ -1157,8 +1157,8 @@ button.close {
 
   #warning .modal-content {
     // padding: 0;
-    width: 360px;
-    height: 238px;
+    width: 400px;
+    height: 260px;
   }
 }
 
