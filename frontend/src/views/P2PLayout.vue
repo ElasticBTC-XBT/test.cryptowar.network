@@ -559,7 +559,9 @@
     <div
       v-if="careerModeRooms.length > 0"
       v-observe-visibility="handleScrollToEnd"
-    ></div>
+    >
+      <span class="hide-loading">Loading...</span>
+    </div>
   </div>
 </template>
 
@@ -1338,7 +1340,6 @@ export default {
     }
     setTimeout(async () => {
       this.fetchInfoInterval = setInterval(async () => {
-        await this.getCareerRooms({ cursor: 0 })
         await this.getRewardPvp()
         await this.getListParticipatedRoom()
       }, 180000)
@@ -1351,6 +1352,9 @@ export default {
 </script>
 
 <style scoped>
+.hide-loading {
+  visibility: hidden;
+}
 .row {
   width: 100%;
 }
