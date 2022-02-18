@@ -21665,7 +21665,7 @@ button.swiper-pagination-bullet {
 }
 
 .inventory .filters {
-  max-height: 830px;
+  max-height: 850px;
 }
 
 .market .filters {
@@ -21771,6 +21771,7 @@ button.swiper-pagination-bullet {
 
 .filters .search-btn.clear {
   padding: 0;
+  margin-bottom: 20px;
 }
 
 .filters .search-btn button {
@@ -21804,7 +21805,7 @@ button.swiper-pagination-bullet {
     background-color: rgba(0, 0, 0, 0.5);
     will-change: height, background-color;
     transition: height 0.6s, background-color 0.5s;
-    height: 670px;
+    height: 800px;
     margin-bottom: 20px;
   }
 

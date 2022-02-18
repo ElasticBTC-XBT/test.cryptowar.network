@@ -740,6 +740,9 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+.filters-blacksmith.active {
+  height: 810px !important;
+}
 .no-data {
   display: flex;
   justify-content: center;
