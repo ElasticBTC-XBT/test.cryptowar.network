@@ -516,12 +516,18 @@ export default {
     },
   },
 
+  updated() {
+    if (this.ownCharacters.length !== 0) {
+      this.$bvModal.hide('warning')
+    }
+  },
+
   async mounted() {
     setTimeout(() => {
       if (this.ownCharacters.length === 0 && this.skillBalance === '0') {
         this.$bvModal.show('warning')
       }
-    }, 2000)
+    }, 5000)
     document
       .querySelector('.app.app-v2')
       .classList.toggle(
