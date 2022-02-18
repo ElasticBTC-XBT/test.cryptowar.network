@@ -253,6 +253,18 @@ export default {
     },
   },
 
+  beforeUpdate() {
+    setTimeout(() => {
+      if (
+        this.ownCharacters.length === 0 &&
+        this.skillBalance === '0' &&
+        this.hideWalletWarning
+      ) {
+        this.$bvModal.show('warning')
+      }
+    }, 2000)
+  },
+
   watch: {
     defaultAccount(account) {
       this.web3.eth.defaultAccount = account
@@ -517,17 +529,13 @@ export default {
   },
 
   updated() {
+    console.log(this.hideWalletWarning)
     if (this.ownCharacters.length !== 0) {
       this.$bvModal.hide('warning')
     }
   },
 
   async mounted() {
-    setTimeout(() => {
-      if (this.ownCharacters.length === 0 && this.skillBalance === '0') {
-        this.$bvModal.show('warning')
-      }
-    }, 5000)
     document
       .querySelector('.app.app-v2')
       .classList.toggle(
