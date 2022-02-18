@@ -310,13 +310,6 @@ export default {
     checkStorage() {
       this.hideWalletWarning =
         localStorage.getItem('hideWalletWarning') === 'true'
-      if (
-        this.ownCharacters.length === 0 &&
-        this.skillBalance === '0' &&
-        !this.hideWalletWarning
-      ) {
-        this.$bvModal.show('warning')
-      }
     },
 
     checkMetamask() {
@@ -522,7 +515,13 @@ export default {
       }
     },
   },
+
   async mounted() {
+    setTimeout(() => {
+      if (this.ownCharacters.length === 0 && this.skillBalance === '0') {
+        this.$bvModal.show('warning')
+      }
+    }, 2000)
     document
       .querySelector('.app.app-v2')
       .classList.toggle(
@@ -1395,7 +1394,7 @@ div.bg-success {
   }
 
   .starter-panel-heading {
-    font-size: 25px;
+    font-size: 21px;
     margin-top: 0;
     padding: 0px 10px;
   }
@@ -1434,6 +1433,11 @@ div.bg-success {
   .starter-panel.connect-wallet .modal-btn::after {
     bottom: -4px;
     right: 0;
+  }
+
+  .back-btn {
+    top: 20px;
+    left: 25px;
   }
 }
 
