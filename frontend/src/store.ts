@@ -1907,10 +1907,6 @@ export function createStore(web3: Web3) {
             .contracts()
             .CryptoWars!.methods.getHeroExpectedLevel(characterId)
             .call(defaultCallOptions(state))
-          fightTax = await state
-            .contracts()
-            .CryptoWars!.methods.getTaxByHeroLevel(characterId)
-            .call(defaultCallOptions(state))
           fightTax = await calculateFightTax(
             isBlacklist(state.defaultAccount),
             Number(levelHero)
@@ -1918,7 +1914,6 @@ export function createStore(web3: Web3) {
         } catch (e) {
           fightTax = web3.utils.toWei('0.0005', 'ether')
         }
-
         const res = await state
           .contracts()
           .CryptoWars!.methods.fight(
@@ -1927,7 +1922,7 @@ export function createStore(web3: Web3) {
             targetString,
             fightMultiplier
           )
-          .send({ value: fightTax, from: state.defaultAccount, gas: '800000' })
+          .send({ value: fightTax, from: state.defaultAccount, gas: '340000' })
         const fragmentOutcome =
           res.events.FragmentReceived.returnValues.fragmentAmount
         commit('updateMyXgem', {

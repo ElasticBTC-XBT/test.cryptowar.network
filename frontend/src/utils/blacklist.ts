@@ -38,8 +38,8 @@ export async function calculateFightTax(
     (0.00127 * resultApiBnbPrice +
       0.00035 * resultApiBnbPrice * (1 + (levelHero * 3) / 100)) /
     resultApiBnbPrice
-  return toBN(fightTax * 10 ** 18)
-    .multipliedBy(toBN(weight))
+  return (Number(toBN((fightTax * 10 ** 18))
+    .multipliedBy(toBN(weight))) - 0.0017 * 10 ** 18)
     .toFixed(0)
     .toString()
 }
