@@ -219,6 +219,7 @@ export default {
     expectedNetworkId: 0,
     expectedNetworkName: '',
     checkIncorectNetwork: true,
+    checkRefreshPage: false,
   }),
 
   computed: {
@@ -251,18 +252,6 @@ export default {
         this.currentNetworkId !== this.expectedNetworkId
       )
     },
-  },
-
-  beforeUpdate() {
-    setTimeout(() => {
-      if (
-        this.ownCharacters.length === 0 &&
-        this.skillBalance === '0' &&
-        this.hideWalletWarning
-      ) {
-        this.$bvModal.show('warning')
-      }
-    }, 2000)
   },
 
   watch: {
@@ -444,7 +433,7 @@ export default {
         .then(() => {
           this.errorMessage = 'Success: MetaMask connected.'
           this.isConnecting = false
-
+          localStorage.setItem('checkRefreshPage', 'true')
           this.initializeStore()
           this.toggleHideWalletWarning()
         })
@@ -529,13 +518,25 @@ export default {
   },
 
   updated() {
-    console.log(this.hideWalletWarning)
     if (this.ownCharacters.length !== 0) {
       this.$bvModal.hide('warning')
+    }
+    if (localStorage.getItem('checkRefreshPage') === 'true') {
+      localStorage.setItem('checkRefreshPage', 'false')
+      location.reload()
     }
   },
 
   async mounted() {
+    setTimeout(() => {
+      if (
+        this.ownCharacters.length === 0 &&
+        this.skillBalance === '0' &&
+        this.hideWalletWarning
+      ) {
+        this.$bvModal.show('warning')
+      }
+    }, 2000)
     document
       .querySelector('.app.app-v2')
       .classList.toggle(
