@@ -144,10 +144,16 @@
               v-html="`Connect via WalletConnect`"
               @click="connectWalletConnect"
             />
-            <big-button
+            <!-- <big-button
               class="btn btn-pink-bg modal-btn"
               v-html="`Connect via MetaMask`"
               @click="checkMetamask"
+            /> -->
+            <big-button
+              v-bind:class="[isConnecting ? 'disabled' : '']"
+              class="btn btn-pink-bg modal-btn"
+              v-html="`Connect via metamask`"
+              @click="connectMetamask"
             />
           </div>
           <div class="button-div" v-if="isMetamask">
@@ -1391,8 +1397,8 @@ div.bg-success {
 
 @media (max-width: 767.98px) {
   .hide-modal {
-    right: 0;
-    top: 20px;
+    right: 4px;
+    top: 0;
   }
 
   .starter-panel {
