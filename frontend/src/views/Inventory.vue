@@ -21,7 +21,10 @@
           <box-balance-display />
         </div>
       </b-tab>
-      <b-tab title="Others">
+      <b-tab
+        title="Others"
+        :active="isOtherActive"
+      >
         <div class="tab-content">
           <other-balance-display />
         </div>
@@ -98,6 +101,11 @@ export default Vue.extend({
     BoxBalanceDisplay,
     OtherBalanceDisplay,
   },
+
+  props: {
+    isOtherActive: Boolean,
+  },
+
   data() {
     return {
       fetchBoxPriceInterval: 0,

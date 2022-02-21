@@ -58,7 +58,7 @@ function createRouter() {
     routes: [
       { path: '/', name: 'plaza', component: Plaza },
       { path: '/blacksmith', name: 'blacksmith', component: Blacksmith },
-      { path: '/inventory', name: 'inventory', component: Inventory },
+      { path: '/inventory', name: 'inventory', component: Inventory, props: true },
       { path: '/combat', name: 'combat', component: Combat },
       { path: '/combat-pvp', name: 'pvp', component: CombatPVP },
       {

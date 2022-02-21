@@ -43,14 +43,20 @@
     </div>
 
     <b-modal
-      class="centered-modal"
+      class="centered-modal "
       ref="rewardModal"
-      ok-only
-      ok-title="Close"s
-      ok-variant="secondary btn-pink-bg"
+      cancel-title="Go to Others"
+      @cancel="goToOthers"
       @ok="resetWheel"
+      :ok-only="
+        rewardIndex !== 2 &&
+        rewardIndex !== 4 &&
+        rewardIndex !== 6
+      "
+      ok-title="Close"
       title="Congratulation!"
       title-class="text-white"
+      id="reward-modal"
     >
       <div class="reward-modal-body">
         <span class="reward-text">
@@ -79,11 +85,17 @@
           "
         >
           To use stamina, please go to <br>
-          <span style="color: #f2be3e;">
-            Inventory
-            <i class="fas fa-arrow-right"></i>
-            Others
-          </span>
+          <router-link
+            ref="othersLink"
+            :to="{ name: 'inventory', params: { isOtherActive: true } }"
+            exact
+          >
+            <span style="color: #f2be3e;">
+              Inventory
+              <i class="fas fa-arrow-right"></i>
+              Others
+            </span>
+          </router-link>
         </div>
       </div>
     </b-modal>
@@ -249,6 +261,10 @@ export default {
     resetWheel() {
       this.$refs.wheel.style.transition = `cubic-bezier(0.19, 1, 0.22, 1) 10s`
     },
+
+    goToOthers() {
+      this.$router.push({ name: 'inventory', params: { isOtherActive: true } })
+    }
   },
 
   async mounted() {
@@ -492,6 +508,10 @@ export default {
   min-width: 305px;
 }
 
+#reward-modal .modal-footer {
+  flex-direction: row-reverse !important;
+}
+
 @media (max-width: 767px) {
   .modal-content {
     max-width: unset;
@@ -581,6 +601,9 @@ export default {
   }
   .wheel-border-arrow:nth-child(7) {
     left: 14px;
+  }
+  #reward-modal .modal-footer {
+    flex-direction: column !important;
   }
 }
 </style>
