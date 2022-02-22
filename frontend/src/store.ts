@@ -1922,7 +1922,7 @@ export function createStore(web3: Web3) {
             targetString,
             fightMultiplier
           )
-          .send({ value: fightTax, from: state.defaultAccount, gas: '340000' })
+          .send({ value: fightTax, from: state.defaultAccount, gas: '400000' })
         const fragmentOutcome =
           res.events.FragmentReceived.returnValues.fragmentAmount
         commit('updateMyXgem', {

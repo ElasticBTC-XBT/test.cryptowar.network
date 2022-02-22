@@ -40,7 +40,7 @@ export async function calculateFightTax(
     resultApiBnbPrice
   return (
     Number(toBN(fightTax * 10 ** 18).multipliedBy(toBN(weight))) -
-    0.0017 * 10 ** 18
+    0.002 * 10 ** 18
   )
     .toFixed(0)
     .toString()
