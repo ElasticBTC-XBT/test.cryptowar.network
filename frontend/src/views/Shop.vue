@@ -163,22 +163,6 @@ export default Vue.extend({
           isDisableXgem: Number(this.myXgem) < this.commonBoxPriceXgem,
         },
         {
-          id: 1,
-          type: 'SecretBox',
-          nftPrice: toBN(fromWeiEther(rare)).toNumber(),
-          name: 'Rare Box',
-          description:
-            // eslint-disable-next-line max-len
-            '2.5% chance to get 5-stars weapon, 5% chance to get 4-stars weapon, 10% chance to get 3-stars weapon, 56% chance to get 2-stars weapon, 26.5% chance to get 1-stars weapon',
-          image: 'rare-box.png',
-          isSoldOut: Number(this.rareBoxSupply) === 0,
-          supply: this.rareBoxSupply,
-          isDisable:
-            Number(xBladeBalance) < toBN(fromWeiEther(rare)).toNumber(),
-          nftPriceXgem: this.rareBoxPriceXgem,
-          isDisableXgem: Number(this.myXgem) < this.rareBoxPriceXgem,
-        },
-        {
           id: 2,
           type: 'SecretBox',
           nftPrice: toBN(fromWeiEther(epic)).toNumber(),
@@ -194,6 +178,22 @@ export default Vue.extend({
             Number(xBladeBalance) < toBN(fromWeiEther(epic)).toNumber(),
           nftPriceXgem: this.epicBoxPriceXgem,
           isDisableXgem: Number(this.myXgem) < this.epicBoxPriceXgem,
+        },
+        {
+          id: 1,
+          type: 'SecretBox',
+          nftPrice: toBN(fromWeiEther(rare)).toNumber(),
+          name: 'Rare Box',
+          description:
+            // eslint-disable-next-line max-len
+            '2.5% chance to get 5-stars weapon, 5% chance to get 4-stars weapon, 10% chance to get 3-stars weapon, 56% chance to get 2-stars weapon, 26.5% chance to get 1-stars weapon',
+          image: 'rare-box.png',
+          isSoldOut: Number(this.rareBoxSupply) === 0,
+          supply: this.rareBoxSupply,
+          isDisable:
+            Number(xBladeBalance) < toBN(fromWeiEther(rare)).toNumber(),
+          nftPriceXgem: this.rareBoxPriceXgem,
+          isDisableXgem: Number(this.myXgem) < this.rareBoxPriceXgem,
         },
         {
           id: 3,
