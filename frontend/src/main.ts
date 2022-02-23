@@ -6,7 +6,6 @@ import BootstrapVue from 'bootstrap-vue'
 import { BootstrapVueIcons } from 'bootstrap-vue'
 import BootstrapVueDialog from 'bootstrap-vue-dialog'
 import VueObserveVisibility from 'vue-observe-visibility'
-import WalletConnectProvider from '@walletconnect/web3-provider'
 
 import Web3 from 'web3'
 
@@ -33,24 +32,20 @@ if (import.meta.env.VITE_EXPECTED_NETWORK_ID) {
 }
 const expectedNetworkName = import.meta.env.VITE_EXPECTED_NETWORK_NAME
 
-const walletConnectProvider = new WalletConnectProvider({
-  rpc: {
-    97: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
-    56: 'https://bsc-dataseed.binance.org/',
-  },
-})
-
 const web3 = new Web3(
   Web3.givenProvider || import.meta.env.VITE_WEB3_FALLBACK_PROVIDER
 )
+
 let networkCurrent = 0
 const checkNetwork = async () => {
   try {
-    const networkId = await web3.eth.net.getId()
-    if (networkCurrent !== 0 && networkId !== networkCurrent) {
-      location.reload()
+    if(web3.currentProvider) {
+      const networkId = await web3.eth.net.getId()
+      if (networkCurrent !== 0 && networkId !== networkCurrent) {
+        location.reload()
+      }
+      networkCurrent = networkId
     }
-    networkCurrent = networkId
   } catch (e) {
     console.error(e)
   }
@@ -78,7 +73,6 @@ new Vue({
   store,
   provide: {
     web3,
-    walletConnectProvider,
     // maybe feature flags should just reference the feature-flags.ts module directly?
     featureFlagStakeOnly,
     featureFlagRaid,

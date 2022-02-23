@@ -69,12 +69,31 @@ const BSC_TESTNET = {
 }
 
 import Web3 from 'web3'
-const web3 = new Web3(
-  Web3.givenProvider || import.meta.env.VITE_WEB3_FALLBACK_PROVIDER
+import WalletConnectProvider from '@walletconnect/web3-provider'
+
+
+let walletConnectProvider = new WalletConnectProvider({
+  rpc: {
+    97: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
+    56: 'https://bsc-dataseed.binance.org/',
+  },
+})
+
+let web3 = new Web3(
+  Web3.givenProvider || walletConnectProvider || import.meta.env.VITE_WEB3_FALLBACK_PROVIDER
 )
 
+if (localStorage.getItem('walletconnect')) {
+  walletConnectProvider = JSON.parse(localStorage.getItem('walletconnect'))
+}
+
 export const getAddressesAuto = async () => {
-  const currentID = await web3.eth.net.getId()
+  let currentID = 0
+  if (walletConnectProvider !== null) {
+    currentID = walletConnectProvider.chainId
+  } else {
+    currentID = await web3.eth.net.getId()
+  }
   if (currentID === parseInt(BSC_MAINNET.VUE_APP_NETWORK_ID, 10))
     return BSC_MAINNET
   if (currentID === parseInt(BSC_TESTNET.VUE_APP_NETWORK_ID, 10))

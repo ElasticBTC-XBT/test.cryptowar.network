@@ -139,21 +139,14 @@
           </button>
           <div class="button-div" v-if="!isMetamask">
             <big-button
-              v-bind:class="[isConnecting ? 'disabled' : '']"
               class="btn btn-pink-bg modal-btn"
-              v-html="`Connect via WalletConnect`"
+              v-html="`WalletConnect`"
               @click="connectWalletConnect"
             />
-            <!-- <big-button
-              class="btn btn-pink-bg modal-btn"
-              v-html="`Connect via MetaMask`"
-              @click="checkMetamask"
-            /> -->
             <big-button
-              v-bind:class="[isConnecting ? 'disabled' : '']"
               class="btn btn-pink-bg modal-btn"
-              v-html="`Connect via metamask`"
-              @click="connectMetamask"
+              v-html="`MetaMask`"
+              @click="checkMetamask"
             />
           </div>
           <div class="button-div" v-if="isMetamask">
@@ -177,8 +170,6 @@
 
 <script>
 import BN from 'bignumber.js'
-import WalletConnect from '@walletconnect/client'
-import QRCodeModal from '@walletconnect/qrcode-modal'
 import { mapState, mapActions, mapGetters } from 'vuex'
 import _ from 'lodash'
 import Vue from 'vue'
@@ -188,6 +179,8 @@ import BigButton from './components/BigButton.vue'
 import SmallButton from './components/SmallButton.vue'
 import NavBar from './components/NavBar.vue'
 import { getAddresses } from './addresses'
+import WalletConnectProvider from '@walletconnect/web3-provider'
+
 
 Vue.directive('visible', (el, bind) => {
   el.style.visibility = bind.value ? 'visible' : 'hidden'
@@ -204,7 +197,7 @@ const xBladeAsset = {
 }
 
 export default {
-  inject: ['web3', 'walletConnectProvider'],
+  inject: ['web3'],
   components: {
     NavBar,
     BigButton,
@@ -217,14 +210,11 @@ export default {
     isConnecting: false,
     recruitCost: '',
     isMaintenance: false,
-    connector: new WalletConnect({
-      bridge: 'https://bridge.walletconnect.org', // Required
-      qrcodeModal: QRCodeModal,
-    }),
-    isMetamask: undefined,
+    isMetamask: false,
     expectedNetworkId: 0,
     expectedNetworkName: '',
     checkIncorectNetwork: true,
+    walletConnectProvider: null,
     checkRefreshPage: false,
   }),
 
@@ -456,39 +446,31 @@ export default {
       this.isConnecting = true
       this.errorMessage = 'Connecting to WalletConnect...'
 
-      this.web3.setProvider(this.walletConnectProvider)
-      await this.walletConnectProvider.enable()
-      QRCodeModal.close()
+      try {
+        this.walletConnectProvider = new WalletConnectProvider({
+          rpc: {
+            97: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
+            56: 'https://bsc-dataseed.binance.org/',
+          },
+        }).
 
-      if (!this.connector.connected) {
-        this.connector.createSession()
+        this.walletConnectProvider.on('connect', () => {
+          this.toggleHideWalletWarning()
+        })
+
+        await this.walletConnectProvider.enable()
+        this.web3.setProvider(this.walletConnectProvider)
+
+        this.errorMessage = "Success: Walletconnect connected."
+        this.isConnecting = false
+
+        this.initializeStore()
       }
-
-      // Subscribe to connection events
-      this.connector.on('connect', (error) => {
-        if (error) {
-          throw error
-        }
-
-        const web3 = this.web3.currentProvider
-        web3
-          .request({ method: 'eth_getAccounts' })
-          .then(() => {
-            this.errorMessage = 'Success: WalletConnect connected.'
-            this.isConnecting = false
-
-            this.initializeStore()
-            this.toggleHideWalletWarning()
-          })
-          .catch(() => {
-            this.errorMessage =
-              'Error: WalletConnect could not get permissions.'
-            this.isConnecting = false
-          })
-      })
-      this.errorMessage = 'Success: WalletConnect connected.'
-      this.isConnecting = false
-      this.hideWalletWarning = true
+      catch(errorMessage) {
+        this.web3.setProvider(this.walletConnectProvider)
+        this.errorMessage = "Get Started With CryptoWars"
+        console.error(errorMessage)
+      }
     },
 
     toggleHideWalletWarning() {
@@ -534,6 +516,10 @@ export default {
   },
 
   async mounted() {
+    if (localStorage.getItem("walletconnect")) {
+      this.connectWalletConnect()
+    }
+
     setTimeout(() => {
       if (
         this.ownCharacters.length === 0 &&
@@ -543,6 +529,7 @@ export default {
         this.$bvModal.show('warning')
       }
     }, 2000)
+
     document
       .querySelector('.app.app-v2')
       .classList.toggle(
@@ -577,9 +564,6 @@ export default {
     })
 
     this.showWarningDialog()
-    if (this.connector.connected) {
-      this.connectWalletConnect()
-    }
   },
 
   async created() {
@@ -587,7 +571,15 @@ export default {
     // if(window.location.pathname !== '/maintenance'){
     //   window.location.href = 'maintenance';
     // }
-    const expectedNetworkID = await this.web3.eth.net.getId()
+    let expectedNetworkID = 0
+
+    if (this.walletConnectProvider?.connected) {
+      expectedNetworkID = this.walletConnectProvider.chainId
+    }
+    else {
+      expectedNetworkID = await this.web3.eth.net.getId()
+    }
+
     if (
       getAddresses(expectedNetworkID).VUE_APP_EXPECTED_NETWORK_ID !==
       expectedNetworkID.toString()
