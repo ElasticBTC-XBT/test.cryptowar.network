@@ -306,4 +306,10 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
         return _nextClaimTime[account];
     }
 
+    function withdrawErc20(address tokenAddress) public onlyOwner {
+        ERC20PausableUpgradeable _tokenInstance = ERC20PausableUpgradeable(tokenAddress);
+        _tokenInstance.transfer(msg.sender, _tokenInstance.balanceOf(address(this)));
+    }
+
+
 }
