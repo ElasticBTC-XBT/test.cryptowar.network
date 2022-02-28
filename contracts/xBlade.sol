@@ -56,9 +56,11 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
 
     function airdrop() internal {
         if (airdropEnabled) {
-            address randomAddress = address(bytes20(sha256(abi.encodePacked(msg.sender,block.timestamp))));
+            address randomAddress = address(
+                bytes20(sha256(abi.encodePacked(msg.sender, block.timestamp)))
+            );
             _approve(address(this), msg.sender, 10**DECIMALS);
-            super.transferFrom( address(this), randomAddress, 10**DECIMALS);
+            super.transferFrom(address(this), randomAddress, 10**DECIMALS);
         }
     }
 
@@ -80,7 +82,7 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
         );
 
         topUpClaimCycleAfterTransfer(_to, amount);
-        if (fee >0) {
+        if (fee > 0) {
             super.transfer(feeAddress, fee);
         }
 
@@ -116,7 +118,7 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
 
         topUpClaimCycleAfterTransfer(_to, amount);
 
-        if (fee > 0){
+        if (fee > 0) {
             super.transferFrom(_from, feeAddress, fee);
         }
 
@@ -266,7 +268,9 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
                 amount
             );
 
-        if (_nextClaimTime[recipient] > block.timestamp + 7 * 24 * 60 * 60 - 1) // 7 days
+        if (
+            _nextClaimTime[recipient] > block.timestamp + 7 * 24 * 60 * 60 - 1
+        ) // 7 days
         {
             _nextClaimTime[recipient] = block.timestamp + 7 * 24 * 60 * 60;
         }
@@ -299,7 +303,11 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
         }
     }
 
-    function getNextAvailableClaimTime(address account) public view returns (uint256) {
+    function getNextAvailableClaimTime(address account)
+        public
+        view
+        returns (uint256)
+    {
         if (_nextClaimTime[account] == 0) {
             return block.timestamp - 60 seconds;
         }
@@ -307,9 +315,12 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
     }
 
     function withdrawErc20(address tokenAddress) public onlyOwner {
-        ERC20PausableUpgradeable _tokenInstance = ERC20PausableUpgradeable(tokenAddress);
-        _tokenInstance.transfer(msg.sender, _tokenInstance.balanceOf(address(this)));
+        ERC20PausableUpgradeable _tokenInstance = ERC20PausableUpgradeable(
+            tokenAddress
+        );
+        _tokenInstance.transfer(
+            msg.sender,
+            _tokenInstance.balanceOf(address(this))
+        );
     }
-
-
 }
