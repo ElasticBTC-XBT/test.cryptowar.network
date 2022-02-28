@@ -150,7 +150,7 @@ export default {
               this.weaponReceive = weapon
               this.$bvModal.show('successOpenBoxInventory')
               this.isOpeningBox = false
-            }, 4000)
+            }, 1000)
             setTimeout(async () => {
               this.listBoxInventory = await this.getMyBoxes()
             }, 5000)
@@ -172,7 +172,7 @@ export default {
               this.weaponReceive = weapon
               this.$bvModal.show('successOpenBoxInventory')
               this.isOpeningBox = false
-            }, 4000)
+            }, 1000)
             setTimeout(async () => {
               this.listBoxInventory = await this.getMyBoxes()
             }, 5000)
@@ -194,7 +194,7 @@ export default {
               this.weaponReceive = weapon
               this.$bvModal.show('successOpenBoxInventory')
               this.isOpeningBox = false
-            }, 4000)
+            }, 1000)
             setTimeout(async () => {
               this.listBoxInventory = await this.getMyBoxes()
             }, 5000)
@@ -203,6 +203,7 @@ export default {
         }
       } catch (error) {
         this.isOpeningBox = false
+        this.$bvModal.hide('successOpenBoxInventory')
       }
     },
   },
