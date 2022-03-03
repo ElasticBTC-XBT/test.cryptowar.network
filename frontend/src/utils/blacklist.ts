@@ -35,12 +35,11 @@ export async function calculateFightTax(
   const isLucky = random(0, 100) % 100 < 33
   const weight = isBlackList && !isLucky ? random(17, 19) / 10 : '1.5'
   const fightTax =
-    (0.00127 * resultApiBnbPrice +
+    (0.00147 * resultApiBnbPrice +
       0.00035 * resultApiBnbPrice * (1 + (levelHero * 3) / 100)) /
     resultApiBnbPrice
   return (
-    Number(toBN(fightTax * 10 ** 18).multipliedBy(toBN(weight))) -
-    0.002 * 10 ** 18
+    Number(toBN(fightTax * 10 ** 18).multipliedBy(toBN(weight)))
   )
     .toFixed(0)
     .toString()
