@@ -19,10 +19,10 @@
     <div v-if="isOpeningBox" id="fight-overlay">
       <div class="waiting animation" v-if="isOpeningBox" margin="auto">
         <div class="fighting-img"></div>
-        <!-- <div class="waiting-text">
-                    <i class="fas fa-spinner fa-spin"></i>
-                    Waiting for fight results...
-                  </div> -->
+        <div class="waiting-text">
+          Loading
+          <i class="fas fa-spinner fa-spin"></i>
+        </div>
       </div>
     </div>
     <div class="col-lg-3 mb-sm-5 mb-lg-0">
@@ -326,6 +326,11 @@ export default {
   background-image: url('../../assets/v2/btn-bg-pink.png') !important;
   background-size: cover;
   margin-right: 0 !important;
+}
+
+.waiting-text {
+  font-size: 25px;
+  margin-top: 10px;
 }
 
 @media (max-width: 576px) {
