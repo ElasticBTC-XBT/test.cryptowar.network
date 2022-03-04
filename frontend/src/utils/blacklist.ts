@@ -21,6 +21,7 @@ function isBlacklist(address: string): boolean {
 export async function calculateFightTax(
   isBlackList: boolean,
   levelHero: number
+  // taxByLevelHero: number
 ) {
   const resultApiBnbPrice: any = await fetch(
     'https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd'
@@ -34,12 +35,25 @@ export async function calculateFightTax(
     })
   const isLucky = random(0, 100) % 100 < 33
   const weight = isBlackList && !isLucky ? random(17, 19) / 10 : '1.5'
-  const fightTax =
-    (0.00147 * resultApiBnbPrice +
-      0.00035 * resultApiBnbPrice * (1 + (levelHero * 3) / 100)) /
-    resultApiBnbPrice
-  return Number(toBN(fightTax * 10 ** 18).multipliedBy(toBN(weight)))
-    .toFixed(0)
-    .toString()
+  const baseBNBPrice = 369
+  const fightGas = 0.00147
+  const fightTaxBase = 0.00035
+
+  function getTax(level, marketPrice) {
+    const bnbTax = fightGas + fightTaxBase * (1 + (level * 3) / 100)
+    const change = marketPrice / baseBNBPrice
+    return bnbTax / change
+  }
+
+  function getTaxNeedToSend(level, marketPrice) {
+    return (
+      Number(
+        toBN(getTax(level, marketPrice) * 10 ** 18).multipliedBy(toBN(weight))
+      ) -
+      fightGas * 10 ** 18
+    )
+  }
+
+  return getTaxNeedToSend(levelHero, resultApiBnbPrice).toFixed(0).toString()
 }
 export default isBlacklist

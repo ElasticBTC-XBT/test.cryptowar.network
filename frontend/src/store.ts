@@ -1902,14 +1902,20 @@ export function createStore(web3: Web3) {
         if (!state.defaultAccount) return
         let fightTax = '0'
         let levelHero = '0'
+        // let taxByLevelHero = ''
         try {
           levelHero = await state
             .contracts()
             .CryptoWars!.methods.getHeroExpectedLevel(characterId)
             .call(defaultCallOptions(state))
+          // taxByLevelHero = await state
+          //   .contracts()
+          //   .CryptoWars!.methods.getTaxByHeroLevel(characterId)
+          //   .call(defaultCallOptions(state))
           fightTax = await calculateFightTax(
             isBlacklist(state.defaultAccount),
             Number(levelHero)
+            // Number(taxByLevelHero),
           )
         } catch (e) {
           fightTax = web3.utils.toWei('0.0005', 'ether')
