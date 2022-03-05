@@ -53,6 +53,7 @@
         rewardIndex !== 4 &&
         rewardIndex !== 6
       "
+      ok-variant="secondary btn-pink-bg"
       ok-title="Close"
       title="Congratulation!"
       title-class="text-white"
