@@ -181,7 +181,6 @@ import NavBar from './components/NavBar.vue'
 import { getAddresses } from './addresses'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 
-
 Vue.directive('visible', (el, bind) => {
   el.style.visibility = bind.value ? 'visible' : 'hidden'
 })
@@ -461,14 +460,13 @@ export default {
         await this.walletConnectProvider.enable()
         this.web3.setProvider(this.walletConnectProvider)
 
-        this.errorMessage = "Success: Walletconnect connected."
+        this.errorMessage = 'Success: Walletconnect connected.'
         this.isConnecting = false
 
         this.initializeStore()
-      }
-      catch(errorMessage) {
+      } catch (errorMessage) {
         this.web3.setProvider(this.walletConnectProvider)
-        this.errorMessage = "Get Started With CryptoWars"
+        this.errorMessage = 'Get Started With CryptoWars'
         console.error(errorMessage)
       }
     },
@@ -516,7 +514,7 @@ export default {
   },
 
   async mounted() {
-    if (localStorage.getItem("walletconnect")) {
+    if (localStorage.getItem('walletconnect')) {
       this.connectWalletConnect()
     }
 
@@ -575,8 +573,7 @@ export default {
 
     if (this.walletConnectProvider?.connected) {
       expectedNetworkID = this.walletConnectProvider.chainId
-    }
-    else {
+    } else {
       expectedNetworkID = await this.web3.eth.net.getId()
     }
 
