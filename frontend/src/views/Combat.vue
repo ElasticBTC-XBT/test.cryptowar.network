@@ -576,7 +576,7 @@ export default Vue.extend({
     },
 
     setStaminaSelectorValues() {
-      if (this.currentCharacterStamina < 40) {
+      if (this.currentCharacterStamina < 200) {
         return [
           {
             value: this.fightMultiplier,
@@ -587,36 +587,8 @@ export default Vue.extend({
       }
 
       const choices = [
-        {
-          value: null,
-          text: 'Please select Stamina Cost per Fight',
-          disabled: true,
-        },
+        { value: 5, text: 200 }
       ]
-
-      const addChoices = []
-
-      if (this.currentCharacterStamina >= 200) {
-        addChoices.push({ value: 5, text: 200 })
-      }
-
-      if (this.currentCharacterStamina >= 160) {
-        addChoices.push({ value: 4, text: 160 })
-      }
-
-      if (this.currentCharacterStamina >= 120) {
-        addChoices.push({ value: 3, text: 120 })
-      }
-
-      if (this.currentCharacterStamina >= 80) {
-        addChoices.push({ value: 2, text: 80 })
-      }
-
-      if (this.currentCharacterStamina >= 40) {
-        addChoices.push({ value: 1, text: 40 })
-      }
-
-      choices.push(...addChoices.reverse())
 
       return choices
     },
