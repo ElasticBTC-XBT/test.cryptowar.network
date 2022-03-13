@@ -64,7 +64,6 @@
                 <b-form-select
                   v-model="fightMultiplier"
                   :options="setStaminaSelectorValues()"
-                  @change="setFightMultiplier()"
                   class="ml-3"
                 >
                 </b-form-select>
@@ -133,7 +132,6 @@
                         id="select-stamina"
                         v-model="fightMultiplier"
                         :options="setStaminaSelectorValues()"
-                        @change="setFightMultiplier()"
                       >
                       </b-form-select>
                       <label for="select-stamina" class="dropdown-icon"></label>
@@ -298,7 +296,7 @@ export default Vue.extend({
       timeMinutes: null,
       fightXpGain: 16,
       selectedWeapon: null,
-      fightMultiplier: Number(localStorage.getItem('fightMultiplier')),
+      fightMultiplier: 5,
       staminaPerFight: 40,
       soundFight: new Audio(SoundFight),
       soundWin: new Audio(SoundWin),
@@ -317,7 +315,7 @@ export default Vue.extend({
       () => (this.timeMinutes = new Date().getMinutes()),
       20000
     )
-    this.staminaPerFight = 40 * Number(localStorage.getItem('fightMultiplier'))
+    this.staminaPerFight = 40 * 5
   },
 
   computed: {
@@ -569,10 +567,6 @@ export default Vue.extend({
         Math.floor((targetToFight.power / totalPower) * this.fightXpGain) *
         this.fightMultiplier
       )
-    },
-
-    setFightMultiplier() {
-      localStorage.setItem('fightMultiplier', this.fightMultiplier.toString())
     },
 
     setStaminaSelectorValues() {
