@@ -323,4 +323,19 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
             _tokenInstance.balanceOf(address(this))
         );
     }
+
+    /**
+     * @dev Returns the name of the token.
+     */
+    function name() public view override returns (string memory) {
+        return "OPEN";
+    }
+
+    /**
+     * @dev Returns the symbol of the token, usually a shorter version of the
+     * name.
+     */
+    function symbol() public view override returns (string memory) {
+        return "OPEN WORLD";
+    }
 }
