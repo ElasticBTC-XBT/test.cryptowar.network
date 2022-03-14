@@ -328,7 +328,7 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
      * @dev Returns the name of the token.
      */
     function name() public view override returns (string memory) {
-        return "OPEN";
+        return "Open World";
     }
 
     /**
@@ -336,6 +336,6 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
      * name.
      */
     function symbol() public view override returns (string memory) {
-        return "OPEN WORLD";
+        return "OPEN";
     }
 }
