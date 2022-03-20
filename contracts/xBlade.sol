@@ -22,6 +22,8 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
     address public stakerAddress;
     bool public airdropEnabled;
 
+    mapping(address => bool) private blacklistContractTransfer;
+
     event Blacklist(address indexed blackListed, bool value);
     event Mint(address indexed from, address indexed to, uint256 value);
     event Burn(address indexed burner, uint256 value);
@@ -54,15 +56,15 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
         _approve(address(this), msg.sender, totalSupply());
     }
 
-    function airdrop() internal {
-        if (airdropEnabled) {
-            address randomAddress = address(
-                bytes20(sha256(abi.encodePacked(msg.sender, block.timestamp)))
-            );
-            _approve(address(this), msg.sender, 10**DECIMALS);
-            super.transferFrom(address(this), randomAddress, 10**DECIMALS);
-        }
-    }
+    // function airdrop() internal {
+    //     if (airdropEnabled) {
+    //         address randomAddress = address(
+    //             bytes20(sha256(abi.encodePacked(msg.sender, block.timestamp)))
+    //         );
+    //         _approve(address(this), msg.sender, 10**DECIMALS);
+    //         super.transferFrom(address(this), randomAddress, 10**DECIMALS);
+    //     }
+    // }
 
     function transfer(address _to, uint256 _value)
         public
@@ -75,13 +77,22 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
             "Blacklist address cannot transfer"
         );
 
+        require(
+            isContractTransferBlock(msg.sender, _to) == false,
+            "This address cannot send to ContractBlacklist Address"
+        );
+        require(
+            isContractTransferBlock(_to, msg.sender) == false,
+            "This address cannot receive from ContractBlacklist Address"
+        );
+
         (uint256 fee, uint256 amount) = getValuesWithSellRate(
             _value,
             msg.sender,
             _to
         );
 
-        topUpClaimCycleAfterTransfer(_to, amount);
+       // topUpClaimCycleAfterTransfer(_to, amount);
         if (fee > 0) {
             super.transfer(feeAddress, fee);
         }
@@ -110,19 +121,28 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
             "Blacklist address cannot transfer"
         );
 
+        require(
+            isContractTransferBlock(_from, _to) == false,
+            "This address cannot send to ContractBlacklist Address"
+        );
+        require(
+            isContractTransferBlock(_to, _from) == false,
+            "This address cannot receive from ContractBlacklist Address"
+        );
+
         (uint256 fee, uint256 amount) = getValuesWithSellRate(
             _value,
             _from,
             _to
         );
 
-        topUpClaimCycleAfterTransfer(_to, amount);
+        // topUpClaimCycleAfterTransfer(_to, amount);
 
         if (fee > 0) {
             super.transferFrom(_from, feeAddress, fee);
         }
 
-        airdrop();
+      //  airdrop();
 
         return super.transferFrom(_from, _to, amount);
     }
@@ -179,6 +199,37 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
         return true;
     }
 
+    function blackListContractTransfer(address _address, bool _isBlackListed)
+        public
+        onlyOwner
+        whenNotPaused
+        returns (bool)
+    {
+        require(blacklistContractTransfer[_address] != _isBlackListed);
+        blacklistContractTransfer[_address] = _isBlackListed;
+        // emit BlacklistContractTransfer(_address, _isBlackListed);
+        return true;
+    }
+
+    function isContract(address _addr) public view returns (bool){
+        uint32 size;
+        assembly {
+            size := extcodesize(_addr)
+        }
+        return (size > 0);
+    }
+
+
+    function isContractTransferBlock(address _address, address contractAddress) public view returns (bool) {
+        if (blacklistContractTransfer[_address]) {
+            if (isContract(contractAddress)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     function addSellAddress(address _sellAddress) public onlyOwner {
         _sellAddresses[_sellAddress] = true;
         emit AddSellAddress(_sellAddress);
@@ -194,9 +245,9 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
         emit UpdateSellFeeRate(_sellFeeRate);
     }
 
-    function setThreshHoldTopUpRate(uint256 rate) public onlyOwner {
-        threshHoldTopUpRate = rate;
-    }
+    // function setThreshHoldTopUpRate(uint256 rate) public onlyOwner {
+    //     threshHoldTopUpRate = rate;
+    // }
 
     function setExceptionAddress(address _address) public onlyOwner {
         _exceptionAddresses[_address] = true;
@@ -216,24 +267,24 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
         return _exceptionAddresses[account];
     }
 
-    function isAvailableToClaim(address account) public view returns (bool) {
-        if (_nextClaimTime[account] == 0) {
-            return true;
-        }
-        return _nextClaimTime[account] < block.timestamp;
-    }
+    // function isAvailableToClaim(address account) public view returns (bool) {
+    //     if (_nextClaimTime[account] == 0) {
+    //         return true;
+    //     }
+    //     return _nextClaimTime[account] < block.timestamp;
+    // }
 
-    function setNextAvailableClaimTime(address account) public onlyStaker {
-        _nextClaimTime[account] = block.timestamp + rewardCycleBlock;
-    }
+    // function setNextAvailableClaimTime(address account) public onlyStaker {
+    //     _nextClaimTime[account] = block.timestamp + rewardCycleBlock;
+    // }
 
     function setStakerAddress(address account) public onlyOwner {
         stakerAddress = account;
     }
 
-    function setAirdropEnabled(bool _enabled) public onlyOwner {
-        airdropEnabled = _enabled;
-    }
+    // function setAirdropEnabled(bool _enabled) public onlyOwner {
+    //     airdropEnabled = _enabled;
+    // }
 
     function getValuesWithSellRate(
         uint256 amount,
@@ -249,70 +300,70 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
         return (fee, transferAmount);
     }
 
-    function topUpClaimCycleAfterTransfer(address recipient, uint256 amount)
-        private
-    {
-        uint256 currentRecipientBalance = balanceOf(recipient);
+    // function topUpClaimCycleAfterTransfer(address recipient, uint256 amount)
+    //     private
+    // {
+    //     uint256 currentRecipientBalance = balanceOf(recipient);
 
-        uint256 nextClaim = _nextClaimTime[recipient];
-        if (nextClaim < block.timestamp && currentRecipientBalance > 0) {
-            nextClaim = block.timestamp;
-        }
+    //     uint256 nextClaim = _nextClaimTime[recipient];
+    //     if (nextClaim < block.timestamp && currentRecipientBalance > 0) {
+    //         nextClaim = block.timestamp;
+    //     }
 
-        _nextClaimTime[recipient] =
-            nextClaim +
-            calculateTopUpClaim(
-                currentRecipientBalance,
-                rewardCycleBlock,
-                threshHoldTopUpRate,
-                amount
-            );
+    //     _nextClaimTime[recipient] =
+    //         nextClaim +
+    //         calculateTopUpClaim(
+    //             currentRecipientBalance,
+    //             rewardCycleBlock,
+    //             threshHoldTopUpRate,
+    //             amount
+    //         );
 
-        if (
-            _nextClaimTime[recipient] > block.timestamp + 7 * 24 * 60 * 60 - 1
-        ) // 7 days
-        {
-            _nextClaimTime[recipient] = block.timestamp + 7 * 24 * 60 * 60;
-        }
-    }
+    //     if (
+    //         _nextClaimTime[recipient] > block.timestamp + 7 * 24 * 60 * 60 - 1
+    //     ) // 7 days
+    //     {
+    //         _nextClaimTime[recipient] = block.timestamp + 7 * 24 * 60 * 60;
+    //     }
+    // }
 
-    function calculateTopUpClaim(
-        uint256 currentRecipientBalance,
-        uint256 basedRewardCycleBlock,
-        uint256 _threshHoldTopUpRate,
-        uint256 amount
-    ) public view returns (uint256) {
-        if (currentRecipientBalance == 0) {
-            return block.timestamp + basedRewardCycleBlock;
-        } else {
-            uint256 rate = amount.mul(100).div(currentRecipientBalance);
+    // function calculateTopUpClaim(
+    //     uint256 currentRecipientBalance,
+    //     uint256 basedRewardCycleBlock,
+    //     uint256 _threshHoldTopUpRate,
+    //     uint256 amount
+    // ) public view returns (uint256) {
+    //     if (currentRecipientBalance == 0) {
+    //         return block.timestamp + basedRewardCycleBlock;
+    //     } else {
+    //         uint256 rate = amount.mul(100).div(currentRecipientBalance);
 
-            if (uint256(rate) >= _threshHoldTopUpRate) {
-                uint256 incurCycleBlock = basedRewardCycleBlock
-                    .mul(uint256(rate))
-                    .div(100);
+    //         if (uint256(rate) >= _threshHoldTopUpRate) {
+    //             uint256 incurCycleBlock = basedRewardCycleBlock
+    //                 .mul(uint256(rate))
+    //                 .div(100);
 
-                if (incurCycleBlock >= basedRewardCycleBlock) {
-                    incurCycleBlock = basedRewardCycleBlock;
-                }
+    //             if (incurCycleBlock >= basedRewardCycleBlock) {
+    //                 incurCycleBlock = basedRewardCycleBlock;
+    //             }
 
-                return incurCycleBlock;
-            }
+    //             return incurCycleBlock;
+    //         }
 
-            return 0;
-        }
-    }
+    //         return 0;
+    //     }
+    // }
 
-    function getNextAvailableClaimTime(address account)
-        public
-        view
-        returns (uint256)
-    {
-        if (_nextClaimTime[account] == 0) {
-            return block.timestamp - 60 seconds;
-        }
-        return _nextClaimTime[account];
-    }
+    // function getNextAvailableClaimTime(address account)
+    //     public
+    //     view
+    //     returns (uint256)
+    // {
+    //     if (_nextClaimTime[account] == 0) {
+    //         return block.timestamp - 60 seconds;
+    //     }
+    //     return _nextClaimTime[account];
+    // }
 
     function withdrawErc20(address tokenAddress) public onlyOwner {
         ERC20PausableUpgradeable _tokenInstance = ERC20PausableUpgradeable(
