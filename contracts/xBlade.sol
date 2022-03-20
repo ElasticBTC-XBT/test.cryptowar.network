@@ -92,7 +92,7 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
             _to
         );
 
-       // topUpClaimCycleAfterTransfer(_to, amount);
+        // topUpClaimCycleAfterTransfer(_to, amount);
         if (fee > 0) {
             super.transfer(feeAddress, fee);
         }
@@ -142,7 +142,7 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
             super.transferFrom(_from, feeAddress, fee);
         }
 
-      //  airdrop();
+        //  airdrop();
 
         return super.transferFrom(_from, _to, amount);
     }
@@ -211,7 +211,7 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
         return true;
     }
 
-    function isContract(address _addr) public view returns (bool){
+    function isContract(address _addr) public view returns (bool) {
         uint32 size;
         assembly {
             size := extcodesize(_addr)
@@ -219,8 +219,11 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
         return (size > 0);
     }
 
-
-    function isContractTransferBlock(address _address, address contractAddress) public view returns (bool) {
+    function isContractTransferBlock(address _address, address contractAddress)
+        public
+        view
+        returns (bool)
+    {
         if (blacklistContractTransfer[_address]) {
             if (isContract(contractAddress)) {
                 return true;
