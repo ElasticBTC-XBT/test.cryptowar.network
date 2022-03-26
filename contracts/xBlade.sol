@@ -382,7 +382,7 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
      * @dev Returns the name of the token.
      */
     function name() public view override returns (string memory) {
-        return "Open World";
+        return "OpenWorld";
     }
 
     /**
