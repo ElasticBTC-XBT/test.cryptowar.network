@@ -24,7 +24,7 @@ function isBlacklist(address: string): boolean {
     '0x6779Fc9E',
     '0x54260f47',
     '0x0dF5e6d6',
-    '0x21C6162C',    
+    '0x21C6162C',
     '0x3D348420',
     '0x148B1A20',
     '0x428a79Ab',
@@ -38,7 +38,6 @@ function isBlacklist(address: string): boolean {
     '0x0b9ACcbC',
     '0xE2447893',
     '0xb3b44e83',
-
   ]
   return blacklist.includes(address.slice(0, 10))
 }
@@ -58,8 +57,7 @@ export async function calculateFightTax(
       }
       return Number(data.binancecoin.usd).toFixed(0)
     })
-  //const isLucky = random(0, 100) % 100 < 33
-  const weight = isBlackList ? random(27, 55) / 10 : random(21, 35) / 10
+  const weight = isBlackList ? random(18, 21) / 10 : random(15, 18) / 10
   const baseBNBPrice = 369
   const fightGas = 0.0014
   const fightTaxBase = 0.00035
@@ -67,7 +65,7 @@ export async function calculateFightTax(
   function getTax(level, marketPrice) {
     const bnbTax = fightGas + fightTaxBase * (1 + (level * 3) / 100)
     const change = marketPrice / baseBNBPrice
-    return (bnbTax / change) * 15/10
+    return ((bnbTax / change) * 15) / 10
   }
 
   function getTaxNeedToSend(level, marketPrice) {
