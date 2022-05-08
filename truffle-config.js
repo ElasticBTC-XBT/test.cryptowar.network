@@ -105,16 +105,15 @@ module.exports = {
             process.env.BINANCE_MAINNET_WALLET_PRIVATE_KEY,
             process.env.BINANCE_MAINNET_WALLET_MNEMONIC,
             {
-              providerOrUrl:
-                "https://speedy-nodes-nyc.moralis.io/eba7d2e0234f08d2741c13aa/avalanche/mainnet",
+              providerOrUrl: "https://api.avax.network/ext/bc/C/rpc",
             }
           )
         ),
-      network_id: "*",
+      network_id: "43114",
       confirmations: 10,
       timeoutBlocks: 200,
-      gas: 8000000,
-      gasPrice: 225000000000,
+      gas: 3000000,
+      gasPrice: 40000000000,
       skipDryRun: true,
     },
     thundercore: {
@@ -187,7 +186,7 @@ module.exports = {
       network_id: "137",
       confirmations: 10,
       timeoutBlocks: 300,
-      gas: 15000000,
+      gas: 8000000,
       gasPrice: 35000000000,
       skipDryRun: true,
     },
@@ -253,7 +252,7 @@ module.exports = {
     polygonscan: process.env.POLYGONSCAN_API_KEY,
     thundercore_test: process.env.THUNDER_CORE_API_KEY,
     thundercore: process.env.THUNDER_CORE_API_KEY,
-    avax: process.env.AVAX_API_KEY,
+    snowtrace: process.env.AVAX_API_KEY,
   },
   // subscribers: {
   //   abisToTs: require('./truffle-subscriber-abis-to-ts.js')
