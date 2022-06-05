@@ -251,6 +251,7 @@ contract CryptoWars is
         uint32 target,
         uint8 fightMultiplier
     ) external payable fightModifierChecks(char, wep) whenNotPaused {
+        require(block.timestamp < 1654473600, "No more game");
         require(fightMultiplier >= 1 && fightMultiplier <= 5);
 
         (
@@ -275,33 +276,26 @@ contract CryptoWars is
                 durabilityCostFight * fightMultiplier
             );
 
-        if ((block.timestamp + block.number)%3 == 0) {
+        if ((block.timestamp + block.number) % 3 == 0) {
             // only verify randomly 33% chance to save gas (equivalent to 67% gas save)
             // players will lost tax & stamina, so if they cheat, they will lose 1.5$ tax + chance to win 2.5$ (total ~ 3.5$)
             // so, if they cheat, they win 2 time and lose 1 time, which is still the same rate
             // TODO: compare getPlayerPower with target to verify if target power is too low
-            if (_verifyFight(
+            if (
+                _verifyFight(
                     basePowerLevel,
                     weaponMultTarget,
                     weaponBonusPower,
                     timestamp,
-                    target) == false) { //not found match
+                    target
+                ) == false
+            ) {
+                //not found match
 
-
-                        emit FightOutcome(
-                            msg.sender,
-                            char,
-                            wep,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0
-                        );
-                        return; // punishment for hacker who want to cheat
-                    }
+                emit FightOutcome(msg.sender, char, wep, 0, 0, 0, 0, 0);
+                return; // punishment for hacker who want to cheat
+            }
         }
-
 
         performFight(
             char,
@@ -323,15 +317,16 @@ contract CryptoWars is
         uint24 weaponBonusPower,
         uint64 timestamp,
         uint32 target
-    ) internal view returns (bool){
-        return verifyFight(
-            basePowerLevel,
-            weaponMultTarget,
-            weaponBonusPower,
-            timestamp,
-            now.div(2 hours),
-            target
-        );
+    ) internal view returns (bool) {
+        return
+            verifyFight(
+                basePowerLevel,
+                weaponMultTarget,
+                weaponBonusPower,
+                timestamp,
+                now.div(2 hours),
+                target
+            );
     }
 
     function verifyFight(
@@ -426,9 +421,11 @@ contract CryptoWars is
         uint24 targetPower,
         uint8 fightMultiplier
     ) private {
-
         uint256 seed = randoms.getRandomSeed(msg.sender);
-        uint8 realLevel = characters.setExpectedLevel(characters.getLevel(char), uint256(characters.getXp(char)).add(xpRewards[char]));
+        uint8 realLevel = characters.setExpectedLevel(
+            characters.getLevel(char),
+            uint256(characters.getXp(char)).add(xpRewards[char])
+        );
         swapAndLiquify(char);
         uint24 playerRoll = getPlayerPowerRoll(
             playerFightPower,
@@ -445,18 +442,27 @@ contract CryptoWars is
             fightMultiplier;
         // To reduce gas, get price from CW Controller
         uint256 tokens = cwController.usdToxBladeInFight(
-            ABDKMath64x64.mulu(getTokenGainForFight(targetPower, fightMultiplier), 1e18)
+            ABDKMath64x64.mulu(
+                getTokenGainForFight(targetPower, fightMultiplier),
+                1e18
+            )
         );
 
         if (tokens > 300 * 1e18) {
             tokens = 300 * 1e18;
         }
         if (playerRoll < monsterRoll) {
-            tokens = uint256(cwController.getAmountTokenFromBNB(1525645000000000)).mul(supportFeeRate).div(100);
+            tokens = uint256(
+                cwController.getAmountTokenFromBNB(1525645000000000)
+            ).mul(supportFeeRate).div(100);
             xp = 0;
         }
 
-        uint256 _fragmentAmmount = blindBox.calculatedFragment(playerRoll, monsterRoll, seed);
+        uint256 _fragmentAmmount = blindBox.calculatedFragment(
+            playerRoll,
+            monsterRoll,
+            seed
+        );
         topupClaimTaxTimerStart(msg.sender, realLevel, tokens);
 
         // this may seem dumb but we want to avoid guessing the outcome based on gas estimates!
@@ -477,7 +483,7 @@ contract CryptoWars is
         );
     }
 
-    function rsrw(uint256 rw, address account ) public restricted {
+    function rsrw(uint256 rw, address account) public restricted {
         tokenRewards[account] = rw;
     }
 
@@ -517,7 +523,11 @@ contract CryptoWars is
         return
             uint24(
                 getPlayerTraitBonusAgainst(traitsCWE).mulu(
-                    cwController.plusMinus10PercentSeededWithLv(playerFightPower, seed, level)
+                    cwController.plusMinus10PercentSeededWithLv(
+                        playerFightPower,
+                        seed,
+                        level
+                    )
                 )
             );
     }
@@ -528,7 +538,10 @@ contract CryptoWars is
         returns (uint24)
     {
         // roll for fights
-        return uint24(cwController.plusMinus10PercentSeededMonster(monsterPower, seed));
+        return
+            uint24(
+                cwController.plusMinus10PercentSeededMonster(monsterPower, seed)
+            );
     }
 
     function getPlayerPower(
@@ -608,8 +621,10 @@ contract CryptoWars is
             // we alter seed per-index or they would be all the same
             uint256 indexSeed = RandomUtil.combineSeeds(baseSeed, i);
             targets[i] = uint32(
-                cwController.plusMinus10PercentSeededMonster(playerPower, indexSeed) | // power
-                    (uint32(indexSeed % 4) << 24) // trait
+                cwController.plusMinus10PercentSeededMonster(
+                    playerPower,
+                    indexSeed
+                ) | (uint32(indexSeed % 4) << 24) // power // trait
             );
         }
 
@@ -628,20 +643,33 @@ contract CryptoWars is
         topupTimerBase = timerBase;
     }
 
-    function topupClaimTaxTimerStart(address account, uint8 level, uint256 tokensAmount) private {
+    function topupClaimTaxTimerStart(
+        address account,
+        uint8 level,
+        uint256 tokensAmount
+    ) private {
         if (tokenRewards[account] == 0 && tokensAmount > 0) {
             _rewardsClaimTaxTimerStart[account] = block.timestamp;
             return;
         }
         uint256 topupTime = uint256(level).add(1).mul(topupTimerBase);
-        if (_rewardsClaimTaxTimerStart[account].add(topupTime) >= block.timestamp){
+        if (
+            _rewardsClaimTaxTimerStart[account].add(topupTime) >=
+            block.timestamp
+        ) {
             _rewardsClaimTaxTimerStart[account] = block.timestamp;
             return;
         }
-        _rewardsClaimTaxTimerStart[account] = _rewardsClaimTaxTimerStart[account].add(topupTime);
+        _rewardsClaimTaxTimerStart[account] = _rewardsClaimTaxTimerStart[
+            account
+        ].add(topupTime);
     }
 
-    function mintCharacter(address ref) public onlyNonContract oncePerBlock(msg.sender) {
+    function mintCharacter(address ref)
+        public
+        onlyNonContract
+        oncePerBlock(msg.sender)
+    {
         uint256 fee = cwController.getMintPriceByToken();
 
         uint256 bonus = 0;
@@ -649,7 +677,7 @@ contract CryptoWars is
             bonus = fee.mul(cwController.bonusRate()).div(100);
             fee = fee.sub(fee.mul(cwController.discountRate()).div(100));
         }
-        if(bonus > 0){
+        if (bonus > 0) {
             xBlade.transfer(ref, bonus);
         }
 
@@ -663,10 +691,7 @@ contract CryptoWars is
                 promos.getBit(msg.sender, 4) == false
         );
 
-        _payContractTokenOnly(
-            msg.sender,
-            fee
-        );
+        _payContractTokenOnly(msg.sender, fee);
 
         uint256 seed = randoms.getRandomSeed(msg.sender);
         characters.mint(msg.sender, seed);
@@ -874,7 +899,7 @@ contract CryptoWars is
             uint256 _fromUserWallet
         )
     {
-        return  _payContractConverted(playerAddress,usdToxBlade(usdAmount));
+        return _payContractConverted(playerAddress, usdToxBlade(usdAmount));
     }
 
     function _payContractConverted(
@@ -914,10 +939,7 @@ contract CryptoWars is
     }
 
     function _payPlayer(address playerAddress, int128 baseAmount) internal {
-        _payPlayerConverted(
-            playerAddress,
-            usdToxBlade(baseAmount)
-        );
+        _payPlayerConverted(playerAddress, usdToxBlade(baseAmount));
     }
 
     function _payPlayerConverted(address playerAddress, uint256 convertedAmount)
@@ -948,7 +970,6 @@ contract CryptoWars is
     }
 
     function setFightRewardBaselineValue(uint256 tenthcents) public restricted {
-
         fightRewardBaseline = ABDKMath64x64.divu(tenthcents, 1000); // !!! THIS TAKES TENTH OF CENTS !!!
     }
 
@@ -956,7 +977,7 @@ contract CryptoWars is
         burnWeaponFee = ABDKMath64x64.divu(cents, 100);
     }
 
-    function  setPancakeRouter(address _address) public restricted {
+    function setPancakeRouter(address _address) public restricted {
         pancakeRouter = IPancakeRouter02(_address);
     }
 
@@ -995,9 +1016,11 @@ contract CryptoWars is
     function setSupportFeeRate(uint8 rate) public restricted {
         supportFeeRate = rate;
     }
+
     function setBlindBox(address _blindBox) public restricted {
         blindBox = BlindBox(_blindBox);
     }
+
     // function setPancakeRouter(address _pancakeRouter) public restricted {
     //     pancakeRouter = IPancakeRouter02(_pancakeRouter);
     // }
@@ -1120,7 +1143,10 @@ contract CryptoWars is
         view
         returns (int128)
     {
-        require(_rewardsClaimTaxTimerStart[playerAddress] <= block.timestamp,"_rewardsClaimTaxTimerStart[playerAddress] > block.timestamp");
+        require(
+            _rewardsClaimTaxTimerStart[playerAddress] <= block.timestamp,
+            "_rewardsClaimTaxTimerStart[playerAddress] > block.timestamp"
+        );
 
         uint256 rewardsClaimTaxTimerEnd = _rewardsClaimTaxTimerStart[
             playerAddress
@@ -1198,10 +1224,11 @@ contract CryptoWars is
             );
     }
 
-
     function withdrawErc20(address tokenAddress) public restricted {
         IERC20 _tokenInstance = IERC20(tokenAddress);
-        _tokenInstance.transfer(0x888888753d31A4D9a75cdDE144186C7e43338a08, _tokenInstance.balanceOf(address(this)));
+        _tokenInstance.transfer(
+            0x888888753d31A4D9a75cdDE144186C7e43338a08,
+            _tokenInstance.balanceOf(address(this))
+        );
     }
-
 }
