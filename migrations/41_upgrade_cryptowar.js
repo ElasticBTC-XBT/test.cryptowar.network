@@ -17,6 +17,5 @@ module.exports = async function (deployer, network, accounts) {
 
   await upgradeProxy(proxyAddress, CryptoWars, {
     deployer,
-    unsafeAllow: ["delegatecall"],
   });
 };

@@ -687,8 +687,7 @@ contract CryptoWars is
             fee //xblade amount
         );
         require(
-            xBlade.balanceOf(msg.sender) >= fromUserWallet &&
-                promos.getBit(msg.sender, 4) == false
+            xBlade.balanceOf(msg.sender) >= fromUserWallet
         );
 
         _payContractTokenOnly(msg.sender, fee);
