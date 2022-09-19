@@ -2,8 +2,9 @@ const xBlade = artifacts.require("xBlade");
 const { upgradeProxy } = require("@openzeppelin/truffle-upgrades");
 
 module.exports = async function (deployer) {
-  // const proxyAddress = "0x8781413C768f207699D51f42b909c5d6A9D9aD36"; testnet
-  const proxyAddress = "0x27a339d9B59b21390d7209b78a839868E319301B"; //mainnet
+  const proxyAddress = "0x61Fc654aA0185bae02a9A3b110D28C3AE8412CEf";
+  // testnet;
+  // const proxyAddress = "0x27a339d9B59b21390d7209b78a839868E319301B"; //mainnet
   await upgradeProxy(proxyAddress, xBlade, {
     deployer,
     unsafeAllow: ["external-library-linking"],

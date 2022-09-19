@@ -382,8 +382,7 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
         public
         onlyOwner
     {
-        require(amount >= balanceOf(burnAddress), "Not enough");
-        transferFrom(burnAddress, address(0), amount);
+        _burn(burnAddress, amount);
     }
 
     /**
