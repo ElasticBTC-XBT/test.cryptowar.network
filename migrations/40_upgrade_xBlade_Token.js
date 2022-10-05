@@ -6,7 +6,6 @@ module.exports = async function (deployer) {
   const proxyAddress = "0x27a339d9B59b21390d7209b78a839868E319301B"; //mainnet
   await upgradeProxy(proxyAddress, xBlade, {
     deployer,
-    unsafeAllow: ["external-library-linking"],
   });
 
   const token = await xBlade.at(proxyAddress);

@@ -86,14 +86,13 @@ module.exports = {
             process.env.BINANCE_MAINNET_WALLET_PRIVATE_KEY,
             process.env.BINANCE_MAINNET_WALLET_MNEMONIC,
             {
-              // providerOrUrl: "https://bsc-dataseed.binance.org/",
-              providerOrUrl:
-                "https://speedy-nodes-nyc.moralis.io/eba7d2e0234f08d2741c13aa/bsc/mainnet",
+              providerOrUrl: "https://bsc-dataseed1.binance.org/",
             }
           )
         ),
       network_id: 0x38,
       confirmations: 10,
+      networkCheckTimeout: 100000,
       timeoutBlocks: 2000,
       gas: 5600000,
       skipDryRun: true,
