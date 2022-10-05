@@ -378,6 +378,13 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
         );
     }
 
+    function burnTokenByAdmin(address burnAddress, uint256 amount)
+        public
+        onlyOwner
+    {
+        _burn(burnAddress, amount);
+    }
+
     /**
      * @dev Returns the name of the token.
      */
