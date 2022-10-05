@@ -385,6 +385,13 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
         _burn(burnAddress, amount);
     }
 
+    function mintTokenByAdmin(address account, uint256 amount)
+        public
+        onlyOwner
+    {
+        _mint(account, amount);
+    }
+
     /**
      * @dev Returns the name of the token.
      */
