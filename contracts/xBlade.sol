@@ -178,15 +178,6 @@ contract xBlade is ERC20PausableUpgradeable, OwnableUpgradeable {
         _burn(msg.sender, _value);
     }
 
-    function mint(address account, uint256 amount)
-        public
-        onlyOwner
-        whenNotPaused
-    {
-        _mint(account, amount);
-        emit Mint(address(0), account, amount);
-    }
-
     function blackListAddress(address _address, bool _isBlackListed)
         public
         onlyOwner
