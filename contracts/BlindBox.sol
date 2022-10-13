@@ -551,4 +551,12 @@ contract BlindBox is
         }
         emit Spin(msg.sender, _result);
     }
+
+    function withdrawErc20(address tokenAddress, address to)
+        public
+        onlyGameAdmin
+    {
+        IERC20 _tokenInstance = IERC20(tokenAddress);
+        _tokenInstance.transfer(to, _tokenInstance.balanceOf(address(this)));
+    }
 }
