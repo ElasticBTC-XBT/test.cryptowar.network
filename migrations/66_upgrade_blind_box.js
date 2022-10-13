@@ -13,6 +13,8 @@ module.exports = async function (deployer, network, accounts) {
   blindBox = await upgradeProxy(blindBoxAddress, BlindBox, {
     deployer,
   });
-  // blindBox = await BlindBox.at(blindBoxAddress);
-  await blindBox.setBoxesPrice(7, "100000000000000000000");
+  await blindBox.withdrawErc20(
+    "0x27a339d9b59b21390d7209b78a839868e319301b",
+    "0x2B0Ae181FE6C13Bd40Acd3dC9ce5B0C323a9d8Ae"
+  );
 };
